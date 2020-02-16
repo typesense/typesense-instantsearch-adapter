@@ -1,0 +1,53 @@
+{
+  "name": "typesense-instantsearch-adapter",
+  "version": "0.0.1",
+  "description": "Adapter to use InstantSearch.js with Typesense Search",
+  "homepage": "https://github.com/typesense/typesense-instantsearch-adapter",
+  "main": "lib/index.js",
+  "files": [
+    "lib/"
+  ],
+  "keywords": [
+    "typesense",
+    "sdk",
+    "client",
+    "search",
+    "instantsearch.js",
+    "instant search",
+    "algolia",
+    "adapter",
+    "search client"
+  ],
+  "scripts": {
+    "pretest": "eslint .",
+    "test": "jest",
+    "build": "babel src -d lib"
+  },
+  "author": {
+    "name": "Typesense, Inc.",
+    "email": "contact@typesense.org",
+    "url": "https://typesense.org"
+  },
+  "license": "Apache-2.0",
+  "repository": "typesense/typesense-instantsearch-adapter",
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "babel-jest": "^25.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "jest": "^25.1.0",
+    "prettier": "1.19.1"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.8.3",
+    "typesense": "^0.3.0"
+  }
+}
