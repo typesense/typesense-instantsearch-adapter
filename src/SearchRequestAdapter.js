@@ -52,8 +52,30 @@ export class SearchRequestAdapter {
     return adaptedResult;
   }
 
+  _adaptNumericFilters(numericFilters) {
+    let adaptedResult = "";
+
+    if (!numericFilters) {
+      return adaptedResult;
+    }
+
+    adaptedResult = numericFilters
+      .map(numericFilter => numericFilter.replace(new RegExp("(>|<=)"), ":$1"))
+      .join(" && ");
+
+    return adaptedResult;
+  }
+
+  _adaptFilters(facetFilters, numericFilters) {
+    const adaptedFilters = [];
+
+    adaptedFilters.push(this._adaptFacetFilters(facetFilters));
+    adaptedFilters.push(this._adaptNumericFilters(numericFilters));
+
+    return adaptedFilters.filter(filter => filter !== "").join(" && ");
+  }
+
   _adaptIndexName(indexName) {
-    console.log(indexName.match(this.constructor.INDEX_NAME_MATCHING_REGEX));
     return indexName.match(this.constructor.INDEX_NAME_MATCHING_REGEX)[1];
   }
 
@@ -62,7 +84,6 @@ export class SearchRequestAdapter {
   }
 
   async request() {
-    console.log(this.instantsearchRequest);
     const indexName = this.instantsearchRequest.indexName;
     const params = this.instantsearchRequest.params;
     return this.typesenseClient
@@ -72,7 +93,10 @@ export class SearchRequestAdapter {
         q: params.query === "" ? "*" : params.query,
         query_by: this.searchByFields.join(","),
         facet_by: [params.facets].flat().join(","),
-        filter_by: this._adaptFacetFilters(params.facetFilters),
+        filter_by: this._adaptFilters(
+          params.facetFilters,
+          params.numericFilters
+        ),
         sort_by: this._adaptSortBy(indexName),
         max_facet_values: params.maxValuesPerFacet,
         page: params.page + 1
