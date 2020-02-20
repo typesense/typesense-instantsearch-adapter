@@ -1,6 +1,6 @@
 "use strict";
 
-export class ResponseAdapter {
+export class SearchResponseAdapter {
   constructor(typesenseResponse, instantsearchRequest) {
     this.typesenseResponse = typesenseResponse;
     this.instantsearchRequest = instantsearchRequest;
@@ -23,8 +23,14 @@ export class ResponseAdapter {
 
   _adaptHighlightTag(value) {
     return value
-      .replace(new RegExp("<mark>", "g"), this.instantsearchRequest.params.highlightPreTag)
-      .replace(new RegExp("</mark>", "g"), this.instantsearchRequest.params.highlightPostTag);
+      .replace(
+        new RegExp("<mark>", "g"),
+        this.instantsearchRequest.params.highlightPreTag
+      )
+      .replace(
+        new RegExp("</mark>", "g"),
+        this.instantsearchRequest.params.highlightPostTag
+      );
   }
 
   _adaptHighlightResult(typesenseHit) {

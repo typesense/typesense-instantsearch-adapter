@@ -1,6 +1,6 @@
 "use strict";
 
-export class RequestAdapter {
+export class SearchRequestAdapter {
   constructor(instantsearchRequest, typesenseClient, searchByFields) {
     this.instantsearchRequest = instantsearchRequest;
     this.typesenseClient = typesenseClient;
