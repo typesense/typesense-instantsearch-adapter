@@ -96,13 +96,21 @@ export class SearchResponseAdapter {
       hits: this._adaptHits(this.typesenseResponse.hits),
       nbHits: this.typesenseResponse.found,
       page: this.typesenseResponse.page,
-      nbPages: Math.ceil(
-        this.typesenseResponse.found / this.typesenseResponse.hits.length
-      ),
+      nbPages: this._adaptNumberOfPages(),
       hitsPerPage: this.typesenseResponse.hits.length,
-      facets: this._adaptFacets(this.typesenseResponse.facet_counts),
+      facets: this._adaptFacets(this.typesenseResponse.facet_counts || []),
       processingTimeMS: this.typesenseResponse.search_time_ms
     };
     return adaptedResult;
+  }
+
+  _adaptNumberOfPages() {
+    const result =
+      this.typesenseResponse.found / this.typesenseResponse.hits.length;
+    if (Number.isFinite(result)) {
+      return Math.ceil(result);
+    } else {
+      return 1;
+    }
   }
 }
