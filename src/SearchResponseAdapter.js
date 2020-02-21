@@ -39,9 +39,9 @@ export class SearchResponseAdapter {
 
     const result = Object.assign(
       {},
-      ...Object.keys(typesenseHit.document).map(attribute => ({
+      ...Object.entries(typesenseHit.document).map(([attribute, value]) => ({
         [attribute]: {
-          value: typesenseHit.document[attribute],
+          value: value,
           matchLevel: "none",
           matchedWords: []
         }
@@ -58,8 +58,9 @@ export class SearchResponseAdapter {
 
     // Now convert any values that have an array value
     // Also, replace highlight tag
-    Object.keys(result).forEach(attribute => {
-      const { value, matchLevel, matchedWords } = result[attribute];
+    Object.entries(result).forEach(([k, v]) => {
+      const attribute = k;
+      const { value, matchLevel, matchedWords } = v;
       if (Array.isArray(value)) {
         result[attribute] = [];
         value.forEach(v => {
@@ -74,7 +75,6 @@ export class SearchResponseAdapter {
         result[attribute].value = this._adaptHighlightTag(`${value}`);
       }
     });
-
     return result;
   }
 
