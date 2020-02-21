@@ -104,6 +104,13 @@ export class SearchRequestAdapter {
       typesenseSearchParams.per_page = 1;
     }
 
+    if (params.hitsPerPage) {
+      typesenseSearchParams.per_page = params.hitsPerPage;
+    }
+
+    // console.log(params);
+    // console.log(typesenseSearchParams);
+
     return typesenseSearchParams;
   }
 
