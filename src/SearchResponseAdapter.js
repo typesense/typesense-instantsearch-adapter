@@ -91,6 +91,16 @@ export class SearchResponseAdapter {
     return adaptedResult;
   }
 
+  _adaptNumberOfPages() {
+    const result =
+      this.typesenseResponse.found / this.typesenseResponse.hits.length;
+    if (Number.isFinite(result)) {
+      return Math.ceil(result);
+    } else {
+      return 1;
+    }
+  }
+
   adapt() {
     const adaptedResult = {
       hits: this._adaptHits(this.typesenseResponse.hits),
@@ -102,15 +112,5 @@ export class SearchResponseAdapter {
       processingTimeMS: this.typesenseResponse.search_time_ms
     };
     return adaptedResult;
-  }
-
-  _adaptNumberOfPages() {
-    const result =
-      this.typesenseResponse.found / this.typesenseResponse.hits.length;
-    if (Number.isFinite(result)) {
-      return Math.ceil(result);
-    } else {
-      return 1;
-    }
   }
 }

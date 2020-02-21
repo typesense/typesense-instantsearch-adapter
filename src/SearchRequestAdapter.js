@@ -83,23 +83,32 @@ export class SearchRequestAdapter {
     return indexName.match(this.constructor.INDEX_NAME_MATCHING_REGEX)[3];
   }
 
-  async request() {
-    const indexName = this.instantsearchRequest.indexName;
+  _buildSearchParameters() {
     const params = this.instantsearchRequest.params;
+    const indexName = this.instantsearchRequest.indexName;
+    const typesenseSearchParams = {
+      q: params.query === "" ? "*" : params.query,
+      query_by: this.searchByFields.join(","),
+      facet_by: [params.facets].flat().join(","),
+      filter_by: this._adaptFilters(params.facetFilters, params.numericFilters),
+      sort_by: this._adaptSortBy(indexName),
+      max_facet_values: params.maxValuesPerFacet,
+      page: params.page + 1
+    };
+
+    if (params.facetQuery) {
+      typesenseSearchParams.facet_query = `${params.facetName}:${params.facetQuery}`;
+      typesenseSearchParams.max_hits = 1;
+      typesenseSearchParams.per_page = 1;
+    }
+
+    return typesenseSearchParams;
+  }
+
+  async request() {
     return this.typesenseClient
-      .collections(this._adaptIndexName(indexName))
+      .collections(this._adaptIndexName(this.instantsearchRequest.indexName))
       .documents()
-      .search({
-        q: params.query === "" ? "*" : params.query,
-        query_by: this.searchByFields.join(","),
-        facet_by: [params.facets].flat().join(","),
-        filter_by: this._adaptFilters(
-          params.facetFilters,
-          params.numericFilters
-        ),
-        sort_by: this._adaptSortBy(indexName),
-        max_facet_values: params.maxValuesPerFacet,
-        page: params.page + 1
-      });
+      .search(this._buildSearchParameters());
   }
 }

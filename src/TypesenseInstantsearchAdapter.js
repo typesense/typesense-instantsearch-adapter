@@ -4,7 +4,6 @@ import { Configuration } from "./Configuration";
 import Typesense from "typesense";
 import { SearchRequestAdapter } from "./SearchRequestAdapter";
 import { SearchResponseAdapter } from "./SearchResponseAdapter";
-import { FacetSearchRequestAdapter } from "./FacetSearchRequestAdapter";
 import { FacetSearchResponseAdapter } from "./FacetSearchResponseAdapter";
 
 export default class TypesenseInstantsearchAdapter {
@@ -46,7 +45,7 @@ export default class TypesenseInstantsearchAdapter {
   async searchTypesenseForFacetValuesAndAdapt(instantsearchRequests) {
     const adaptedResponses = await instantsearchRequests.map(
       async instantsearchRequest => {
-        const requestAdapter = new FacetSearchRequestAdapter(
+        const requestAdapter = new SearchRequestAdapter(
           instantsearchRequest,
           this.typesenseClient,
           this.configuration.searchByFields
