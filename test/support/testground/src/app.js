@@ -20,41 +20,41 @@ import {
 import { connectAutocomplete } from "instantsearch.js/es/connectors";
 
 // ======= Uncomment to use typesense-instantsearch-adapter
-// import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
-// const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
-//   server: {
-//     masterNode: {
-//       host: "localhost",
-//       port: "8108",
-//       protocol: "http",
-//       apiKey: "abcd"
-//     }
-//   },
-//   searchByFields: ["name", "description", "categories"]
-// });
-// const searchClient = typesenseInstantsearchAdapter.searchClient;
-// const search = instantsearch({
-//   searchClient,
-//   indexName: "products"
-// });
-// const suggestions = instantsearch({
-//   indexName: "products",
-//   searchClient
-// });
-
-// ======== Uncomment to use Algolia
-const searchClient = algoliasearch(
-  "B1G2GM9NG0",
-  "aadef574be1f9252bb48d4ea09b5cfe5"
-);
+import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
+const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
+  server: {
+    masterNode: {
+      host: "localhost",
+      port: "8108",
+      protocol: "http",
+      apiKey: "abcd"
+    }
+  },
+  searchByFields: ["name", "description", "categories"]
+});
+const searchClient = typesenseInstantsearchAdapter.searchClient;
 const search = instantsearch({
-  indexName: "demo_ecommerce",
-  searchClient
+  searchClient,
+  indexName: "products"
 });
 const suggestions = instantsearch({
-  indexName: "demo_ecommerce",
+  indexName: "products",
   searchClient
 });
+
+// ======== Uncomment to use Algolia
+// const searchClient = algoliasearch(
+//   "B1G2GM9NG0",
+//   "aadef574be1f9252bb48d4ea09b5cfe5"
+// );
+// const search = instantsearch({
+//   indexName: "demo_ecommerce",
+//   searchClient
+// });
+// const suggestions = instantsearch({
+//   indexName: "demo_ecommerce",
+//   searchClient
+// });
 
 // ============ Begin Widget Configuration
 search.addWidgets([
