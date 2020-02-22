@@ -7,7 +7,8 @@ module.exports = {
     {
       command: "npm run startTestground",
       port: 3000,
-      debug: true
+      debug: true,
+      launchTimeout: 20 * 1000
     },
     {
       command: "npm run startTestTypesenseServer",

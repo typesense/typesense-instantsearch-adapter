@@ -90,8 +90,8 @@ module.exports = (async () => {
     const collection = await typesense.collections("products").retrieve();
     if (collection.num_documents !== products.length) {
       reindexNeeded = true;
+      await typesense.collections("products").delete();
     }
-    await typesense.collections("products").delete();
   } catch (e) {
     reindexNeeded = true;
   }
