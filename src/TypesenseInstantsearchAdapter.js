@@ -22,12 +22,9 @@ export default class TypesenseInstantsearchAdapter {
   async searchTypesenseAndAdapt(instantsearchRequests) {
     const adaptedResponses = await instantsearchRequests.map(
       async instantsearchRequest => {
-        const requestAdapter = new SearchRequestAdapter(
-          instantsearchRequest,
-          this.typesenseClient,
-          this.configuration.searchByFields
+        const typesenseResponse = await this._adaptAndPerformTypesenseRequest(
+          instantsearchRequest
         );
-        const typesenseResponse = await requestAdapter.request();
         const responseAdapter = new SearchResponseAdapter(
           typesenseResponse,
           instantsearchRequest
@@ -45,12 +42,9 @@ export default class TypesenseInstantsearchAdapter {
   async searchTypesenseForFacetValuesAndAdapt(instantsearchRequests) {
     const adaptedResponses = await instantsearchRequests.map(
       async instantsearchRequest => {
-        const requestAdapter = new SearchRequestAdapter(
-          instantsearchRequest,
-          this.typesenseClient,
-          this.configuration.searchByFields
+        const typesenseResponse = await this._adaptAndPerformTypesenseRequest(
+          instantsearchRequest
         );
-        const typesenseResponse = await requestAdapter.request();
         const responseAdapter = new FacetSearchResponseAdapter(
           typesenseResponse,
           instantsearchRequest
@@ -61,5 +55,15 @@ export default class TypesenseInstantsearchAdapter {
 
     const results = await Promise.all(adaptedResponses);
     return results;
+  }
+
+  async _adaptAndPerformTypesenseRequest(instantsearchRequest) {
+    const requestAdapter = new SearchRequestAdapter(
+      instantsearchRequest,
+      this.typesenseClient,
+      this.configuration.searchByFields
+    );
+    const typesenseResponse = await requestAdapter.request();
+    return typesenseResponse;
   }
 }
