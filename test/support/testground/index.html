@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="theme-color" content="#000000" />
+
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="shortcut icon" href="./favicon.png" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/instantsearch.css@7/themes/algolia-min.css"
+    />
+    <link rel="stylesheet" href="./src/index.css" />
+    <link rel="stylesheet" href="./src/app.css" />
+
+    <title>testground</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="ais-InstantSearch">
+        <h1>InstantSearch.js demo</h1>
+
+        <div class="left-panel">
+          <div id="current-refinements"></div>
+
+          <h2>Brands</h2>
+          <div id="brand-list"></div>
+
+          <h2>Categories</h2>
+          <h3>List (uncomment)</h3>
+          <div id="categories-list"></div>
+
+          <h3>Menu (uncomment)</h3>
+          <div id="categories-menu"></div>
+
+          <h3>Hierarchical Menu (uncomment)</h3>
+          <div id="categories-hierarchical-menu"></div>
+
+          <h3>Breadcrumb</h3>
+          <div id="breadcrumb"></div>
+
+          <h2>Price</h2>
+          <h3>Menu (uncomment)</h3>
+          <div id="price-menu"></div>
+
+          <h3>Range input (uncomment)</h3>
+          <div id="price-range-input"></div>
+
+          <h3>Range slider (uncomment)</h3>
+          <div id="price-range-slider"></div>
+
+          <div id="clear-refinements"></div>
+        </div>
+
+        <div class="right-panel">
+          <div id="searchbox"></div>
+          <div id="stats"></div>
+          <div id="sort-by"></div>
+          <div id="hits"></div>
+          <div id="pagination"></div>
+          <div id="hits-per-page"></div>
+        </div>
+      </div>
+
+      <h2>Autocomplete</h2>
+      Search:
+      <div id="autocomplete"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/algoliasearch/3.32.0/algoliasearchLite.js"></script>
+    <script src="./src/app.js"></script>
+  </body>
+</html>

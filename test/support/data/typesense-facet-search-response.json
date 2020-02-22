@@ -1,0 +1,242 @@
+{
+  "facet_counts": [
+    {
+      "counts": [
+        {
+          "count": 165,
+          "value": "Apple"
+        }
+      ],
+      "field_name": "brand"
+    },
+    {
+      "counts": [
+        {
+          "count": 3824,
+          "value": "Cell Phones"
+        },
+        {
+          "count": 3800,
+          "value": "iPhone Accessories"
+        },
+        {
+          "count": 1712,
+          "value": "iPhone Cases & Clips"
+        },
+        {
+          "count": 212,
+          "value": "iPhone 6s Cases"
+        },
+        {
+          "count": 126,
+          "value": "All Cell Phones with Plans"
+        },
+        {
+          "count": 125,
+          "value": "Screen Protectors"
+        },
+        {
+          "count": 86,
+          "value": "Smartwatch Bands"
+        },
+        {
+          "count": 78,
+          "value": "Data Cables"
+        },
+        {
+          "count": 57,
+          "value": "Car Chargers"
+        },
+        {
+          "count": 37,
+          "value": "Prepaid Minutes"
+        }
+      ],
+      "field_name": "categories"
+    }
+  ],
+  "found": 3291,
+  "hits": [
+    {
+      "document": {
+        "brand": "AT&T GoPhone",
+        "categories": [
+          "Cell Phones",
+          "Prepaid Phones",
+          "All Prepaid Phones"
+        ],
+        "description": "Grab your data and your minutes as you go with this Samsung Galaxy 3 Express smartphone. The 4.5-inch Super AMOLED screen offers a dazzling display for texting, gaming or scrolling the Internet. A microSD slot lets you add up to 128GB storage, and this Samsung Galaxy 3 Express smartphone has a 5-megapixel camera for taking and sharing pictures.",
+        "id": "0",
+        "image": "https://cdn-demo.algolia.com/bestbuy-0118/4984700_sb.jpg",
+        "name": "AT&T GoPhone - Samsung Galaxy Express 3 4G LTE with 8GB Memory Prepaid Cell Phone",
+        "popularity": 21449,
+        "price": 49.99
+      },
+      "highlights": [],
+      "match_score": 33488996
+    },
+    {
+      "document": {
+        "brand": "Boost Mobile",
+        "categories": [
+          "Cell Phones",
+          "Prepaid Phones",
+          "All Prepaid Phones"
+        ],
+        "description": "Slide the slim profile of this Boost Mobile LG M3 smartphone in your pocket, and keep in contact no matter where you roam. Cameras on the front and the back make conversations fun, and Android 6.0 Marshmallow offers reliable support for all of your apps. The ample 5-inch HD screen on this Boost Mobile LG M3 phone offers clear images.",
+        "id": "1",
+        "image": "https://cdn-demo.algolia.com/bestbuy-0118/5428602_sb.jpg",
+        "name": "Boost Mobile - LG Tribute HD 4G LTE with 16GB Memory Prepaid Cell Phone - White",
+        "popularity": 21429,
+        "price": 79.99
+      },
+      "highlights": [],
+      "match_score": 33488996
+    },
+    {
+      "document": {
+        "brand": "AT&T GoPhone",
+        "categories": [
+          "Cell Phones",
+          "Prepaid Phones",
+          "All Prepaid Phones"
+        ],
+        "description": "Enjoy simplicity and speed with Alcatel's Ideal cell phone for AT&T. It fits neatly in almost any pocket and has a 4.5-inch display for easy one-handed use. Alcatel's Ideal phone from AT&T comes with 4G of memory and uses Wi-Fi or Bluetooth connectivity to keep connections active no matter what.",
+        "id": "7",
+        "image": "https://cdn-demo.algolia.com/bestbuy-0118/5443800_sb.jpg",
+        "name": "AT&T GoPhone - Alcatel Ideal 4G LTE with 8GB Memory Prepaid Cell Phone - Slate Blue",
+        "popularity": 21413,
+        "price": 29.99
+      },
+      "highlights": [],
+      "match_score": 33488996
+    },
+    {
+      "document": {
+        "brand": "Cricket Wireless",
+        "categories": [
+          "Cell Phones",
+          "Prepaid Phones",
+          "All Prepaid Phones"
+        ],
+        "description": "Alcatel OneTouch Flint Prepaid Cell Phone for Cricket Wireless:Stay connected to your friends and family with this Cricket Alcatel OneTouch Flint smartphone. It has a hefty 5.5-inch HD screen for easy viewing and navigation, and the color display is crisp and vibrant. The 2500 mAh battery in this Cricket Alcatel OneTouch Flint smartphone lets you talk up to 19 hours on a single charge..",
+        "id": "6",
+        "image": "https://cdn-demo.algolia.com/bestbuy-0118/5215801_sb.jpg",
+        "name": "Cricket Wireless - Alcatel OneTouch Flint 4G with 16GB Memory Prepaid Cell Phone",
+        "popularity": 21343,
+        "price": 49.99
+      },
+      "highlights": [],
+      "match_score": 33488996
+    },
+    {
+      "document": {
+        "brand": "AT&T GoPhone",
+        "categories": [
+          "Cell Phones",
+          "Prepaid Phones",
+          "All Prepaid Phones"
+        ],
+        "description": "Text and talk with ease on this Samsung Jack smartphone with a full QWERTY keyboard featuring tactile keys. The slim profile sits easily in your hand, and Bluetooth compatibility connects easily with your car stereo and other devices. This Samsung Jack smartphone lets you purchase minutes and date without needing a contract.",
+        "id": "5",
+        "image": "https://cdn-demo.algolia.com/bestbuy-0118/4984900_sb.jpg",
+        "name": "AT&T GoPhone - Samsung Galaxy Express Prime 4G LTE with 16GB Memory Prepaid Cell Phone",
+        "popularity": 21309,
+        "price": 79.99
+      },
+      "highlights": [],
+      "match_score": 33488996
+    },
+    {
+      "document": {
+        "brand": "Motorola",
+        "categories": [
+          "Cell Phones",
+          "Unlocked Cell Phones",
+          "All Unlocked Cell Phones"
+        ],
+        "description": "Stay in touch with loved ones with this unlocked Motorola Moto G phone. It has a thin, lightweight design for comfort and a micro-texture back and rounded edges for an enhanced grip. TurboPower-enabled charging provides extra battery juice in 15 minutes, and you can talk with others via any carrier with this unlocked Motorola Moto G phone.",
+        "id": "4",
+        "image": "https://cdn-demo.algolia.com/bestbuy-0118/5191101_sb.jpg",
+        "name": "Motorola - MOTO G (4th Generation) 4G LTE with 16GB Memory Cell Phone (Unlocked) - Black",
+        "popularity": 21286,
+        "price": 199.99
+      },
+      "highlights": [],
+      "match_score": 33488996
+    },
+    {
+      "document": {
+        "brand": "AT&T GoPhone",
+        "categories": [
+          "Cell Phones",
+          "Prepaid Phones",
+          "All Prepaid Phones"
+        ],
+        "description": "Call friends and family with this AT&T LG flip phone. It has a 2.2-inch screen that's bright and easy to read and a 1.3MP camera for taking photos and videos. This smartphone comes with enhanced audio mode to help those with hearing difficulties. Have your messages read out loud with the text-to-speech function on this AT&T LG flip phone.",
+        "id": "3",
+        "image": "https://cdn-demo.algolia.com/bestbuy-0118/5444000_sb.jpg",
+        "name": "AT&T GoPhone - LG B470 Prepaid Cell Phone - Black",
+        "popularity": 21279,
+        "price": 24.99
+      },
+      "highlights": [],
+      "match_score": 33488996
+    },
+    {
+      "document": {
+        "brand": "Boost Mobile",
+        "categories": [
+          "Cell Phones",
+          "Prepaid Phones",
+          "All Prepaid Phones"
+        ],
+        "description": "LG K3 with 8GB Memory Prepaid Cell Phone for Boost Mobile: Call, text and contact your friends and family with the LG E0 smartphone. The 8GB of storage ensures you always have somewhere to put your photos and documents, and Bluetooth connectivity allows easy file sharing. Android 6 gives you access to a wide range of apps so that you can customize your LG E0 smartphone to your specifications.",
+        "id": "44",
+        "image": "https://cdn-demo.algolia.com/bestbuy-0118/5020200_sb.jpg",
+        "name": "Boost Mobile - LG K3 with 8GB Memory Prepaid Cell Phone - Black",
+        "popularity": 21224,
+        "price": 49.99
+      },
+      "highlights": [],
+      "match_score": 33488996
+    },
+    {
+      "document": {
+        "brand": "BLU",
+        "categories": [
+          "Cell Phones",
+          "Unlocked Cell Phones",
+          "All Unlocked Cell Phones"
+        ],
+        "description": "Find a plan. Choose a phone. Choose life. The BLU LIFE XL has plenty of internal memory and lots of RAM combined with a powerful processor to deliver peak performance throughout the day. A 5.5-inch high-definition display delivers clear images, and a massive 13-megapixel camera ensures the BLU LIFE XL will be a part of your day-to-day life.",
+        "id": "2",
+        "image": "https://cdn-demo.algolia.com/bestbuy-0118/4913700_sb.jpg",
+        "name": "BLU - Life XL with 8GB Memory Cell Phone (Unlocked) - Black",
+        "popularity": 21220,
+        "price": 129.99
+      },
+      "highlights": [],
+      "match_score": 33488996
+    },
+    {
+      "document": {
+        "brand": "Samsung",
+        "categories": [
+          "Cell Phones",
+          "All Cell Phones with Plans"
+        ],
+        "description": "Combine incredible water resistance with a great screen and a powerful processor, and you get the Samsung Galaxy S7. It's built to withstand dunks in water for up to 30 minutes, and then you can wipe it off and get playing with a 5.1-inch touchscreen. The Samsung Galaxy S7 enjoys a quad-core processor for ultra-fast responsiveness.",
+        "id": "42",
+        "image": "https://cdn-demo.algolia.com/bestbuy-0118/4893100_sb.jpg",
+        "name": "Samsung - Galaxy S7 32GB - Black Onyx (Verizon)",
+        "popularity": 21218,
+        "price": 679.99
+      },
+      "highlights": [],
+      "match_score": 33488996
+    }
+  ],
+  "page": 1,
+  "search_time_ms": 5
+}

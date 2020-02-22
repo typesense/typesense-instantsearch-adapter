@@ -1,0 +1,15 @@
+{
+  "indexName": "products",
+  "params": {
+    "query": "appl",
+    "page": 0,
+    "maxValuesPerFacet": 10,
+    "highlightPreTag": "__ais-highlight__",
+    "highlightPostTag": "__/ais-highlight__",
+    "facets": [
+      "brand",
+      "categories"
+    ],
+    "tagFilters": ""
+  }
+}

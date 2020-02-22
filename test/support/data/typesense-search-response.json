@@ -1,0 +1,208 @@
+{
+  "facet_counts": [{
+    "counts": [{"count": 471, "value": "Cell Phones"}, {
+      "count": 367,
+      "value": "Cell Phone Accessories"
+    }, {"count": 159, "value": "Cell Phone Cases & Clips"}, {
+      "count": 43,
+      "value": "iPhone Accessories"
+    }, {"count": 33, "value": "All Cell Phones with Plans"}, {
+      "count": 33,
+      "value": "Unlocked Cell Phones"
+    }, {"count": 33, "value": "All Unlocked Cell Phones"}, {
+      "count": 32,
+      "value": "iPhone Cases & Clips"
+    }, {"count": 25, "value": "All Prepaid Phones"}, {"count": 25, "value": "Prepaid Phones"}],
+    "field_name": "categories"
+  }, {
+    "counts": [{"count": 38, "value": "Incipio"}, {"count": 37, "value": "mophie"}, {
+      "count": 35,
+      "value": "Modal"
+    }, {"count": 30, "value": "Apple"}, {"count": 29, "value": "Nomad"}, {
+      "count": 26,
+      "value": "Samsung"
+    }, {"count": 21, "value": "Motorola"}, {"count": 14, "value": "ZAGG"}, {
+      "count": 14,
+      "value": "Boost Mobile"
+    }, {"count": 13, "value": "Spigen"}], "field_name": "brand"
+  }],
+  "found": 471,
+  "hits": [{
+    "document": {
+      "brand": "Verizon Wireless Prepaid",
+      "categories": ["Cell Phones", "Prepaid Phones", "All Prepaid Phones"],
+      "description": "Stay in touch with loved ones with this Verizon Wireless Prepaid Samsung Gusto 3 SMB311VZPP cell phone that enables calling and text messaging and features 3G speed for Web access. A Bluetooth 2.1 + EDR interface allows pairing with select devices.",
+      "id": "15",
+      "image": "https://cdn-demo.algolia.com/bestbuy-0118/5358001_sb.jpg",
+      "name": "Verizon Wireless Prepaid - Samsung Gusto 3 No-Contract Cell Phone - Dark Blue",
+      "popularity": 21040,
+      "price": 19.99
+    },
+    "highlights": [{
+      "field": "name",
+      "snippet": "Verizon Wireless Prepaid - Samsung Gusto 3 <mark>No-Contract</mark> Cell Phone - Dark Blue"
+    }],
+    "match_match_scorescore": 33488996
+  }, {
+    "document": {
+      "brand": "Samsung",
+      "categories": ["Cell Phones", "Unlocked Cell Phones", "All Unlocked Cell Phones"],
+      "description": "Stay ahead of everyone with the Samsung Galaxy Note 4. Talk and browse for up to 20 hours thanks to the lithium-ion battery, and then rapidly charge it thanks to the Quick Charge 2.0 support. A massive 5.7-inch AMOLED screen on this Samsung Galaxy Note 4 means excellent resolutions and outstanding images.",
+      "id": "233",
+      "image": "https://cdn-demo.algolia.com/bestbuy-0118/5315200_sb.jpg",
+      "name": "Samsung - Galaxy Note 4 4G with 32GB Memory Cell Phone Unlocked - Frost white",
+      "popularity": 17128,
+      "price": 499.99
+    },
+    "highlights": [{
+      "field": "name",
+      "snippet": "Samsung - Galaxy <mark>Note</mark> 4 4G with 32GB Memory Cell Phone Unlocked - Frost white"
+    }, {
+      "field": "description",
+      "snippet": "everyone with the Samsung Galaxy <mark>Note</mark> 4. Talk and browse"
+    }],
+    "match_score": 33488996
+  }, {
+    "document": {
+      "brand": "Samsung",
+      "categories": ["Cell Phones", "Unlocked Cell Phones", "All Unlocked Cell Phones"],
+      "description": "Stay updated with the latest news, gossip and thoughts from your friends, families and co-workers with the Samsung Galaxy Note 4. Gorilla Glass 4 delivers outstanding screen protection to reduce the risk of scratches and breakages, while a powerful quad-core processor pulls data up quickly. Outstanding images are assured with the 5.7-inch AMOLED screen on this Samsung Galaxy Note 4.",
+      "id": "265",
+      "image": "https://cdn-demo.algolia.com/bestbuy-0118/5315001_sb.jpg",
+      "name": "Samsung - Galaxy Note 4 4G with 32GB Memory Cell Phone Unlocked - Charcoal black",
+      "popularity": 16072,
+      "price": 499.99
+    },
+    "highlights": [{
+      "field": "name",
+      "snippet": "Samsung - Galaxy <mark>Note</mark> 4 4G with 32GB Memory Cell Phone Unlocked - Charcoal black"
+    }, {
+      "field": "description",
+      "snippet": "co-workers with the Samsung Galaxy <mark>Note</mark> 4. Gorilla Glass 4"
+    }],
+    "match_score": 33488996
+  }, {
+    "document": {
+      "brand": "NET10",
+      "categories": ["Cell Phones", "Prepaid Phones", "All Prepaid Phones"],
+      "description": "Experience fast, reliable connections on the go with this mobile phone that features 3G speed and Wi-Fi connectivity for quick access to e-mail and Web browsing. The 3.2\" HVGA touch screen allows simple navigation of the phone's functions.",
+      "id": "344",
+      "image": "https://cdn-demo.algolia.com/bestbuy-0118/3654411_sb.jpg",
+      "name": "NET10 - LG Optimus Q No-Contract Mobile Phone - Black",
+      "popularity": 13908,
+      "price": 149.99
+    },
+    "highlights": [{
+      "field": "name",
+      "snippet": "NET10 - LG Optimus Q <mark>No-Contract</mark> Mobile Phone - Black"
+    }],
+    "match_score": 33488996
+  }, {
+    "document": {
+      "brand": "Nomad",
+      "categories": ["Cell Phones", "Cell Phone Accessories", "iPhone Accessories", "iPhone Cases & Clips", "iPhone 7 Plus Cases"],
+      "description": "Encase your iPhone in this Nomad leather folio case, and protect your phone while giving it a luxe look. Extra-wide openings let you connect various Apple lightning cables, and 360-degree protection defends all angles. This Nomad leather folio case is constructed from real leather for long-wearing sophistication no matter what your plans are.",
+      "id": "635",
+      "image": "https://cdn-demo.algolia.com/bestbuy-0118/5578879_sb.jpg",
+      "name": "Nomad - Leather Folio Case for Apple® iPhone® 7 Plus - Brown",
+      "popularity": 8421,
+      "price": 49.99
+    },
+    "highlights": [{
+      "field": "name",
+      "snippet": "<mark>Nomad</mark> - Leather Folio Case for Apple® iPhone® 7 Plus - Brown"
+    }, {
+      "field": "description",
+      "snippet": "Encase your iPhone in this <mark>Nomad</mark> leather folio case, and"
+    }],
+    "match_score": 33488996
+  }, {
+    "document": {
+      "brand": "AT&T",
+      "categories": ["Cell Phones", "Cell Phone Accessories", "Mobile Hotspots"],
+      "description": "This AT&T Velocity Wi-Fi hotspot allows you to simultaneously connect up to 10 devices to the Internet at 4G LTE speeds. The intuitive touch screen makes navigation and changing settings simple.",
+      "id": "662",
+      "image": "https://cdn-demo.algolia.com/bestbuy-0118/4800300_rb.jpg",
+      "name": "AT&T - Velocity 4G LTE Wi-Fi No-Contract Hotspot - Black",
+      "popularity": 8327,
+      "price": 59.99
+    },
+    "highlights": [{
+      "field": "name",
+      "snippet": "AT&T - Velocity 4G LTE Wi-Fi <mark>No-Contract</mark> Hotspot - Black"
+    }],
+    "match_score": 33488996
+  }, {
+    "document": {
+      "brand": "Nomad",
+      "categories": ["Cell Phones", "Cell Phone Accessories"],
+      "description": "Upgrade your standard Lightning cable to this ultra-rugged nylon braid Lightning cable. The reinforced housing, Kevlar inner cord wrap and PVC jacket mean it can withstand a variety of scenarios, whether it's travelling with you to the furthest-flung reaches of the world or you simply place this ultra-rugged nylon braid Lightning cable on your desk.",
+      "id": "686",
+      "image": "https://cdn-demo.algolia.com/bestbuy-0118/5152006_sb.jpg",
+      "name": "Nomad - 4.9' Lightning USB Charging Cable",
+      "popularity": 8252,
+      "price": 29.99
+    },
+    "highlights": [{"field": "name", "snippet": "<mark>Nomad</mark> - 4.9' Lightning USB Charging Cable"}],
+    "match_score": 33488996
+  }, {
+    "document": {
+      "brand": "Nomad",
+      "categories": ["Cell Phones", "Cell Phone Accessories", "Cell Phone Cases & Clips"],
+      "description": "Carry your cash and your phone all in one spot with this Nomad leather folio case. Made with real leather, this case lets you store cash and credits cards while keeping your iPhone safe from drops and dings. This Nomad leather folio case fits your phone snugly, adding protection without adding bulk.",
+      "id": "699",
+      "image": "https://cdn-demo.algolia.com/bestbuy-0118/5578883_sb.jpg",
+      "name": "Nomad - Folio Wallet Case for Apple® iPhone® 7 - Brown",
+      "popularity": 8210,
+      "price": 49.99
+    },
+    "highlights": [{
+      "field": "name",
+      "snippet": "<mark>Nomad</mark> - Folio Wallet Case for Apple® iPhone® 7 - Brown"
+    }, {
+      "field": "description",
+      "snippet": "in one spot with this <mark>Nomad</mark> leather folio case. Made"
+    }],
+    "match_score": 33488996
+  }, {
+    "document": {
+      "brand": "Nomad",
+      "categories": ["Cell Phones", "Cell Phone Accessories", "Smartwatches & Accessories", "Smartwatch Accessories", "Smartwatch Bands"],
+      "description": "Strap on your 42mm Apple Watch with this Nomad brown leather band. The Horween leather weathers over time to develop a lovely patina, and the clasp ensures a custom fit.",
+      "id": "755",
+      "image": "https://cdn-demo.algolia.com/bestbuy-0118/5613422_rb.jpg",
+      "name": "Nomad - Leather Watch Strap for Apple Watch 42mm - Brown with silver lugs",
+      "popularity": 8043,
+      "price": 59.99
+    },
+    "highlights": [{
+      "field": "name",
+      "snippet": "<mark>Nomad</mark> - Leather Watch Strap for Apple Watch 42mm - Brown with silver lugs"
+    }, {
+      "field": "description",
+      "snippet": "Strap on your 42mm Apple Watch with this <mark>Nomad</mark> brown leather band. The Horween leather weathers over time to develop a lovely patina, and the clasp ensures a custom fit."
+    }],
+    "match_score": 33488996
+  }, {
+    "document": {
+      "brand": "Nomad",
+      "categories": ["Cell Phones", "Cell Phone Accessories", "Smartwatches & Accessories", "Smartwatch Accessories", "Smartwatch Bands"],
+      "description": "Keep your 42mm Apple Watch in place with this Nomad band. The brown leather provides a comfortable fit on your wrist, and the custom hardware holds up to daily wear.",
+      "id": "798",
+      "image": "https://cdn-demo.algolia.com/bestbuy-0118/5613426_rb.jpg",
+      "name": "Nomad - Leather Watch Strap for Apple Watch 42mm - Brown with black lugs",
+      "popularity": 7906,
+      "price": 59.99
+    },
+    "highlights": [{
+      "field": "name",
+      "snippet": "<mark>Nomad</mark> - Leather Watch Strap for Apple Watch 42mm - Brown with black lugs"
+    }, {
+      "field": "description",
+      "snippet": "Keep your 42mm Apple Watch in place with this <mark>Nomad</mark> band. The brown leather provides a comfortable fit on your wrist, and the custom hardware holds up to daily wear."
+    }],
+    "match_score": 33488996
+  }],
+  "page": 1,
+  "search_time_ms": 1
+}
