@@ -1,5 +1,5 @@
 // This script can also be executed from the command line directly:
-// $ node createAndPopulateTypesenseIndex.js
+// $ node populateTypesenseIndex.js
 
 const Typesense = require("typesense");
 const promiseRetry = require("promise-retry");

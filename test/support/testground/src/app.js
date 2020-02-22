@@ -6,10 +6,11 @@ import {
   currentRefinements,
   refinementList,
   hits,
+  infiniteHits,
   stats,
   sortBy,
   hierarchicalMenu,
-  // menu,
+  menu,
   numericMenu,
   // rangeInput,
   // rangeSlider,
@@ -74,27 +75,27 @@ search.addWidgets([
     showMore: true,
     sortBy: ["name:asc", "count:desc"]
   }),
-  refinementList({
-    container: "#categories-list",
-    attribute: "categories",
-    searchable: true,
-    showMore: true,
-    sortBy: ["name:asc", "count:desc"]
+  // refinementList({
+  //   container: "#categories-list",
+  //   attribute: "categories",
+  //   searchable: true,
+  //   showMore: true,
+  //   sortBy: ["name:asc", "count:desc"]
+  // }),
+  menu({
+    container: "#categories-menu",
+    attribute: "categories"
   }),
-  // menu({
-  //   container: '#categories-menu',
-  //   attribute: 'categories',
-  // }),
-  // hierarchicalMenu({
-  //   // TODO: Document how to setup the index in Typesense to use the hierarchical menu
-  //   container: "#categories-hierarchical-menu",
-  //   attributes: [
-  //     "categories.lvl0",
-  //     "categories.lvl1",
-  //     "categories.lvl2",
-  //     "categories.lvl3"
-  //   ]
-  // }),
+  hierarchicalMenu({
+    // TODO: Document how to setup the index in Typesense to use the hierarchical menu
+    container: "#categories-hierarchical-menu",
+    attributes: [
+      "categories.lvl0",
+      "categories.lvl1",
+      "categories.lvl2",
+      "categories.lvl3"
+    ]
+  }),
   numericMenu({
     container: "#price-menu",
     attribute: "price",
@@ -137,6 +138,19 @@ search.addWidgets([
       `
     }
   }),
+  infiniteHits({
+    container: "#infinite-hits",
+    templates: {
+      item: `
+        <div>
+          <div class="infinite-hit-name">
+            {{#helpers.highlight}}{ "attribute": "name" }{{/helpers.highlight}}
+          </div>
+          <div class="infinite-hit-price">\${{price}}</div>
+        </div>
+      `
+    }
+  }),
   hitsPerPage({
     container: "#hits-per-page",
     items: [
@@ -175,10 +189,14 @@ search.start();
 
 // Helper for the render function
 const renderIndexListItem = ({ indexId, hits }) => `
-  <ol>
+  <ol class="autocomplete-list">
     ${hits
       .map(
-        hit => `<li>${instantsearch.highlight({ attribute: "name", hit })}</li>`
+        hit =>
+          `<li class="autocomplete-list-item">${instantsearch.highlight({
+            attribute: "name",
+            hit
+          })}</li>`
       )
       .join("")}
   </ol>
