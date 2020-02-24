@@ -100,8 +100,7 @@ export class SearchRequestAdapter {
 
     if (params.facetQuery) {
       typesenseSearchParams.facet_query = `${params.facetName}:${params.facetQuery}`;
-      typesenseSearchParams.max_hits = 1;
-      typesenseSearchParams.per_page = 1;
+      typesenseSearchParams.max_hits = 0;
     }
 
     if (params.hitsPerPage) {

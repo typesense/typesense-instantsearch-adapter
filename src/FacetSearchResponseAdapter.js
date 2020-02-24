@@ -1,5 +1,7 @@
 "use strict";
 
+import { utils } from "./support/utils";
+
 export class FacetSearchResponseAdapter {
   constructor(typesenseResponse, instantsearchRequest) {
     this.typesenseResponse = typesenseResponse;
@@ -14,21 +16,11 @@ export class FacetSearchResponseAdapter {
 
     adaptedResult = facet.counts.map(facetCount => ({
       value: facetCount.value,
-      highlighted: facetCount.value, // TODO: Fix highlighted facet values
+      highlighted: this._adaptHighlightTag(facetCount.highlighted),
       count: facetCount.count
     }));
 
     return adaptedResult;
-  }
-
-  _adaptNumberOfPages() {
-    const result =
-      this.typesenseResponse.found / this.typesenseResponse.hits.length;
-    if (Number.isFinite(result)) {
-      return Math.ceil(result);
-    } else {
-      return 1;
-    }
   }
 
   adapt() {
@@ -40,3 +32,5 @@ export class FacetSearchResponseAdapter {
     return adaptedResult;
   }
 }
+
+Object.assign(FacetSearchResponseAdapter.prototype, utils);

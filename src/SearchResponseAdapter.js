@@ -1,5 +1,7 @@
 "use strict";
 
+import { utils } from "./support/utils";
+
 export class SearchResponseAdapter {
   constructor(typesenseResponse, instantsearchRequest) {
     this.typesenseResponse = typesenseResponse;
@@ -19,18 +21,6 @@ export class SearchResponseAdapter {
       return adaptedHit;
     });
     return adaptedResult;
-  }
-
-  _adaptHighlightTag(value) {
-    return value
-      .replace(
-        new RegExp("<mark>", "g"),
-        this.instantsearchRequest.params.highlightPreTag
-      )
-      .replace(
-        new RegExp("</mark>", "g"),
-        this.instantsearchRequest.params.highlightPostTag
-      );
   }
 
   _adaptHighlightResult(typesenseHit) {
@@ -91,16 +81,6 @@ export class SearchResponseAdapter {
     return adaptedResult;
   }
 
-  _adaptNumberOfPages() {
-    const result =
-      this.typesenseResponse.found / this.typesenseResponse.hits.length;
-    if (Number.isFinite(result)) {
-      return Math.ceil(result);
-    } else {
-      return 1;
-    }
-  }
-
   adapt() {
     const adaptedResult = {
       hits: this._adaptHits(this.typesenseResponse.hits),
@@ -114,3 +94,5 @@ export class SearchResponseAdapter {
     return adaptedResult;
   }
 }
+
+Object.assign(SearchResponseAdapter.prototype, utils);
