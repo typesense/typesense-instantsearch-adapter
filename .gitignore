@@ -1,3 +1,4 @@
 .idea
 node_modules
 .typesense-server-data
+yarn-error.log

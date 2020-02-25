@@ -127,6 +127,7 @@ search.addWidgets([
     templates: {
       item: `
         <div>
+          <img src="{{image}}" align="left" alt="{{name}}" />
           <div class="hit-name">
             {{#helpers.highlight}}{ "attribute": "name" }{{/helpers.highlight}}
           </div>

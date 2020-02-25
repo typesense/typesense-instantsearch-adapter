@@ -1,32 +1,5 @@
 describe("Instant Search Widgets", () => {
-  beforeAll(async () => {
-    // Log page errors
-    page
-      .on("console", message => {
-        const messageType = message
-          .type()
-          .substr(0, 3)
-          .toUpperCase();
-
-        switch (messageType) {
-          case "ERR":
-            console.error(`${messageType} ${message.text()}`);
-            break;
-          default:
-        }
-      })
-      .on("pageerror", ({ message }) => console.error(message))
-      .on("response", response => {
-        if (![200, 304].includes(response.status())) {
-          console.error(`${response.status()} ${response.url()}`);
-        }
-      })
-      .on("requestfailed", request =>
-        console.error(`${request.failure().errorText} ${request.url()}`)
-      );
-
-    return require("./support/populateTypesenseIndex");
-  }, 60 * 1000);
+  beforeAll(require("./support/beforeAll"), 60 * 1000);
 
   beforeEach(async () => {
     return page.goto("http://localhost:3000");
@@ -58,7 +31,7 @@ describe("Instant Search Widgets", () => {
 
   describe("stats", () => {
     it("renders", async () => {
-      return expect(page).toMatchElement("#stats .ais-Stats", {
+      return expect(page).toMatchElement("#stats", {
         text: "3,291 results found"
       });
     });
@@ -95,7 +68,7 @@ describe("Instant Search Widgets", () => {
   describe("menu", () => {
     it("renders", async () => {
       return expect(page).toMatchElement("#categories-menu", {
-        text: "AT&T Hotspots"
+        text: "Data Cables"
       });
     });
   });
