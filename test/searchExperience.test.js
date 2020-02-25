@@ -168,17 +168,17 @@ describe("Search Experience", () => {
           text: "430 results found"
         });
         await expect(page).toMatchElement("#hits", {
-          text: "Motorola - Refurbished MOTO G plus"
+          text: "mophie - powerstation 8x Portable Charger"
         });
         await expect(page).toMatchElement("#infinite-hits", {
-          text: "Verizon - Jetpack 4G"
+          text: "Tumi - Portable Charger"
         });
         await expect(page).toClick("#pagination a", { text: "2" });
         await expect(page).toMatchElement("#hits", {
-          text: "Dell - Power Companion Portable Charger"
+          text: "Cobra - JumPack Portable Charger"
         });
         await expect(page).toMatchElement("#infinite-hits", {
-          text: "mophie - powerstation 5x Portable Charger"
+          text: "myCharge - HUBMAX"
         });
       });
     });
