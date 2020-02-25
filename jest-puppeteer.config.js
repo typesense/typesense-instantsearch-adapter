@@ -1,7 +1,6 @@
 module.exports = {
   launch: {
     // dumpio: true,
-    // slowMo: 500
     headless: process.env.HEADLESS === "true",
     defaultViewport: null
   },
