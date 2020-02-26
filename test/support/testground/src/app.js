@@ -87,7 +87,6 @@ search.addWidgets([
     attribute: "categories"
   }),
   hierarchicalMenu({
-    // TODO: Document how to setup the index in Typesense to use the hierarchical menu
     container: "#categories-hierarchical-menu",
     attributes: [
       "categories.lvl0",
@@ -118,7 +117,7 @@ search.addWidgets([
     container: "#sort-by",
     items: [
       { label: "Default", value: "products" },
-      { label: "Price (asc)", value: "products/sort/price:asc" }, // TODO Document the indexNaming convention in sortBy, we need to do this custom naming format, since Algolia uses different indices for sorts
+      { label: "Price (asc)", value: "products/sort/price:asc" },
       { label: "Price (desc)", value: "products/sort/price:desc" }
     ]
   }),
