@@ -80,8 +80,8 @@ module.exports = (async () => {
         facet: true
       },
       {
-        name: "reviews_count",
-        type: "integer",
+        name: "rating",
+        type: "int32",
         facet: true
       }
     ],
@@ -114,11 +114,8 @@ module.exports = (async () => {
 
   return Promise.all(
     products.map(product => {
-      product.free_shipping =
-        Math.floor(Math.random() * Math.floor(10)) % 2 === 1;
-
-      product.reviews_count = Math.floor(Math.random() * Math.floor(1000));
-
+      product.free_shipping = product.name.length % 2 === 1; // We need this to be deterministic for tests
+      product.rating = (product.description.length % 5) + 1; // We need this to be deterministic for tests
       product.categories.forEach((category, index) => {
         product[`categories.lvl${index}`] = product.categories
           .slice(0, index + 1)

@@ -39,16 +39,20 @@ export class SearchRequestAdapter {
     // Need to transform this:
     // intermediateFacetFilters = {
     //     "facet1": ["value1", "value2"],
-    //     "facet2": ["value1", "value2"]
+    //     "facet2": ["value1"]
     // }
     //
     // Into this:
-    // facet1: [value1,value2] && facet2: [value1,value2]
+    // facet1:[value1,value2] && facet2:value1
 
     adaptedResult = Object.entries(intermediateFacetFilters)
-      .map(([facet, values]) =>
-        "".concat(facet, ": [").concat(values.join(","), "]")
-      )
+      .map(([facet, values]) => {
+        if (values.length === 1) {
+          return `${facet}:${values[0]}`;
+        } else {
+          return `${facet}:[${values.join(",")}]`;
+        }
+      })
       .join(" && ");
 
     return adaptedResult;

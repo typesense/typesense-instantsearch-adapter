@@ -12,8 +12,10 @@ import {
   hierarchicalMenu,
   menu,
   numericMenu,
-  // rangeInput,
-  // rangeSlider,
+  rangeInput,
+  rangeSlider,
+  ratingMenu,
+  toggleRefinement,
   hitsPerPage,
   clearRefinements,
   breadcrumb
@@ -105,14 +107,25 @@ search.addWidgets([
       { label: "More than 1000$", start: 1000 }
     ]
   }),
-  // rangeInput({
-  //   container: '#price-range-input', // TODO: Add support once server supports faceting by IntegerFields
-  //   attribute: 'price',
-  // }),
-  // rangeSlider({
-  //   container: '#price-range-slider', // TODO: Add support once server supports faceting by IntegerFields
-  //   attribute: 'price',
-  // }),
+  toggleRefinement({
+    container: "#toggle-refinement",
+    attribute: "free_shipping",
+    templates: {
+      labelText: "Free shipping"
+    }
+  }),
+  rangeInput({
+    container: "#price-range-input", // TODO: Add support once server supports faceting by IntegerFields
+    attribute: "price"
+  }),
+  rangeSlider({
+    container: "#price-range-slider", // TODO: Add support once server supports faceting by IntegerFields
+    attribute: "price"
+  }),
+  ratingMenu({
+    container: "#rating-menu",
+    attribute: "rating"
+  }),
   sortBy({
     container: "#sort-by",
     items: [
@@ -134,6 +147,8 @@ search.addWidgets([
             {{#helpers.highlight}}{ "attribute": "description" }{{/helpers.highlight}}
           </div>
           <div class="hit-price">\${{price}}</div>
+          <div class="hit-rating">Rating: {{rating}}</div>
+          <div class="hit-free-shipping">Free Shipping: {{free_shipping}}</div>
         </div>
       `
     }
