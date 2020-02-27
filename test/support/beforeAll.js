@@ -20,9 +20,12 @@ module.exports = async () => {
         console.error(`${response.status()} ${response.url()}`);
       }
     })
-    .on("requestfailed", request =>
-      console.error(`${request.failure().errorText} ${request.url()}`)
-    );
+    .on("requestfailed", request => {
+      const errorText = request.failure().errorText;
+      if (errorText !== "net::ERR_ABORTED") {
+        console.error(`${request.failure().errorText} ${request.url()}`);
+      }
+    });
 
   return require("./populateTypesenseIndex");
 };
