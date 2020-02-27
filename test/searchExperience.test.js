@@ -3,7 +3,7 @@ describe("Search Experience", () => {
 
   beforeEach(async () => {
     return page.goto("http://localhost:3000");
-  });
+  }, 10 * 1000);
 
   describe("when searching for a term", () => {
     beforeEach(async () => {
@@ -16,7 +16,7 @@ describe("Search Experience", () => {
         text: "Cell Phone Accessories"
       });
       await expect(page).toMatchElement("#stats", {
-        text: "430 results found"
+        text: "433 results found"
       });
       await expect(page).toMatchElement("#hits .hit-name:first-of-type", {
         text: "Charger"
@@ -31,129 +31,161 @@ describe("Search Experience", () => {
     });
 
     describe("applying filters", () => {
-      it("renders the results, facets and pagination", async () => {
-        await expect(page).toClick("#brand-list button", { text: "Show more" });
-        await expect(page).toClick(
-          "#brand-list input[type=checkbox][value=Samsung]"
-        );
-        await expect(page).toMatchElement("#stats", {
-          text: "430 results found"
-        });
-        await expect(page).toMatchElement("#hits", {
-          text: "Fast Charge Wireless Charger"
-        });
-        await expect(page).toMatchElement("#infinite-hits", {
-          text: "Fast Charge Wireless Charger"
-        });
-        await expect(page).toMatchElement("#current-refinements", {
-          text: "Brand:Samsung"
-        });
+      describe("brand filter", () => {
+        it("renders the results, facets and pagination", async () => {
+          await expect(page).toClick("#brand-list button", {
+            text: "Show more"
+          });
+          await expect(page).toClick(
+            "#brand-list input[type=checkbox][value=Samsung]"
+          );
+          await expect(page).toMatchElement("#stats", {
+            text: "433 results found"
+          });
+          await expect(page).toMatchElement("#hits", {
+            text: "Fast Charge Wireless Charger"
+          });
+          await expect(page).toMatchElement("#infinite-hits", {
+            text: "Fast Charge Wireless Charger"
+          });
+          await expect(page).toMatchElement("#current-refinements", {
+            text: "Brand:Samsung"
+          });
 
-        // Pagination
-        await page.waitForSelector("#pagination a.ais-Pagination-link");
-        let length = (await page.$$("#pagination a.ais-Pagination-link"))
-          .length;
-        expect(length).toEqual(4 + 2);
+          // Pagination
+          await page.waitForSelector("#pagination a.ais-Pagination-link");
+          const length = (await page.$$("#pagination a.ais-Pagination-link"))
+            .length;
+          expect(length).toEqual(4 + 2);
+        });
+      });
 
-        await expect(page).toFill("#brand-list input[type=search]", "Apple");
-        await expect(page).toMatchElement("#brand-list", {
-          text: "No results"
+      describe("searching for a brand facet value", () => {
+        it("renders the facet search results", async () => {
+          await expect(page).toFill("#brand-list input[type=search]", "Apple");
+          await expect(page).toMatchElement("#brand-list", {
+            text: "No results"
+          });
+          await expect(page).toFill("#brand-list input[type=search]", "ottie");
+          await expect(page).toMatchElement("#brand-list", {
+            text: "iOttie"
+          });
         });
+      });
 
-        // Facet Search
-        await expect(page).toFill("#brand-list input[type=search]", "Apple");
-        await expect(page).toMatchElement("#brand-list", {
-          text: "No results"
-        });
-        await expect(page).toFill("#brand-list input[type=search]", "ottie");
-        await expect(page).toMatchElement("#brand-list", {
-          text: "iOttie"
-        });
+      describe("using the menu widget", () => {
+        it("renders the filtered results and updates the breadcrumb", async () => {
+          await expect(page).toMatchElement("#categories-menu a", {
+            text: "Car & Travel Accessories"
+          });
+          await expect(page).toClick("#categories-menu a span", {
+            text: "Car & Travel Accessories"
+          });
+          await expect(page).toMatchElement("#stats", {
+            text: "16 results found"
+          });
+          await expect(page).toMatchElement("#hits", {
+            text: "Samsung - Adaptive Fast Charging Vehicle Charger"
+          });
+          await expect(page).toMatchElement("#infinite-hits", {
+            text: "Belkin - MIXIT Metallic Car Charger - Black"
+          });
+          await expect(page).toMatchElement("#current-refinements", {
+            text: "Categories:Car & Travel Accessories"
+          });
 
-        // Menu widget
-        await expect(page).toClick("#categories-menu a", {
-          text: "Smartwatch Accessories"
+          // Breadcrumb
+          await expect(page).toMatchElement("#breadcrumb", {
+            text: "Home>Car & Travel Accessories"
+          });
         });
-        await expect(page).toMatchElement("#stats", {
-          text: "5 results found"
-        });
-        await expect(page).toMatchElement("#hits", {
-          text: "Gear S2 Wireless Charger"
-        });
-        await expect(page).toMatchElement("#infinite-hits", {
-          text: "Gear S3 Wireless Charging Doc"
-        });
-        await expect(page).toMatchElement("#current-refinements", {
-          text: "Categories:Smartwatch Accessories"
-        });
+      });
 
-        // Breadcrumb
-        await expect(page).toMatchElement("#breadcrumb", {
-          text: "Home>Smartwatch Accessories"
-        });
+      describe("when the refinements are cleared", () => {
+        it("renders the unrefined results", async () => {
+          await expect(page).toMatchElement("#categories-menu a", {
+            text: "Car & Travel Accessories"
+          });
+          await expect(page).toClick("#categories-menu a span", {
+            text: "Car & Travel Accessories"
+          });
+          await expect(page).toMatchElement("#stats", {
+            text: "16 results found"
+          });
 
-        // clearRefinements
-        await expect(page).toClick("#clear-refinements button", {
-          text: "Clear refinements"
+          // clearRefinements
+          await expect(page).toClick("#clear-refinements button", {
+            text: "Clear refinements"
+          });
+          await expect(page).toMatchElement("#stats", {
+            text: "433 results found"
+          });
         });
-        await expect(page).toMatchElement("#stats", {
-          text: "430 results found"
-        });
+      });
 
-        // hierarchicalMenu
-        await expect(page).toClick("#searchbox input[type=search]", {
-          clickCount: 3
+      describe("using the hierarchicalMenu", () => {
+        it("renders the filtered results", async () => {
+          // hierarchicalMenu
+          await expect(page).toClick("#searchbox input[type=search]", {
+            clickCount: 3
+          });
+          await (await page.$("#searchbox input[type=search]")).press(
+            "Backspace"
+          );
+          await expect(page).toClick("#categories-hierarchical-menu a", {
+            text: "Cell Phones"
+          });
+          await expect(page).toClick("#categories-hierarchical-menu a", {
+            text: "iPhone"
+          });
+          await expect(page).toMatchElement("#categories-hierarchical-menu a", {
+            text: "iPhone SE"
+          });
+          await expect(page).toMatchElement("#stats", {
+            text: "35 results found"
+          });
+          await expect(page).toMatchElement("#hits", {
+            text: "Apple - iPhone SE 16GB"
+          });
+          await expect(page).toMatchElement("#infinite-hits", {
+            text: "Apple - iPhone SE 16GB - Rose Gold"
+          });
+          await page.waitForSelector("#pagination a.ais-Pagination-link");
+          const length = (await page.$$("#pagination a.ais-Pagination-link"))
+            .length;
+          expect(length).toEqual(5 + 2);
         });
-        await (await page.$("#searchbox input[type=search]")).press(
-          "Backspace"
-        );
-        await expect(page).toClick("#categories-hierarchical-menu a", {
-          text: "Cell Phones"
-        });
-        await expect(page).toClick("#categories-hierarchical-menu a", {
-          text: "iPhone"
-        });
-        await expect(page).toMatchElement("#categories-hierarchical-menu a", {
-          text: "iPhone SE"
-        });
-        await expect(page).toMatchElement("#stats", {
-          text: "35 results found"
-        });
-        await expect(page).toMatchElement("#hits", {
-          text: "Apple - iPhone SE 16GB"
-        });
-        await expect(page).toMatchElement("#infinite-hits", {
-          text: "Apple - iPhone SE 16GB - Rose Gold"
-        });
-        await page.waitForSelector("#pagination a.ais-Pagination-link");
-        length = (await page.$$("#pagination a.ais-Pagination-link")).length;
-        expect(length).toEqual(5 + 2);
+      });
 
-        // numericMenu
-        await expect(page).toClick("#price-menu span", {
-          text: "Between 500$ - 1000$"
-        }); // Apple - iPhone 6s 32GB - Space Gray
-        await expect(page).toMatchElement("#stats", {
-          text: "22 results found"
+      describe("using the numericMenu", () => {
+        it("renders the filtered results", async () => {
+          // numericMenu
+          await expect(page).toClick("#price-menu span", {
+            text: "Between 500$ - 1000$"
+          }); // Apple - iPhone 6s 32GB - Space Gray
+          await expect(page).toMatchElement("#stats", {
+            text: "4 results found"
+          });
+          await expect(page).toMatchElement("#hits", {
+            text: "Samsung - Galaxy S7 edge 4G LTE"
+          });
+          await expect(page).toMatchElement("#infinite-hits", {
+            text: "Sony - Xperia™ XZ 4G LTE with 32GB Memory Cell Phone"
+          });
+          await page.waitForSelector("#pagination a.ais-Pagination-link");
+          const length = (await page.$$("#pagination a.ais-Pagination-link"))
+            .length;
+          expect(length).toEqual(1);
         });
-        await expect(page).toMatchElement("#hits", {
-          text: "Apple - iPhone 6s 32GB - Space Gray"
-        });
-        await expect(page).toMatchElement("#infinite-hits", {
-          text: "Apple - iPhone 6s Plus 64GB"
-        });
-        await page.waitForSelector("#pagination a.ais-Pagination-link");
-        length = (await page.$$("#pagination a.ais-Pagination-link")).length;
-        expect(length).toEqual(3 + 2);
       });
     });
 
-    describe("sorting", () => {
-      it("renders the results", async () => {
+    describe("when sorting", () => {
+      it("renders the sorted results", async () => {
         // Sort Asc
         await expect(page).toSelect("#sort-by select", "Price (asc)");
         await expect(page).toMatchElement("#stats", {
-          text: "430 results found"
+          text: "433 results found"
         });
         await expect(page).toMatchElement("#hits", {
           text: "Tzumi - PocketJuice Portable Charger"
@@ -165,7 +197,7 @@ describe("Search Experience", () => {
         // Sort Desc
         await expect(page).toSelect("#sort-by select", "Price (desc)");
         await expect(page).toMatchElement("#stats", {
-          text: "430 results found"
+          text: "433 results found"
         });
         await expect(page).toMatchElement("#hits", {
           text: "mophie - powerstation 8x Portable Charger"
@@ -183,7 +215,7 @@ describe("Search Experience", () => {
       });
     });
 
-    describe("Hits per Page", () => {
+    describe("when changing the Hits per Page", () => {
       it("renders the set number of hits", async () => {
         await expect(page).toSelect(
           "#hits-per-page select",
