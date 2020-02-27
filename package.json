@@ -22,7 +22,7 @@
     "pretest": "eslint .",
     "test": "jest --maxWorkers=1",
     "build": "babel src -d lib",
-    "startTestTypesenseServer": "docker run -i -p 8108:8108 -v`pwd`/.typesense-server-data/:/data typesense/typesense:facets-25-feb-2020 --data-dir /data --api-key=xyz --search-only-api-key=abcd --listen-port 8108 --enable-cors",
+    "startTestTypesenseServer": "docker run -i -p 8108:8108 -v`pwd`/.typesense-server-data/:/data typesense/typesense:facets-26-feb-2020 --data-dir /data --api-key=xyz --search-only-api-key=abcd --listen-port 8108 --enable-cors",
     "startTestground": "yarn link ; pkill -f testground/node_modules/.bin/parcel ; cd test/support/testground && yarn link typesense-instantsearch-adapter && yarn install && yarn start",
     "indexTestData": "node test/support/populateTypesenseIndex.js"
   },

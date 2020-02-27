@@ -62,7 +62,7 @@ module.exports = (async () => {
       {
         name: "price",
         type: "float",
-        facet: false
+        facet: true
       },
       {
         name: "image",
@@ -73,12 +73,17 @@ module.exports = (async () => {
         name: "popularity",
         type: "int32",
         facet: false
+      },
+      {
+        name: "free_shipping",
+        type: "bool",
+        facet: true
+      },
+      {
+        name: "reviews_count",
+        type: "integer",
+        facet: true
       }
-      // {
-      //     'name': 'free_shipping',
-      //     'type': 'bool',
-      //     'facet': true
-      // },
     ],
     default_sorting_field: "popularity"
   };
@@ -88,7 +93,10 @@ module.exports = (async () => {
   let reindexNeeded = false;
   try {
     const collection = await typesense.collections("products").retrieve();
-    if (collection.num_documents !== products.length) {
+    if (
+      collection.num_documents !== products.length ||
+      process.env.FORCE_REINDEX === "true"
+    ) {
       reindexNeeded = true;
       await typesense.collections("products").delete();
     }
@@ -108,6 +116,9 @@ module.exports = (async () => {
     products.map(product => {
       product.free_shipping =
         Math.floor(Math.random() * Math.floor(10)) % 2 === 1;
+
+      product.reviews_count = Math.floor(Math.random() * Math.floor(1000));
+
       product.categories.forEach((category, index) => {
         product[`categories.lvl${index}`] = product.categories
           .slice(0, index + 1)
