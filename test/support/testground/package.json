@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "parcel index.html --port 3000",
+    "build:instantsearch.js": "cd node_modules/instantsearch.js && yarn && yarn run build:es",
     "build": "parcel build index.html",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix"
@@ -20,6 +21,6 @@
     "prettier": "1.19.1"
   },
   "dependencies": {
-    "instantsearch.js": "^4.2.0"
+    "instantsearch.js": "git://github.com/algolia/instantsearch.js.git#4.2.0"
   }
 }
