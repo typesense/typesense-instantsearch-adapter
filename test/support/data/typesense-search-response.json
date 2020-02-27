@@ -1,208 +1,422 @@
 {
-  "facet_counts": [{
-    "counts": [{"count": 471, "value": "Cell Phones"}, {
-      "count": 367,
-      "value": "Cell Phone Accessories"
-    }, {"count": 159, "value": "Cell Phone Cases & Clips"}, {
-      "count": 43,
-      "value": "iPhone Accessories"
-    }, {"count": 33, "value": "All Cell Phones with Plans"}, {
-      "count": 33,
-      "value": "Unlocked Cell Phones"
-    }, {"count": 33, "value": "All Unlocked Cell Phones"}, {
-      "count": 32,
-      "value": "iPhone Cases & Clips"
-    }, {"count": 25, "value": "All Prepaid Phones"}, {"count": 25, "value": "Prepaid Phones"}],
-    "field_name": "categories"
-  }, {
-    "counts": [{"count": 38, "value": "Incipio"}, {"count": 37, "value": "mophie"}, {
-      "count": 35,
-      "value": "Modal"
-    }, {"count": 30, "value": "Apple"}, {"count": 29, "value": "Nomad"}, {
-      "count": 26,
-      "value": "Samsung"
-    }, {"count": 21, "value": "Motorola"}, {"count": 14, "value": "ZAGG"}, {
-      "count": 14,
-      "value": "Boost Mobile"
-    }, {"count": 13, "value": "Spigen"}], "field_name": "brand"
-  }],
-  "found": 471,
-  "hits": [{
-    "document": {
-      "brand": "Verizon Wireless Prepaid",
-      "categories": ["Cell Phones", "Prepaid Phones", "All Prepaid Phones"],
-      "description": "Stay in touch with loved ones with this Verizon Wireless Prepaid Samsung Gusto 3 SMB311VZPP cell phone that enables calling and text messaging and features 3G speed for Web access. A Bluetooth 2.1 + EDR interface allows pairing with select devices.",
-      "id": "15",
-      "image": "https://cdn-demo.algolia.com/bestbuy-0118/5358001_sb.jpg",
-      "name": "Verizon Wireless Prepaid - Samsung Gusto 3 No-Contract Cell Phone - Dark Blue",
-      "popularity": 21040,
-      "price": 19.99
+  "facet_counts": [
+    {
+      "counts": [
+        { "count": 305, "highlighted": "Incipio", "value": "Incipio" },
+        { "count": 191, "highlighted": "OtterBox", "value": "OtterBox" },
+        { "count": 185, "highlighted": "Insignia™", "value": "Insignia™" },
+        { "count": 165, "highlighted": "Apple", "value": "Apple" },
+        { "count": 146, "highlighted": "Speck", "value": "Speck" },
+        { "count": 146, "highlighted": "Samsung", "value": "Samsung" },
+        {
+          "count": 103,
+          "highlighted": "kate spade new york",
+          "value": "kate spade new york"
+        },
+        { "count": 101, "highlighted": "mophie", "value": "mophie" },
+        { "count": 94, "highlighted": "Spigen", "value": "Spigen" },
+        { "count": 85, "highlighted": "ZAGG", "value": "ZAGG" },
+        { "count": 81, "highlighted": "Tech21", "value": "Tech21" },
+        { "count": 79, "highlighted": "Dynex™", "value": "Dynex™" },
+        { "count": 78, "highlighted": "Modal", "value": "Modal" },
+        { "count": 74, "highlighted": "Platinum", "value": "Platinum" },
+        { "count": 72, "highlighted": "LifeProof", "value": "LifeProof" },
+        { "count": 55, "highlighted": "Case-Mate", "value": "Case-Mate" },
+        { "count": 52, "highlighted": "Belkin", "value": "Belkin" },
+        {
+          "count": 48,
+          "highlighted": "Urban Armor Gear",
+          "value": "Urban Armor Gear"
+        },
+        { "count": 47, "highlighted": "BLU", "value": "BLU" },
+        { "count": 35, "highlighted": "Native Union", "value": "Native Union" }
+      ],
+      "field_name": "brand",
+      "stats": {}
     },
-    "highlights": [{
-      "field": "name",
-      "snippet": "Verizon Wireless Prepaid - Samsung Gusto 3 <mark>No-Contract</mark> Cell Phone - Dark Blue"
-    }],
-    "match_match_scorescore": 33488996
-  }, {
-    "document": {
-      "brand": "Samsung",
-      "categories": ["Cell Phones", "Unlocked Cell Phones", "All Unlocked Cell Phones"],
-      "description": "Stay ahead of everyone with the Samsung Galaxy Note 4. Talk and browse for up to 20 hours thanks to the lithium-ion battery, and then rapidly charge it thanks to the Quick Charge 2.0 support. A massive 5.7-inch AMOLED screen on this Samsung Galaxy Note 4 means excellent resolutions and outstanding images.",
-      "id": "233",
-      "image": "https://cdn-demo.algolia.com/bestbuy-0118/5315200_sb.jpg",
-      "name": "Samsung - Galaxy Note 4 4G with 32GB Memory Cell Phone Unlocked - Frost white",
-      "popularity": 17128,
-      "price": 499.99
+    {
+      "counts": [
+        { "count": 1678, "highlighted": "true", "value": "true" },
+        { "count": 1613, "highlighted": "false", "value": "false" }
+      ],
+      "field_name": "free_shipping",
+      "stats": {}
     },
-    "highlights": [{
-      "field": "name",
-      "snippet": "Samsung - Galaxy <mark>Note</mark> 4 4G with 32GB Memory Cell Phone Unlocked - Frost white"
-    }, {
-      "field": "description",
-      "snippet": "everyone with the Samsung Galaxy <mark>Note</mark> 4. Talk and browse"
-    }],
-    "match_score": 33488996
-  }, {
-    "document": {
-      "brand": "Samsung",
-      "categories": ["Cell Phones", "Unlocked Cell Phones", "All Unlocked Cell Phones"],
-      "description": "Stay updated with the latest news, gossip and thoughts from your friends, families and co-workers with the Samsung Galaxy Note 4. Gorilla Glass 4 delivers outstanding screen protection to reduce the risk of scratches and breakages, while a powerful quad-core processor pulls data up quickly. Outstanding images are assured with the 5.7-inch AMOLED screen on this Samsung Galaxy Note 4.",
-      "id": "265",
-      "image": "https://cdn-demo.algolia.com/bestbuy-0118/5315001_sb.jpg",
-      "name": "Samsung - Galaxy Note 4 4G with 32GB Memory Cell Phone Unlocked - Charcoal black",
-      "popularity": 16072,
-      "price": 499.99
+    {
+      "counts": [
+        { "count": 463, "highlighted": "39.990002", "value": "39.990002" },
+        { "count": 271, "highlighted": "19.99", "value": "19.99" },
+        { "count": 248, "highlighted": "49.990002", "value": "49.990002" },
+        { "count": 208, "highlighted": "29.99", "value": "29.99" },
+        { "count": 199, "highlighted": "34.990002", "value": "34.990002" },
+        { "count": 162, "highlighted": "24.99", "value": "24.99" },
+        { "count": 127, "highlighted": "44.990002", "value": "44.990002" },
+        { "count": 126, "highlighted": "14.99", "value": "14.99" },
+        { "count": 111, "highlighted": "59.990002", "value": "59.990002" },
+        { "count": 81, "highlighted": "99.989998", "value": "99.989998" },
+        { "count": 72, "highlighted": "79.989998", "value": "79.989998" },
+        { "count": 71, "highlighted": "9.99", "value": "9.99" },
+        { "count": 64, "highlighted": "12.99", "value": "12.99" },
+        { "count": 48, "highlighted": "89.989998", "value": "89.989998" },
+        { "count": 37, "highlighted": "17.99", "value": "17.99" },
+        { "count": 32, "highlighted": "699.98999", "value": "699.98999" },
+        { "count": 30, "highlighted": "21.99", "value": "21.99" },
+        { "count": 26, "highlighted": "69.989998", "value": "69.989998" },
+        { "count": 26, "highlighted": "129.990005", "value": "129.990005" },
+        { "count": 25, "highlighted": "39.950001", "value": "39.950001" }
+      ],
+      "field_name": "price",
+      "stats": {
+        "avg": 79.6379997253418,
+        "max": 699.989990234375,
+        "min": 9.989999771118164,
+        "sum": 1592.759994506836
+      }
     },
-    "highlights": [{
-      "field": "name",
-      "snippet": "Samsung - Galaxy <mark>Note</mark> 4 4G with 32GB Memory Cell Phone Unlocked - Charcoal black"
-    }, {
-      "field": "description",
-      "snippet": "co-workers with the Samsung Galaxy <mark>Note</mark> 4. Gorilla Glass 4"
-    }],
-    "match_score": 33488996
-  }, {
-    "document": {
-      "brand": "NET10",
-      "categories": ["Cell Phones", "Prepaid Phones", "All Prepaid Phones"],
-      "description": "Experience fast, reliable connections on the go with this mobile phone that features 3G speed and Wi-Fi connectivity for quick access to e-mail and Web browsing. The 3.2\" HVGA touch screen allows simple navigation of the phone's functions.",
-      "id": "344",
-      "image": "https://cdn-demo.algolia.com/bestbuy-0118/3654411_sb.jpg",
-      "name": "NET10 - LG Optimus Q No-Contract Mobile Phone - Black",
-      "popularity": 13908,
-      "price": 149.99
+    {
+      "counts": [
+        { "count": 701, "highlighted": "4", "value": "4" },
+        { "count": 671, "highlighted": "2", "value": "2" },
+        { "count": 667, "highlighted": "1", "value": "1" },
+        { "count": 627, "highlighted": "5", "value": "5" },
+        { "count": 625, "highlighted": "3", "value": "3" }
+      ],
+      "field_name": "rating",
+      "stats": { "avg": 3.0, "max": 5.0, "min": 1.0, "sum": 15.0 }
     },
-    "highlights": [{
-      "field": "name",
-      "snippet": "NET10 - LG Optimus Q <mark>No-Contract</mark> Mobile Phone - Black"
-    }],
-    "match_score": 33488996
-  }, {
-    "document": {
-      "brand": "Nomad",
-      "categories": ["Cell Phones", "Cell Phone Accessories", "iPhone Accessories", "iPhone Cases & Clips", "iPhone 7 Plus Cases"],
-      "description": "Encase your iPhone in this Nomad leather folio case, and protect your phone while giving it a luxe look. Extra-wide openings let you connect various Apple lightning cables, and 360-degree protection defends all angles. This Nomad leather folio case is constructed from real leather for long-wearing sophistication no matter what your plans are.",
-      "id": "635",
-      "image": "https://cdn-demo.algolia.com/bestbuy-0118/5578879_sb.jpg",
-      "name": "Nomad - Leather Folio Case for Apple® iPhone® 7 Plus - Brown",
-      "popularity": 8421,
-      "price": 49.99
+    {
+      "counts": [
+        { "count": 3291, "highlighted": "Cell Phones", "value": "Cell Phones" },
+        {
+          "count": 2836,
+          "highlighted": "Cell Phone Accessories",
+          "value": "Cell Phone Accessories"
+        },
+        {
+          "count": 1195,
+          "highlighted": "Cell Phone Cases & Clips",
+          "value": "Cell Phone Cases & Clips"
+        },
+        {
+          "count": 607,
+          "highlighted": "iPhone Accessories",
+          "value": "iPhone Accessories"
+        },
+        {
+          "count": 517,
+          "highlighted": "iPhone Cases & Clips",
+          "value": "iPhone Cases & Clips"
+        },
+        {
+          "count": 198,
+          "highlighted": "Unlocked Cell Phones",
+          "value": "Unlocked Cell Phones"
+        },
+        {
+          "count": 198,
+          "highlighted": "All Unlocked Cell Phones",
+          "value": "All Unlocked Cell Phones"
+        },
+        {
+          "count": 126,
+          "highlighted": "All Cell Phones with Plans",
+          "value": "All Cell Phones with Plans"
+        },
+        {
+          "count": 116,
+          "highlighted": "Smartwatch Accessories",
+          "value": "Smartwatch Accessories"
+        },
+        {
+          "count": 116,
+          "highlighted": "Smartwatches & Accessories",
+          "value": "Smartwatches & Accessories"
+        },
+        {
+          "count": 105,
+          "highlighted": "Screen Protectors",
+          "value": "Screen Protectors"
+        },
+        {
+          "count": 86,
+          "highlighted": "Smartwatch Bands",
+          "value": "Smartwatch Bands"
+        },
+        { "count": 71, "highlighted": "Data Cables", "value": "Data Cables" },
+        {
+          "count": 65,
+          "highlighted": "Photography Accessories",
+          "value": "Photography Accessories"
+        },
+        {
+          "count": 58,
+          "highlighted": "iPhone 6s Cases",
+          "value": "iPhone 6s Cases"
+        },
+        {
+          "count": 55,
+          "highlighted": "Prepaid Phones",
+          "value": "Prepaid Phones"
+        },
+        {
+          "count": 55,
+          "highlighted": "All Prepaid Phones",
+          "value": "All Prepaid Phones"
+        },
+        {
+          "count": 52,
+          "highlighted": "Car & Travel Accessories",
+          "value": "Car & Travel Accessories"
+        },
+        { "count": 46, "highlighted": "Car Chargers", "value": "Car Chargers" },
+        {
+          "count": 37,
+          "highlighted": "Prepaid Minutes",
+          "value": "Prepaid Minutes"
+        }
+      ],
+      "field_name": "categories",
+      "stats": {}
     },
-    "highlights": [{
-      "field": "name",
-      "snippet": "<mark>Nomad</mark> - Leather Folio Case for Apple® iPhone® 7 Plus - Brown"
-    }, {
-      "field": "description",
-      "snippet": "Encase your iPhone in this <mark>Nomad</mark> leather folio case, and"
-    }],
-    "match_score": 33488996
-  }, {
-    "document": {
-      "brand": "AT&T",
-      "categories": ["Cell Phones", "Cell Phone Accessories", "Mobile Hotspots"],
-      "description": "This AT&T Velocity Wi-Fi hotspot allows you to simultaneously connect up to 10 devices to the Internet at 4G LTE speeds. The intuitive touch screen makes navigation and changing settings simple.",
-      "id": "662",
-      "image": "https://cdn-demo.algolia.com/bestbuy-0118/4800300_rb.jpg",
-      "name": "AT&T - Velocity 4G LTE Wi-Fi No-Contract Hotspot - Black",
-      "popularity": 8327,
-      "price": 59.99
+    {
+      "counts": [
+        { "count": 3291, "highlighted": "Cell Phones", "value": "Cell Phones" }
+      ],
+      "field_name": "categories.lvl0",
+      "stats": {}
+    }
+  ],
+  "found": 3291,
+  "hits": [
+    {
+      "document": {
+        "brand": "AT&T GoPhone",
+        "categories": ["Cell Phones", "Prepaid Phones", "All Prepaid Phones"],
+        "categories.lvl0": "Cell Phones",
+        "categories.lvl1": "Cell Phones > Prepaid Phones",
+        "categories.lvl2": "Cell Phones > Prepaid Phones > All Prepaid Phones",
+        "categories.lvl3": "",
+        "description": "Grab your data and your minutes as you go with this Samsung Galaxy 3 Express smartphone. The 4.5-inch Super AMOLED screen offers a dazzling display for texting, gaming or scrolling the Internet. A microSD slot lets you add up to 128GB storage, and this Samsung Galaxy 3 Express smartphone has a 5-megapixel camera for taking and sharing pictures.",
+        "free_shipping": true,
+        "id": "20",
+        "image": "https://cdn-demo.algolia.com/bestbuy-0118/4984700_sb.jpg",
+        "name": "AT&T GoPhone - Samsung Galaxy Express 3 4G LTE with 8GB Memory Prepaid Cell Phone",
+        "popularity": 21449,
+        "price": 49.99,
+        "rating": 2
+      },
+      "highlights": [
+        {
+          "field": "name",
+          "snippet": "AT&T GoPhone - Samsung Galaxy Express 3 4G LTE with 8GB Memory Prepaid Cell <mark>Phone</mark>"
+        }
+      ],
+      "match_score": 33488996
     },
-    "highlights": [{
-      "field": "name",
-      "snippet": "AT&T - Velocity 4G LTE Wi-Fi <mark>No-Contract</mark> Hotspot - Black"
-    }],
-    "match_score": 33488996
-  }, {
-    "document": {
-      "brand": "Nomad",
-      "categories": ["Cell Phones", "Cell Phone Accessories"],
-      "description": "Upgrade your standard Lightning cable to this ultra-rugged nylon braid Lightning cable. The reinforced housing, Kevlar inner cord wrap and PVC jacket mean it can withstand a variety of scenarios, whether it's travelling with you to the furthest-flung reaches of the world or you simply place this ultra-rugged nylon braid Lightning cable on your desk.",
-      "id": "686",
-      "image": "https://cdn-demo.algolia.com/bestbuy-0118/5152006_sb.jpg",
-      "name": "Nomad - 4.9' Lightning USB Charging Cable",
-      "popularity": 8252,
-      "price": 29.99
+    {
+      "document": {
+        "brand": "Boost Mobile",
+        "categories": ["Cell Phones", "Prepaid Phones", "All Prepaid Phones"],
+        "categories.lvl0": "Cell Phones",
+        "categories.lvl1": "Cell Phones > Prepaid Phones",
+        "categories.lvl2": "Cell Phones > Prepaid Phones > All Prepaid Phones",
+        "categories.lvl3": "",
+        "description": "Slide the slim profile of this Boost Mobile LG M3 smartphone in your pocket, and keep in contact no matter where you roam. Cameras on the front and the back make conversations fun, and Android 6.0 Marshmallow offers reliable support for all of your apps. The ample 5-inch HD screen on this Boost Mobile LG M3 phone offers clear images.",
+        "free_shipping": true,
+        "id": "0",
+        "image": "https://cdn-demo.algolia.com/bestbuy-0118/5428602_sb.jpg",
+        "name": "Boost Mobile - LG Tribute HD 4G LTE with 16GB Memory Prepaid Cell Phone - White",
+        "popularity": 21429,
+        "price": 79.99,
+        "rating": 1
+      },
+      "highlights": [
+        {
+          "field": "name",
+          "snippet": "Boost Mobile - LG Tribute HD 4G LTE with 16GB Memory Prepaid Cell <mark>Phone</mark> - White"
+        },
+        {
+          "field": "description",
+          "snippet": "Boost Mobile LG M3 <mark>phone</mark> offers clear images."
+        }
+      ],
+      "match_score": 33488996
     },
-    "highlights": [{"field": "name", "snippet": "<mark>Nomad</mark> - 4.9' Lightning USB Charging Cable"}],
-    "match_score": 33488996
-  }, {
-    "document": {
-      "brand": "Nomad",
-      "categories": ["Cell Phones", "Cell Phone Accessories", "Cell Phone Cases & Clips"],
-      "description": "Carry your cash and your phone all in one spot with this Nomad leather folio case. Made with real leather, this case lets you store cash and credits cards while keeping your iPhone safe from drops and dings. This Nomad leather folio case fits your phone snugly, adding protection without adding bulk.",
-      "id": "699",
-      "image": "https://cdn-demo.algolia.com/bestbuy-0118/5578883_sb.jpg",
-      "name": "Nomad - Folio Wallet Case for Apple® iPhone® 7 - Brown",
-      "popularity": 8210,
-      "price": 49.99
+    {
+      "document": {
+        "brand": "AT&T GoPhone",
+        "categories": ["Cell Phones", "Prepaid Phones", "All Prepaid Phones"],
+        "categories.lvl0": "Cell Phones",
+        "categories.lvl1": "Cell Phones > Prepaid Phones",
+        "categories.lvl2": "Cell Phones > Prepaid Phones > All Prepaid Phones",
+        "categories.lvl3": "",
+        "description": "Enjoy simplicity and speed with Alcatel's Ideal cell phone for AT&T. It fits neatly in almost any pocket and has a 4.5-inch display for easy one-handed use. Alcatel's Ideal phone from AT&T comes with 4G of memory and uses Wi-Fi or Bluetooth connectivity to keep connections active no matter what.",
+        "free_shipping": true,
+        "id": "8",
+        "image": "https://cdn-demo.algolia.com/bestbuy-0118/5443800_sb.jpg",
+        "name": "AT&T GoPhone - Alcatel Ideal 4G LTE with 8GB Memory Prepaid Cell Phone - Slate Blue",
+        "popularity": 21413,
+        "price": 29.99,
+        "rating": 2
+      },
+      "highlights": [
+        {
+          "field": "name",
+          "snippet": "AT&T GoPhone - Alcatel Ideal 4G LTE with 8GB Memory Prepaid Cell <mark>Phone</mark> - Slate Blue"
+        },
+        {
+          "field": "description",
+          "snippet": "with Alcatel's Ideal cell <mark>phone</mark> for AT&T. It fits"
+        }
+      ],
+      "match_score": 33488996
     },
-    "highlights": [{
-      "field": "name",
-      "snippet": "<mark>Nomad</mark> - Folio Wallet Case for Apple® iPhone® 7 - Brown"
-    }, {
-      "field": "description",
-      "snippet": "in one spot with this <mark>Nomad</mark> leather folio case. Made"
-    }],
-    "match_score": 33488996
-  }, {
-    "document": {
-      "brand": "Nomad",
-      "categories": ["Cell Phones", "Cell Phone Accessories", "Smartwatches & Accessories", "Smartwatch Accessories", "Smartwatch Bands"],
-      "description": "Strap on your 42mm Apple Watch with this Nomad brown leather band. The Horween leather weathers over time to develop a lovely patina, and the clasp ensures a custom fit.",
-      "id": "755",
-      "image": "https://cdn-demo.algolia.com/bestbuy-0118/5613422_rb.jpg",
-      "name": "Nomad - Leather Watch Strap for Apple Watch 42mm - Brown with silver lugs",
-      "popularity": 8043,
-      "price": 59.99
+    {
+      "document": {
+        "brand": "Cricket Wireless",
+        "categories": ["Cell Phones", "Prepaid Phones", "All Prepaid Phones"],
+        "categories.lvl0": "Cell Phones",
+        "categories.lvl1": "Cell Phones > Prepaid Phones",
+        "categories.lvl2": "Cell Phones > Prepaid Phones > All Prepaid Phones",
+        "categories.lvl3": "",
+        "description": "Alcatel OneTouch Flint Prepaid Cell Phone for Cricket Wireless:Stay connected to your friends and family with this Cricket Alcatel OneTouch Flint smartphone. It has a hefty 5.5-inch HD screen for easy viewing and navigation, and the color display is crisp and vibrant. The 2500 mAh battery in this Cricket Alcatel OneTouch Flint smartphone lets you talk up to 19 hours on a single charge..",
+        "free_shipping": false,
+        "id": "10",
+        "image": "https://cdn-demo.algolia.com/bestbuy-0118/5215801_sb.jpg",
+        "name": "Cricket Wireless - Alcatel OneTouch Flint 4G with 16GB Memory Prepaid Cell Phone",
+        "popularity": 21343,
+        "price": 49.99,
+        "rating": 5
+      },
+      "highlights": [
+        {
+          "field": "name",
+          "snippet": "Cricket Wireless - Alcatel OneTouch Flint 4G with 16GB Memory Prepaid Cell <mark>Phone</mark>"
+        },
+        {
+          "field": "description",
+          "snippet": "OneTouch Flint Prepaid Cell <mark>Phone</mark> for Cricket Wireless:Stay connected"
+        }
+      ],
+      "match_score": 33488996
     },
-    "highlights": [{
-      "field": "name",
-      "snippet": "<mark>Nomad</mark> - Leather Watch Strap for Apple Watch 42mm - Brown with silver lugs"
-    }, {
-      "field": "description",
-      "snippet": "Strap on your 42mm Apple Watch with this <mark>Nomad</mark> brown leather band. The Horween leather weathers over time to develop a lovely patina, and the clasp ensures a custom fit."
-    }],
-    "match_score": 33488996
-  }, {
-    "document": {
-      "brand": "Nomad",
-      "categories": ["Cell Phones", "Cell Phone Accessories", "Smartwatches & Accessories", "Smartwatch Accessories", "Smartwatch Bands"],
-      "description": "Keep your 42mm Apple Watch in place with this Nomad band. The brown leather provides a comfortable fit on your wrist, and the custom hardware holds up to daily wear.",
-      "id": "798",
-      "image": "https://cdn-demo.algolia.com/bestbuy-0118/5613426_rb.jpg",
-      "name": "Nomad - Leather Watch Strap for Apple Watch 42mm - Brown with black lugs",
-      "popularity": 7906,
-      "price": 59.99
+    {
+      "document": {
+        "brand": "AT&T GoPhone",
+        "categories": ["Cell Phones", "Prepaid Phones", "All Prepaid Phones"],
+        "categories.lvl0": "Cell Phones",
+        "categories.lvl1": "Cell Phones > Prepaid Phones",
+        "categories.lvl2": "Cell Phones > Prepaid Phones > All Prepaid Phones",
+        "categories.lvl3": "",
+        "description": "Text and talk with ease on this Samsung Jack smartphone with a full QWERTY keyboard featuring tactile keys. The slim profile sits easily in your hand, and Bluetooth compatibility connects easily with your car stereo and other devices. This Samsung Jack smartphone lets you purchase minutes and date without needing a contract.",
+        "free_shipping": false,
+        "id": "17",
+        "image": "https://cdn-demo.algolia.com/bestbuy-0118/4984900_sb.jpg",
+        "name": "AT&T GoPhone - Samsung Galaxy Express Prime 4G LTE with 16GB Memory Prepaid Cell Phone",
+        "popularity": 21309,
+        "price": 79.99,
+        "rating": 2
+      },
+      "highlights": [
+        {
+          "field": "name",
+          "snippet": "AT&T GoPhone - Samsung Galaxy Express Prime 4G LTE with 16GB Memory Prepaid Cell <mark>Phone</mark>"
+        }
+      ],
+      "match_score": 33488996
     },
-    "highlights": [{
-      "field": "name",
-      "snippet": "<mark>Nomad</mark> - Leather Watch Strap for Apple Watch 42mm - Brown with black lugs"
-    }, {
-      "field": "description",
-      "snippet": "Keep your 42mm Apple Watch in place with this <mark>Nomad</mark> band. The brown leather provides a comfortable fit on your wrist, and the custom hardware holds up to daily wear."
-    }],
-    "match_score": 33488996
-  }],
+    {
+      "document": {
+        "brand": "Motorola",
+        "categories": [
+          "Cell Phones",
+          "Unlocked Cell Phones",
+          "All Unlocked Cell Phones"
+        ],
+        "categories.lvl0": "Cell Phones",
+        "categories.lvl1": "Cell Phones > Unlocked Cell Phones",
+        "categories.lvl2": "Cell Phones > Unlocked Cell Phones > All Unlocked Cell Phones",
+        "categories.lvl3": "",
+        "description": "Stay in touch with loved ones with this unlocked Motorola Moto G phone. It has a thin, lightweight design for comfort and a micro-texture back and rounded edges for an enhanced grip. TurboPower-enabled charging provides extra battery juice in 15 minutes, and you can talk with others via any carrier with this unlocked Motorola Moto G phone.",
+        "free_shipping": false,
+        "id": "5",
+        "image": "https://cdn-demo.algolia.com/bestbuy-0118/5191101_sb.jpg",
+        "name": "Motorola - MOTO G (4th Generation) 4G LTE with 16GB Memory Cell Phone (Unlocked) - Black",
+        "popularity": 21286,
+        "price": 199.99,
+        "rating": 2
+      },
+      "highlights": [
+        {
+          "field": "name",
+          "snippet": "Motorola - MOTO G (4th Generation) 4G LTE with 16GB Memory Cell <mark>Phone</mark> (Unlocked) - Black"
+        },
+        {
+          "field": "description",
+          "snippet": "unlocked Motorola Moto G <mark>phone.</mark> It has a thin,"
+        }
+      ],
+      "match_score": 33488996
+    },
+    {
+      "document": {
+        "brand": "AT&T GoPhone",
+        "categories": ["Cell Phones", "Prepaid Phones", "All Prepaid Phones"],
+        "categories.lvl0": "Cell Phones",
+        "categories.lvl1": "Cell Phones > Prepaid Phones",
+        "categories.lvl2": "Cell Phones > Prepaid Phones > All Prepaid Phones",
+        "categories.lvl3": "",
+        "description": "Call friends and family with this AT&T LG flip phone. It has a 2.2-inch screen that's bright and easy to read and a 1.3MP camera for taking photos and videos. This smartphone comes with enhanced audio mode to help those with hearing difficulties. Have your messages read out loud with the text-to-speech function on this AT&T LG flip phone.",
+        "free_shipping": true,
+        "id": "32",
+        "image": "https://cdn-demo.algolia.com/bestbuy-0118/5444000_sb.jpg",
+        "name": "AT&T GoPhone - LG B470 Prepaid Cell Phone - Black",
+        "popularity": 21279,
+        "price": 24.99,
+        "rating": 1
+      },
+      "highlights": [
+        {
+          "field": "name",
+          "snippet": "AT&T GoPhone - LG B470 Prepaid Cell <mark>Phone</mark> - Black"
+        },
+        {
+          "field": "description",
+          "snippet": "this AT&T LG flip <mark>phone.</mark> It has a 2.2-inch"
+        }
+      ],
+      "match_score": 33488996
+    },
+    {
+      "document": {
+        "brand": "Boost Mobile",
+        "categories": ["Cell Phones", "Prepaid Phones", "All Prepaid Phones"],
+        "categories.lvl0": "Cell Phones",
+        "categories.lvl1": "Cell Phones > Prepaid Phones",
+        "categories.lvl2": "Cell Phones > Prepaid Phones > All Prepaid Phones",
+        "categories.lvl3": "",
+        "description": "LG K3 with 8GB Memory Prepaid Cell Phone for Boost Mobile: Call, text and contact your friends and family with the LG E0 smartphone. The 8GB of storage ensures you always have somewhere to put your photos and documents, and Bluetooth connectivity allows easy file sharing. Android 6 gives you access to a wide range of apps so that you can customize your LG E0 smartphone to your specifications.",
+        "free_shipping": true,
+        "id": "2",
+        "image": "https://cdn-demo.algolia.com/bestbuy-0118/5020200_sb.jpg",
+        "name": "Boost Mobile - LG K3 with 8GB Memory Prepaid Cell Phone - Black",
+        "popularity": 21224,
+        "price": 49.99,
+        "rating": 1
+      },
+      "highlights": [
+        {
+          "field": "name",
+          "snippet": "Boost Mobile - LG K3 with 8GB Memory Prepaid Cell <mark>Phone</mark> - Black"
+        },
+        {
+          "field": "description",
+          "snippet": "8GB Memory Prepaid Cell <mark>Phone</mark> for Boost Mobile: Call,"
+        }
+      ],
+      "match_score": 33488996
+    }
+  ],
   "page": 1,
-  "search_time_ms": 1
+  "search_time_ms": 46
 }

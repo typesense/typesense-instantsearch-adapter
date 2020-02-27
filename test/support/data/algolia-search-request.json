@@ -1,15 +1,17 @@
 {
-  "indexName": "products",
-  "params": {
-    "query": "appl",
-    "page": 0,
-    "maxValuesPerFacet": 10,
-    "highlightPreTag": "__ais-highlight__",
-    "highlightPostTag": "__/ais-highlight__",
-    "facets": [
-      "brand",
-      "categories"
-    ],
-    "tagFilters": ""
-  }
+  "query": "phone",
+  "page": 0,
+  "maxValuesPerFacet": 20,
+  "highlightPreTag": "__ais-highlight__",
+  "highlightPostTag": "__/ais-highlight__",
+  "hitsPerPage": 8,
+  "facets": [
+    "brand",
+    "free_shipping",
+    "price",
+    "rating",
+    "categories",
+    "categories.lvl0"
+  ],
+  "tagFilters": ""
 }

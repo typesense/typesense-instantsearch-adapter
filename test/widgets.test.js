@@ -124,6 +124,26 @@ describe("Instant Search Widgets", () => {
     });
   });
 
+  describe("rangeInput", () => {
+    it("renders", async () => {
+      expect(page).toMatchElement(
+        '#price-range-input form input[type=number][placeholder="9"]'
+      );
+      return expect(page).toMatchElement(
+        '#price-range-input form input[type=number][placeholder="700"]'
+      );
+    });
+  });
+
+  describe("rangeSlide", () => {
+    it("renders", async () => {
+      expect(page).toMatchElement('#price-range-slider div[aria-valuenow="9"]');
+      return expect(page).toMatchElement(
+        '#price-range-slider div[aria-valuenow="700"]'
+      );
+    });
+  });
+
   describe("pagination", () => {
     it("renders", async () => {
       await page.waitForSelector("#pagination a.ais-Pagination-link");

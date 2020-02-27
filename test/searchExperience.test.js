@@ -178,6 +178,28 @@ describe("Search Experience", () => {
           expect(length).toEqual(1);
         });
       });
+      describe("using the rangeInput", () => {
+        it("renders the filtered results", async () => {
+          await expect(page).toFill(
+            "#price-range-input form input[type=number].ais-RangeInput-input--min",
+            "99"
+          );
+          await expect(page).toFill(
+            "#price-range-input form input[type=number].ais-RangeInput-input--max",
+            "100"
+          );
+          await expect(page).toClick("#price-range-input button");
+          await expect(page).toMatchElement("#stats", {
+            text: "72 results found"
+          });
+          await expect(page).toMatchElement("#hits", {
+            text: "mophie - Powerstation 20,000 mAh Portable Charger"
+          });
+          return expect(page).toMatchElement("#infinite-hits", {
+            text: "Tumi - Portable Charger"
+          });
+        });
+      });
 
       describe("using the ratingMenu", () => {
         it("renders the filtered results", async () => {

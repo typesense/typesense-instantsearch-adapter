@@ -77,13 +77,6 @@ search.addWidgets([
     showMore: true,
     sortBy: ["name:asc", "count:desc"]
   }),
-  // refinementList({
-  //   container: "#categories-list",
-  //   attribute: "categories",
-  //   searchable: true,
-  //   showMore: true,
-  //   sortBy: ["name:asc", "count:desc"]
-  // }),
   menu({
     container: "#categories-menu",
     attribute: "categories"

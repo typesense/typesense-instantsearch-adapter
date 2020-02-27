@@ -3,265 +3,269 @@
     {
       "hits": [
         {
-          "name": "Samsung - Gear VR for Select Samsung Cell Phones - Blue Black",
-          "description": "Immerse yourself in virtual reality fun with your Galaxy device and these Samsung Gear VR goggles. Whether you want to experience movies on the big screen or enter your favorite gaming world, simply snap in a smartphone to make it possible. These Samsung Gear VR goggles are also lightweight and padded for comfort.",
-          "brand": "Samsung",
+          "name": "PhoneSuit - Elite Pro External Battery Case for Apple® iPhone® 6 and 6s - Black",
+          "description": "Provide your Apple iPhone 6 or 6s with additional power using this PhoneSuit Elite Pro case, which features a lithium-polymer battery with a 3000 mAh capacity that offers additional time for chatting, browsing and more. Digital buttons simplify use.",
+          "brand": "PhoneSuit",
           "categories": [
             "Cell Phones",
-            "Cell Phone Accessories"
+            "Cell Phone Accessories",
+            "iPhone Accessories",
+            "iPhone Cases & Clips"
           ],
           "price": 99.99,
-          "image": "https://cdn-demo.algolia.com/bestbuy-0118/5577911_rb.jpg",
-          "popularity": 9016,
-          "objectID": "131284950",
+          "image": "https://cdn-demo.algolia.com/bestbuy-0118/6938566_sb.jpg",
+          "popularity": 2199,
+          "objectID": "131306430",
           "_highlightResult": {
             "name": {
-              "value": "Samsung - Gear VR for Select Samsung Cell __ais-highlight__Phone__/ais-highlight__s - Blue Black",
+              "value": "__ais-highlight__Phone__/ais-highlight__Suit - Elite Pro External Battery Case for Apple® iPhone® 6 and 6s - Black",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
+              "matchedWords": ["phone"]
             },
             "description": {
-              "value": "Immerse yourself in virtual reality fun with your Galaxy device and these Samsung Gear VR goggles. Whether you want to experience movies on the big screen or enter your favorite gaming world, simply snap in a smartphone to make it possible. These Samsung Gear VR goggles are also lightweight and padded for comfort.",
-              "matchLevel": "none",
-              "matchedWords": []
+              "value": "Provide your Apple iPhone 6 or 6s with additional power using this __ais-highlight__Phone__/ais-highlight__Suit Elite Pro case, which features a lithium-polymer battery with a 3000 mAh capacity that offers additional time for chatting, browsing and more. Digital buttons simplify use.",
+              "matchLevel": "full",
+              "fullyHighlighted": false,
+              "matchedWords": ["phone"]
             },
             "brand": {
-              "value": "Samsung",
-              "matchLevel": "none",
-              "matchedWords": []
+              "value": "__ais-highlight__Phone__/ais-highlight__Suit",
+              "matchLevel": "full",
+              "fullyHighlighted": false,
+              "matchedWords": ["phone"]
             },
             "categories": [
               {
                 "value": "Cell __ais-highlight__Phone__/ais-highlight__s",
                 "matchLevel": "full",
                 "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
+                "matchedWords": ["phone"]
               },
               {
                 "value": "Cell __ais-highlight__Phone__/ais-highlight__ Accessories",
                 "matchLevel": "full",
                 "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
+                "matchedWords": ["phone"]
+              },
+              {
+                "value": "iPhone Accessories",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              {
+                "value": "iPhone Cases & Clips",
+                "matchLevel": "none",
+                "matchedWords": []
               }
             ]
           }
         },
         {
-          "name": "Samsung - Gear VR for Select Samsung Cell Phones - Blue Black",
-          "description": "Immerse yourself in virtual reality fun with your Galaxy device and these Samsung Gear VR goggles. Whether you want to experience movies on the big screen or enter your favorite gaming world, simply snap in a smartphone to make it possible. These Samsung Gear VR goggles are also lightweight and padded for comfort.",
-          "brand": "Samsung",
+          "name": "PhoneSuit - Elite Pro External Battery Case for Apple® iPhone® 6 and 6s - Black",
+          "description": "Provide your Apple iPhone 6 or 6s with additional power using this PhoneSuit Elite Pro case, which features a lithium-polymer battery with a 3000 mAh capacity that offers additional time for chatting, browsing and more. Digital buttons simplify use.",
+          "brand": "PhoneSuit",
           "categories": [
             "Cell Phones",
-            "Cell Phone Accessories"
+            "Cell Phone Accessories",
+            "iPhone Accessories",
+            "iPhone Cases & Clips"
           ],
           "price": 99.99,
-          "image": "https://cdn-demo.algolia.com/bestbuy-0118/5577911_rb.jpg",
-          "popularity": 9016,
-          "objectID": "131219060",
+          "image": "https://cdn-demo.algolia.com/bestbuy-0118/6938566_sb.jpg",
+          "popularity": 2199,
+          "objectID": "131243450",
           "_highlightResult": {
             "name": {
-              "value": "Samsung - Gear VR for Select Samsung Cell __ais-highlight__Phone__/ais-highlight__s - Blue Black",
+              "value": "__ais-highlight__Phone__/ais-highlight__Suit - Elite Pro External Battery Case for Apple® iPhone® 6 and 6s - Black",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
+              "matchedWords": ["phone"]
             },
             "description": {
-              "value": "Immerse yourself in virtual reality fun with your Galaxy device and these Samsung Gear VR goggles. Whether you want to experience movies on the big screen or enter your favorite gaming world, simply snap in a smartphone to make it possible. These Samsung Gear VR goggles are also lightweight and padded for comfort.",
-              "matchLevel": "none",
-              "matchedWords": []
+              "value": "Provide your Apple iPhone 6 or 6s with additional power using this __ais-highlight__Phone__/ais-highlight__Suit Elite Pro case, which features a lithium-polymer battery with a 3000 mAh capacity that offers additional time for chatting, browsing and more. Digital buttons simplify use.",
+              "matchLevel": "full",
+              "fullyHighlighted": false,
+              "matchedWords": ["phone"]
             },
             "brand": {
-              "value": "Samsung",
-              "matchLevel": "none",
-              "matchedWords": []
+              "value": "__ais-highlight__Phone__/ais-highlight__Suit",
+              "matchLevel": "full",
+              "fullyHighlighted": false,
+              "matchedWords": ["phone"]
             },
             "categories": [
               {
                 "value": "Cell __ais-highlight__Phone__/ais-highlight__s",
                 "matchLevel": "full",
                 "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
+                "matchedWords": ["phone"]
               },
               {
                 "value": "Cell __ais-highlight__Phone__/ais-highlight__ Accessories",
                 "matchLevel": "full",
                 "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
+                "matchedWords": ["phone"]
+              },
+              {
+                "value": "iPhone Accessories",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              {
+                "value": "iPhone Cases & Clips",
+                "matchLevel": "none",
+                "matchedWords": []
               }
             ]
           }
         },
         {
-          "name": "Samsung - S-View Case for Samsung Galaxy S6 Cell Phones - White",
-          "description": "Safeguard your Samsung Galaxy S6 cell phone with this Samsung S-View EF-CG920PW case, which offers a durable polyurethane interior and a flip cover to prevent everyday wear and tear. The case automatically wakes up your device when the cover is opened.",
-          "brand": "Samsung",
+          "name": "PhoneSuit - Elite Pro External Battery Case for Apple® iPhone® 6 Plus and 6s Plus - Black",
+          "description": "Enjoy your media longer with this PhoneSuit Elite Pro external battery case, which utilizes a 4200 mAh lithium-polymer battery to provide your Apple iPhone 6 Plus or 6s Plus with additional battery life. The raised edge shields your phone's display from damage.",
+          "brand": "PhoneSuit",
           "categories": [
             "Cell Phones",
             "Cell Phone Accessories",
-            "Cell Phone Cases & Clips"
+            "iPhone Accessories",
+            "iPhone Cases & Clips"
           ],
-          "price": 10.99,
-          "image": "https://cdn-demo.algolia.com/bestbuy-0118/5906208_sb.jpg",
-          "popularity": 5651,
-          "objectID": "131296670",
+          "price": 109.99,
+          "image": "https://cdn-demo.algolia.com/bestbuy-0118/6938648_sb.jpg",
+          "popularity": 1489,
+          "objectID": "131308460",
           "_highlightResult": {
             "name": {
-              "value": "Samsung - S-View Case for Samsung Galaxy S6 Cell __ais-highlight__Phone__/ais-highlight__s - White",
+              "value": "__ais-highlight__Phone__/ais-highlight__Suit - Elite Pro External Battery Case for Apple® iPhone® 6 Plus and 6s Plus - Black",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
+              "matchedWords": ["phone"]
             },
             "description": {
-              "value": "Safeguard your Samsung Galaxy S6 cell __ais-highlight__phone__/ais-highlight__ with this Samsung S-View EF-CG920PW case, which offers a durable polyurethane interior and a flip cover to prevent everyday wear and tear. The case automatically wakes up your device when the cover is opened.",
+              "value": "Enjoy your media longer with this __ais-highlight__Phone__/ais-highlight__Suit Elite Pro external battery case, which utilizes a 4200 mAh lithium-polymer battery to provide your Apple iPhone 6 Plus or 6s Plus with additional battery life. The raised edge shields your __ais-highlight__phone__/ais-highlight__'s display from damage.",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
+              "matchedWords": ["phone"]
             },
             "brand": {
-              "value": "Samsung",
-              "matchLevel": "none",
-              "matchedWords": []
+              "value": "__ais-highlight__Phone__/ais-highlight__Suit",
+              "matchLevel": "full",
+              "fullyHighlighted": false,
+              "matchedWords": ["phone"]
             },
             "categories": [
               {
                 "value": "Cell __ais-highlight__Phone__/ais-highlight__s",
                 "matchLevel": "full",
                 "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
+                "matchedWords": ["phone"]
               },
               {
                 "value": "Cell __ais-highlight__Phone__/ais-highlight__ Accessories",
                 "matchLevel": "full",
                 "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
+                "matchedWords": ["phone"]
               },
               {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__ Cases & Clips",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
+                "value": "iPhone Accessories",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              {
+                "value": "iPhone Cases & Clips",
+                "matchLevel": "none",
+                "matchedWords": []
               }
             ]
           }
         },
         {
-          "name": "Samsung - S-View Case for Samsung Galaxy S6 Cell Phones - White",
-          "description": "Safeguard your Samsung Galaxy S6 cell phone with this Samsung S-View EF-CG920PW case, which offers a durable polyurethane interior and a flip cover to prevent everyday wear and tear. The case automatically wakes up your device when the cover is opened.",
-          "brand": "Samsung",
+          "name": "PhoneSuit - Elite Pro External Battery Case for Apple® iPhone® 6 Plus and 6s Plus - Black",
+          "description": "Enjoy your media longer with this PhoneSuit Elite Pro external battery case, which utilizes a 4200 mAh lithium-polymer battery to provide your Apple iPhone 6 Plus or 6s Plus with additional battery life. The raised edge shields your phone's display from damage.",
+          "brand": "PhoneSuit",
           "categories": [
             "Cell Phones",
             "Cell Phone Accessories",
-            "Cell Phone Cases & Clips"
+            "iPhone Accessories",
+            "iPhone Cases & Clips"
           ],
-          "price": 10.99,
-          "image": "https://cdn-demo.algolia.com/bestbuy-0118/5906208_sb.jpg",
-          "popularity": 5651,
-          "objectID": "131230780",
+          "price": 109.99,
+          "image": "https://cdn-demo.algolia.com/bestbuy-0118/6938648_sb.jpg",
+          "popularity": 1489,
+          "objectID": "131245480",
           "_highlightResult": {
             "name": {
-              "value": "Samsung - S-View Case for Samsung Galaxy S6 Cell __ais-highlight__Phone__/ais-highlight__s - White",
+              "value": "__ais-highlight__Phone__/ais-highlight__Suit - Elite Pro External Battery Case for Apple® iPhone® 6 Plus and 6s Plus - Black",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
+              "matchedWords": ["phone"]
             },
             "description": {
-              "value": "Safeguard your Samsung Galaxy S6 cell __ais-highlight__phone__/ais-highlight__ with this Samsung S-View EF-CG920PW case, which offers a durable polyurethane interior and a flip cover to prevent everyday wear and tear. The case automatically wakes up your device when the cover is opened.",
+              "value": "Enjoy your media longer with this __ais-highlight__Phone__/ais-highlight__Suit Elite Pro external battery case, which utilizes a 4200 mAh lithium-polymer battery to provide your Apple iPhone 6 Plus or 6s Plus with additional battery life. The raised edge shields your __ais-highlight__phone__/ais-highlight__'s display from damage.",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
+              "matchedWords": ["phone"]
             },
             "brand": {
-              "value": "Samsung",
-              "matchLevel": "none",
-              "matchedWords": []
+              "value": "__ais-highlight__Phone__/ais-highlight__Suit",
+              "matchLevel": "full",
+              "fullyHighlighted": false,
+              "matchedWords": ["phone"]
             },
             "categories": [
               {
                 "value": "Cell __ais-highlight__Phone__/ais-highlight__s",
                 "matchLevel": "full",
                 "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
+                "matchedWords": ["phone"]
               },
               {
                 "value": "Cell __ais-highlight__Phone__/ais-highlight__ Accessories",
                 "matchLevel": "full",
                 "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
+                "matchedWords": ["phone"]
               },
               {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__ Cases & Clips",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
+                "value": "iPhone Accessories",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              {
+                "value": "iPhone Cases & Clips",
+                "matchLevel": "none",
+                "matchedWords": []
               }
             ]
           }
         },
         {
-          "name": "Samsung - Flip Cover for Samsung Galaxy S III Cell Phones - Pink",
-          "description": "Guard your Galaxy S III cell phone against smudges, scratches and dirt with this Samsung flip cover that features a form-fitting design for a snug fit. The soft plastic and felt materials offer lasting strength and style.",
-          "brand": "Samsung",
+          "name": "Insignia™ - Phone Camera 3 Lens Kit - Black",
+          "description": "Capture stunning imagery with this Insignia three-lens kit. The wide-angle lens allows you to take extraordinary landscapes, a fisheye lens creates a unique perspective on the world, while the macro lens means you can get in close. This Insignia three-lens kit simply clips onto your phone, and it's all stored in a soft storage pouch for easy transport.",
+          "brand": "Insignia™",
           "categories": [
             "Cell Phones",
             "Cell Phone Accessories",
-            "Cell Phone Cases & Clips"
+            "Photography Accessories"
           ],
-          "price": 39.99,
-          "image": "https://cdn-demo.algolia.com/bestbuy-0118/6965211_sb.jpg",
-          "popularity": 3309,
-          "objectID": "131303610",
+          "price": 29.99,
+          "image": "https://cdn-demo.algolia.com/bestbuy-0118/5086533_rb.jpg",
+          "popularity": 7872,
+          "objectID": "131288410",
           "_highlightResult": {
             "name": {
-              "value": "Samsung - Flip Cover for Samsung Galaxy S III Cell __ais-highlight__Phone__/ais-highlight__s - Pink",
+              "value": "Insignia™ - __ais-highlight__Phone__/ais-highlight__ Camera 3 Lens Kit - Black",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
+              "matchedWords": ["phone"]
             },
             "description": {
-              "value": "Guard your Galaxy S III cell __ais-highlight__phone__/ais-highlight__ against smudges, scratches and dirt with this Samsung flip cover that features a form-fitting design for a snug fit. The soft plastic and felt materials offer lasting strength and style.",
+              "value": "Capture stunning imagery with this Insignia three-lens kit. The wide-angle lens allows you to take extraordinary landscapes, a fisheye lens creates a unique perspective on the world, while the macro lens means you can get in close. This Insignia three-lens kit simply clips onto your __ais-highlight__phone__/ais-highlight__, and it's all stored in a soft storage pouch for easy transport.",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
+              "matchedWords": ["phone"]
             },
             "brand": {
-              "value": "Samsung",
+              "value": "Insignia™",
               "matchLevel": "none",
               "matchedWords": []
             },
@@ -270,61 +274,50 @@
                 "value": "Cell __ais-highlight__Phone__/ais-highlight__s",
                 "matchLevel": "full",
                 "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
+                "matchedWords": ["phone"]
               },
               {
                 "value": "Cell __ais-highlight__Phone__/ais-highlight__ Accessories",
                 "matchLevel": "full",
                 "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
+                "matchedWords": ["phone"]
               },
               {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__ Cases & Clips",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
+                "value": "Photography Accessories",
+                "matchLevel": "none",
+                "matchedWords": []
               }
             ]
           }
         },
         {
-          "name": "Samsung - Flip Cover for Samsung Galaxy S III Cell Phones - Pink",
-          "description": "Guard your Galaxy S III cell phone against smudges, scratches and dirt with this Samsung flip cover that features a form-fitting design for a snug fit. The soft plastic and felt materials offer lasting strength and style.",
-          "brand": "Samsung",
+          "name": "Insignia™ - Phone Camera 3 Lens Kit - Black",
+          "description": "Capture stunning imagery with this Insignia three-lens kit. The wide-angle lens allows you to take extraordinary landscapes, a fisheye lens creates a unique perspective on the world, while the macro lens means you can get in close. This Insignia three-lens kit simply clips onto your phone, and it's all stored in a soft storage pouch for easy transport.",
+          "brand": "Insignia™",
           "categories": [
             "Cell Phones",
             "Cell Phone Accessories",
-            "Cell Phone Cases & Clips"
+            "Photography Accessories"
           ],
-          "price": 39.99,
-          "image": "https://cdn-demo.algolia.com/bestbuy-0118/6965211_sb.jpg",
-          "popularity": 3309,
-          "objectID": "131240630",
+          "price": 29.99,
+          "image": "https://cdn-demo.algolia.com/bestbuy-0118/5086533_rb.jpg",
+          "popularity": 7872,
+          "objectID": "131222520",
           "_highlightResult": {
             "name": {
-              "value": "Samsung - Flip Cover for Samsung Galaxy S III Cell __ais-highlight__Phone__/ais-highlight__s - Pink",
+              "value": "Insignia™ - __ais-highlight__Phone__/ais-highlight__ Camera 3 Lens Kit - Black",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
+              "matchedWords": ["phone"]
             },
             "description": {
-              "value": "Guard your Galaxy S III cell __ais-highlight__phone__/ais-highlight__ against smudges, scratches and dirt with this Samsung flip cover that features a form-fitting design for a snug fit. The soft plastic and felt materials offer lasting strength and style.",
+              "value": "Capture stunning imagery with this Insignia three-lens kit. The wide-angle lens allows you to take extraordinary landscapes, a fisheye lens creates a unique perspective on the world, while the macro lens means you can get in close. This Insignia three-lens kit simply clips onto your __ais-highlight__phone__/ais-highlight__, and it's all stored in a soft storage pouch for easy transport.",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
+              "matchedWords": ["phone"]
             },
             "brand": {
-              "value": "Samsung",
+              "value": "Insignia™",
               "matchLevel": "none",
               "matchedWords": []
             },
@@ -333,61 +326,51 @@
                 "value": "Cell __ais-highlight__Phone__/ais-highlight__s",
                 "matchLevel": "full",
                 "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
+                "matchedWords": ["phone"]
               },
               {
                 "value": "Cell __ais-highlight__Phone__/ais-highlight__ Accessories",
                 "matchLevel": "full",
                 "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
+                "matchedWords": ["phone"]
               },
               {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__ Cases & Clips",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
+                "value": "Photography Accessories",
+                "matchLevel": "none",
+                "matchedWords": []
               }
             ]
           }
         },
         {
-          "name": "Samsung - Soft-Shell Case for Samsung Galaxy S6 Cell Phones - Black",
-          "description": "Protect your Samsung Galaxy S6 cell phone against damage with this Samsung EF-ZG920BBEGUS soft-shell case, which features an interior constructed of durable polyurethane material. A flip cover activates your device automatically when opened.",
-          "brand": "Samsung",
+          "name": "PanaVise - PortaGrip Phone Holder for Select Cell Phones - Matte Black",
+          "description": "Keep your compatible smartphone within reach in your vehicle with this PanaVise PortaGrip 15585 phone holder that features rubberized index grips and a foam-backed cradle for a sure grasp on your device. Ratcheting feet let you access your phone's ports.",
+          "brand": "PanaVise",
           "categories": [
             "Cell Phones",
             "Cell Phone Accessories",
-            "Cell Phone Cases & Clips"
+            "Car & Travel Accessories",
+            "Cell Phone Mounts"
           ],
-          "price": 59.99,
-          "image": "https://cdn-demo.algolia.com/bestbuy-0118/5052055_sb.jpg",
-          "popularity": 1328,
-          "objectID": "131308800",
+          "price": 16.99,
+          "image": "https://cdn-demo.algolia.com/bestbuy-0118/9629035_sb.jpg",
+          "popularity": 3255,
+          "objectID": "131303700",
           "_highlightResult": {
             "name": {
-              "value": "Samsung - Soft-Shell Case for Samsung Galaxy S6 Cell __ais-highlight__Phone__/ais-highlight__s - Black",
+              "value": "PanaVise - PortaGrip __ais-highlight__Phone__/ais-highlight__ Holder for Select Cell __ais-highlight__Phone__/ais-highlight__s - Matte Black",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
+              "matchedWords": ["phone"]
             },
             "description": {
-              "value": "Protect your Samsung Galaxy S6 cell __ais-highlight__phone__/ais-highlight__ against damage with this Samsung EF-ZG920BBEGUS soft-shell case, which features an interior constructed of durable polyurethane material. A flip cover activates your device automatically when opened.",
+              "value": "Keep your compatible smartphone within reach in your vehicle with this PanaVise PortaGrip 15585 __ais-highlight__phone__/ais-highlight__ holder that features rubberized index grips and a foam-backed cradle for a sure grasp on your device. Ratcheting feet let you access your __ais-highlight__phone__/ais-highlight__'s ports.",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
+              "matchedWords": ["phone"]
             },
             "brand": {
-              "value": "Samsung",
+              "value": "PanaVise",
               "matchLevel": "none",
               "matchedWords": []
             },
@@ -396,61 +379,57 @@
                 "value": "Cell __ais-highlight__Phone__/ais-highlight__s",
                 "matchLevel": "full",
                 "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
+                "matchedWords": ["phone"]
               },
               {
                 "value": "Cell __ais-highlight__Phone__/ais-highlight__ Accessories",
                 "matchLevel": "full",
                 "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
+                "matchedWords": ["phone"]
               },
               {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__ Cases & Clips",
+                "value": "Car & Travel Accessories",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              {
+                "value": "Cell __ais-highlight__Phone__/ais-highlight__ Mounts",
                 "matchLevel": "full",
                 "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
+                "matchedWords": ["phone"]
               }
             ]
           }
         },
         {
-          "name": "Samsung - Soft-Shell Case for Samsung Galaxy S6 Cell Phones - Black",
-          "description": "Protect your Samsung Galaxy S6 cell phone against damage with this Samsung EF-ZG920BBEGUS soft-shell case, which features an interior constructed of durable polyurethane material. A flip cover activates your device automatically when opened.",
-          "brand": "Samsung",
+          "name": "PanaVise - PortaGrip Phone Holder for Select Cell Phones - Matte Black",
+          "description": "Keep your compatible smartphone within reach in your vehicle with this PanaVise PortaGrip 15585 phone holder that features rubberized index grips and a foam-backed cradle for a sure grasp on your device. Ratcheting feet let you access your phone's ports.",
+          "brand": "PanaVise",
           "categories": [
             "Cell Phones",
             "Cell Phone Accessories",
-            "Cell Phone Cases & Clips"
+            "Car & Travel Accessories",
+            "Cell Phone Mounts"
           ],
-          "price": 59.99,
-          "image": "https://cdn-demo.algolia.com/bestbuy-0118/5052055_sb.jpg",
-          "popularity": 1328,
-          "objectID": "131245820",
+          "price": 16.99,
+          "image": "https://cdn-demo.algolia.com/bestbuy-0118/9629035_sb.jpg",
+          "popularity": 3255,
+          "objectID": "131240720",
           "_highlightResult": {
             "name": {
-              "value": "Samsung - Soft-Shell Case for Samsung Galaxy S6 Cell __ais-highlight__Phone__/ais-highlight__s - Black",
+              "value": "PanaVise - PortaGrip __ais-highlight__Phone__/ais-highlight__ Holder for Select Cell __ais-highlight__Phone__/ais-highlight__s - Matte Black",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
+              "matchedWords": ["phone"]
             },
             "description": {
-              "value": "Protect your Samsung Galaxy S6 cell __ais-highlight__phone__/ais-highlight__ against damage with this Samsung EF-ZG920BBEGUS soft-shell case, which features an interior constructed of durable polyurethane material. A flip cover activates your device automatically when opened.",
+              "value": "Keep your compatible smartphone within reach in your vehicle with this PanaVise PortaGrip 15585 __ais-highlight__phone__/ais-highlight__ holder that features rubberized index grips and a foam-backed cradle for a sure grasp on your device. Ratcheting feet let you access your __ais-highlight__phone__/ais-highlight__'s ports.",
               "matchLevel": "full",
               "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
+              "matchedWords": ["phone"]
             },
             "brand": {
-              "value": "Samsung",
+              "value": "PanaVise",
               "matchLevel": "none",
               "matchedWords": []
             },
@@ -459,876 +438,110 @@
                 "value": "Cell __ais-highlight__Phone__/ais-highlight__s",
                 "matchLevel": "full",
                 "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
+                "matchedWords": ["phone"]
               },
               {
                 "value": "Cell __ais-highlight__Phone__/ais-highlight__ Accessories",
                 "matchLevel": "full",
                 "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
+                "matchedWords": ["phone"]
               },
               {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__ Cases & Clips",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "name": "Samsung - Keyboard Cover for Samsung Galaxy Note 5 Cell Phones - Black Sapphire",
-          "description": "This Samsung 60-3527-05-XP keyboard cover for Samsung Galaxy Note 5 cell phones features a detachable full-size QWERTY keyboard complete with shortcuts and hot keys. The molded polycarbonate shell adds a layer of protection against surface dings and scratches.",
-          "brand": "Samsung",
-          "categories": [
-            "Cell Phones",
-            "Cell Phone Accessories",
-            "Cell Phone Cases & Clips"
-          ],
-          "price": 40.99,
-          "image": "https://cdn-demo.algolia.com/bestbuy-0118/4742902_sb.jpg",
-          "popularity": 1314,
-          "objectID": "131308850",
-          "_highlightResult": {
-            "name": {
-              "value": "Samsung - Keyboard Cover for Samsung Galaxy Note 5 Cell __ais-highlight__Phone__/ais-highlight__s - Black Sapphire",
-              "matchLevel": "full",
-              "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
-            },
-            "description": {
-              "value": "This Samsung 60-3527-05-XP keyboard cover for Samsung Galaxy Note 5 cell __ais-highlight__phone__/ais-highlight__s features a detachable full-size QWERTY keyboard complete with shortcuts and hot keys. The molded polycarbonate shell adds a layer of protection against surface dings and scratches.",
-              "matchLevel": "full",
-              "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
-            },
-            "brand": {
-              "value": "Samsung",
-              "matchLevel": "none",
-              "matchedWords": []
-            },
-            "categories": [
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__s",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
+                "value": "Car & Travel Accessories",
+                "matchLevel": "none",
+                "matchedWords": []
               },
               {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__ Accessories",
+                "value": "Cell __ais-highlight__Phone__/ais-highlight__ Mounts",
                 "matchLevel": "full",
                 "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              },
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__ Cases & Clips",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "name": "Samsung - Keyboard Cover for Samsung Galaxy Note 5 Cell Phones - Black Sapphire",
-          "description": "This Samsung 60-3527-05-XP keyboard cover for Samsung Galaxy Note 5 cell phones features a detachable full-size QWERTY keyboard complete with shortcuts and hot keys. The molded polycarbonate shell adds a layer of protection against surface dings and scratches.",
-          "brand": "Samsung",
-          "categories": [
-            "Cell Phones",
-            "Cell Phone Accessories",
-            "Cell Phone Cases & Clips"
-          ],
-          "price": 40.99,
-          "image": "https://cdn-demo.algolia.com/bestbuy-0118/4742902_sb.jpg",
-          "popularity": 1314,
-          "objectID": "131245870",
-          "_highlightResult": {
-            "name": {
-              "value": "Samsung - Keyboard Cover for Samsung Galaxy Note 5 Cell __ais-highlight__Phone__/ais-highlight__s - Black Sapphire",
-              "matchLevel": "full",
-              "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
-            },
-            "description": {
-              "value": "This Samsung 60-3527-05-XP keyboard cover for Samsung Galaxy Note 5 cell __ais-highlight__phone__/ais-highlight__s features a detachable full-size QWERTY keyboard complete with shortcuts and hot keys. The molded polycarbonate shell adds a layer of protection against surface dings and scratches.",
-              "matchLevel": "full",
-              "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
-            },
-            "brand": {
-              "value": "Samsung",
-              "matchLevel": "none",
-              "matchedWords": []
-            },
-            "categories": [
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__s",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              },
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__ Accessories",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              },
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__ Cases & Clips",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "name": "Samsung - S-View Flip Cover for Samsung Galaxy S6 Cell Phones - Black",
-          "description": "Defend your Samsung Galaxy S6 cell phone on the go with this Samsung S-View EF-CG920PBEGUS flip cover, which features flexible polyurethane construction. The cover guards your device's screen while keeping important information visible.",
-          "brand": "Samsung",
-          "categories": [
-            "Cell Phones",
-            "Cell Phone Accessories",
-            "Cell Phone Cases & Clips"
-          ],
-          "price": 49.99,
-          "image": "https://cdn-demo.algolia.com/bestbuy-0118/4706037_sb.jpg",
-          "popularity": 5906,
-          "objectID": "131295870",
-          "_highlightResult": {
-            "name": {
-              "value": "Samsung - S-View Flip Cover for Samsung Galaxy S6 Cell __ais-highlight__Phone__/ais-highlight__s - Black",
-              "matchLevel": "full",
-              "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
-            },
-            "description": {
-              "value": "Defend your Samsung Galaxy S6 cell __ais-highlight__phone__/ais-highlight__ on the go with this Samsung S-View EF-CG920PBEGUS flip cover, which features flexible polyurethane construction. The cover guards your device's screen while keeping important information visible.",
-              "matchLevel": "full",
-              "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
-            },
-            "brand": {
-              "value": "Samsung",
-              "matchLevel": "none",
-              "matchedWords": []
-            },
-            "categories": [
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__s",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              },
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__ Accessories",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              },
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__ Cases & Clips",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "name": "Samsung - S-View Flip Cover for Samsung Galaxy S6 Cell Phones - Black",
-          "description": "Defend your Samsung Galaxy S6 cell phone on the go with this Samsung S-View EF-CG920PBEGUS flip cover, which features flexible polyurethane construction. The cover guards your device's screen while keeping important information visible.",
-          "brand": "Samsung",
-          "categories": [
-            "Cell Phones",
-            "Cell Phone Accessories",
-            "Cell Phone Cases & Clips"
-          ],
-          "price": 49.99,
-          "image": "https://cdn-demo.algolia.com/bestbuy-0118/4706037_sb.jpg",
-          "popularity": 5906,
-          "objectID": "131229980",
-          "_highlightResult": {
-            "name": {
-              "value": "Samsung - S-View Flip Cover for Samsung Galaxy S6 Cell __ais-highlight__Phone__/ais-highlight__s - Black",
-              "matchLevel": "full",
-              "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
-            },
-            "description": {
-              "value": "Defend your Samsung Galaxy S6 cell __ais-highlight__phone__/ais-highlight__ on the go with this Samsung S-View EF-CG920PBEGUS flip cover, which features flexible polyurethane construction. The cover guards your device's screen while keeping important information visible.",
-              "matchLevel": "full",
-              "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
-            },
-            "brand": {
-              "value": "Samsung",
-              "matchLevel": "none",
-              "matchedWords": []
-            },
-            "categories": [
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__s",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              },
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__ Accessories",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              },
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__ Cases & Clips",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "name": "Samsung - S-View Case for Samsung Galaxy Note 5 Cell Phones - Blue/Black",
-          "description": "Safeguard your Samsung Galaxy Note 5 cell phone against accidental damage with this Samsung S-View EF-CN920PBEGUS case, which features a hard shell and polyurethane interior for reliable protection.",
-          "brand": "Samsung",
-          "categories": [
-            "Cell Phones",
-            "Cell Phone Accessories",
-            "Cell Phone Cases & Clips"
-          ],
-          "price": 28.99,
-          "image": "https://cdn-demo.algolia.com/bestbuy-0118/4353502_sb.jpg",
-          "popularity": 5424,
-          "objectID": "131297360",
-          "_highlightResult": {
-            "name": {
-              "value": "Samsung - S-View Case for Samsung Galaxy Note 5 Cell __ais-highlight__Phone__/ais-highlight__s - Blue/Black",
-              "matchLevel": "full",
-              "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
-            },
-            "description": {
-              "value": "Safeguard your Samsung Galaxy Note 5 cell __ais-highlight__phone__/ais-highlight__ against accidental damage with this Samsung S-View EF-CN920PBEGUS case, which features a hard shell and polyurethane interior for reliable protection.",
-              "matchLevel": "full",
-              "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
-            },
-            "brand": {
-              "value": "Samsung",
-              "matchLevel": "none",
-              "matchedWords": []
-            },
-            "categories": [
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__s",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              },
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__ Accessories",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              },
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__ Cases & Clips",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "name": "Samsung - S-View Case for Samsung Galaxy Note 5 Cell Phones - Blue/Black",
-          "description": "Safeguard your Samsung Galaxy Note 5 cell phone against accidental damage with this Samsung S-View EF-CN920PBEGUS case, which features a hard shell and polyurethane interior for reliable protection.",
-          "brand": "Samsung",
-          "categories": [
-            "Cell Phones",
-            "Cell Phone Accessories",
-            "Cell Phone Cases & Clips"
-          ],
-          "price": 28.99,
-          "image": "https://cdn-demo.algolia.com/bestbuy-0118/4353502_sb.jpg",
-          "popularity": 5424,
-          "objectID": "131231470",
-          "_highlightResult": {
-            "name": {
-              "value": "Samsung - S-View Case for Samsung Galaxy Note 5 Cell __ais-highlight__Phone__/ais-highlight__s - Blue/Black",
-              "matchLevel": "full",
-              "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
-            },
-            "description": {
-              "value": "Safeguard your Samsung Galaxy Note 5 cell __ais-highlight__phone__/ais-highlight__ against accidental damage with this Samsung S-View EF-CN920PBEGUS case, which features a hard shell and polyurethane interior for reliable protection.",
-              "matchLevel": "full",
-              "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
-            },
-            "brand": {
-              "value": "Samsung",
-              "matchLevel": "none",
-              "matchedWords": []
-            },
-            "categories": [
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__s",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              },
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__ Accessories",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              },
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__ Cases & Clips",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "name": "Samsung - Flip Wallet Case for Samsung Galaxy S6 edge Cell Phones - Black",
-          "description": "Safeguard your Samsung Galaxy S6 edge cell phone in style with this Samsung EF-WG925PB wallet case, which wakes your device up automatically when flipped open. The camera cutout lets you take pictures while your phone remains in the case.",
-          "brand": "Samsung",
-          "categories": [
-            "Cell Phones",
-            "Cell Phone Accessories",
-            "Cell Phone Cases & Clips"
-          ],
-          "price": 34.99,
-          "image": "https://cdn-demo.algolia.com/bestbuy-0118/5909012_sb.jpg",
-          "popularity": 5370,
-          "objectID": "131297510",
-          "_highlightResult": {
-            "name": {
-              "value": "Samsung - Flip Wallet Case for Samsung Galaxy S6 edge Cell __ais-highlight__Phone__/ais-highlight__s - Black",
-              "matchLevel": "full",
-              "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
-            },
-            "description": {
-              "value": "Safeguard your Samsung Galaxy S6 edge cell __ais-highlight__phone__/ais-highlight__ in style with this Samsung EF-WG925PB wallet case, which wakes your device up automatically when flipped open. The camera cutout lets you take pictures while your __ais-highlight__phone__/ais-highlight__ remains in the case.",
-              "matchLevel": "full",
-              "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
-            },
-            "brand": {
-              "value": "Samsung",
-              "matchLevel": "none",
-              "matchedWords": []
-            },
-            "categories": [
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__s",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              },
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__ Accessories",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              },
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__ Cases & Clips",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "name": "Samsung - Flip Wallet Case for Samsung Galaxy S6 edge Cell Phones - Black",
-          "description": "Safeguard your Samsung Galaxy S6 edge cell phone in style with this Samsung EF-WG925PB wallet case, which wakes your device up automatically when flipped open. The camera cutout lets you take pictures while your phone remains in the case.",
-          "brand": "Samsung",
-          "categories": [
-            "Cell Phones",
-            "Cell Phone Accessories",
-            "Cell Phone Cases & Clips"
-          ],
-          "price": 34.99,
-          "image": "https://cdn-demo.algolia.com/bestbuy-0118/5909012_sb.jpg",
-          "popularity": 5370,
-          "objectID": "131231620",
-          "_highlightResult": {
-            "name": {
-              "value": "Samsung - Flip Wallet Case for Samsung Galaxy S6 edge Cell __ais-highlight__Phone__/ais-highlight__s - Black",
-              "matchLevel": "full",
-              "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
-            },
-            "description": {
-              "value": "Safeguard your Samsung Galaxy S6 edge cell __ais-highlight__phone__/ais-highlight__ in style with this Samsung EF-WG925PB wallet case, which wakes your device up automatically when flipped open. The camera cutout lets you take pictures while your __ais-highlight__phone__/ais-highlight__ remains in the case.",
-              "matchLevel": "full",
-              "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
-            },
-            "brand": {
-              "value": "Samsung",
-              "matchLevel": "none",
-              "matchedWords": []
-            },
-            "categories": [
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__s",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              },
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__ Accessories",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              },
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__ Cases & Clips",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "name": "Samsung - Clear View Case for Samsung Galaxy Note 5 Cell Phones - Blue/Black",
-          "description": "With its hard shell and polyurethane interior, this Samsung Clear View EF-ZN920CBEGUS case safeguards your Samsung Galaxy Note 5 cell phone against accidental damage. An automatic wake function turns on your phone when you open the case.",
-          "brand": "Samsung",
-          "categories": [
-            "Cell Phones",
-            "Cell Phone Accessories",
-            "Cell Phone Cases & Clips"
-          ],
-          "price": 59.99,
-          "image": "https://cdn-demo.algolia.com/bestbuy-0118/4353503_sb.jpg",
-          "popularity": 4956,
-          "objectID": "131298900",
-          "_highlightResult": {
-            "name": {
-              "value": "Samsung - Clear View Case for Samsung Galaxy Note 5 Cell __ais-highlight__Phone__/ais-highlight__s - Blue/Black",
-              "matchLevel": "full",
-              "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
-            },
-            "description": {
-              "value": "With its hard shell and polyurethane interior, this Samsung Clear View EF-ZN920CBEGUS case safeguards your Samsung Galaxy Note 5 cell __ais-highlight__phone__/ais-highlight__ against accidental damage. An automatic wake function turns on your __ais-highlight__phone__/ais-highlight__ when you open the case.",
-              "matchLevel": "full",
-              "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
-            },
-            "brand": {
-              "value": "Samsung",
-              "matchLevel": "none",
-              "matchedWords": []
-            },
-            "categories": [
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__s",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              },
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__ Accessories",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              },
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__ Cases & Clips",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "name": "Samsung - Clear View Case for Samsung Galaxy Note 5 Cell Phones - Blue/Black",
-          "description": "With its hard shell and polyurethane interior, this Samsung Clear View EF-ZN920CBEGUS case safeguards your Samsung Galaxy Note 5 cell phone against accidental damage. An automatic wake function turns on your phone when you open the case.",
-          "brand": "Samsung",
-          "categories": [
-            "Cell Phones",
-            "Cell Phone Accessories",
-            "Cell Phone Cases & Clips"
-          ],
-          "price": 59.99,
-          "image": "https://cdn-demo.algolia.com/bestbuy-0118/4353503_sb.jpg",
-          "popularity": 4956,
-          "objectID": "131233010",
-          "_highlightResult": {
-            "name": {
-              "value": "Samsung - Clear View Case for Samsung Galaxy Note 5 Cell __ais-highlight__Phone__/ais-highlight__s - Blue/Black",
-              "matchLevel": "full",
-              "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
-            },
-            "description": {
-              "value": "With its hard shell and polyurethane interior, this Samsung Clear View EF-ZN920CBEGUS case safeguards your Samsung Galaxy Note 5 cell __ais-highlight__phone__/ais-highlight__ against accidental damage. An automatic wake function turns on your __ais-highlight__phone__/ais-highlight__ when you open the case.",
-              "matchLevel": "full",
-              "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
-            },
-            "brand": {
-              "value": "Samsung",
-              "matchLevel": "none",
-              "matchedWords": []
-            },
-            "categories": [
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__s",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              },
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__ Accessories",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              },
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__ Cases & Clips",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "name": "Samsung - Flip-Cover Case for Samsung Galaxy S 4 Mobile Phones - White",
-          "description": "With a flip cover that shields your Samsung Galaxy S 4 mobile phone's display, this Samsung case offers reliable defense against scratches and smudges. Plastic material provides durability to help keep your phone safe.",
-          "brand": "Samsung",
-          "categories": [
-            "Cell Phones",
-            "Cell Phone Accessories",
-            "Cell Phone Cases & Clips"
-          ],
-          "price": 39.99,
-          "image": "https://cdn-demo.algolia.com/bestbuy-0118/8877168_sb.jpg",
-          "popularity": 4819,
-          "objectID": "131299280",
-          "_highlightResult": {
-            "name": {
-              "value": "Samsung - Flip-Cover Case for Samsung Galaxy S 4 Mobile __ais-highlight__Phone__/ais-highlight__s - White",
-              "matchLevel": "full",
-              "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
-            },
-            "description": {
-              "value": "With a flip cover that shields your Samsung Galaxy S 4 mobile __ais-highlight__phone__/ais-highlight__'s display, this Samsung case offers reliable defense against scratches and smudges. Plastic material provides durability to help keep your __ais-highlight__phone__/ais-highlight__ safe.",
-              "matchLevel": "full",
-              "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
-            },
-            "brand": {
-              "value": "Samsung",
-              "matchLevel": "none",
-              "matchedWords": []
-            },
-            "categories": [
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__s",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              },
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__ Accessories",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              },
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__ Cases & Clips",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "name": "Samsung - Flip-Cover Case for Samsung Galaxy S 4 Mobile Phones - White",
-          "description": "With a flip cover that shields your Samsung Galaxy S 4 mobile phone's display, this Samsung case offers reliable defense against scratches and smudges. Plastic material provides durability to help keep your phone safe.",
-          "brand": "Samsung",
-          "categories": [
-            "Cell Phones",
-            "Cell Phone Accessories",
-            "Cell Phone Cases & Clips"
-          ],
-          "price": 39.99,
-          "image": "https://cdn-demo.algolia.com/bestbuy-0118/8877168_sb.jpg",
-          "popularity": 4819,
-          "objectID": "131233390",
-          "_highlightResult": {
-            "name": {
-              "value": "Samsung - Flip-Cover Case for Samsung Galaxy S 4 Mobile __ais-highlight__Phone__/ais-highlight__s - White",
-              "matchLevel": "full",
-              "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
-            },
-            "description": {
-              "value": "With a flip cover that shields your Samsung Galaxy S 4 mobile __ais-highlight__phone__/ais-highlight__'s display, this Samsung case offers reliable defense against scratches and smudges. Plastic material provides durability to help keep your __ais-highlight__phone__/ais-highlight__ safe.",
-              "matchLevel": "full",
-              "fullyHighlighted": false,
-              "matchedWords": [
-                "phone"
-              ]
-            },
-            "brand": {
-              "value": "Samsung",
-              "matchLevel": "none",
-              "matchedWords": []
-            },
-            "categories": [
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__s",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              },
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__ Accessories",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
-              },
-              {
-                "value": "Cell __ais-highlight__Phone__/ais-highlight__ Cases & Clips",
-                "matchLevel": "full",
-                "fullyHighlighted": false,
-                "matchedWords": [
-                  "phone"
-                ]
+                "matchedWords": ["phone"]
               }
             ]
           }
         }
       ],
-      "nbHits": 228,
+      "nbHits": 6582,
       "page": 0,
-      "nbPages": 12,
-      "hitsPerPage": 20,
-      "facets": {
-        "brand": {
-          "Samsung": 170,
-          "Apple": 58
-        },
-        "categories": {
-          "Cell Phone Accessories": 228,
-          "Cell Phones": 228,
-          "Cell Phone Cases & Clips": 150,
-          "Smartwatch Accessories": 30,
-          "Smartwatches & Accessories": 30,
-          "Smartwatch Bands": 24,
-          "Wireless Chargers & Cases": 14,
-          "Wireless Chargers": 10,
-          "Smartwatch Charging Docks": 6,
-          "Car & Travel Accessories": 4
-        }
-      },
-      "exhaustiveFacetsCount": true,
-      "exhaustiveNbHits": true,
-      "query": "phone",
-      "params": "query=phone&page=0&maxValuesPerFacet=10&highlightPreTag=__ais-highlight__&highlightPostTag=__%2Fais-highlight__&facets=%5B%22brand%22%2C%22categories%22%5D&tagFilters=&facetFilters=%5B%5B%22brand%3AApple%22%2C%22brand%3ASamsung%22%5D%2C%5B%22categories%3ACell%20Phone%20Accessories%22%5D%5D",
-      "index": "demo_ecommerce",
-      "processingTimeMS": 1
-    },
-    {
-      "hits": [
-        {
-          "objectID": "131306430"
-        }
-      ],
-      "nbHits": 5672,
-      "page": 0,
-      "nbPages": 1000,
-      "hitsPerPage": 1,
+      "nbPages": 125,
+      "hitsPerPage": 8,
       "facets": {
         "brand": {
           "Incipio": 610,
           "OtterBox": 382,
           "Insignia™": 370,
+          "Apple": 330,
+          "Samsung": 292,
           "Speck": 292,
           "kate spade new york": 206,
           "mophie": 202,
-          "Spigen": 186,
-          "Samsung": 170,
+          "Spigen": 188,
           "ZAGG": 170,
-          "Tech21": 162
+          "Tech21": 162,
+          "Dynex™": 158,
+          "Modal": 156,
+          "Platinum": 148,
+          "LifeProof": 144,
+          "Case-Mate": 110,
+          "Belkin": 104,
+          "Urban Armor Gear": 96,
+          "BLU": 94,
+          "Native Union": 70
+        },
+        "price": {
+          "39.99": 926,
+          "19.99": 542,
+          "49.99": 496,
+          "29.99": 416,
+          "34.99": 398,
+          "24.99": 324,
+          "44.99": 254,
+          "14.99": 252,
+          "59.99": 222,
+          "99.99": 162,
+          "79.99": 144,
+          "9.99": 142,
+          "12.99": 128,
+          "89.99": 96,
+          "17.99": 74,
+          "699.99": 64,
+          "21.99": 60,
+          "129.99": 52,
+          "69.99": 52,
+          "39.95": 50
+        },
+        "categories": {
+          "Cell Phones": 6582,
+          "Cell Phone Accessories": 5672,
+          "Cell Phone Cases & Clips": 2390,
+          "iPhone Accessories": 1214,
+          "iPhone Cases & Clips": 1034,
+          "All Unlocked Cell Phones": 396,
+          "Unlocked Cell Phones": 396,
+          "All Cell Phones with Plans": 252,
+          "Smartwatch Accessories": 232,
+          "Smartwatches & Accessories": 232,
+          "Screen Protectors": 208,
+          "Smartwatch Bands": 172,
+          "Data Cables": 142,
+          "Photography Accessories": 130,
+          "iPhone 6s Cases": 116,
+          "All Prepaid Phones": 110,
+          "Prepaid Phones": 110,
+          "Car & Travel Accessories": 104,
+          "Car Chargers": 92,
+          "Prepaid Minutes": 74
         }
+      },
+      "facets_stats": {
+        "price": { "min": 1, "max": 899, "avg": 87.5139, "sum": 576016 }
       },
       "exhaustiveFacetsCount": true,
       "exhaustiveNbHits": true,
       "query": "phone",
-      "params": "query=phone&page=0&maxValuesPerFacet=10&highlightPreTag=__ais-highlight__&highlightPostTag=__%2Fais-highlight__&hitsPerPage=1&attributesToRetrieve=%5B%5D&attributesToHighlight=%5B%5D&attributesToSnippet=%5B%5D&tagFilters=&analytics=false&clickAnalytics=false&facets=brand&facetFilters=%5B%5B%22categories%3ACell%20Phone%20Accessories%22%5D%5D",
+      "params": "query=phone&page=0&maxValuesPerFacet=20&highlightPreTag=__ais-highlight__&highlightPostTag=__%2Fais-highlight__&hitsPerPage=8&facets=%5B%22brand%22%2C%22free_shipping%22%2C%22price%22%2C%22rating%22%2C%22categories%22%2C%22categories.lvl0%22%5D&tagFilters=",
       "index": "demo_ecommerce",
       "processingTimeMS": 2
-    },
-    {
-      "hits": [
-        {
-          "objectID": "131281030"
-        }
-      ],
-      "nbHits": 622,
-      "page": 0,
-      "nbPages": 622,
-      "hitsPerPage": 1,
-      "facets": {
-        "categories": {
-          "Cell Phones": 622,
-          "Cell Phone Accessories": 228,
-          "All Cell Phones with Plans": 206,
-          "Cell Phone Cases & Clips": 150,
-          "iPhone": 70,
-          "All Unlocked Cell Phones": 58,
-          "Unlocked Cell Phones": 58,
-          "Refurbished Phones": 52,
-          "Smartwatch Accessories": 30,
-          "Smartwatches & Accessories": 30
-        }
-      },
-      "exhaustiveFacetsCount": true,
-      "exhaustiveNbHits": true,
-      "query": "phone",
-      "params": "query=phone&page=0&maxValuesPerFacet=10&highlightPreTag=__ais-highlight__&highlightPostTag=__%2Fais-highlight__&hitsPerPage=1&attributesToRetrieve=%5B%5D&attributesToHighlight=%5B%5D&attributesToSnippet=%5B%5D&tagFilters=&analytics=false&clickAnalytics=false&facets=categories&facetFilters=%5B%5B%22brand%3AApple%22%2C%22brand%3ASamsung%22%5D%5D",
-      "index": "demo_ecommerce",
-      "processingTimeMS": 1
     }
   ]
 }

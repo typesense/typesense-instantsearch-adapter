@@ -81,6 +81,18 @@ export class SearchResponseAdapter {
     return adaptedResult;
   }
 
+  _adaptFacetStats(typesenseFacetCounts) {
+    const adaptedResult = {};
+    typesenseFacetCounts.forEach(facet => {
+      if (Object.keys(facet.stats).length > 0) {
+        Object.assign(adaptedResult, {
+          [facet.field_name]: facet.stats
+        });
+      }
+    });
+    return adaptedResult;
+  }
+
   adapt() {
     const adaptedResult = {
       hits: this._adaptHits(this.typesenseResponse.hits),
@@ -89,8 +101,13 @@ export class SearchResponseAdapter {
       nbPages: this._adaptNumberOfPages(),
       hitsPerPage: this.typesenseResponse.hits.length,
       facets: this._adaptFacets(this.typesenseResponse.facet_counts || []),
+      facets_stats: this._adaptFacetStats(
+        this.typesenseResponse.facet_counts || {}
+      ),
       processingTimeMS: this.typesenseResponse.search_time_ms
     };
+
+    // console.log(adaptedResult);
     return adaptedResult;
   }
 }
