@@ -3,10 +3,10 @@ describe("Instant Search Widgets", () => {
 
   beforeEach(async () => {
     return page.goto("http://localhost:3000");
-  });
+  }, 10 * 1000);
 
-  describe("Page load", () => {
-    it('should load the page"', async () => {
+  describe("Page", () => {
+    it("loads", async () => {
       await expect(page).toMatch("InstantSearch.js demo");
       await expect(page).toMatch("AT&T");
       return expect(page.title()).resolves.toMatch("testground");
@@ -61,7 +61,17 @@ describe("Instant Search Widgets", () => {
 
   describe("refinementList", () => {
     it("renders", async () => {
-      return expect(page).toMatchElement("#brand-list", { text: "Apple 165" });
+      return expect(page).toMatchElement("#brand-list", {
+        text: "Apple 165"
+      });
+    });
+  });
+
+  describe("toggleRefinement", () => {
+    it("renders", async () => {
+      return expect(page).toMatchElement("#toggle-refinement", {
+        text: "Free shipping"
+      });
     });
   });
 
@@ -78,6 +88,12 @@ describe("Instant Search Widgets", () => {
       return expect(page).toMatchElement("#categories-hierarchical-menu", {
         text: "Cell Phones"
       });
+    });
+  });
+
+  describe("ratingMenu", () => {
+    it("renders", async () => {
+      return expect(page).toMatchElement("#rating-menu a[aria-label='4 & up']");
     });
   });
 

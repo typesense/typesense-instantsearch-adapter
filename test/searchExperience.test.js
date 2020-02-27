@@ -162,7 +162,7 @@ describe("Search Experience", () => {
           // numericMenu
           await expect(page).toClick("#price-menu span", {
             text: "Between 500$ - 1000$"
-          }); // Apple - iPhone 6s 32GB - Space Gray
+          });
           await expect(page).toMatchElement("#stats", {
             text: "4 results found"
           });
@@ -176,6 +176,28 @@ describe("Search Experience", () => {
           const length = (await page.$$("#pagination a.ais-Pagination-link"))
             .length;
           expect(length).toEqual(1);
+        });
+      });
+
+      describe("using the ratingMenu", () => {
+        it("renders the filtered results", async () => {
+          // numericMenu
+          await expect(page).toClick(
+            "#rating-menu a[aria-label='4 & up'] span"
+          );
+          await expect(page).toMatchElement("#stats", {
+            text: "237 results found"
+          });
+          await expect(page).toMatchElement("#hits", {
+            text: "Dynex™ - Portable Charger - Gray"
+          });
+          await expect(page).toMatchElement("#infinite-hits", {
+            text: "Samsung - Adaptive Fast Charging Wall Charger"
+          });
+          await page.waitForSelector("#pagination a.ais-Pagination-link");
+          const length = (await page.$$("#pagination a.ais-Pagination-link"))
+            .length;
+          expect(length).toEqual(7 + 2);
         });
       });
     });

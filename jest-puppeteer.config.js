@@ -2,8 +2,7 @@ module.exports = {
   launch: {
     // dumpio: true,
     headless: process.env.HEADLESS === "true",
-    defaultViewport: null,
-    devtools: true
+    defaultViewport: null
   },
   server: [
     {
@@ -14,7 +13,8 @@ module.exports = {
     },
     {
       command: "npm run startTestTypesenseServer",
-      port: 8108
+      port: 8108,
+      launchTimeout: 20 * 1000
       // debug: true
     }
   ]
