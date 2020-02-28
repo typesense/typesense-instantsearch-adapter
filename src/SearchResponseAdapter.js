@@ -40,7 +40,7 @@ export class SearchResponseAdapter {
 
     typesenseHit.highlights.forEach(highlight => {
       result[highlight.field] = {
-        value: highlight.snippet,
+        value: highlight.snippet || highlight.snippets,
         matchLevel: "full",
         matchedWords: [] // Todo: Fix MatchedWords
       };
