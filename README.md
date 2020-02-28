@@ -8,6 +8,8 @@ The good folks over at Algolia have built and open-sourced [Instantsearch.js](ht
 
 With the adapter in this repository, you'll be able to use [Instantsearch](https://github.com/algolia/instantsearch.js) (and its [React](https://github.com/algolia/react-instantsearch), [Vue](https://github.com/algolia/vue-instantsearch) and [Angular](https://github.com/algolia/angular-instantsearch) cousins) with data indexed in a Typesense search server.
 
+If you haven't used Instantsearch before, we highly recommend going through their Getting Started guide [here](https://www.algolia.com/doc/guides/building-search-ui/getting-started/js/#build-a-simple-ui).
+
 ## Installation
 
 ```shell
@@ -24,7 +26,7 @@ Since this is an adapter, it will not install the Instantsearch library automati
 
 - [instantsearch.js](https://github.com/algolia/instantsearch.js)
 - [react-instantsearch](https://github.com/algolia/react-instantsearch)
-- [vue-instantsearch](https://github.com/algolia/vue-instantsearch) or
+- [vue-instantsearch](https://github.com/algolia/vue-instantsearch)
 - [angular-instantsearch](https://github.com/algolia/angular-instantsearch)
 
 You'll find information on how to get started with each of the above libraries in their respective repos. 
@@ -74,7 +76,7 @@ search.addWidgets([
 ]);
 ```
 
-You can add any of the Instantsearch widgets [here](https://www.algolia.com/doc/guides/building-search-ui/widgets/showcase/js/) that are supported by the adapter.
+You can add any of the Instantsearch widgets [here](https://www.algolia.com/doc/guides/building-search-ui/widgets/showcase/js/) that are [supported](#widget-compatibility) by the adapter.
 
 
 ### With [react-instantsearch](https://github.com/algolia/react-instantsearch)
@@ -108,7 +110,7 @@ const App = () => (
 );
 ```
 
-You can then add any of the Instantsearch-React widgets [here](https://www.algolia.com/doc/guides/building-search-ui/widgets/showcase/react/) that are supported by the adapter.
+You can then add any of the Instantsearch-React widgets [here](https://www.algolia.com/doc/guides/building-search-ui/widgets/showcase/react/) that are [supported](#widget-compatibility) by the adapter.
 
 ### With [angular-instantsearch](https://github.com/algolia/angular-instantsearch)
 
@@ -152,7 +154,7 @@ export default {
 </script>
 ```
 
-You can then add any of the Instantsearch widgets [here](https://www.algolia.com/doc/guides/building-search-ui/widgets/showcase/vue/) that are supported by the adapter.
+You can then add any of the Instantsearch widgets [here](https://www.algolia.com/doc/guides/building-search-ui/widgets/showcase/vue/) that are [supported](#widget-compatibility) by the adapter.
 
 
 ### With `instantsearch-angular`
@@ -187,7 +189,7 @@ export class AppComponent {
 }
 ```
 
-You can then add any of the Instantsearch widgets [here](https://www.algolia.com/doc/guides/building-search-ui/widgets/showcase/angular/) that are supported by the adapter.
+You can then add any of the Instantsearch widgets [here](https://www.algolia.com/doc/guides/building-search-ui/widgets/showcase/angular/) that are [supported](#widget-compatibility) by the adapter.
 
 ## Widget Specific Instructions
 
@@ -231,6 +233,14 @@ This version of the adapter will work with:
 - angular-instantsearch > 3.0.0
 
 If a particular version of the above libraries don't work with the adapter, please open a Github issue with details.
+
+### Widget Compatibility
+
+This adapter works with all widgets in [this list](https://www.algolia.com/doc/api-reference/widgets/js/), _except_ for the following:
+
+- `geoSearch`
+- `queryRuleCustomData`
+- `queryRuleContext`
 
 ## Development
 
