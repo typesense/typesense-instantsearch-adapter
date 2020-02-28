@@ -2,3 +2,4 @@
 node_modules
 .typesense-server-data
 yarn-error.log
+junit.xml
