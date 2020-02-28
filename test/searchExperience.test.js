@@ -16,7 +16,7 @@ describe("Search Experience", () => {
         text: "Cell Phone Accessories"
       });
       await expect(page).toMatchElement("#stats", {
-        text: "433 results found"
+        text: "436 results found"
       });
       await expect(page).toMatchElement("#hits .hit-name:first-of-type", {
         text: "Charger"
@@ -40,7 +40,7 @@ describe("Search Experience", () => {
             "#brand-list input[type=checkbox][value=Samsung]"
           );
           await expect(page).toMatchElement("#stats", {
-            text: "433 results found"
+            text: "436 results found"
           });
           await expect(page).toMatchElement("#hits", {
             text: "Fast Charge Wireless Charger"
@@ -118,20 +118,22 @@ describe("Search Experience", () => {
             text: "Clear refinements"
           });
           await expect(page).toMatchElement("#stats", {
-            text: "433 results found"
+            text: "436 results found"
           });
         });
       });
 
       describe("using the hierarchicalMenu", () => {
         it("renders the filtered results", async () => {
-          // hierarchicalMenu
           await expect(page).toClick("#searchbox input[type=search]", {
             clickCount: 3
           });
           await (await page.$("#searchbox input[type=search]")).press(
             "Backspace"
           );
+          await expect(page).toMatchElement("#categories-hierarchical-menu a", {
+            text: "Cell Phones"
+          });
           await expect(page).toClick("#categories-hierarchical-menu a", {
             text: "Cell Phones"
           });
@@ -164,18 +166,18 @@ describe("Search Experience", () => {
             text: "Between 500$ - 1000$"
           });
           await expect(page).toMatchElement("#stats", {
-            text: "4 results found"
+            text: "21 results found"
           });
           await expect(page).toMatchElement("#hits", {
-            text: "Samsung - Galaxy S7 edge 4G LTE"
+            text: "Samsung - Galaxy J3"
           });
           await expect(page).toMatchElement("#infinite-hits", {
-            text: "Sony - Xperia™ XZ 4G LTE with 32GB Memory Cell Phone"
+            text: "Sony - XPERIA XA 4G LTE with 16GB Memory Cell Phone"
           });
           await page.waitForSelector("#pagination a.ais-Pagination-link");
           const length = (await page.$$("#pagination a.ais-Pagination-link"))
             .length;
-          expect(length).toEqual(1);
+          expect(length).toEqual(3 + 2);
         });
       });
       describe("using the rangeInput", () => {
@@ -190,20 +192,22 @@ describe("Search Experience", () => {
           );
           await expect(page).toClick("#price-range-input button");
           await expect(page).toMatchElement("#stats", {
-            text: "72 results found"
+            text: "32 results found"
           });
           await expect(page).toMatchElement("#hits", {
             text: "mophie - Powerstation 20,000 mAh Portable Charger"
           });
           return expect(page).toMatchElement("#infinite-hits", {
-            text: "Tumi - Portable Charger"
+            text: "Belkin - Valet 6700 mAh Portable Charger"
           });
         });
       });
 
       describe("using the ratingMenu", () => {
         it("renders the filtered results", async () => {
-          // numericMenu
+          await expect(page).toMatchElement(
+            "#rating-menu a[aria-label='4 & up'] span"
+          );
           await expect(page).toClick(
             "#rating-menu a[aria-label='4 & up'] span"
           );
@@ -229,7 +233,7 @@ describe("Search Experience", () => {
         // Sort Asc
         await expect(page).toSelect("#sort-by select", "Price (asc)");
         await expect(page).toMatchElement("#stats", {
-          text: "433 results found"
+          text: "436 results found"
         });
         await expect(page).toMatchElement("#hits", {
           text: "Tzumi - PocketJuice Portable Charger"
@@ -241,7 +245,7 @@ describe("Search Experience", () => {
         // Sort Desc
         await expect(page).toSelect("#sort-by select", "Price (desc)");
         await expect(page).toMatchElement("#stats", {
-          text: "433 results found"
+          text: "436 results found"
         });
         await expect(page).toMatchElement("#hits", {
           text: "mophie - powerstation 8x Portable Charger"
