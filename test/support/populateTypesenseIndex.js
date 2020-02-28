@@ -112,37 +112,40 @@ module.exports = (async () => {
 
   await typesense.collections().create(schema);
 
-  return Promise.all(
-    products.map(product => {
-      product.free_shipping = product.name.length % 2 === 1; // We need this to be deterministic for tests
-      product.rating = (product.description.length % 5) + 1; // We need this to be deterministic for tests
-      product.categories.forEach((category, index) => {
-        product[`categories.lvl${index}`] = product.categories
-          .slice(0, index + 1)
-          .join(" > ");
-      });
-      // TODO: Fix this after we support optional facets
-      for (let i = 0; i <= 3; i++) {
-        if (!product[`categories.lvl${i}`]) {
-          product[`categories.lvl${i}`] = "";
+  const returnData = products
+    .reduce((accPromise, product) => {
+      return accPromise.then(() => {
+        product.free_shipping = product.name.length % 2 === 1; // We need this to be deterministic for tests
+        product.rating = (product.description.length % 5) + 1; // We need this to be deterministic for tests
+        product.categories.forEach((category, index) => {
+          product[`categories.lvl${index}`] = product.categories
+            .slice(0, index + 1)
+            .join(" > ");
+        });
+        // TODO: Fix this after we support optional facets
+        for (let i = 0; i <= 3; i++) {
+          if (!product[`categories.lvl${i}`]) {
+            product[`categories.lvl${i}`] = "";
+          }
         }
-      }
-      return promiseRetry((retry, number) => {
-        // console.log(`"${product.name}": Indexing #${number}`);
-        process.stdout.write(".");
-        return typesense
-          .collections("products")
-          .documents()
-          .create(product)
-          .catch(retry);
+        return promiseRetry((retry, number) => {
+          // console.log(`"${product.name}": Indexing #${number}`);
+          process.stdout.write(".");
+          return typesense
+            .collections("products")
+            .documents()
+            .create(product)
+            .catch(retry);
+        });
       });
-    })
-  )
+    }, Promise.resolve())
     .then(data => {
       // console.log(data);
-      // console.log("Done Indexing products");
+      console.log("\nDone indexing products");
     })
     .catch(error => {
       console.log(error);
     });
+
+  return returnData;
 })();
