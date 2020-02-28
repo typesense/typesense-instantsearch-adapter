@@ -38,7 +38,8 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
 const searchClient = typesenseInstantsearchAdapter.searchClient;
 const search = instantsearch({
   searchClient,
-  indexName: "products"
+  indexName: "products",
+  routing: true,
 });
 const suggestions = instantsearch({
   indexName: "products",
@@ -56,7 +57,8 @@ const suggestions = instantsearch({
 // });
 // const suggestions = instantsearch({
 //   indexName: "demo_ecommerce",
-//   searchClient
+//   searchClient,
+//   routing: true
 // });
 
 // ============ Begin Widget Configuration
