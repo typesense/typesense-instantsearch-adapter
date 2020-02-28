@@ -236,11 +236,11 @@ If a particular version of the above libraries don't work with the adapter, plea
 
 ```shell
 $ npm install
-$ npm run startTestTypesenseServer
+$ npm run typesenseServer
 $ npm run indexTestData
 
 $ npm link typesense-instantsearch-adapter
-$ npm run startTestground
+$ npm run testground
 
 $ npm test
 ```

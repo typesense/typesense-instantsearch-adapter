@@ -21,6 +21,6 @@
     "prettier": "1.19.1"
   },
   "dependencies": {
-    "instantsearch.js": "git://github.com/algolia/instantsearch.js.git#4.2.0"
+    "instantsearch.js": "^4.2.0"
   }
 }

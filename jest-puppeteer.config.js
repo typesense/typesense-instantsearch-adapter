@@ -1,20 +1,21 @@
 module.exports = {
   launch: {
     // dumpio: true,
-    headless: process.env.HEADLESS === "true",
+    // headless: process.env.HEADLESS === "true" || process.env.CI === "true",
+    headless: true,
     defaultViewport: null
   },
   server: [
     {
-      command: "npm run startTestground",
+      command: "npm run testground",
       port: 3000,
       // debug: true,
-      launchTimeout: 20 * 1000
+      launchTimeout: 120 * 1000
     },
     {
-      command: "npm run startTestTypesenseServer",
+      command: "npm run typesenseServer",
       port: 8108,
-      launchTimeout: 20 * 1000
+      launchTimeout: 60 * 1000
       // debug: true
     }
   ]
