@@ -31,17 +31,17 @@ jobs:
             echo "[ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\"" >> $BASH_ENV
             echo 'nvm use v12.16.1' >> $BASH_ENV
       - restore_cache:
-          # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
-          key: dependency-cache-v1-{{ checksum "package-lock.json" }}
+          key: dependency-cache-v1-{{ checksum "package-lock.json" }}-{{ checksum "test/support/testground/yarn.lock" }}
       - run:
           name: npm install
           command: npm install
-      - save_cache: # special step to save the dependency cache
-          key: dependency-cache-v1-{{ checksum "package-lock.json" }}
+      - save_cache:
+          key: dependency-cache-v1-{{ checksum "package-lock.json" }}-{{ checksum "test/support/testground/yarn.lock" }}
           paths:
             - ./node_modules
+            - ./test/support/testground/node_modules
       - run:
-          name: test
+          name: npm test
           command: npm test
 
 workflows:
