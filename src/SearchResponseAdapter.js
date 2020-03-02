@@ -1,6 +1,7 @@
 "use strict";
 
 import { utils } from "./support/utils";
+import he from "he";
 
 export class SearchResponseAdapter {
   constructor(typesenseResponse, instantsearchRequest) {
@@ -15,15 +16,20 @@ export class SearchResponseAdapter {
         ...typesenseHit.document
       };
       adaptedHit.objectID = typesenseHit.document.id;
-      adaptedHit._highlightResult = this._adaptHighlightResult(typesenseHit);
-      // Todo: Fix Snippets and Highlights
-      adaptedHit._snippetResult = adaptedHit._highlightResult;
+      adaptedHit._snippetResult = this._adaptHighlightResult(
+        typesenseHit,
+        "snippet"
+      );
+      adaptedHit._highlightResult = this._adaptHighlightResult(
+        typesenseHit,
+        "value"
+      );
       return adaptedHit;
     });
     return adaptedResult;
   }
 
-  _adaptHighlightResult(typesenseHit) {
+  _adaptHighlightResult(typesenseHit, snippetOrValue) {
     // Algolia lists all searchable attributes in this key, even if there are no matches
     // So do the same and then override highlights
 
@@ -40,7 +46,7 @@ export class SearchResponseAdapter {
 
     typesenseHit.highlights.forEach(highlight => {
       result[highlight.field] = {
-        value: highlight.snippet || highlight.snippets,
+        value: highlight[snippetOrValue] || highlight[`${snippetOrValue}s`],
         matchLevel: "full",
         matchedWords: [] // Todo: Fix MatchedWords
       };
@@ -55,14 +61,16 @@ export class SearchResponseAdapter {
         result[attribute] = [];
         value.forEach(v => {
           result[attribute].push({
-            value: this._adaptHighlightTag(`${v}`),
+            value: this._adaptHighlightTag(he.decode(`${v}`)),
             matchLevel: matchLevel, // TODO: Fix MatchLevel for array
             matchedWords: matchedWords // TODO: Fix MatchedWords for array
           });
         });
       } else {
         // Convert all values to strings
-        result[attribute].value = this._adaptHighlightTag(`${value}`);
+        result[attribute].value = this._adaptHighlightTag(
+          he.decode(`${value}`)
+        );
       }
     });
     return result;

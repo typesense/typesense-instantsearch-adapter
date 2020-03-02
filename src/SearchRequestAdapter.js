@@ -89,6 +89,7 @@ export class SearchRequestAdapter {
     const typesenseSearchParams = {
       q: params.query === "" ? "*" : params.query,
       query_by: this.searchByFields.join(","),
+      highlight_full_fields: this.searchByFields.join(","),
       facet_by: [params.facets].flat().join(","),
       filter_by: this._adaptFilters(params.facetFilters, params.numericFilters),
       sort_by: this._adaptSortBy(indexName),
