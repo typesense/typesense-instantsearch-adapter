@@ -1,4 +1,8 @@
+import { setDefaultOptions } from "expect-puppeteer";
+
 module.exports = async () => {
+  setDefaultOptions({ timeout: 1000 });
+
   // Log page errors
   page
     .on("console", message => {

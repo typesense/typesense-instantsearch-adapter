@@ -126,7 +126,7 @@ describe("Instant Search Widgets", () => {
 
   describe("rangeInput", () => {
     it("renders", async () => {
-      expect(page).toMatchElement(
+      await expect(page).toMatchElement(
         '#price-range-input form input[type=number][placeholder="9"]'
       );
       return expect(page).toMatchElement(
@@ -137,7 +137,9 @@ describe("Instant Search Widgets", () => {
 
   describe("rangeSlide", () => {
     it("renders", async () => {
-      expect(page).toMatchElement('#price-range-slider div[aria-valuenow="9"]');
+      await expect(page).toMatchElement(
+        '#price-range-slider div[aria-valuenow="9"]'
+      );
       return expect(page).toMatchElement(
         '#price-range-slider div[aria-valuenow="700"]'
       );

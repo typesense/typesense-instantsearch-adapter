@@ -15,6 +15,12 @@ describe("Search Experience", () => {
       await expect(page).toMatchElement("#categories-menu", {
         text: "Cell Phone Accessories"
       });
+      await expect(page).toMatchElement(
+        '#price-range-input form input[type=number][placeholder="3"]'
+      );
+      await expect(page).toMatchElement(
+        '#price-range-input form input[type=number][placeholder="250"]'
+      );
       await expect(page).toMatchElement("#stats", {
         text: "436 results found"
       });
@@ -40,8 +46,14 @@ describe("Search Experience", () => {
             "#brand-list input[type=checkbox][value=Samsung]"
           );
           await expect(page).toMatchElement("#stats", {
-            text: "436 results found"
+            text: "27 results found"
           });
+          await expect(page).toMatchElement(
+            '#price-range-input form input[type=number][placeholder="14"]'
+          );
+          await expect(page).toMatchElement(
+            '#price-range-input form input[type=number][placeholder="770"]'
+          );
           await expect(page).toMatchElement("#hits", {
             text: "Fast Charge Wireless Charger"
           });
