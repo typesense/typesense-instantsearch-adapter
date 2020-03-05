@@ -12,6 +12,7 @@ export class Configuration {
     };
 
     this.searchByFields = options.searchByFields || [];
+    this.maxHits = options.maxHits;
   }
 
   validate() {

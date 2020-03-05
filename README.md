@@ -50,7 +50,8 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
       apiKey: "abcd" // Be sure to use the search-only-api-key
     }
   },
-  searchByFields: ["name", "description", "categories"]
+  searchByFields: ["name", "description", "categories"],
+  maxHits: 5000 // Optional
 });
 const searchClient = typesenseInstantsearchAdapter.searchClient;
 
@@ -95,7 +96,8 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
       apiKey: "abcd" // Be sure to use the search-only-api-key
     }
   },
-  searchByFields: ["name", "description", "categories"]
+  searchByFields: ["name", "description", "categories"],
+  maxHits: 5000 // Optional
 });
 const searchClient = typesenseInstantsearchAdapter.searchClient;
 
@@ -140,7 +142,8 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
       apiKey: "abcd" // Be sure to use the search-only-api-key
     }
   },
-  searchByFields: ["name", "description", "categories"]
+  searchByFields: ["name", "description", "categories"],
+  maxHits: 5000 // Optional
 });
 const searchClient = typesenseInstantsearchAdapter.searchClient;
 
@@ -172,7 +175,8 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
       apiKey: "abcd" // Be sure to use the search-only-api-key
     }
   },
-  searchByFields: ["name", "description", "categories"]
+  searchByFields: ["name", "description", "categories"],
+  maxHits: 5000 // Optional
 });
 const searchClient = typesenseInstantsearchAdapter.searchClient;
 

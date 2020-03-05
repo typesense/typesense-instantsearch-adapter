@@ -33,13 +33,14 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
       apiKey: "abcd"
     }
   },
-  searchByFields: ["name", "description", "categories"]
+  searchByFields: ["name", "description", "categories"],
+  maxHits: 10000
 });
 const searchClient = typesenseInstantsearchAdapter.searchClient;
 const search = instantsearch({
   searchClient,
   indexName: "products",
-  routing: true,
+  routing: true
 });
 const suggestions = instantsearch({
   indexName: "products",

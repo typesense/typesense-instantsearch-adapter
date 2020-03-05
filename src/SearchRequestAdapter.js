@@ -5,10 +5,11 @@ export class SearchRequestAdapter {
     return new RegExp("^(.+?)(?=(/sort/(.*))|$)");
   }
 
-  constructor(instantsearchRequest, typesenseClient, searchByFields) {
+  constructor(instantsearchRequest, typesenseClient, searchByFields, maxHits) {
     this.instantsearchRequest = instantsearchRequest;
     this.typesenseClient = typesenseClient;
     this.searchByFields = searchByFields;
+    this.maxHits = maxHits;
   }
 
   _adaptFacetFilters(facetFilters) {
@@ -96,6 +97,10 @@ export class SearchRequestAdapter {
       max_facet_values: params.maxValuesPerFacet,
       page: (params.page || 0) + 1
     };
+
+    if (this.maxHits) {
+      typesenseSearchParams.max_hits = this.maxHits;
+    }
 
     if (params.facetQuery) {
       typesenseSearchParams.facet_query = `${params.facetName}:${params.facetQuery}`;
