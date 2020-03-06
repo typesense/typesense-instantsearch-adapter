@@ -112,6 +112,7 @@ export class SearchResponseAdapter {
       facets_stats: this._adaptFacetStats(
         this.typesenseResponse.facet_counts || {}
       ),
+      query: this.typesenseResponse.request_params.q,
       processingTimeMS: this.typesenseResponse.search_time_ms
     };
 

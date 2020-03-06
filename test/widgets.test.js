@@ -32,7 +32,7 @@ describe("Instant Search Widgets", () => {
   describe("stats", () => {
     it("renders", async () => {
       return expect(page).toMatchElement("#stats", {
-        text: "3,291 results found"
+        text: /3,291 results found in \d*ms for \*'/
       });
     });
   });

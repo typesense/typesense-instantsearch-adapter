@@ -47,17 +47,20 @@ module.exports = (async () => {
       {
         name: "categories.lvl1",
         type: "string",
-        facet: true
+        facet: true,
+        optional: true
       },
       {
         name: "categories.lvl2",
         type: "string",
-        facet: true
+        facet: true,
+        optional: true
       },
       {
         name: "categories.lvl3",
         type: "string",
-        facet: true
+        facet: true,
+        optional: true
       },
       {
         name: "price",
@@ -88,15 +91,20 @@ module.exports = (async () => {
     default_sorting_field: "popularity"
   };
 
+  console.log("Populating index in Typesense");
+
   const products = require("./data/ecommerce.json");
 
   let reindexNeeded = false;
   try {
     const collection = await typesense.collections("products").retrieve();
+    console.log("Found existing schema:");
+    console.log(JSON.stringify(collection, null, 2));
     if (
       collection.num_documents !== products.length ||
       process.env.FORCE_REINDEX === "true"
     ) {
+      console.log("Deleting existing schema");
       reindexNeeded = true;
       await typesense.collections("products").delete();
     }
@@ -108,10 +116,17 @@ module.exports = (async () => {
     return true;
   }
 
-  console.log("Indexing products...");
-
+  console.log("Creating schema: ");
+  console.log(JSON.stringify(schema, null, 2));
   await typesense.collections().create(schema);
 
+  // const collectionRetrieved = await typesense
+  //   .collections("products")
+  //   .retrieve();
+  // console.log("Retrieving created schema: ");
+  // console.log(JSON.stringify(collectionRetrieved, null, 2));
+
+  console.log("Adding records: ");
   const returnData = products
     .reduce((accPromise, product) => {
       return accPromise.then(() => {
@@ -122,12 +137,6 @@ module.exports = (async () => {
             .slice(0, index + 1)
             .join(" > ");
         });
-        // TODO: Fix this after we support optional facets
-        for (let i = 0; i <= 3; i++) {
-          if (!product[`categories.lvl${i}`]) {
-            product[`categories.lvl${i}`] = "";
-          }
-        }
         return promiseRetry((retry, number) => {
           // console.log(`"${product.name}": Indexing #${number}`);
           process.stdout.write(".");
@@ -141,7 +150,7 @@ module.exports = (async () => {
     }, Promise.resolve())
     .then(data => {
       // console.log(data);
-      console.log("\nDone indexing products");
+      console.log("Done indexing");
     })
     .catch(error => {
       console.log(error);

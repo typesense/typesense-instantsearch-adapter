@@ -9,14 +9,14 @@ module.exports = {
     {
       command: "npm run testground",
       port: 3000,
-      // debug: true,
-      launchTimeout: 120 * 1000
+      launchTimeout: 120 * 1000,
+      debug: false
     },
     {
       command: "npm run typesenseServer",
       port: 8108,
-      launchTimeout: 60 * 1000
-      // debug: true
+      launchTimeout: 60 * 1000,
+      debug: false
     }
   ]
 };

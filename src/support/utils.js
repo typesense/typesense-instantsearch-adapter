@@ -11,9 +11,9 @@ export const utils = {
       );
   },
   _adaptNumberOfPages() {
-    // Todo: Fix - this is a temp hack, replace hits.length with per_page, to prevent issues when rendering the last page
     const result =
-      this.typesenseResponse.found / this.typesenseResponse.hits.length;
+      this.typesenseResponse.found /
+      this.typesenseResponse.request_params.per_page;
     if (Number.isFinite(result)) {
       return Math.ceil(result);
     } else {
