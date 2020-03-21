@@ -251,7 +251,7 @@ This adapter works with all widgets in [this list](https://www.algolia.com/doc/a
 ```shell
 $ npm install
 $ npm run typesenseServer
-$ npm run indexTestData
+$ FORCE_REINDEX=true npm run indexTestData
 
 $ npm link typesense-instantsearch-adapter
 $ npm run testground
