@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "parcel index.html --port 3000",
+    "testground": "npm start",
     "build:instantsearch.js": "cd node_modules/instantsearch.js && yarn && yarn run build:es",
     "build": "parcel build index.html",
     "lint": "eslint .",

@@ -1,6 +1,6 @@
-# typesense-instantsearch-adapter
+# Typesense Instantsearch Adapter
 
-An adapter to use the awesome [Instantsearch.js](https://github.com/algolia/instantsearch.js) library with a Typesense search backend, to build rich search interfaces.
+An adapter to use the awesome [Instantsearch.js](https://github.com/algolia/instantsearch.js) library with a [Typesense](https://typesense.org) Search Server, to build rich search interfaces.
 
 ## Background
 
@@ -9,6 +9,7 @@ The good folks over at Algolia have built and open-sourced [Instantsearch.js](ht
 With the adapter in this repository, you'll be able to use [Instantsearch](https://github.com/algolia/instantsearch.js) (and its [React](https://github.com/algolia/react-instantsearch), [Vue](https://github.com/algolia/vue-instantsearch) and [Angular](https://github.com/algolia/angular-instantsearch) cousins) with data indexed in a Typesense search server.
 
 If you haven't used Instantsearch before, we highly recommend going through their Getting Started guide [here](https://www.algolia.com/doc/guides/building-search-ui/getting-started/js/#build-a-simple-ui).
+Once you go through the guide, follow the usage instructions below to plug the Typesense adapter into Instantsearch.
 
 ## Installation
 
@@ -81,6 +82,7 @@ search.addWidgets([
 
 You can add any of the Instantsearch widgets [here](https://www.algolia.com/doc/guides/building-search-ui/widgets/showcase/js/) that are [supported](#widget-compatibility) by the adapter.
 
+You'll also find a working example in [test/support/testground](test/support/testground). To run it, run `npm run testground` from the project root folder.
 
 ### With [react-instantsearch](https://github.com/algolia/react-instantsearch)
 ```jsx harmony
