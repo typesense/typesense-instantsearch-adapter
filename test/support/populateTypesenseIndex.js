@@ -2,17 +2,18 @@
 // $ node populateTypesenseIndex.js
 
 const Typesense = require("typesense");
-const promiseRetry = require("promise-retry");
 
 module.exports = (async () => {
   // Create a client
   const typesense = new Typesense.Client({
-    masterNode: {
-      host: "localhost",
-      port: "8108",
-      protocol: "http",
-      apiKey: "xyz"
-    }
+    nodes: [
+      {
+        host: "localhost",
+        port: "8108",
+        protocol: "http"
+      }
+    ],
+    apiKey: "xyz"
   });
 
   const schema = {
@@ -98,8 +99,8 @@ module.exports = (async () => {
   let reindexNeeded = false;
   try {
     const collection = await typesense.collections("products").retrieve();
-    console.log("Found existing schema:");
-    console.log(JSON.stringify(collection, null, 2));
+    console.log("Found existing schema");
+    // console.log(JSON.stringify(collection, null, 2));
     if (
       collection.num_documents !== products.length ||
       process.env.FORCE_REINDEX === "true"
@@ -127,34 +128,35 @@ module.exports = (async () => {
   // console.log(JSON.stringify(collectionRetrieved, null, 2));
 
   console.log("Adding records: ");
-  const returnData = products
-    .reduce((accPromise, product) => {
-      return accPromise.then(() => {
-        product.free_shipping = product.name.length % 2 === 1; // We need this to be deterministic for tests
-        product.rating = (product.description.length % 5) + 1; // We need this to be deterministic for tests
-        product.categories.forEach((category, index) => {
-          product[`categories.lvl${index}`] = product.categories
-            .slice(0, index + 1)
-            .join(" > ");
-        });
-        return promiseRetry((retry, number) => {
-          // console.log(`"${product.name}": Indexing #${number}`);
-          process.stdout.write(".");
-          return typesense
-            .collections("products")
-            .documents()
-            .create(product)
-            .catch(retry);
-        });
-      });
-    }, Promise.resolve())
-    .then(data => {
-      // console.log(data);
-      console.log("Done indexing");
-    })
-    .catch(error => {
-      console.log(error);
-    });
 
-  return returnData;
+  // Bulk Import
+  products.forEach(product => {
+    product.free_shipping = product.name.length % 2 === 1; // We need this to be deterministic for tests
+    product.rating = (product.description.length % 5) + 1; // We need this to be deterministic for tests
+    product.categories.forEach((category, index) => {
+      product[`categories.lvl${index}`] = product.categories
+        .slice(0, index + 1)
+        .join(" > ");
+    });
+  });
+
+  try {
+    const returnData = await typesense
+      .collections("products")
+      .documents()
+      .createMany(products);
+    console.log(returnData);
+    console.log("Done indexing.");
+
+    const failedItems = returnData.items.filter(item => item.success === false);
+    if (failedItems.length > 0) {
+      throw new Error(
+        `Error indexing items ${JSON.stringify(failedItems, null, 2)}`
+      );
+    }
+
+    return returnData;
+  } catch (error) {
+    console.log(error);
+  }
 })();

@@ -22,7 +22,7 @@ or
 $ yarn add typesense-instantsearch-adapter
 ```
 
-Since this is an adapter, it will not install the Instantsearch library automatically for you. You need to also install one of the following in your application directly:
+Since this is an adapter, it **will not install** the Instantsearch library automatically for you. You need to install one of the following in your application directly:
 
 - [instantsearch.js](https://github.com/algolia/instantsearch.js)
 - [react-instantsearch](https://github.com/algolia/react-instantsearch)
@@ -43,12 +43,14 @@ import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
 
 const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   server: {
-    masterNode: {
-      host: "localhost",
-      port: "8108",
-      protocol: "http",
-      apiKey: "abcd" // Be sure to use the search-only-api-key
-    }
+    apiKey: "abcd", // Be sure to use the search-only-api-key
+    nodes: [
+      {
+        host: "localhost",
+        port: "8108",
+        protocol: "http"
+      }
+    ]
   },
   searchByFields: ["name", "description", "categories"],
   maxHits: 5000 // Optional
@@ -89,12 +91,14 @@ import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
 
 const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   server: {
-    masterNode: {
-      host: "localhost",
-      port: "8108",
-      protocol: "http",
-      apiKey: "abcd" // Be sure to use the search-only-api-key
-    }
+    apiKey: "abcd", // Be sure to use the search-only-api-key
+    nodes: [
+      {
+        host: "localhost",
+        port: "8108",
+        protocol: "http"
+      }
+    ]
   },
   searchByFields: ["name", "description", "categories"],
   maxHits: 5000 // Optional
@@ -114,7 +118,7 @@ const App = () => (
 
 You can then add any of the Instantsearch-React widgets [here](https://www.algolia.com/doc/guides/building-search-ui/widgets/showcase/react/) that are [supported](#widget-compatibility) by the adapter.
 
-### With [angular-instantsearch](https://github.com/algolia/angular-instantsearch)
+### With [vue-instantsearch](https://github.com/algolia/vue-instantsearch)
 
 App.vue:
 
@@ -135,12 +139,14 @@ import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
 
 const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   server: {
-    masterNode: {
-      host: "localhost",
-      port: "8108",
-      protocol: "http",
-      apiKey: "abcd" // Be sure to use the search-only-api-key
-    }
+    apiKey: "abcd", // Be sure to use the search-only-api-key
+    nodes: [
+      {
+        host: "localhost",
+        port: "8108",
+        protocol: "http"
+      }
+    ]
   },
   searchByFields: ["name", "description", "categories"],
   maxHits: 5000 // Optional
@@ -159,8 +165,7 @@ export default {
 
 You can then add any of the Instantsearch widgets [here](https://www.algolia.com/doc/guides/building-search-ui/widgets/showcase/vue/) that are [supported](#widget-compatibility) by the adapter.
 
-
-### With `instantsearch-angular`
+### With [angular-instantsearch](https://github.com/algolia/angular-instantsearch)
 ```javascript
 // app.component.ts
 import { Component } from '@angular/core';
@@ -168,12 +173,14 @@ import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
 
 const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   server: {
-    masterNode: {
-      host: "localhost",
-      port: "8108",
-      protocol: "http",
-      apiKey: "abcd" // Be sure to use the search-only-api-key
-    }
+    apiKey: "abcd", // Be sure to use the search-only-api-key
+    nodes: [
+      {
+        host: "localhost",
+        port: "8108",
+        protocol: "http"
+      }
+    ]
   },
   searchByFields: ["name", "description", "categories"],
   maxHits: 5000 // Optional
@@ -230,11 +237,11 @@ The generalized pattern for the value attribute is: `<index_name>[/sort/<sort_by
 
 This version of the adapter will work with:
 
-- typesense server > (TODO: Update with latest release)
-- instantsearch.js > 4.2.0
-- react-instantsearch > 6.0.0
-- vue-instantsearch > 2.2.1
-- angular-instantsearch > 3.0.0
+- typesense server >= 0.12 
+- instantsearch.js >= 4.2.0
+- react-instantsearch >= 6.0.0
+- vue-instantsearch >= 2.2.1
+- angular-instantsearch >= 3.0.0
 
 If a particular version of the above libraries don't work with the adapter, please open a Github issue with details.
 

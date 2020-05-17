@@ -149,6 +149,9 @@ describe("Search Experience", () => {
           await expect(page).toClick("#categories-hierarchical-menu a", {
             text: "Cell Phones"
           });
+          await expect(page).toMatchElement("#categories-hierarchical-menu a", {
+            text: "iPhone"
+          });
           await expect(page).toClick("#categories-hierarchical-menu a", {
             text: "iPhone"
           });
@@ -178,18 +181,18 @@ describe("Search Experience", () => {
             text: "Between 500$ - 1000$"
           });
           await expect(page).toMatchElement("#stats", {
-            text: "21 results found"
+            text: "7 results found"
           });
           await expect(page).toMatchElement("#hits", {
-            text: "Samsung - Galaxy J3"
+            text: "Motorola - Moto Z 4G LTE"
           });
           await expect(page).toMatchElement("#infinite-hits", {
-            text: "Sony - XPERIA XA 4G LTE with 16GB Memory Cell Phone"
+            text: "Sony - Xperia™ XZ 4G LTE with 32GB Memory Cell Phone"
           });
           await page.waitForSelector("#pagination a.ais-Pagination-link");
           const length = (await page.$$("#pagination a.ais-Pagination-link"))
             .length;
-          expect(length).toEqual(3 + 2);
+          expect(length).toEqual(1);
         });
       });
       describe("using the rangeInput", () => {
@@ -263,14 +266,14 @@ describe("Search Experience", () => {
           text: "mophie - powerstation 8x Portable Charger"
         });
         await expect(page).toMatchElement("#infinite-hits", {
-          text: "Tumi - Portable Charger"
+          text: "Verizon - Jetpack 4G LTE Mobile Hotspot"
         });
         await expect(page).toClick("#pagination a", { text: "2" });
         await expect(page).toMatchElement("#hits", {
-          text: "Cobra - JumPack Portable Charger"
+          text: "Dell - Power Companion Portable Charger"
         });
         await expect(page).toMatchElement("#infinite-hits", {
-          text: "myCharge - HUBMAX"
+          text: "iBattz - Optimus Battstation Power"
         });
       });
     });

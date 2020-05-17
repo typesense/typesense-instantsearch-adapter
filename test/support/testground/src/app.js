@@ -26,12 +26,24 @@ import { connectAutocomplete } from "instantsearch.js/es/connectors";
 import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
 const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   server: {
-    masterNode: {
-      host: "localhost",
-      port: "8108",
-      protocol: "http",
-      apiKey: "abcd"
-    }
+    apiKey: "abcd",
+    nodes: [
+      {
+        host: "localhost",
+        port: "8108",
+        protocol: "http"
+      }
+      // {
+      //   host: "localhost",
+      //   port: "7108",
+      //   protocol: "http"
+      // },
+      // {
+      //   host: "localhost",
+      //   port: "9108",
+      //   protocol: "http"
+      // }
+    ]
   },
   searchByFields: ["name", "description", "categories"],
   maxHits: 10000

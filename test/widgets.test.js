@@ -32,7 +32,7 @@ describe("Instant Search Widgets", () => {
   describe("stats", () => {
     it("renders", async () => {
       return expect(page).toMatchElement("#stats", {
-        text: /3,291 results found in \d*ms for \*'/
+        text: /3,291 results found in \d*ms for \*/
       });
     });
   });
@@ -127,10 +127,10 @@ describe("Instant Search Widgets", () => {
   describe("rangeInput", () => {
     it("renders", async () => {
       await expect(page).toMatchElement(
-        '#price-range-input form input[type=number][placeholder="9"]'
+        '#price-range-input form input[type=number][placeholder="1"]'
       );
       return expect(page).toMatchElement(
-        '#price-range-input form input[type=number][placeholder="700"]'
+        '#price-range-input form input[type=number][placeholder="900"]'
       );
     });
   });
@@ -138,10 +138,10 @@ describe("Instant Search Widgets", () => {
   describe("rangeSlide", () => {
     it("renders", async () => {
       await expect(page).toMatchElement(
-        '#price-range-slider div[aria-valuenow="9"]'
+        '#price-range-slider div[aria-valuenow="1"]'
       );
       return expect(page).toMatchElement(
-        '#price-range-slider div[aria-valuenow="700"]'
+        '#price-range-slider div[aria-valuenow="900"]'
       );
     });
   });
