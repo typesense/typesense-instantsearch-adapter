@@ -22,7 +22,7 @@ describe("Search Experience", () => {
         '#price-range-input form input[type=number][placeholder="250"]'
       );
       await expect(page).toMatchElement("#stats", {
-        text: "436 results found"
+        text: "437 results found"
       });
       await expect(page).toMatchElement("#hits .hit-name:first-of-type", {
         text: "Charger"
@@ -130,7 +130,7 @@ describe("Search Experience", () => {
             text: "Clear refinements"
           });
           await expect(page).toMatchElement("#stats", {
-            text: "436 results found"
+            text: "437 results found"
           });
         });
       });
@@ -207,7 +207,7 @@ describe("Search Experience", () => {
           );
           await expect(page).toClick("#price-range-input button");
           await expect(page).toMatchElement("#stats", {
-            text: "32 results found"
+            text: "34 results found"
           });
           await expect(page).toMatchElement("#hits", {
             text: "mophie - Powerstation 20,000 mAh Portable Charger"
@@ -227,7 +227,7 @@ describe("Search Experience", () => {
             "#rating-menu a[aria-label='4 & up'] span"
           );
           await expect(page).toMatchElement("#stats", {
-            text: "237 results found"
+            text: "241 results found"
           });
           await expect(page).toMatchElement("#hits", {
             text: "Dynex™ - Portable Charger - Gray"
@@ -248,7 +248,7 @@ describe("Search Experience", () => {
         // Sort Asc
         await expect(page).toSelect("#sort-by select", "Price (asc)");
         await expect(page).toMatchElement("#stats", {
-          text: "436 results found"
+          text: "437 results found"
         });
         await expect(page).toMatchElement("#hits", {
           text: "Tzumi - PocketJuice Portable Charger"
@@ -260,7 +260,7 @@ describe("Search Experience", () => {
         // Sort Desc
         await expect(page).toSelect("#sort-by select", "Price (desc)");
         await expect(page).toMatchElement("#stats", {
-          text: "436 results found"
+          text: "437 results found"
         });
         await expect(page).toMatchElement("#hits", {
           text: "mophie - powerstation 8x Portable Charger"

@@ -11,13 +11,24 @@ export class Configuration {
       }
     };
 
-    this.searchByFields = options.searchByFields || [];
-    this.maxHits = options.maxHits;
+    this.additionalSearchParameters = options.additionalSearchParameters || {};
+
+    this.additionalSearchParameters.queryBy =
+      this.additionalSearchParameters.queryBy || "";
+
+    this.additionalSearchParameters.highlightFullFields =
+      this.additionalSearchParameters.highlightFullFields ||
+      this.additionalSearchParameters.queryBy;
+
+    this.additionalSearchParameters.maxHits =
+      this.additionalSearchParameters.maxHits || "all";
   }
 
   validate() {
-    if (this.searchByFields.length === 0) {
-      throw new Error("Missing required parameter: searchByFields");
+    if (this.additionalSearchParameters.queryBy.length === 0) {
+      throw new Error(
+        "Missing required parameter: additionalSearchParameters.queryBy"
+      );
     }
   }
 }

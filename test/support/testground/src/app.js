@@ -45,8 +45,13 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
       // }
     ]
   },
-  searchByFields: ["name", "description", "categories"],
-  maxHits: 10000
+  // The following parameters are directly passed to Typesense's search API endpoint.
+  //  So you can pass any parameters supported by the search endpoint below.
+  //  queryBy is required.
+  additionalSearchParameters: {
+    queryBy: "name,description,categories"
+    // pinnedHits: "23:2"
+  }
 });
 const searchClient = typesenseInstantsearchAdapter.searchClient;
 const search = instantsearch({
@@ -123,11 +128,11 @@ search.addWidgets([
     }
   }),
   rangeInput({
-    container: "#price-range-input", // TODO: Add support once server supports faceting by IntegerFields
+    container: "#price-range-input",
     attribute: "price"
   }),
   rangeSlider({
-    container: "#price-range-slider", // TODO: Add support once server supports faceting by IntegerFields
+    container: "#price-range-slider",
     attribute: "price"
   }),
   ratingMenu({

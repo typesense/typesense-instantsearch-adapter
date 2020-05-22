@@ -5,11 +5,14 @@ export class SearchRequestAdapter {
     return new RegExp("^(.+?)(?=(/sort/(.*))|$)");
   }
 
-  constructor(instantsearchRequest, typesenseClient, searchByFields, maxHits) {
+  constructor(
+    instantsearchRequest,
+    typesenseClient,
+    additionalSearchParameters
+  ) {
     this.instantsearchRequest = instantsearchRequest;
     this.typesenseClient = typesenseClient;
-    this.searchByFields = searchByFields;
-    this.maxHits = maxHits;
+    this.additionalSearchParameters = additionalSearchParameters;
   }
 
   _adaptFacetFilters(facetFilters) {
@@ -87,20 +90,27 @@ export class SearchRequestAdapter {
   _buildSearchParameters() {
     const params = this.instantsearchRequest.params;
     const indexName = this.instantsearchRequest.indexName;
-    const typesenseSearchParams = {
+
+    const snakeCasedAdditionalSearchParameters = {};
+    for (const [key, value] of Object.entries(
+      this.additionalSearchParameters
+    )) {
+      snakeCasedAdditionalSearchParameters[this._camelToSnakeCase(key)] = value;
+    }
+
+    const typesenseSearchParams = Object.assign(
+      {},
+      snakeCasedAdditionalSearchParameters
+    );
+
+    Object.assign(typesenseSearchParams, {
       q: params.query === "" ? "*" : params.query,
-      query_by: this.searchByFields.join(","),
-      highlight_full_fields: this.searchByFields.join(","),
       facet_by: [params.facets].flat().join(","),
       filter_by: this._adaptFilters(params.facetFilters, params.numericFilters),
       sort_by: this._adaptSortBy(indexName),
       max_facet_values: params.maxValuesPerFacet,
       page: (params.page || 0) + 1
-    };
-
-    if (this.maxHits) {
-      typesenseSearchParams.max_hits = this.maxHits;
-    }
+    });
 
     if (params.facetQuery) {
       typesenseSearchParams.facet_query = `${params.facetName}:${params.facetQuery}`;
@@ -115,6 +125,13 @@ export class SearchRequestAdapter {
     // console.log(typesenseSearchParams);
 
     return typesenseSearchParams;
+  }
+
+  _camelToSnakeCase(str) {
+    return str
+      .split(/(?=[A-Z])/)
+      .join("_")
+      .toLowerCase();
   }
 
   async request() {
