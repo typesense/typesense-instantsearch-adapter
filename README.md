@@ -3,7 +3,7 @@
 An adapter to use the awesome [Instantsearch.js](https://github.com/algolia/instantsearch.js) library with a [Typesense](https://typesense.org) Search Server, to build rich search interfaces.
 
 [![NPM version][npm-image]][npm-url]
-[![typesense](https://circleci.com/git/typesense/typesense-instantsearch-adapter.svg?style=svg)](https://circleci.com/gh/typesense/typesense-instantsearch-adapter)
+[![CircleCI](https://circleci.com/gh/typesense/typesense-instantsearch-adapter.svg?style=shield)](https://circleci.com/gh/typesense/typesense-instantsearch-adapter)
 
 ## Background
 
@@ -287,8 +287,21 @@ $ npm run testground
 $ npm test
 ```
 
+To release a new version, we use the [np](https://github.com/sindresorhus/np) package:
+
+```shell
+$ npm install --global np
+$ np 
+
+# Follow instructions that np shows you
+
+```
+
 ## Help
 
 If you have any questions or run into any problems, please create a Github issue and we'll try our best to help.
 
 © 2020 Typesense, Inc.
+
+[npm-image]: https://badge.fury.io/js/typesense.svg
+[npm-url]: https://npmjs.org/package/typesense
