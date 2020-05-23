@@ -303,5 +303,5 @@ If you have any questions or run into any problems, please create a Github issue
 
 © 2020 Typesense, Inc.
 
-[npm-image]: https://badge.fury.io/js/typesense.svg
-[npm-url]: https://npmjs.org/package/typesense
+[npm-image]: https://badge.fury.io/js/typesense-instantsearch-adapter.svg
+[npm-url]: https://npmjs.org/package/typesense-instantsearch-adapter
