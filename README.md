@@ -11,8 +11,14 @@ The good folks over at Algolia have built and open-sourced [Instantsearch.js](ht
 
 With the adapter in this repository, you'll be able to use [Instantsearch](https://github.com/algolia/instantsearch.js) (and its [React](https://github.com/algolia/react-instantsearch), [Vue](https://github.com/algolia/vue-instantsearch) and [Angular](https://github.com/algolia/angular-instantsearch) cousins) with data indexed in a Typesense search server.
 
-If you haven't used Instantsearch before, we highly recommend going through their Getting Started guide [here](https://www.algolia.com/doc/guides/building-search-ui/getting-started/js/#build-a-simple-ui).
-Once you go through the guide, follow the usage instructions below to plug the Typesense adapter into Instantsearch.
+If you haven't used Instantsearch before, we recommend going through their Getting Started guide [here](https://www.algolia.com/doc/guides/building-search-ui/getting-started/js/#build-a-simple-ui).
+Once you go through the guide, follow the instructions below to plug the Typesense adapter into Instantsearch.
+
+## Quick Start
+
+Here's a guide on building a quick search interface with Typesense and InstantSearch.js: [https://typesense.org/docs/0.12.0/guide/#search-ui](https://typesense.org/docs/0.12.0/guide/#search-ui)
+
+Here's a demo app that showcases the adapter in action: [https://github.com/typesense/typesense-instantsearch-demo](https://github.com/typesense/typesense-instantsearch-demo)
 
 ## Installation
 
