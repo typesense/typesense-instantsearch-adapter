@@ -42,24 +42,24 @@ module.exports = (async () => {
       },
       {
         name: "categories.lvl0",
-        type: "string",
+        type: "string[]",
         facet: true
       },
       {
         name: "categories.lvl1",
-        type: "string",
+        type: "string[]",
         facet: true,
         optional: true
       },
       {
         name: "categories.lvl2",
-        type: "string",
+        type: "string[]",
         facet: true,
         optional: true
       },
       {
         name: "categories.lvl3",
-        type: "string",
+        type: "string[]",
         facet: true,
         optional: true
       },
@@ -134,9 +134,9 @@ module.exports = (async () => {
     product.free_shipping = product.name.length % 2 === 1; // We need this to be deterministic for tests
     product.rating = (product.description.length % 5) + 1; // We need this to be deterministic for tests
     product.categories.forEach((category, index) => {
-      product[`categories.lvl${index}`] = product.categories
-        .slice(0, index + 1)
-        .join(" > ");
+      product[`categories.lvl${index}`] = [
+        product.categories.slice(0, index + 1).join(" > ")
+      ];
     });
   });
 
