@@ -241,6 +241,8 @@ For this widget, you want to create independent fields in the collection's schem
 
 for a nested hierarchy of `field.lvl0 > field.lvl1 > field.lvl2`
 
+Each of these fields can also hold an array of values. This is useful for handling multiple hierarchies.
+
 ### `sortBy`
 
 When instantiating this widget, you want to set the value of the index name to this particular format:
