@@ -26,7 +26,7 @@ import { connectAutocomplete } from "instantsearch.js/es/connectors";
 import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
 const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   server: {
-    apiKey: "abcd",
+    apiKey: "xyz", // Be sure to use an API key that only has search permissions, since this is exposed in the browser
     nodes: [
       {
         host: "localhost",

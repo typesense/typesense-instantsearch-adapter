@@ -19,9 +19,6 @@ export class Configuration {
     this.additionalSearchParameters.highlightFullFields =
       this.additionalSearchParameters.highlightFullFields ||
       this.additionalSearchParameters.queryBy;
-
-    this.additionalSearchParameters.maxHits =
-      this.additionalSearchParameters.maxHits || "all";
   }
 
   validate() {

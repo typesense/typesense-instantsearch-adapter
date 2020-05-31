@@ -112,13 +112,13 @@ export class SearchRequestAdapter {
       page: (params.page || 0) + 1
     });
 
-    if (params.facetQuery) {
-      typesenseSearchParams.facet_query = `${params.facetName}:${params.facetQuery}`;
-      typesenseSearchParams.max_hits = 0;
-    }
-
     if (params.hitsPerPage) {
       typesenseSearchParams.per_page = params.hitsPerPage;
+    }
+
+    if (params.facetQuery) {
+      typesenseSearchParams.facet_query = `${params.facetName}:${params.facetQuery}`;
+      typesenseSearchParams.per_page = 0;
     }
 
     // console.log(params);
