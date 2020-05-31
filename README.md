@@ -264,13 +264,10 @@ The generalized pattern for the value attribute is: `<index_name>[/sort/<sort_by
 
 ## Compatibility
 
-This version of the adapter will work with:
-
-- typesense server >= 0.12 
-- instantsearch.js >= 4.2.0
-- react-instantsearch >= 6.0.0
-- vue-instantsearch >= 2.2.1
-- angular-instantsearch >= 3.0.0
+| Typesense Server | typesense-instantsearch-adapter | instantsearch.js | react-instantsearch | vue-instantsearch | angular-instantsearch |
+|------------------|----------------|----------------|----------------|----------------|----------------|
+| \>= v0.13 | \>= v0.1.0 | \>= 4.2.0 | \>= 6.0.0 | \>= 2.2.1 | \>= 3.0.0 |
+| \>= v0.12 | \>= v0.0.4 | \>= 4.2.0 | \>= 6.0.0 | \>= 2.2.1 | \>= 3.0.0 |
 
 If a particular version of the above libraries don't work with the adapter, please open a Github issue with details.
 
