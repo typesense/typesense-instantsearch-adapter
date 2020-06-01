@@ -3,7 +3,7 @@ describe("Search Experience", () => {
 
   beforeEach(async () => {
     return page.goto("http://localhost:3000");
-  }, 10 * 1000);
+  }, 30 * 1000);
 
   describe("when searching for a term", () => {
     beforeEach(async () => {
