@@ -39,23 +39,23 @@
   "license": "Apache-2.0",
   "repository": "typesense/typesense-instantsearch-adapter",
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.4",
-    "@babel/plugin-transform-runtime": "^7.8.3",
-    "@babel/polyfill": "^7.8.3",
-    "@babel/preset-env": "^7.8.4",
-    "babel-jest": "^25.1.0",
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
+    "@babel/plugin-transform-runtime": "^7.10.1",
+    "@babel/polyfill": "^7.10.1",
+    "@babel/preset-env": "^7.10.2",
+    "babel-jest": "^25.5.1",
     "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.10.0",
-    "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.20.1",
-    "eslint-plugin-jest": "^23.7.0",
-    "eslint-plugin-node": "^11.0.0",
-    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.21.2",
+    "eslint-plugin-jest": "^23.13.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "expect-puppeteer": "^4.4.0",
-    "jest": "^25.1.0",
+    "jest": "^25.5.4",
     "jest-dev-server": "^4.4.0",
     "jest-junit": "^10.0.0",
     "jest-puppeteer": "^4.4.0",
@@ -64,7 +64,9 @@
   },
   "dependencies": {
     "he": "^1.2.0",
-    "typesense": "^0.5.1",
+    "typesense": "^0.6.0"
+  },
+  "peerDependencies": {
     "@babel/runtime": "^7.10.2"
   }
 }

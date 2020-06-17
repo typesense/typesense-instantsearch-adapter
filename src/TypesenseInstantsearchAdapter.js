@@ -1,7 +1,7 @@
 "use strict";
 
 import { Configuration } from "./Configuration";
-import Typesense from "typesense";
+import { SearchClient as TypesenseSearchClient } from "typesense";
 import { SearchRequestAdapter } from "./SearchRequestAdapter";
 import { SearchResponseAdapter } from "./SearchResponseAdapter";
 import { FacetSearchResponseAdapter } from "./FacetSearchResponseAdapter";
@@ -10,7 +10,7 @@ export default class TypesenseInstantsearchAdapter {
   constructor(options) {
     this.configuration = new Configuration(options);
     this.configuration.validate();
-    this.typesenseClient = new Typesense.Client(this.configuration.server);
+    this.typesenseClient = new TypesenseSearchClient(this.configuration.server);
     this.searchClient = {
       search: instantsearchRequests =>
         this.searchTypesenseAndAdapt(instantsearchRequests),
