@@ -9,6 +9,21 @@ export class SearchResponseAdapter {
     this.instantsearchRequest = instantsearchRequest;
   }
 
+  _adaptGroupedHits(typesenseGroupedHits) {
+    let adaptedResult = [];
+
+    adaptedResult = typesenseGroupedHits.map(groupedHit =>
+      this._adaptHits(groupedHit.hits)
+    );
+
+    // adaptedResult is now in the form of [[{}, {}], [{}, {}], ...]
+    //  where each element in the outer most array corresponds to a group.
+    // We now flatten it to [{}, {}, {}]
+    adaptedResult = adaptedResult.flat();
+
+    return adaptedResult;
+  }
+
   _adaptHits(typesenseHits) {
     let adaptedResult = [];
     adaptedResult = typesenseHits.map(typesenseHit => {
@@ -103,11 +118,13 @@ export class SearchResponseAdapter {
 
   adapt() {
     const adaptedResult = {
-      hits: this._adaptHits(this.typesenseResponse.hits),
+      hits: this.typesenseResponse.grouped_hits
+        ? this._adaptGroupedHits(this.typesenseResponse.grouped_hits)
+        : this._adaptHits(this.typesenseResponse.hits),
       nbHits: this.typesenseResponse.found,
       page: this.typesenseResponse.page,
       nbPages: this._adaptNumberOfPages(),
-      hitsPerPage: this.typesenseResponse.hits.length,
+      hitsPerPage: this.typesenseResponse.request_params.per_page,
       facets: this._adaptFacets(this.typesenseResponse.facet_counts || []),
       facets_stats: this._adaptFacetStats(
         this.typesenseResponse.facet_counts || {}
