@@ -140,6 +140,7 @@ describe("Search Experience", () => {
 
       describe("using the hierarchicalMenu", () => {
         it("renders the filtered results", async () => {
+          await expect(page).toMatchElement("#searchbox input[type=search]");
           await expect(page).toClick("#searchbox input[type=search]", {
             clickCount: 3
           });
