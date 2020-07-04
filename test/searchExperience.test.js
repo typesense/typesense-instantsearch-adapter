@@ -24,9 +24,12 @@ describe("Search Experience", () => {
       await expect(page).toMatchElement("#stats", {
         text: "437 results found"
       });
-      await expect(page).toMatchElement("#hits .hit-name:first-of-type", {
-        text: "Charger"
-      });
+      await expect(page).toMatchElement(
+        "#hits .ais-Hits-item:nth-of-type(1) .hit-name",
+        {
+          text: "Charger"
+        }
+      );
       await expect(page).toMatchElement("#infinite-hits", {
         text: "Charger"
       });
@@ -137,6 +140,7 @@ describe("Search Experience", () => {
 
       describe("using the hierarchicalMenu", () => {
         it("renders the filtered results", async () => {
+          await expect(page).toMatchElement("#searchbox input[type=search]");
           await expect(page).toClick("#searchbox input[type=search]", {
             clickCount: 3
           });
@@ -288,6 +292,50 @@ describe("Search Experience", () => {
         const length = (await page.$$("#hits li")).length;
         expect(length).toEqual(16);
       });
+    });
+  });
+
+  describe("when grouping results", () => {
+    beforeEach(async () => {
+      return page.goto("http://localhost:3000/?groupBy=brand&groupLimit=2");
+    });
+
+    it("renders the grouped results", async () => {
+      await expect(page).toMatchElement("#brand-list", { text: "AT&T 1" });
+      await expect(page).toMatchElement("#stats", {
+        text: "250 results found"
+      });
+      await expect(page).toMatchElement(
+        "#hits .ais-Hits-item:nth-of-type(1) .hit-name",
+        {
+          text: "AT&T"
+        }
+      );
+      await expect(page).toMatchElement(
+        "#hits .ais-Hits-item:nth-of-type(2) .hit-name",
+        {
+          text: "AT&T"
+        }
+      );
+      await expect(page).toMatchElement(
+        "#hits .ais-Hits-item:nth-of-type(3) .hit-name",
+        {
+          text: "Boost"
+        }
+      );
+      await expect(page).toMatchElement(
+        "#hits .ais-Hits-item:nth-of-type(4) .hit-name",
+        {
+          text: "Boost"
+        }
+      );
+      await expect(page).toMatchElement("#infinite-hits", {
+        text: "Samsung"
+      });
+      await page.waitForSelector("#pagination a.ais-Pagination-link");
+      const length = (await page.$$("#pagination a.ais-Pagination-link"))
+        .length;
+      return expect(length).toEqual(7 + 2);
     });
   });
 });

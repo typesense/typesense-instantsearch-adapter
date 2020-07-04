@@ -24,6 +24,22 @@ import { connectAutocomplete } from "instantsearch.js/es/connectors";
 
 // ======= Uncomment to use typesense-instantsearch-adapter
 import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
+
+const additionalSearchParameters = {
+  queryBy: "name,description,categories"
+  // groupBy: "categories",
+  // groupLimit: 1
+  // pinnedHits: "23:2"
+};
+
+// Allow search params to be specified in the URL, for the test suite
+const urlParams = new URLSearchParams(window.location.search);
+["groupBy", "groupLimit", "pinnedHits"].forEach(attr => {
+  if (urlParams.has(attr)) {
+    additionalSearchParameters[attr] = urlParams.get(attr);
+  }
+});
+
 const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   server: {
     apiKey: "xyz", // Be sure to use an API key that only has search permissions, since this is exposed in the browser
@@ -48,10 +64,7 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   // The following parameters are directly passed to Typesense's search API endpoint.
   //  So you can pass any parameters supported by the search endpoint below.
   //  queryBy is required.
-  additionalSearchParameters: {
-    queryBy: "name,description,categories"
-    // pinnedHits: "23:2"
-  }
+  additionalSearchParameters
 });
 const searchClient = typesenseInstantsearchAdapter.searchClient;
 const search = instantsearch({
@@ -160,6 +173,7 @@ search.addWidgets([
             {{#helpers.highlight}}{ "attribute": "description" }{{/helpers.highlight}}
           </div>
           <div class="hit-price">\${{price}}</div>
+          <div class="hit-rating">Categories: {{categories}}</div>
           <div class="hit-rating">Rating: {{rating}}</div>
           <div class="hit-free-shipping">Free Shipping: {{free_shipping}}</div>
         </div>
