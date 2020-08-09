@@ -91,6 +91,8 @@ search.addWidgets([
     }
   })
 ]);
+
+search.start();
 ```
 
 You can add any of the Instantsearch widgets [here](https://www.algolia.com/doc/guides/building-search-ui/widgets/showcase/js/) that are [supported](#widget-compatibility) by the adapter.
