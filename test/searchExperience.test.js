@@ -147,6 +147,7 @@ describe("Search Experience", () => {
           await (await page.$("#searchbox input[type=search]")).press(
             "Backspace"
           );
+          await page.focus("#categories-hierarchical-menu a");
           await expect(page).toMatchElement("#categories-hierarchical-menu a", {
             text: "Cell Phones"
           });
@@ -159,6 +160,7 @@ describe("Search Experience", () => {
           await expect(page).toClick("#categories-hierarchical-menu a", {
             text: "iPhone"
           });
+          await page.focus("#categories-hierarchical-menu a"); // For some reason page scrolls to bottom
           await expect(page).toMatchElement("#categories-hierarchical-menu a", {
             text: "iPhone SE"
           });
@@ -211,7 +213,7 @@ describe("Search Experience", () => {
           );
           await expect(page).toClick("#price-range-input button");
           await expect(page).toMatchElement("#stats", {
-            text: "34 results found"
+            text: "33 results found"
           });
           await expect(page).toMatchElement("#hits", {
             text: "mophie - Powerstation 20,000 mAh Portable Charger"
@@ -231,7 +233,7 @@ describe("Search Experience", () => {
             "#rating-menu a[aria-label='4 & up'] span"
           );
           await expect(page).toMatchElement("#stats", {
-            text: "241 results found"
+            text: "229 results found"
           });
           await expect(page).toMatchElement("#hits", {
             text: "Dynex™ - Portable Charger - Gray"
@@ -301,7 +303,9 @@ describe("Search Experience", () => {
     });
 
     it("renders the grouped results", async () => {
-      await expect(page).toMatchElement("#brand-list", { text: "AT&T 1" });
+      await expect(page).toMatchElement("#brand-list", {
+        text: "AT&T GoPhone"
+      });
       await expect(page).toMatchElement("#stats", {
         text: "250 results found"
       });

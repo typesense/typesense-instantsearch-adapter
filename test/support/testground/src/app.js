@@ -104,6 +104,8 @@ search.addWidgets([
     container: "#current-refinements"
   }),
   refinementList({
+    limit: 50,
+    showMoreLimit: 100,
     container: "#brand-list",
     attribute: "brand",
     searchable: true,

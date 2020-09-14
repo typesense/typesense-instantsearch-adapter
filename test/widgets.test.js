@@ -78,13 +78,14 @@ describe("Instant Search Widgets", () => {
   describe("menu", () => {
     it("renders", async () => {
       return expect(page).toMatchElement("#categories-menu", {
-        text: "Data Cables"
+        text: "Bluetooth Headsets"
       });
     });
   });
 
   describe("hierarchicalMenu", () => {
     it("renders", async () => {
+      await page.focus("#categories-hierarchical-menu");
       return expect(page).toMatchElement("#categories-hierarchical-menu", {
         text: "Cell Phones"
       });

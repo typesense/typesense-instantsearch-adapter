@@ -47,10 +47,10 @@ export class SearchRequestAdapter {
     // }
     //
     // Into this:
-    // facet1:[value1,value2] && facet2:value1
+    // facet1:=[value1,value2] && facet2:=value1
 
     adaptedResult = Object.entries(intermediateFacetFilters)
-      .map(([facet, values]) => `${facet}:[${values.join(",")}]`)
+      .map(([facet, values]) => `${facet}:=[${values.join(",")}]`)
       .join(" && ");
 
     return adaptedResult;
