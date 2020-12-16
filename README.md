@@ -5,6 +5,8 @@ An adapter to use the awesome [Instantsearch.js](https://github.com/algolia/inst
 [![NPM version][npm-image]][npm-url]
 [![CircleCI](https://circleci.com/gh/typesense/typesense-instantsearch-adapter.svg?style=shield)](https://circleci.com/gh/typesense/typesense-instantsearch-adapter)
 
+Here is an example of UI you can build with this adapater: [songs-search.typesense.org](https://songs-search.typesense.org)
+
 ## Background
 
 The good folks over at Algolia have built and open-sourced [Instantsearch.js](https://github.com/algolia/instantsearch.js) which is a collection of out-of-the-box components that you can use to build interactive search experiences swiftly.
