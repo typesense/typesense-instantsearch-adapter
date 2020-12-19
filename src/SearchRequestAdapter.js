@@ -16,40 +16,37 @@ export class SearchRequestAdapter {
   }
 
   _adaptBaseFilters(filters) {
-    let adaptedResult = "";
-    let temp = [];
-    let intermediateFacetFilters = {};
-
     if (!filters) {
       return adaptedResult;
     }
 
+    let adaptedResult = "";
+    let temp = [];
+    let intermediateFacetFilters = {};
+
     let facetFilters = filters.split("AND")
 
     facetFilters.forEach(part => {
-        if(part.includes("(")) {
-            let matches = part.match(/\((.*?)\)/);
-
-            if (matches) {
-                var submatch = matches[1];
-            }
-
-            part = submatch.split("OR")
-        }
-
+      if(part.includes("OR")) {
+        let subparts = part.split("OR")
+        temp.push(subparts)
+      } else {
         temp.push(part)
+      }
     })
 
     temp.flat().forEach(facetFilter => {
       let [facetName, facetValue] = facetFilter.split(":");
+
       intermediateFacetFilters[facetName] =
         intermediateFacetFilters[facetName] || [];
       intermediateFacetFilters[facetName].push(facetValue);
     });
 
+
     adaptedResult = Object.entries(intermediateFacetFilters)
-          .map(([facet, values]) => `${facet}:=[${values.join(",")}]`)
-          .join(" && ");
+      .map(([facet, values]) => `${facet}:=[${values.join(",")}]`)
+      .join(" && ");
 
     return adaptedResult
   }
