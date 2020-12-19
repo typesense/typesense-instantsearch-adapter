@@ -15,6 +15,45 @@ export class SearchRequestAdapter {
     this.additionalSearchParameters = additionalSearchParameters;
   }
 
+  _adaptBaseFilters(filters) {
+    let adaptedResult = "";
+    let temp = [];
+    let intermediateFacetFilters = {};
+
+    if (!filters) {
+      return adaptedResult;
+    }
+
+    let facetFilters = filters.split("AND")
+
+    facetFilters.forEach(part => {
+        if(part.includes("(")) {
+            let matches = part.match(/\((.*?)\)/);
+
+            if (matches) {
+                var submatch = matches[1];
+            }
+
+            part = submatch.split("OR")
+        }
+
+        temp.push(part)
+    })
+
+    temp.flat().forEach(facetFilter => {
+      let [facetName, facetValue] = facetFilter.split(":");
+      intermediateFacetFilters[facetName] =
+        intermediateFacetFilters[facetName] || [];
+      intermediateFacetFilters[facetName].push(facetValue);
+    });
+
+    adaptedResult = Object.entries(intermediateFacetFilters)
+          .map(([facet, values]) => `${facet}:=[${values.join(",")}]`)
+          .join(" && ");
+
+    return adaptedResult
+  }
+
   _adaptFacetFilters(facetFilters) {
     let adaptedResult = "";
 
@@ -70,9 +109,10 @@ export class SearchRequestAdapter {
     return adaptedResult;
   }
 
-  _adaptFilters(facetFilters, numericFilters) {
+  _adaptFilters(filters, facetFilters, numericFilters) {
     const adaptedFilters = [];
 
+    adaptedFilters.push(this._adaptBaseFilters(filters));
     adaptedFilters.push(this._adaptFacetFilters(facetFilters));
     adaptedFilters.push(this._adaptNumericFilters(numericFilters));
 
@@ -106,7 +146,7 @@ export class SearchRequestAdapter {
     Object.assign(typesenseSearchParams, {
       q: params.query === "" ? "*" : params.query,
       facet_by: [params.facets].flat().join(","),
-      filter_by: this._adaptFilters(params.facetFilters, params.numericFilters),
+      filter_by: this._adaptFilters(params.filters, params.facetFilters, params.numericFilters),
       sort_by: this._adaptSortBy(indexName),
       max_facet_values: params.maxValuesPerFacet,
       page: (params.page || 0) + 1
