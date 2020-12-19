@@ -16,11 +16,12 @@ export class SearchRequestAdapter {
   }
 
   _adaptBaseFilters(filters) {
+    let adaptedResult = "";
+    
     if (!filters) {
       return adaptedResult;
     }
 
-    let adaptedResult = "";
     let temp = [];
     let intermediateFacetFilters = {};
 
