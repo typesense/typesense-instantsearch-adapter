@@ -17,7 +17,7 @@ export class SearchRequestAdapter {
 
   _adaptBaseFilters(filters) {
     let adaptedResult = "";
-    
+
     if (!filters) {
       return adaptedResult;
     }
@@ -145,7 +145,9 @@ export class SearchRequestAdapter {
       q: params.query === "" ? "*" : params.query,
       facet_by: [params.facets].flat().join(","),
       filter_by: this._adaptFilters(params.filters, params.facetFilters, params.numericFilters),
-      sort_by: this._adaptSortBy(indexName),
+      sort_by: this.additionalSearchParameters.sortBy ? this.additionalSearchParameters.sortBy : this._adaptSortBy(indexName),
+      group_by: this.additionalSearchParameters.groupBy,
+      per_page: this.additionalSearchParameters.perPage,
       max_facet_values: params.maxValuesPerFacet,
       page: (params.page || 0) + 1
     });
