@@ -16,6 +16,15 @@ export class Configuration {
     this.additionalSearchParameters.queryBy =
       this.additionalSearchParameters.queryBy || "";
 
+    this.additionalSearchParameters.sortBy =
+      this.additionalSearchParameters.sortBy || "";
+
+    this.additionalSearchParameters.groupBy =
+      this.additionalSearchParameters.groupBy || "";
+
+    this.additionalSearchParameters.perPage =
+      this.additionalSearchParameters.perPage || "10";
+
     this.additionalSearchParameters.highlightFullFields =
       this.additionalSearchParameters.highlightFullFields ||
       this.additionalSearchParameters.queryBy;
