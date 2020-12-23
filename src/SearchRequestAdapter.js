@@ -15,43 +15,6 @@ export class SearchRequestAdapter {
     this.additionalSearchParameters = additionalSearchParameters;
   }
 
-  _adaptBaseFilters(filters) {
-    let adaptedResult = "";
-
-    if (!filters) {
-      return adaptedResult;
-    }
-
-    let temp = [];
-    let intermediateFacetFilters = {};
-
-    let facetFilters = filters.split("AND")
-
-    facetFilters.forEach(part => {
-      if(part.includes("OR")) {
-        let subparts = part.split("OR")
-        temp.push(subparts)
-      } else {
-        temp.push(part)
-      }
-    })
-
-    temp.flat().forEach(facetFilter => {
-      let [facetName, facetValue] = facetFilter.split(":");
-
-      intermediateFacetFilters[facetName] =
-        intermediateFacetFilters[facetName] || [];
-      intermediateFacetFilters[facetName].push(facetValue);
-    });
-
-
-    adaptedResult = Object.entries(intermediateFacetFilters)
-      .map(([facet, values]) => `${facet}:=[${values.join(",")}]`)
-      .join(" && ");
-
-    return adaptedResult
-  }
-
   _adaptFacetFilters(facetFilters) {
     let adaptedResult = "";
 
@@ -107,10 +70,9 @@ export class SearchRequestAdapter {
     return adaptedResult;
   }
 
-  _adaptFilters(filters, facetFilters, numericFilters) {
+  _adaptFilters(facetFilters, numericFilters) {
     const adaptedFilters = [];
 
-    adaptedFilters.push(this._adaptBaseFilters(filters));
     adaptedFilters.push(this._adaptFacetFilters(facetFilters));
     adaptedFilters.push(this._adaptNumericFilters(numericFilters));
 
@@ -146,7 +108,7 @@ export class SearchRequestAdapter {
     Object.assign(typesenseSearchParams, {
       q: params.query === "" ? "*" : params.query,
       facet_by: [params.facets].flat().join(","),
-      filter_by: this._adaptFilters(params.filters, params.facetFilters, params.numericFilters),
+      filter_by: this._adaptFilters(params.facetFilters, params.numericFilters),
       sort_by: adaptedSortBy ? adaptedSortBy : this.additionalSearchParameters.sortBy,
       max_facet_values: params.maxValuesPerFacet,
       page: (params.page || 0) + 1
