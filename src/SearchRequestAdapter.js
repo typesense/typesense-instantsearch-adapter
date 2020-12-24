@@ -105,11 +105,13 @@ export class SearchRequestAdapter {
       snakeCasedAdditionalSearchParameters
     );
 
+    const adaptedSortBy = this._adaptSortBy(indexName);
+
     Object.assign(typesenseSearchParams, {
       q: params.query === "" ? "*" : params.query,
       facet_by: [params.facets].flat().join(","),
       filter_by: this._adaptFilters(params.facetFilters, params.numericFilters),
-      sort_by: this._adaptSortBy(indexName),
+      sort_by: adaptedSortBy || this.additionalSearchParameters.sortBy,
       max_facet_values: params.maxValuesPerFacet,
       page: (params.page || 0) + 1
     });
