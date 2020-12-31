@@ -18,7 +18,7 @@ Once you go through the guide, follow the instructions below to plug the Typesen
 
 ## Quick Start
 
-Here's a guide on building a quick search interface with Typesense and InstantSearch.js: [https://typesense.org/docs/0.12.0/guide/#search-ui](https://typesense.org/docs/0.12.0/guide/#search-ui)
+Here's a guide on building a quick search interface with Typesense and InstantSearch.js: [https://typesense.org/docs/0.18.0/guide/#search-ui](https://typesense.org/docs/0.18.0/guide/#search-ui)
 
 Here's a demo app that showcases the adapter in action: [https://github.com/typesense/typesense-instantsearch-demo](https://github.com/typesense/typesense-instantsearch-demo)
 
