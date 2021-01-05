@@ -7,6 +7,22 @@ An adapter to use the awesome [Instantsearch.js](https://github.com/algolia/inst
 
 Here is an example of UI you can build with this adapater: [songs-search.typesense.org](https://songs-search.typesense.org)
 
+## Quick Links
+
+- [Background](#background)
+- [Quick Start](#quick-start)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [With instantsearch.js](#with-instantsearchjs)
+  - [With react-instantsearch](#with-react-instantsearch)
+  - [With vue-instantsearch](#with-vue-instantsearch)
+  - [With angular-instantsearch](#with-angular-instantsearch)
+- [Widget Specific Instructuctions](#widget-specific-instructions)
+- [Implementation Notes](#implementation-notes)
+- [Compatibility](#compatibility)
+- [Development](#development)
+- [Help](#help)
+
 ## Background
 
 The good folks over at Algolia have built and open-sourced [Instantsearch.js](https://github.com/algolia/instantsearch.js) which is a collection of out-of-the-box components that you can use to build interactive search experiences swiftly.
@@ -18,7 +34,7 @@ Once you go through the guide, follow the instructions below to plug the Typesen
 
 ## Quick Start
 
-Here's a guide on building a quick search interface with Typesense and InstantSearch.js: [https://typesense.org/docs/0.12.0/guide/#search-ui](https://typesense.org/docs/0.12.0/guide/#search-ui)
+Here's a guide on building a quick search interface with Typesense and InstantSearch.js: [https://typesense.org/docs/0.18.0/guide/#search-ui](https://typesense.org/docs/0.18.0/guide/#search-ui)
 
 Here's a demo app that showcases the adapter in action: [https://github.com/typesense/typesense-instantsearch-demo](https://github.com/typesense/typesense-instantsearch-demo)
 
@@ -264,7 +280,11 @@ search.addWidgets([
 ])
 ```
 
-The generalized pattern for the value attribute is: `<index_name>[/sort/<sort_by>]`. The adapter will use the value in `<sort_by>` as the value for the `sort_by` search parameter.  
+The generalized pattern for the value attribute is: `<index_name>[/sort/<sort_by>]`. The adapter will use the value in `<sort_by>` as the value for the `sort_by` search parameter. 
+
+### Implementation Notes
+
+- If you need to specify a `filter_by` search parameter for Typesense, you want to use the appropriate `configure` InstantSearch widget. Setting `filter_by` inside the `additionalQueryParameters` config does not work, because InstantSearch internally overrides the `filter_by` field. So you want to use InstantSearch to configure it. Read more [here](https://github.com/typesense/typesense-instantsearch-adapter/issues/17#issuecomment-746912375). 
 
 ## Compatibility
 
