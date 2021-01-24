@@ -1,14 +1,8 @@
 export const utils = {
-  _adaptHighlightTag(value) {
+  _adaptHighlightTag(value, highlightPreTag, highlightPostTag) {
     return value
-      .replace(
-        new RegExp("<mark>", "g"),
-        this.instantsearchRequest.params.highlightPreTag
-      )
-      .replace(
-        new RegExp("</mark>", "g"),
-        this.instantsearchRequest.params.highlightPostTag
-      );
+      .replace(new RegExp("<mark>", "g"), highlightPreTag)
+      .replace(new RegExp("</mark>", "g"), highlightPostTag);
   },
   _adaptNumberOfPages() {
     const result =

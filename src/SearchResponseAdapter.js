@@ -76,7 +76,11 @@ export class SearchResponseAdapter {
         result[attribute] = [];
         value.forEach(v => {
           result[attribute].push({
-            value: this._adaptHighlightTag(he.decode(`${v}`)),
+            value: this._adaptHighlightTag(
+              he.decode(`${v}`),
+              this.instantsearchRequest.params.highlightPreTag,
+              this.instantsearchRequest.params.highlightPostTag
+            ),
             matchLevel: matchLevel, // TODO: Fix MatchLevel for array
             matchedWords: matchedWords // TODO: Fix MatchedWords for array
           });
@@ -84,7 +88,9 @@ export class SearchResponseAdapter {
       } else {
         // Convert all values to strings
         result[attribute].value = this._adaptHighlightTag(
-          he.decode(`${value}`)
+          he.decode(`${value}`),
+          this.instantsearchRequest.params.highlightPreTag,
+          this.instantsearchRequest.params.highlightPostTag
         );
       }
     });
