@@ -20,6 +20,7 @@
   ],
   "scripts": {
     "pretest": "npm run lint",
+    "postinstall": "node postinstall.js",
     "lint": "eslint .",
     "test": "jest --maxWorkers=1 --verbose",
     "build": "babel src -d lib",
@@ -64,7 +65,7 @@
   },
   "dependencies": {
     "he": "^1.2.0",
-    "typesense": "^0.10.0"
+    "typesense": "^0.10.1"
   },
   "peerDependencies": {
     "@babel/runtime": "^7.10.2"
