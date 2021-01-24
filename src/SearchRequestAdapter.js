@@ -34,9 +34,11 @@ export class SearchRequestAdapter {
     // }
 
     facetFilters.flat().forEach(facetFilter => {
-      const [facetName, facetValue] = facetFilter.split(
-        new RegExp("(?<!:):(?!:)")
+      const facetFilterMatches = facetFilter.match(
+        new RegExp("(.*)((?!:).):(?!:)(.*)")
       );
+      const facetName = `${facetFilterMatches[1]}${facetFilterMatches[2]}`;
+      const facetValue = `${facetFilterMatches[3]}`;
       intermediateFacetFilters[facetName] =
         intermediateFacetFilters[facetName] || [];
       intermediateFacetFilters[facetName].push(facetValue);
