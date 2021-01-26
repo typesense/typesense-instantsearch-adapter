@@ -11,7 +11,7 @@ describe("Search Experience", () => {
     });
 
     it("renders the results, facets and pagination", async () => {
-      await expect(page).toMatchElement("#brand-list", { text: "Belkin 21" });
+      await expect(page).toMatchElement("#brand-list", { text: "Belkin 19" });
       await expect(page).toMatchElement("#categories-menu", {
         text: "Cell Phone Accessories"
       });
@@ -22,7 +22,7 @@ describe("Search Experience", () => {
         '#price-range-input form input[type=number][placeholder="250"]'
       );
       await expect(page).toMatchElement("#stats", {
-        text: "437 results found"
+        text: "294 results found"
       });
       await expect(page).toMatchElement(
         "#hits .ais-Hits-item:nth-of-type(1) .hit-name",
@@ -49,7 +49,7 @@ describe("Search Experience", () => {
             "#brand-list input[type=checkbox][value=Samsung]"
           );
           await expect(page).toMatchElement("#stats", {
-            text: "27 results found"
+            text: "25 results found"
           });
           await expect(page).toMatchElement(
             '#price-range-input form input[type=number][placeholder="14"]'
@@ -97,7 +97,7 @@ describe("Search Experience", () => {
             text: "Car & Travel Accessories"
           });
           await expect(page).toMatchElement("#stats", {
-            text: "16 results found"
+            text: "13 results found"
           });
           await expect(page).toMatchElement("#hits", {
             text: "Samsung - Adaptive Fast Charging Vehicle Charger"
@@ -125,7 +125,7 @@ describe("Search Experience", () => {
             text: "Car & Travel Accessories"
           });
           await expect(page).toMatchElement("#stats", {
-            text: "16 results found"
+            text: "13 results found"
           });
 
           // clearRefinements
@@ -133,7 +133,7 @@ describe("Search Experience", () => {
             text: "Clear refinements"
           });
           await expect(page).toMatchElement("#stats", {
-            text: "437 results found"
+            text: "294 results found"
           });
         });
       });
@@ -213,7 +213,7 @@ describe("Search Experience", () => {
           );
           await expect(page).toClick("#price-range-input button");
           await expect(page).toMatchElement("#stats", {
-            text: "33 results found"
+            text: "32 results found"
           });
           await expect(page).toMatchElement("#hits", {
             text: "mophie - Powerstation 20,000 mAh Portable Charger"
@@ -233,13 +233,13 @@ describe("Search Experience", () => {
             "#rating-menu a[aria-label='4 & up'] span"
           );
           await expect(page).toMatchElement("#stats", {
-            text: "229 results found"
+            text: "113 results found"
           });
           await expect(page).toMatchElement("#hits", {
-            text: "Dynex™ - Portable Charger - Gray"
+            text: "Insignia™ - Vehicle Charger - Sea"
           });
           await expect(page).toMatchElement("#infinite-hits", {
-            text: "Samsung - Adaptive Fast Charging Wall Charger"
+            text: "Insignia™ - Vehicle Charger"
           });
           await page.waitForSelector("#pagination a.ais-Pagination-link");
           const length = (await page.$$("#pagination a.ais-Pagination-link"))
@@ -254,7 +254,7 @@ describe("Search Experience", () => {
         // Sort Asc
         await expect(page).toSelect("#sort-by select", "Price (asc)");
         await expect(page).toMatchElement("#stats", {
-          text: "437 results found"
+          text: "294 results found"
         });
         await expect(page).toMatchElement("#hits", {
           text: "Tzumi - PocketJuice Portable Charger"
@@ -266,7 +266,7 @@ describe("Search Experience", () => {
         // Sort Desc
         await expect(page).toSelect("#sort-by select", "Price (desc)");
         await expect(page).toMatchElement("#stats", {
-          text: "437 results found"
+          text: "294 results found"
         });
         await expect(page).toMatchElement("#hits", {
           text: "mophie - powerstation 8x Portable Charger"
@@ -276,10 +276,10 @@ describe("Search Experience", () => {
         });
         await expect(page).toClick("#pagination a", { text: "2" });
         await expect(page).toMatchElement("#hits", {
-          text: "Dell - Power Companion Portable Charger"
+          text: "iBattz - Optimus Battstation Power Bank"
         });
         await expect(page).toMatchElement("#infinite-hits", {
-          text: "iBattz - Optimus Battstation Power"
+          text: "Samsung - Power Pack Fast Charge bundle"
         });
       });
     });
