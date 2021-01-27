@@ -5,7 +5,8 @@
   "homepage": "https://github.com/typesense/typesense-instantsearch-adapter",
   "main": "lib/TypesenseInstantsearchAdapter.js",
   "files": [
-    "lib/"
+    "lib/",
+    "scripts"
   ],
   "keywords": [
     "typesense",
@@ -20,7 +21,7 @@
   ],
   "scripts": {
     "pretest": "npm run lint",
-    "postinstall": "node postinstall.js",
+    "postinstall": "node scripts/postinstall.js",
     "lint": "eslint .",
     "test": "jest --maxWorkers=1 --verbose",
     "build": "babel src -d lib",

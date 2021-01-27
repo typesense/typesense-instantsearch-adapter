@@ -1,4 +1,4 @@
-const packageJson = require("./package.json");
+const packageJson = require("../package.json");
 
 if (packageJson.version.includes("0.4.")) {
   console.warn(
