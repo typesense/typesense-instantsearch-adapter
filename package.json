@@ -6,7 +6,7 @@
   "main": "lib/TypesenseInstantsearchAdapter.js",
   "files": [
     "lib/",
-    "scripts"
+    "scripts/"
   ],
   "keywords": [
     "typesense",
