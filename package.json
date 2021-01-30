@@ -1,6 +1,6 @@
 {
   "name": "typesense-instantsearch-adapter",
-  "version": "0.4.0-2",
+  "version": "1.0.0-0",
   "description": "Adapter to use InstantSearch.js with Typesense Search",
   "homepage": "https://github.com/typesense/typesense-instantsearch-adapter",
   "main": "lib/TypesenseInstantsearchAdapter.js",
