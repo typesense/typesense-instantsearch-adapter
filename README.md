@@ -290,7 +290,7 @@ The generalized pattern for the value attribute is: `<index_name>[/sort/<sort_by
 
 | Typesense Server | typesense-instantsearch-adapter | instantsearch.js | react-instantsearch | vue-instantsearch | angular-instantsearch |
 |------------------|----------------|----------------|----------------|----------------|----------------|
-| \>= v0.19 | \>= v0.4.0 | \>= 4.2.0 | \>= 6.0.0 | \>= 2.2.1 | \>= 3.0.0 |
+| \>= v0.19 | \>= v1.0.0 | \>= 4.2.0 | \>= 6.0.0 | \>= 2.2.1 | \>= 3.0.0 |
 | \>= v0.15 | \>= v0.3.0 | \>= 4.2.0 | \>= 6.0.0 | \>= 2.2.1 | \>= 3.0.0 |
 | \>= v0.14 | \>= v0.2.0 | \>= 4.2.0 | \>= 6.0.0 | \>= 2.2.1 | \>= 3.0.0 |
 | \>= v0.13 | \>= v0.1.0 | \>= 4.2.0 | \>= 6.0.0 | \>= 2.2.1 | \>= 3.0.0 |
