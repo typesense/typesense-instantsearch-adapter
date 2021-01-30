@@ -61,16 +61,61 @@ export class SearchRequestAdapter {
   }
 
   _adaptNumericFilters(numericFilters) {
+    // Need to transform this:
+    // ["field1<=634", "field1>=289", "field2<=5", "field3>=3"]
+    // to:
+    // "field1:=[634..289] && field2:<=5 && field3:>=3"
     let adaptedResult = "";
 
     if (!numericFilters) {
       return adaptedResult;
     }
 
-    adaptedResult = numericFilters
-      .map(numericFilter => numericFilter.replace(new RegExp("(>|<=)"), ":$1"))
-      .join(" && ");
+    // Transform to intermediate structure:
+    // {
+    //   field1: {
+    //     "<=": 634,
+    //     ">=": 289
+    //   },
+    //   field2: {
+    //     "<=": 5
+    //   },
+    //   field3: {
+    //     ">=": 3
+    //   }
+    // };
+    const filtersHash = {};
+    numericFilters.forEach(filter => {
+      const [, field, operator, value] = filter.match(
+        new RegExp("(.*)(<=|>=|>|<|:)(.*)")
+      );
+      filtersHash[field] = filtersHash[field] || {};
+      filtersHash[field][operator] = value;
+    });
 
+    // Transform that to:
+    //  "field1:=[634..289] && field2:<=5 && field3:>=3"
+    const adaptedFilters = [];
+    Object.keys(filtersHash).forEach(field => {
+      if (
+        filtersHash[field]["<="] != null &&
+        filtersHash[field][">="] != null
+      ) {
+        adaptedFilters.push(
+          `${field}:=[${filtersHash[field][">="]}..${filtersHash[field]["<="]}]`
+        );
+      } else if (filtersHash[field]["<="] != null) {
+        adaptedFilters.push(`${field}:<=${filtersHash[field]["<="]}`);
+      } else if (filtersHash[field][">="] != null) {
+        adaptedFilters.push(`${field}:>=${filtersHash[field][">="]}`);
+      } else {
+        console.warn(
+          `Unsupported operator found ${JSON.stringify(filtersHash[field])}`
+        );
+      }
+    });
+
+    adaptedResult = adaptedFilters.join(" && ");
     return adaptedResult;
   }
 
