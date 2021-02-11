@@ -15,13 +15,13 @@ export class Configuration {
 
     this.additionalSearchParameters.queryBy =
       this.additionalSearchParameters.queryBy || "";
-
     this.additionalSearchParameters.sortBy =
       this.additionalSearchParameters.sortBy || "";
-
     this.additionalSearchParameters.highlightFullFields =
       this.additionalSearchParameters.highlightFullFields ||
       this.additionalSearchParameters.queryBy;
+
+    this.geoLocationField = options.geoLocationField || "_geoloc";
   }
 
   validate() {

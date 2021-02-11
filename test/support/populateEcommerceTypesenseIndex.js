@@ -18,7 +18,6 @@ module.exports = (async () => {
 
   const schema = {
     name: "products",
-    num_documents: 0,
     fields: [
       {
         name: "name",
@@ -92,7 +91,7 @@ module.exports = (async () => {
     default_sorting_field: "popularity"
   };
 
-  console.log("Populating index in Typesense");
+  console.log("Populating products index in Typesense");
 
   const products = require("./data/ecommerce.json");
 
@@ -118,7 +117,7 @@ module.exports = (async () => {
   }
 
   console.log("Creating schema: ");
-  console.log(JSON.stringify(schema, null, 2));
+  // console.log(JSON.stringify(schema, null, 2));
   await typesense.collections().create(schema);
 
   // const collectionRetrieved = await typesense
@@ -158,5 +157,6 @@ module.exports = (async () => {
     return returnData;
   } catch (error) {
     console.log(error);
+    throw error;
   }
 })();

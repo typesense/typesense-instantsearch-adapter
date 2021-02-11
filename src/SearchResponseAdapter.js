@@ -4,9 +4,10 @@ import { utils } from "./support/utils";
 import he from "he";
 
 export class SearchResponseAdapter {
-  constructor(typesenseResponse, instantsearchRequest) {
+  constructor(typesenseResponse, instantsearchRequest, configuration) {
     this.typesenseResponse = typesenseResponse;
     this.instantsearchRequest = instantsearchRequest;
+    this.configuration = configuration;
   }
 
   _adaptGroupedHits(typesenseGroupedHits) {
@@ -39,6 +40,14 @@ export class SearchResponseAdapter {
         typesenseHit,
         "value"
       );
+
+      const geoLocationValue = adaptedHit[this.configuration.geoLocationField];
+      if (geoLocationValue) {
+        adaptedHit._geoloc = {
+          lat: geoLocationValue[0],
+          lng: geoLocationValue[1]
+        };
+      }
       return adaptedHit;
     });
     return adaptedResult;

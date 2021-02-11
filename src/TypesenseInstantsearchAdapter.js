@@ -31,7 +31,8 @@ export default class TypesenseInstantsearchAdapter {
           this._validateTypesenseResult(typesenseResult);
           const responseAdapter = new SearchResponseAdapter(
             typesenseResult,
-            instantsearchRequests[index]
+            instantsearchRequests[index],
+            this.configuration
           );
           return responseAdapter.adapt();
         }
@@ -58,7 +59,8 @@ export default class TypesenseInstantsearchAdapter {
           this._validateTypesenseResult(typesenseResult);
           const responseAdapter = new FacetSearchResponseAdapter(
             typesenseResult,
-            instantsearchRequests[index]
+            instantsearchRequests[index],
+            this.configuration
           );
           return responseAdapter.adapt();
         }
