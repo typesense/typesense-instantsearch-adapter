@@ -128,7 +128,7 @@ export class SearchResponseAdapter {
         ? this._adaptGroupedHits(this.typesenseResponse.grouped_hits)
         : this._adaptHits(this.typesenseResponse.hits),
       nbHits: this.typesenseResponse.found,
-      page: this.typesenseResponse.page,
+      page: this.typesenseResponse.page - 1,
       nbPages: this._adaptNumberOfPages(),
       hitsPerPage: this.typesenseResponse.request_params.per_page,
       facets: this._adaptFacets(this.typesenseResponse.facet_counts || []),
