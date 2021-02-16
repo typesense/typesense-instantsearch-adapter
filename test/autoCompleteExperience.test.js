@@ -12,7 +12,7 @@ describe("Search Experience", () => {
 
     it("renders autocomplete results", async () => {
       return expect(page).toMatchElement("#autocomplete .autocomplete-list", {
-        text: "Dynex™ - Portable Charger - Green"
+        text: "Insignia™ - 17W Vehicle Charger with 2 USB Ports"
       });
     });
   });

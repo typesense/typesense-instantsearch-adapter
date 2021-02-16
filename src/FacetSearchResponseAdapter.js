@@ -16,7 +16,11 @@ export class FacetSearchResponseAdapter {
 
     adaptedResult = facet.counts.map(facetCount => ({
       value: facetCount.value,
-      highlighted: this._adaptHighlightTag(facetCount.highlighted),
+      highlighted: this._adaptHighlightTag(
+        facetCount.highlighted,
+        this.instantsearchRequest.params.highlightPreTag,
+        this.instantsearchRequest.params.highlightPostTag
+      ),
       count: facetCount.count
     }));
 

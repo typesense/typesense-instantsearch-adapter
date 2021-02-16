@@ -6,11 +6,11 @@ export class SearchRequestAdapter {
   }
 
   constructor(
-    instantsearchRequest,
+    instantsearchRequests,
     typesenseClient,
     additionalSearchParameters
   ) {
-    this.instantsearchRequest = instantsearchRequest;
+    this.instantsearchRequests = instantsearchRequests;
     this.typesenseClient = typesenseClient;
     this.additionalSearchParameters = additionalSearchParameters;
   }
@@ -61,16 +61,61 @@ export class SearchRequestAdapter {
   }
 
   _adaptNumericFilters(numericFilters) {
+    // Need to transform this:
+    // ["field1<=634", "field1>=289", "field2<=5", "field3>=3"]
+    // to:
+    // "field1:=[634..289] && field2:<=5 && field3:>=3"
     let adaptedResult = "";
 
     if (!numericFilters) {
       return adaptedResult;
     }
 
-    adaptedResult = numericFilters
-      .map(numericFilter => numericFilter.replace(new RegExp("(>|<=)"), ":$1"))
-      .join(" && ");
+    // Transform to intermediate structure:
+    // {
+    //   field1: {
+    //     "<=": 634,
+    //     ">=": 289
+    //   },
+    //   field2: {
+    //     "<=": 5
+    //   },
+    //   field3: {
+    //     ">=": 3
+    //   }
+    // };
+    const filtersHash = {};
+    numericFilters.forEach(filter => {
+      const [, field, operator, value] = filter.match(
+        new RegExp("(.*)(<=|>=|>|<|:)(.*)")
+      );
+      filtersHash[field] = filtersHash[field] || {};
+      filtersHash[field][operator] = value;
+    });
 
+    // Transform that to:
+    //  "field1:=[634..289] && field2:<=5 && field3:>=3"
+    const adaptedFilters = [];
+    Object.keys(filtersHash).forEach(field => {
+      if (
+        filtersHash[field]["<="] != null &&
+        filtersHash[field][">="] != null
+      ) {
+        adaptedFilters.push(
+          `${field}:=[${filtersHash[field][">="]}..${filtersHash[field]["<="]}]`
+        );
+      } else if (filtersHash[field]["<="] != null) {
+        adaptedFilters.push(`${field}:<=${filtersHash[field]["<="]}`);
+      } else if (filtersHash[field][">="] != null) {
+        adaptedFilters.push(`${field}:>=${filtersHash[field][">="]}`);
+      } else {
+        console.warn(
+          `Unsupported operator found ${JSON.stringify(filtersHash[field])}`
+        );
+      }
+    });
+
+    adaptedResult = adaptedFilters.join(" && ");
     return adaptedResult;
   }
 
@@ -91,9 +136,9 @@ export class SearchRequestAdapter {
     return indexName.match(this.constructor.INDEX_NAME_MATCHING_REGEX)[3];
   }
 
-  _buildSearchParameters() {
-    const params = this.instantsearchRequest.params;
-    const indexName = this.instantsearchRequest.indexName;
+  _buildSearchParameters(instantsearchRequest) {
+    const params = instantsearchRequest.params;
+    const indexName = instantsearchRequest.indexName;
 
     const snakeCasedAdditionalSearchParameters = {};
     for (const [key, value] of Object.entries(
@@ -110,6 +155,7 @@ export class SearchRequestAdapter {
     const adaptedSortBy = this._adaptSortBy(indexName);
 
     Object.assign(typesenseSearchParams, {
+      collection: this._adaptIndexName(instantsearchRequest.indexName),
       q: params.query === "" ? "*" : params.query,
       facet_by: [params.facets].flat().join(","),
       filter_by: this._adaptFilters(params.facetFilters, params.numericFilters),
@@ -128,7 +174,7 @@ export class SearchRequestAdapter {
     }
 
     // console.log(params);
-    // console.log(typesenseSearchParams);
+    // console.log(sanitizedParams);
 
     return typesenseSearchParams;
   }
@@ -141,9 +187,10 @@ export class SearchRequestAdapter {
   }
 
   async request() {
-    return this.typesenseClient
-      .collections(this._adaptIndexName(this.instantsearchRequest.indexName))
-      .documents()
-      .search(this._buildSearchParameters());
+    const searches = this.instantsearchRequests.map(instantsearchRequest =>
+      this._buildSearchParameters(instantsearchRequest)
+    );
+
+    return this.typesenseClient.multiSearch.perform({ searches: searches });
   }
 }

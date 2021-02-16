@@ -20,60 +20,75 @@ export default class TypesenseInstantsearchAdapter {
   }
 
   async searchTypesenseAndAdapt(instantsearchRequests) {
-    const adaptedResponses = await instantsearchRequests.map(
-      async instantsearchRequest => {
-        try {
-          const typesenseResponse = await this._adaptAndPerformTypesenseRequest(
-            instantsearchRequest
-          );
+    let typesenseResponse;
+    try {
+      typesenseResponse = await this._adaptAndPerformTypesenseRequest(
+        instantsearchRequests
+      );
+
+      const adaptedResponses = typesenseResponse.results.map(
+        (typesenseResult, index) => {
+          this._validateTypesenseResult(typesenseResult);
           const responseAdapter = new SearchResponseAdapter(
-            typesenseResponse,
-            instantsearchRequest
+            typesenseResult,
+            instantsearchRequests[index]
           );
           return responseAdapter.adapt();
-        } catch (error) {
-          console.error(error);
-          throw error;
         }
-      }
-    );
+      );
 
-    const results = await Promise.all(adaptedResponses);
-    return {
-      results: results
-    };
+      return {
+        results: adaptedResponses
+      };
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   }
 
   async searchTypesenseForFacetValuesAndAdapt(instantsearchRequests) {
-    const adaptedResponses = await instantsearchRequests.map(
-      async instantsearchRequest => {
-        try {
-          const typesenseResponse = await this._adaptAndPerformTypesenseRequest(
-            instantsearchRequest
-          );
+    let typesenseResponse;
+    try {
+      typesenseResponse = await this._adaptAndPerformTypesenseRequest(
+        instantsearchRequests
+      );
+
+      const adaptedResponses = typesenseResponse.results.map(
+        (typesenseResult, index) => {
+          this._validateTypesenseResult(typesenseResult);
           const responseAdapter = new FacetSearchResponseAdapter(
-            typesenseResponse,
-            instantsearchRequest
+            typesenseResult,
+            instantsearchRequests[index]
           );
           return responseAdapter.adapt();
-        } catch (error) {
-          console.error(error);
-          throw error;
         }
-      }
-    );
+      );
 
-    const results = await Promise.all(adaptedResponses);
-    return results;
+      return adaptedResponses;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   }
 
-  async _adaptAndPerformTypesenseRequest(instantsearchRequest) {
+  async _adaptAndPerformTypesenseRequest(instantsearchRequests) {
     const requestAdapter = new SearchRequestAdapter(
-      instantsearchRequest,
+      instantsearchRequests,
       this.typesenseClient,
       this.configuration.additionalSearchParameters
     );
     const typesenseResponse = await requestAdapter.request();
     return typesenseResponse;
+  }
+
+  _validateTypesenseResult(typesenseResult) {
+    if (typesenseResult.error) {
+      throw new Error(`${typesenseResult.code} - ${typesenseResult.error}`);
+    }
+    if (!typesenseResult.hits && !typesenseResult.grouped_hits) {
+      throw new Error(
+        `Did not find any hits. ${typesenseResult.code} - ${typesenseResult.error}`
+      );
+    }
   }
 }
