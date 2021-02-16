@@ -191,6 +191,6 @@ export class SearchRequestAdapter {
       this._buildSearchParameters(instantsearchRequest)
     );
 
-    return this.typesenseClient.multi_search.perform({ searches: searches });
+    return this.typesenseClient.multiSearch.perform({ searches: searches });
   }
 }
