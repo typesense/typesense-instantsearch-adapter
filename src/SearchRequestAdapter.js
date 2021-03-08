@@ -5,14 +5,11 @@ export class SearchRequestAdapter {
     return new RegExp("^(.+?)(?=(/sort/(.*))|$)");
   }
 
-  constructor(
-    instantsearchRequests,
-    typesenseClient,
-    additionalSearchParameters
-  ) {
+  constructor(instantsearchRequests, typesenseClient, configuration) {
     this.instantsearchRequests = instantsearchRequests;
     this.typesenseClient = typesenseClient;
-    this.additionalSearchParameters = additionalSearchParameters;
+    this.configuration = configuration;
+    this.additionalSearchParameters = this.configuration.additionalSearchParameters;
   }
 
   _adaptFacetFilters(facetFilters) {
@@ -119,11 +116,19 @@ export class SearchRequestAdapter {
     return adaptedResult;
   }
 
-  _adaptFilters(facetFilters, numericFilters) {
+  _adaptGeoFilter(boundingBox) {
+    return `${this.configuration.geoLocationField}:loc(${boundingBox})`;
+  }
+
+  _adaptFilters(facetFilters, numericFilters, geoFilter) {
     const adaptedFilters = [];
 
     adaptedFilters.push(this._adaptFacetFilters(facetFilters));
     adaptedFilters.push(this._adaptNumericFilters(numericFilters));
+
+    if (geoFilter != null) {
+      adaptedFilters.push(this._adaptGeoFilter(geoFilter));
+    }
 
     return adaptedFilters.filter(filter => filter !== "").join(" && ");
   }
@@ -158,7 +163,11 @@ export class SearchRequestAdapter {
       collection: this._adaptIndexName(instantsearchRequest.indexName),
       q: params.query === "" ? "*" : params.query,
       facet_by: [params.facets].flat().join(","),
-      filter_by: this._adaptFilters(params.facetFilters, params.numericFilters),
+      filter_by: this._adaptFilters(
+        params.facetFilters,
+        params.numericFilters,
+        params.insideBoundingBox
+      ),
       sort_by: adaptedSortBy || this.additionalSearchParameters.sortBy,
       max_facet_values: params.maxValuesPerFacet,
       page: (params.page || 0) + 1
@@ -173,7 +182,6 @@ export class SearchRequestAdapter {
       typesenseSearchParams.per_page = 0;
     }
 
-    // console.log(params);
     // console.log(sanitizedParams);
 
     return typesenseSearchParams;
