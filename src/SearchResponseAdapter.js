@@ -1,7 +1,6 @@
 "use strict";
 
 import { utils } from "./support/utils";
-import he from "he";
 
 export class SearchResponseAdapter {
   constructor(typesenseResponse, instantsearchRequest) {
@@ -77,7 +76,7 @@ export class SearchResponseAdapter {
         value.forEach(v => {
           result[attribute].push({
             value: this._adaptHighlightTag(
-              he.decode(`${v}`),
+              `${v}`,
               this.instantsearchRequest.params.highlightPreTag,
               this.instantsearchRequest.params.highlightPostTag
             ),
@@ -88,7 +87,7 @@ export class SearchResponseAdapter {
       } else {
         // Convert all values to strings
         result[attribute].value = this._adaptHighlightTag(
-          he.decode(`${value}`),
+          `${value}`,
           this.instantsearchRequest.params.highlightPreTag,
           this.instantsearchRequest.params.highlightPostTag
         );
