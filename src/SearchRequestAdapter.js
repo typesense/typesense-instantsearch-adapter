@@ -117,7 +117,7 @@ export class SearchRequestAdapter {
   }
 
   _adaptGeoFilter(boundingBox) {
-    return `${this.configuration.geoLocationField}:loc(${boundingBox})`;
+    return `${this.configuration.geoLocationField}:(${boundingBox})`;
   }
 
   _adaptFilters(facetFilters, numericFilters, geoFilter) {
