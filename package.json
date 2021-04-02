@@ -5,6 +5,7 @@
   "homepage": "https://github.com/typesense/typesense-instantsearch-adapter",
   "main": "lib/TypesenseInstantsearchAdapter.js",
   "files": [
+    "dist/",
     "lib/",
     "scripts/"
   ],
@@ -24,7 +25,9 @@
     "postinstall": "node scripts/postinstall.js",
     "lint": "eslint .",
     "test": "jest --maxWorkers=1 --verbose",
-    "build": "babel src -d lib",
+    "build:lib": "rm -r lib/* && babel src -d lib",
+    "build:dist": "rm -r dist/* && webpack",
+    "build": "npm run build:lib && npm run build:dist",
     "typesenseServer": "docker run -i -p 8108:8108 -v/tmp/typesense-server-data/:/data typesense/typesense:0.19.0 --data-dir /data --api-key=xyz --listen-port 8108 --enable-cors",
     "createServerNodesFile": "echo '172.17.0.2:8107:8108,172.17.0.3:7107:7108,172.17.0.4:9107:9108' > `pwd`/typesense-server-nodes",
     "typesenseServer:0": "docker run -i -p 8108:8108 -p 8107:8107 -v/tmp/typesense-server-data-node-1/:/data -v`pwd`/typesense-server-nodes:/typesense-server-nodes typesense/typesense:0.19.0 --data-dir /data --api-key=xyz --listen-port 8108 --peering-port 8107 --enable-cors --nodes=/typesense-server-nodes",
@@ -47,6 +50,7 @@
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.12.16",
     "babel-jest": "^25.5.1",
+    "babel-loader": "^8.2.2",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.15.0",
     "eslint-config-standard": "^14.1.1",
@@ -62,7 +66,9 @@
     "jest-junit": "^10.0.0",
     "jest-puppeteer": "^4.4.0",
     "prettier": "1.19.1",
-    "puppeteer": "^2.1.1"
+    "puppeteer": "^2.1.1",
+    "webpack": "^5.30.0",
+    "webpack-cli": "^4.6.0"
   },
   "dependencies": {
     "typesense": "^0.11.1"
