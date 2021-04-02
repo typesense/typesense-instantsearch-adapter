@@ -333,7 +333,7 @@ $ np
 
 If you have any questions or run into any problems, please create a Github issue and we'll try our best to help.
 
-© 2020 Typesense, Inc.
+© 2020-present Typesense, Inc.
 
 [npm-image]: https://badge.fury.io/js/typesense-instantsearch-adapter.svg
 [npm-url]: https://npmjs.org/package/typesense-instantsearch-adapter
