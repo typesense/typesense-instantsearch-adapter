@@ -17,8 +17,7 @@ Here is an example of UI you can build with this adapater: [songs-search.typesen
   - [With react-instantsearch](#with-react-instantsearch)
   - [With vue-instantsearch](#with-vue-instantsearch)
   - [With angular-instantsearch](#with-angular-instantsearch)
-- [Widget Specific Instructuctions](#widget-specific-instructions)
-- [Implementation Notes](#implementation-notes)
+- [Widget Specific Instructions](#widget-specific-instructions)
 - [Compatibility](#compatibility)
 - [Development](#development)
 - [Help](#help)
@@ -71,7 +70,7 @@ import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
 
 const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   server: {
-    apiKey: "abcd", // Be sure to use the search-only-api-key
+    apiKey: "abcd", // Be sure to use an API key that only allows search operations
     nodes: [
       {
         host: "localhost",
@@ -126,7 +125,7 @@ import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
 
 const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   server: {
-    apiKey: "abcd", // Be sure to use the search-only-api-key
+    apiKey: "abcd", // Be sure to use an API key that only allows search operations
     nodes: [
       {
         host: "localhost",
@@ -178,7 +177,7 @@ import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
 
 const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   server: {
-    apiKey: "abcd", // Be sure to use the search-only-api-key
+    apiKey: "abcd", // Be sure to use an API key that only allows search operations
     nodes: [
       {
         host: "localhost",
@@ -216,7 +215,7 @@ import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
 
 const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   server: {
-    apiKey: "abcd", // Be sure to use the search-only-api-key
+    apiKey: "abcd", // Be sure to use an API key that only allows search operations
     nodes: [
       {
         host: "localhost",
@@ -280,11 +279,40 @@ search.addWidgets([
 ])
 ```
 
-The generalized pattern for the value attribute is: `<index_name>[/sort/<sort_by>]`. The adapter will use the value in `<sort_by>` as the value for the `sort_by` search parameter. 
+The generalized pattern for the value attribute is: `<index_name>[/sort/<sort_by>]`. The adapter will use the value in `<sort_by>` as the value for the `sort_by` search parameter.
 
-### Implementation Notes
+### `configure`
 
-- If you need to specify a `filter_by` search parameter for Typesense, you want to use the appropriate `configure` InstantSearch widget. Setting `filter_by` inside the `additionalQueryParameters` config does not work, because InstantSearch internally overrides the `filter_by` field. So you want to use InstantSearch to configure it. Read more [here](https://github.com/typesense/typesense-instantsearch-adapter/issues/17#issuecomment-746912375). 
+If you need to specify a `filter_by` search parameter for Typesense, you want to use the appropriate `configure` InstantSearch widget. Setting `filter_by` inside the `additionalQueryParameters` config does not work, because InstantSearch internally overrides the `filter_by` field. So you want to use InstantSearch to configure it. Read more [here](https://github.com/typesense/typesense-instantsearch-adapter/issues/17#issuecomment-746912375).
+
+### `index`
+
+For Federated / Multi-Index Search, you'd need to use the `index` widget. To then be able to specify different search parameters for each index/collection, you can specify them using the `collectionSpecificSearchParameters` configuration:
+
+```js
+const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
+  server: {
+    apiKey: "abcd", // Be sure to use an API key that only allows search operations
+    nodes: [{ host: "localhost", port: "8108", protocol: "http" }]
+  },
+  // Search parameters that are common to all collections/indices go here:
+  additionalSearchParameters: {
+    numTypos: 3 
+  },
+  // Search parameters that need to be *overridden* on a per-collection-basis go here:
+  collectionSpecificSearchParameters: {
+    products: {
+      queryBy: "name,description,categories"
+    },
+    brands: {
+      queryBy: "name"
+    }
+  }
+});
+const searchClient = typesenseInstantsearchAdapter.searchClient;
+```
+
+Essentially, any parameters set in `collectionSpecificSearchParameters` will be merged with the values in `additionalSearchParameters` when querying Typesense, effectively overriding values in `additionalSearchParameters` on a per-collection-basis.
 
 ## Compatibility
 

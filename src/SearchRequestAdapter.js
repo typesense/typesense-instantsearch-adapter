@@ -8,11 +8,13 @@ export class SearchRequestAdapter {
   constructor(
     instantsearchRequests,
     typesenseClient,
-    additionalSearchParameters
+    additionalSearchParameters,
+    collectionSpecificSearchParameters
   ) {
     this.instantsearchRequests = instantsearchRequests;
     this.typesenseClient = typesenseClient;
     this.additionalSearchParameters = additionalSearchParameters;
+    this.collectionSpecificSearchParameters = collectionSpecificSearchParameters;
   }
 
   _adaptFacetFilters(facetFilters) {
@@ -139,12 +141,25 @@ export class SearchRequestAdapter {
   _buildSearchParameters(instantsearchRequest) {
     const params = instantsearchRequest.params;
     const indexName = instantsearchRequest.indexName;
+    const adaptedCollectionName = this._adaptIndexName(indexName);
 
+    // Convert all common parameters to snake case
     const snakeCasedAdditionalSearchParameters = {};
     for (const [key, value] of Object.entries(
       this.additionalSearchParameters
     )) {
       snakeCasedAdditionalSearchParameters[this._camelToSnakeCase(key)] = value;
+    }
+
+    // Override, collection specific parameters
+    if (this.collectionSpecificSearchParameters[adaptedCollectionName]) {
+      for (const [key, value] of Object.entries(
+        this.collectionSpecificSearchParameters[adaptedCollectionName]
+      )) {
+        snakeCasedAdditionalSearchParameters[
+          this._camelToSnakeCase(key)
+        ] = value;
+      }
     }
 
     const typesenseSearchParams = Object.assign(
@@ -155,7 +170,7 @@ export class SearchRequestAdapter {
     const adaptedSortBy = this._adaptSortBy(indexName);
 
     Object.assign(typesenseSearchParams, {
-      collection: this._adaptIndexName(instantsearchRequest.indexName),
+      collection: adaptedCollectionName,
       q: params.query === "" ? "*" : params.query,
       facet_by: [params.facets].flat().join(","),
       filter_by: this._adaptFilters(params.facetFilters, params.numericFilters),
@@ -174,7 +189,7 @@ export class SearchRequestAdapter {
     }
 
     // console.log(params);
-    // console.log(sanitizedParams);
+    // console.log(typesenseSearchParams);
 
     return typesenseSearchParams;
   }

@@ -2,7 +2,7 @@ describe("Search Experience", () => {
   beforeAll(require("./support/beforeAll"), 60 * 1000);
 
   beforeEach(async () => {
-    return page.goto("http://localhost:3000");
+    return page.goto("http://localhost:3000/index.html");
   }, 10 * 1000);
 
   describe("when searching for a term", () => {

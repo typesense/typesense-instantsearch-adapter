@@ -2,12 +2,11 @@ describe("Instant Search Widgets", () => {
   beforeAll(require("./support/beforeAll"), 60 * 1000);
 
   beforeEach(async () => {
-    return page.goto("http://localhost:3000");
+    return page.goto("http://localhost:3000/index.html");
   }, 10 * 1000);
 
   describe("Page", () => {
     it("loads", async () => {
-      await expect(page).toMatch("InstantSearch.js demo");
       await expect(page).toMatch("AT&T");
       return expect(page.title()).resolves.toMatch("testground");
     });

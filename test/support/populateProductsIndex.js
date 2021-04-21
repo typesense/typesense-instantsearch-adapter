@@ -1,6 +1,3 @@
-// This script can also be executed from the command line directly:
-// $ node populateTypesenseIndex.js
-
 const Typesense = require("typesense");
 
 module.exports = (async () => {

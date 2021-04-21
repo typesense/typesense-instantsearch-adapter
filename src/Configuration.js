@@ -22,12 +22,37 @@ export class Configuration {
     this.additionalSearchParameters.highlightFullFields =
       this.additionalSearchParameters.highlightFullFields ||
       this.additionalSearchParameters.queryBy;
+
+    this.collectionSpecificSearchParameters =
+      options.collectionSpecificSearchParameters || {};
+
+    Object.keys(this.collectionSpecificSearchParameters).forEach(collection => {
+      const overrideHighlightFullFields =
+        this.collectionSpecificSearchParameters[collection]
+          .highlightFullFields ||
+        this.collectionSpecificSearchParameters[collection].queryBy;
+      if (overrideHighlightFullFields) {
+        this.collectionSpecificSearchParameters[
+          collection
+        ].highlightFullFields = overrideHighlightFullFields;
+      }
+    });
   }
 
+  /*
+   * Either additionalSearchParameters.queryBy needs to be set, or
+   *   All collectionSpecificSearchParameters need to have queryBy
+   *
+   * */
   validate() {
-    if (this.additionalSearchParameters.queryBy.length === 0) {
+    if (
+      this.additionalSearchParameters.queryBy.length === 0 &&
+      Object.values(this.collectionSpecificSearchParameters).some(
+        c => (c.queryBy || "").length === 0
+      )
+    ) {
       throw new Error(
-        "Missing required parameter: additionalSearchParameters.queryBy"
+        "Missing parameter: Either additionalSearchParameters.queryBy needs to be set, or all collectionSpecificSearchParameters need to have .queryBy set"
       );
     }
   }

@@ -2,7 +2,7 @@ describe("Search Experience", () => {
   beforeAll(require("./support/beforeAll"), 60 * 1000);
 
   beforeEach(async () => {
-    return page.goto("http://localhost:3000");
+    return page.goto("http://localhost:3000/index.html");
   }, 30 * 1000);
 
   describe("when searching for a term", () => {
@@ -299,7 +299,9 @@ describe("Search Experience", () => {
 
   describe("when grouping results", () => {
     beforeEach(async () => {
-      return page.goto("http://localhost:3000/?groupBy=brand&groupLimit=2");
+      return page.goto(
+        "http://localhost:3000/index.html?groupBy=brand&groupLimit=2"
+      );
     });
 
     it("renders the grouped results", async () => {

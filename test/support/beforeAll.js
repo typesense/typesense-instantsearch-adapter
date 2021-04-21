@@ -32,5 +32,6 @@ module.exports = async () => {
       }
     });
 
-  return require("./populateTypesenseIndex");
+  await require("./populateProductsIndex");
+  return require("./populateBrandsIndex");
 };
