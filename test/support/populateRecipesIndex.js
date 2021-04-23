@@ -14,38 +14,38 @@ module.exports = (async () => {
   });
 
   const schema = {
-    name: "brands",
-    num_documents: 0,
+    name: "recipes",
     fields: [
       {
-        name: "name",
+        name: "recipe_id",
+        type: "int32"
+      },
+      {
+        name: "title",
         type: "string"
       },
       {
-        name: "popularity",
-        type: "int32"
+        name: "ingredient_names",
+        type: "string[]",
+        facet: true
       }
     ],
-    default_sorting_field: "popularity"
+    default_sorting_field: "recipe_id"
   };
 
-  console.log("Populating brands index in Typesense");
+  console.log("Populating index in Typesense");
 
-  const brands = require("./data/brands.json");
-
-  brands.forEach(brand => {
-    brand.popularity = brand.name.length;
-  });
+  const recipes = require("./data/recipes.json");
 
   let reindexNeeded = false;
   try {
-    const collection = await typesense.collections("brands").retrieve();
+    const collection = await typesense.collections("recipes").retrieve();
     console.log("Found existing schema");
     // console.log(JSON.stringify(collection, null, 2));
-    if (collection.num_documents !== brands.length || process.env.FORCE_REINDEX === "true") {
+    if (collection.num_documents !== recipes.length || process.env.FORCE_REINDEX === "true") {
       console.log("Deleting existing schema");
       reindexNeeded = true;
-      await typesense.collections("brands").delete();
+      await typesense.collections("recipes").delete();
     }
   } catch (e) {
     reindexNeeded = true;
@@ -60,7 +60,7 @@ module.exports = (async () => {
   await typesense.collections().create(schema);
 
   // const collectionRetrieved = await typesense
-  //   .collections("products")
+  //   .collections("recipes")
   //   .retrieve();
   // console.log("Retrieving created schema: ");
   // console.log(JSON.stringify(collectionRetrieved, null, 2));
@@ -69,9 +69,9 @@ module.exports = (async () => {
 
   try {
     const returnData = await typesense
-      .collections("brands")
+      .collections("recipes")
       .documents()
-      .import(brands);
+      .import(recipes);
     console.log(returnData);
     console.log("Done indexing.");
 

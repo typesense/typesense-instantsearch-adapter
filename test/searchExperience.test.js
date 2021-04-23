@@ -15,27 +15,19 @@ describe("Search Experience", () => {
       await expect(page).toMatchElement("#categories-menu", {
         text: "Cell Phone Accessories"
       });
-      await expect(page).toMatchElement(
-        '#price-range-input form input[type=number][placeholder="3"]'
-      );
-      await expect(page).toMatchElement(
-        '#price-range-input form input[type=number][placeholder="250"]'
-      );
+      await expect(page).toMatchElement('#price-range-input form input[type=number][placeholder="3"]');
+      await expect(page).toMatchElement('#price-range-input form input[type=number][placeholder="250"]');
       await expect(page).toMatchElement("#stats", {
         text: "294 results found"
       });
-      await expect(page).toMatchElement(
-        "#hits .ais-Hits-item:nth-of-type(1) .hit-name",
-        {
-          text: "Charger"
-        }
-      );
+      await expect(page).toMatchElement("#hits .ais-Hits-item:nth-of-type(1) .hit-name", {
+        text: "Charger"
+      });
       await expect(page).toMatchElement("#infinite-hits", {
         text: "Charger"
       });
       await page.waitForSelector("#pagination a.ais-Pagination-link");
-      const length = (await page.$$("#pagination a.ais-Pagination-link"))
-        .length;
+      const length = (await page.$$("#pagination a.ais-Pagination-link")).length;
       return expect(length).toEqual(7 + 2);
     });
 
@@ -45,18 +37,12 @@ describe("Search Experience", () => {
           await expect(page).toClick("#brand-list button", {
             text: "Show more"
           });
-          await expect(page).toClick(
-            "#brand-list input[type=checkbox][value=Samsung]"
-          );
+          await expect(page).toClick("#brand-list input[type=checkbox][value=Samsung]");
           await expect(page).toMatchElement("#stats", {
             text: "25 results found"
           });
-          await expect(page).toMatchElement(
-            '#price-range-input form input[type=number][placeholder="14"]'
-          );
-          await expect(page).toMatchElement(
-            '#price-range-input form input[type=number][placeholder="770"]'
-          );
+          await expect(page).toMatchElement('#price-range-input form input[type=number][placeholder="14"]');
+          await expect(page).toMatchElement('#price-range-input form input[type=number][placeholder="770"]');
           await expect(page).toMatchElement("#hits", {
             text: "Fast Charge Wireless Charger"
           });
@@ -69,8 +55,7 @@ describe("Search Experience", () => {
 
           // Pagination
           await page.waitForSelector("#pagination a.ais-Pagination-link");
-          const length = (await page.$$("#pagination a.ais-Pagination-link"))
-            .length;
+          const length = (await page.$$("#pagination a.ais-Pagination-link")).length;
           expect(length).toEqual(4 + 2);
         });
       });
@@ -144,9 +129,7 @@ describe("Search Experience", () => {
           await expect(page).toClick("#searchbox input[type=search]", {
             clickCount: 3
           });
-          await (await page.$("#searchbox input[type=search]")).press(
-            "Backspace"
-          );
+          await (await page.$("#searchbox input[type=search]")).press("Backspace");
           await page.focus("#categories-hierarchical-menu a");
           await expect(page).toMatchElement("#categories-hierarchical-menu a", {
             text: "Cell Phones"
@@ -174,8 +157,7 @@ describe("Search Experience", () => {
             text: "Apple - iPhone SE 16GB - Rose Gold"
           });
           await page.waitForSelector("#pagination a.ais-Pagination-link");
-          const length = (await page.$$("#pagination a.ais-Pagination-link"))
-            .length;
+          const length = (await page.$$("#pagination a.ais-Pagination-link")).length;
           expect(length).toEqual(5 + 2);
         });
       });
@@ -196,21 +178,14 @@ describe("Search Experience", () => {
             text: "Sony - Xperia™ XZ 4G LTE with 32GB Memory Cell Phone"
           });
           await page.waitForSelector("#pagination a.ais-Pagination-link");
-          const length = (await page.$$("#pagination a.ais-Pagination-link"))
-            .length;
+          const length = (await page.$$("#pagination a.ais-Pagination-link")).length;
           expect(length).toEqual(1);
         });
       });
       describe("using the rangeInput", () => {
         it("renders the filtered results", async () => {
-          await expect(page).toFill(
-            "#price-range-input form input[type=number].ais-RangeInput-input--min",
-            "99"
-          );
-          await expect(page).toFill(
-            "#price-range-input form input[type=number].ais-RangeInput-input--max",
-            "100"
-          );
+          await expect(page).toFill("#price-range-input form input[type=number].ais-RangeInput-input--min", "99");
+          await expect(page).toFill("#price-range-input form input[type=number].ais-RangeInput-input--max", "100");
           await expect(page).toClick("#price-range-input button");
           await expect(page).toMatchElement("#stats", {
             text: "32 results found"
@@ -226,12 +201,8 @@ describe("Search Experience", () => {
 
       describe("using the ratingMenu", () => {
         it("renders the filtered results", async () => {
-          await expect(page).toMatchElement(
-            "#rating-menu a[aria-label='4 & up'] span"
-          );
-          await expect(page).toClick(
-            "#rating-menu a[aria-label='4 & up'] span"
-          );
+          await expect(page).toMatchElement("#rating-menu a[aria-label='4 & up'] span");
+          await expect(page).toClick("#rating-menu a[aria-label='4 & up'] span");
           await expect(page).toMatchElement("#stats", {
             text: "113 results found"
           });
@@ -242,8 +213,7 @@ describe("Search Experience", () => {
             text: "Insignia™ - Vehicle Charger"
           });
           await page.waitForSelector("#pagination a.ais-Pagination-link");
-          const length = (await page.$$("#pagination a.ais-Pagination-link"))
-            .length;
+          const length = (await page.$$("#pagination a.ais-Pagination-link")).length;
           expect(length).toEqual(7 + 2);
         });
       });
@@ -286,10 +256,7 @@ describe("Search Experience", () => {
 
     describe("when changing the Hits per Page", () => {
       it("renders the set number of hits", async () => {
-        await expect(page).toSelect(
-          "#hits-per-page select",
-          "16 hits per page"
-        );
+        await expect(page).toSelect("#hits-per-page select", "16 hits per page");
         await page.waitForSelector("#hits li:nth-of-type(9)");
         const length = (await page.$$("#hits li")).length;
         expect(length).toEqual(16);
@@ -299,9 +266,7 @@ describe("Search Experience", () => {
 
   describe("when grouping results", () => {
     beforeEach(async () => {
-      return page.goto(
-        "http://localhost:3000/index.html?groupBy=brand&groupLimit=2"
-      );
+      return page.goto("http://localhost:3000/index.html?groupBy=brand&groupLimit=2");
     });
 
     it("renders the grouped results", async () => {
@@ -311,36 +276,23 @@ describe("Search Experience", () => {
       await expect(page).toMatchElement("#stats", {
         text: "250 results found"
       });
-      await expect(page).toMatchElement(
-        "#hits .ais-Hits-item:nth-of-type(1) .hit-name",
-        {
-          text: "AT&T"
-        }
-      );
-      await expect(page).toMatchElement(
-        "#hits .ais-Hits-item:nth-of-type(2) .hit-name",
-        {
-          text: "AT&T"
-        }
-      );
-      await expect(page).toMatchElement(
-        "#hits .ais-Hits-item:nth-of-type(3) .hit-name",
-        {
-          text: "Boost"
-        }
-      );
-      await expect(page).toMatchElement(
-        "#hits .ais-Hits-item:nth-of-type(4) .hit-name",
-        {
-          text: "Boost"
-        }
-      );
+      await expect(page).toMatchElement("#hits .ais-Hits-item:nth-of-type(1) .hit-name", {
+        text: "AT&T"
+      });
+      await expect(page).toMatchElement("#hits .ais-Hits-item:nth-of-type(2) .hit-name", {
+        text: "AT&T"
+      });
+      await expect(page).toMatchElement("#hits .ais-Hits-item:nth-of-type(3) .hit-name", {
+        text: "Boost"
+      });
+      await expect(page).toMatchElement("#hits .ais-Hits-item:nth-of-type(4) .hit-name", {
+        text: "Boost"
+      });
       await expect(page).toMatchElement("#infinite-hits", {
         text: "Samsung"
       });
       await page.waitForSelector("#pagination a.ais-Pagination-link");
-      const length = (await page.$$("#pagination a.ais-Pagination-link"))
-        .length;
+      const length = (await page.$$("#pagination a.ais-Pagination-link")).length;
       return expect(length).toEqual(7 + 2);
     });
   });

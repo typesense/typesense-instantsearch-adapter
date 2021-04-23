@@ -18,4 +18,4 @@ yarn
 yarn start
 ```
 
-Open http://localhost:3000 to see your app.
+Open http://localhost:3000/index.html or http://localhost:3000/federated_search.html to see the app.

@@ -14,9 +14,7 @@ describe("Instant Search Widgets", () => {
 
   describe("searchBox", () => {
     it("renders", async () => {
-      return expect(page).toMatchElement(
-        "#searchbox input.ais-SearchBox-input"
-      );
+      return expect(page).toMatchElement("#searchbox input.ais-SearchBox-input");
     });
   });
 
@@ -44,17 +42,13 @@ describe("Instant Search Widgets", () => {
 
   describe("clearRefinements", () => {
     it("renders", async () => {
-      return expect(page).toMatchElement(
-        "#clear-refinements button.ais-ClearRefinements-button"
-      );
+      return expect(page).toMatchElement("#clear-refinements button.ais-ClearRefinements-button");
     });
   });
 
   describe("currentRefinements", () => {
     it("renders", async () => {
-      return expect(page).toMatchElement(
-        "#current-refinements ul.ais-CurrentRefinements-list"
-      );
+      return expect(page).toMatchElement("#current-refinements ul.ais-CurrentRefinements-list");
     });
   });
 
@@ -107,12 +101,9 @@ describe("Instant Search Widgets", () => {
 
   describe("infiniteHits", () => {
     it("renders", async () => {
-      return expect(page).toMatchElement(
-        "#infinite-hits .infinite-hit-name:first-of-type",
-        {
-          text: "Samsung Galaxy Express"
-        }
-      );
+      return expect(page).toMatchElement("#infinite-hits .infinite-hit-name:first-of-type", {
+        text: "Samsung Galaxy Express"
+      });
     });
   });
 
@@ -126,40 +117,29 @@ describe("Instant Search Widgets", () => {
 
   describe("rangeInput", () => {
     it("renders", async () => {
-      await expect(page).toMatchElement(
-        '#price-range-input form input[type=number][placeholder="1"]'
-      );
-      return expect(page).toMatchElement(
-        '#price-range-input form input[type=number][placeholder="900"]'
-      );
+      await expect(page).toMatchElement('#price-range-input form input[type=number][placeholder="1"]');
+      return expect(page).toMatchElement('#price-range-input form input[type=number][placeholder="900"]');
     });
   });
 
   describe("rangeSlide", () => {
     it("renders", async () => {
-      await expect(page).toMatchElement(
-        '#price-range-slider div[aria-valuenow="1"]'
-      );
-      return expect(page).toMatchElement(
-        '#price-range-slider div[aria-valuenow="900"]'
-      );
+      await expect(page).toMatchElement('#price-range-slider div[aria-valuenow="1"]');
+      return expect(page).toMatchElement('#price-range-slider div[aria-valuenow="900"]');
     });
   });
 
   describe("pagination", () => {
     it("renders", async () => {
       await page.waitForSelector("#pagination a.ais-Pagination-link");
-      const length = (await page.$$("#pagination a.ais-Pagination-link"))
-        .length;
+      const length = (await page.$$("#pagination a.ais-Pagination-link")).length;
       return expect(length).toEqual(7 + 2);
     });
   });
 
   describe("hitsPerPage", () => {
     it("renders", async () => {
-      return expect(page).toMatchElement(
-        "#hits-per-page select.ais-HitsPerPage-select"
-      );
+      return expect(page).toMatchElement("#hits-per-page select.ais-HitsPerPage-select");
     });
   });
 

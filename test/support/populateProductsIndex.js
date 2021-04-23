@@ -98,10 +98,7 @@ module.exports = (async () => {
     const collection = await typesense.collections("products").retrieve();
     console.log("Found existing schema");
     // console.log(JSON.stringify(collection, null, 2));
-    if (
-      collection.num_documents !== products.length ||
-      process.env.FORCE_REINDEX === "true"
-    ) {
+    if (collection.num_documents !== products.length || process.env.FORCE_REINDEX === "true") {
       console.log("Deleting existing schema");
       reindexNeeded = true;
       await typesense.collections("products").delete();
@@ -131,9 +128,7 @@ module.exports = (async () => {
     product.free_shipping = product.name.length % 2 === 1; // We need this to be deterministic for tests
     product.rating = (product.description.length % 5) + 1; // We need this to be deterministic for tests
     product.categories.forEach((category, index) => {
-      product[`categories.lvl${index}`] = [
-        product.categories.slice(0, index + 1).join(" > ")
-      ];
+      product[`categories.lvl${index}`] = [product.categories.slice(0, index + 1).join(" > ")];
     });
   });
 
@@ -147,9 +142,7 @@ module.exports = (async () => {
 
     const failedItems = returnData.filter(item => item.success === false);
     if (failedItems.length > 0) {
-      throw new Error(
-        `Error indexing items ${JSON.stringify(failedItems, null, 2)}`
-      );
+      throw new Error(`Error indexing items ${JSON.stringify(failedItems, null, 2)}`);
     }
 
     return returnData;

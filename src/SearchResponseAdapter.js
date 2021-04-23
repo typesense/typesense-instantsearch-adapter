@@ -11,9 +11,7 @@ export class SearchResponseAdapter {
   _adaptGroupedHits(typesenseGroupedHits) {
     let adaptedResult = [];
 
-    adaptedResult = typesenseGroupedHits.map(groupedHit =>
-      this._adaptHits(groupedHit.hits)
-    );
+    adaptedResult = typesenseGroupedHits.map(groupedHit => this._adaptHits(groupedHit.hits));
 
     // adaptedResult is now in the form of [[{}, {}], [{}, {}], ...]
     //  where each element in the outer most array corresponds to a group.
@@ -30,14 +28,8 @@ export class SearchResponseAdapter {
         ...typesenseHit.document
       };
       adaptedHit.objectID = typesenseHit.document.id;
-      adaptedHit._snippetResult = this._adaptHighlightResult(
-        typesenseHit,
-        "snippet"
-      );
-      adaptedHit._highlightResult = this._adaptHighlightResult(
-        typesenseHit,
-        "value"
-      );
+      adaptedHit._snippetResult = this._adaptHighlightResult(typesenseHit, "snippet");
+      adaptedHit._highlightResult = this._adaptHighlightResult(typesenseHit, "value");
       return adaptedHit;
     });
     return adaptedResult;
@@ -100,10 +92,7 @@ export class SearchResponseAdapter {
     const adaptedResult = {};
     typesenseFacetCounts.forEach(facet => {
       Object.assign(adaptedResult, {
-        [facet.field_name]: Object.assign(
-          {},
-          ...facet.counts.map(count => ({ [count.value]: count.count }))
-        )
+        [facet.field_name]: Object.assign({}, ...facet.counts.map(count => ({ [count.value]: count.count })))
       });
     });
     return adaptedResult;
@@ -131,9 +120,7 @@ export class SearchResponseAdapter {
       nbPages: this._adaptNumberOfPages(),
       hitsPerPage: this.typesenseResponse.request_params.per_page,
       facets: this._adaptFacets(this.typesenseResponse.facet_counts || []),
-      facets_stats: this._adaptFacetStats(
-        this.typesenseResponse.facet_counts || {}
-      ),
+      facets_stats: this._adaptFacetStats(this.typesenseResponse.facet_counts || {}),
       query: this.typesenseResponse.request_params.q,
       processingTimeMS: this.typesenseResponse.search_time_ms
     };

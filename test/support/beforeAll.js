@@ -33,5 +33,6 @@ module.exports = async () => {
     });
 
   await require("./populateProductsIndex");
-  return require("./populateBrandsIndex");
+  await require("./populateBrandsIndex");
+  return require("./populateRecipesIndex");
 };
