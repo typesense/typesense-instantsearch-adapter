@@ -1,4 +1,8 @@
 coverage/
 dist/
 lib/
-test/support/testground/
+
+.cache
+.parcel-cache
+
+test/support/data/

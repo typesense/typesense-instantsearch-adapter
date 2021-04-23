@@ -1,12 +1,5 @@
 import instantsearch from "instantsearch.js";
-import {
-  searchBox,
-  pagination,
-  hits,
-  stats,
-  index,
-  configure
-} from "instantsearch.js/es/widgets";
+import { searchBox, pagination, hits, stats, index, configure } from "instantsearch.js/es/widgets";
 
 import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
 
@@ -17,39 +10,39 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
       {
         host: "localhost",
         port: "8108",
-        protocol: "http"
-      }
-    ]
+        protocol: "http",
+      },
+    ],
   },
   // The following parameters are directly passed to Typesense's search API endpoint.
   //  So you can pass any parameters supported by the search endpoint below.
   // Parameters set in collectionSpecificSearchParameters override parameters set in additionalSearchParameters
   additionalSearchParameters: {
-    queryBy: "name"
+    queryBy: "name",
   },
   collectionSpecificSearchParameters: {
     products: {
-      queryBy: "name,description,categories"
+      queryBy: "name,description,categories",
     },
     brands: {
-      queryBy: "name"
-    }
-  }
+      queryBy: "name",
+    },
+  },
 });
 const searchClient = typesenseInstantsearchAdapter.searchClient;
 const search = instantsearch({
   searchClient,
   indexName: "products",
-  routing: true
+  routing: true,
 });
 
 // ============ Begin Widget Configuration
 search.addWidgets([
   searchBox({
-    container: "#searchbox"
+    container: "#searchbox",
   }),
   pagination({
-    container: "#pagination"
+    container: "#pagination",
   }),
   index({ indexName: "products" }).addWidgets([
     hits({
@@ -69,8 +62,8 @@ search.addWidgets([
           <div class="hit-rating">Rating: {{rating}}</div>
           <div class="hit-free-shipping">Free Shipping: {{free_shipping}}</div>
         </div>
-      `
-      }
+      `,
+      },
     }),
     stats({
       container: "#product-stats",
@@ -80,13 +73,13 @@ search.addWidgets([
       {{#hasOneResult}}1 result{{/hasOneResult}}
       {{#hasManyResults}}{{#helpers.formatNumber}}{{nbHits}}{{/helpers.formatNumber}} results{{/hasManyResults}}
       found in {{processingTimeMS}}ms for {{query}}
-    `
-      }
-    })
+    `,
+      },
+    }),
   ]),
   index({ indexName: "brands" }).addWidgets([
     configure({
-      hitsPerPage: 4
+      hitsPerPage: 4,
     }),
     hits({
       container: "#brand-hits",
@@ -94,8 +87,8 @@ search.addWidgets([
         item: `
           <div class="hit-name">
             {{#helpers.highlight}}{ "attribute": "name" }{{/helpers.highlight}}
-          </div>`
-      }
+          </div>`,
+      },
     }),
     stats({
       container: "#brand-stats",
@@ -105,10 +98,10 @@ search.addWidgets([
       {{#hasOneResult}}1 result{{/hasOneResult}}
       {{#hasManyResults}}{{#helpers.formatNumber}}{{nbHits}}{{/helpers.formatNumber}} results{{/hasManyResults}}
       found in {{processingTimeMS}}ms for {{query}}
-    `
-      }
-    })
-  ])
+    `,
+      },
+    }),
+  ]),
 ]);
 
 search.start();

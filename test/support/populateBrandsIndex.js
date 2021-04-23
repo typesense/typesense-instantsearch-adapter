@@ -7,10 +7,10 @@ module.exports = (async () => {
       {
         host: "localhost",
         port: "8108",
-        protocol: "http"
-      }
+        protocol: "http",
+      },
     ],
-    apiKey: "xyz"
+    apiKey: "xyz",
   });
 
   const schema = {
@@ -19,21 +19,21 @@ module.exports = (async () => {
     fields: [
       {
         name: "name",
-        type: "string"
+        type: "string",
       },
       {
         name: "popularity",
-        type: "int32"
-      }
+        type: "int32",
+      },
     ],
-    default_sorting_field: "popularity"
+    default_sorting_field: "popularity",
   };
 
   console.log("Populating brands index in Typesense");
 
   const brands = require("./data/brands.json");
 
-  brands.forEach(brand => {
+  brands.forEach((brand) => {
     brand.popularity = brand.name.length;
   });
 
@@ -68,14 +68,11 @@ module.exports = (async () => {
   console.log("Adding records: ");
 
   try {
-    const returnData = await typesense
-      .collections("brands")
-      .documents()
-      .import(brands);
+    const returnData = await typesense.collections("brands").documents().import(brands);
     console.log(returnData);
     console.log("Done indexing.");
 
-    const failedItems = returnData.filter(item => item.success === false);
+    const failedItems = returnData.filter((item) => item.success === false);
     if (failedItems.length > 0) {
       throw new Error(`Error indexing items ${JSON.stringify(failedItems, null, 2)}`);
     }

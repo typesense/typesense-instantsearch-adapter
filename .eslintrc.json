@@ -1,9 +1,10 @@
 {
   "env": {
     "browser": true,
-    "es6": true
+    "amd": true,
+    "node": true
   },
-  "extends": ["plugin:prettier/recommended", "prettier/standard"],
+  "extends": ["eslint:recommended", "prettier"],
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"

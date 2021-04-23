@@ -39,7 +39,7 @@ export class SearchRequestAdapter {
      *  - Join strings by &&
      */
 
-    const transformedTypesenseFilters = facetFilters.map(item => {
+    const transformedTypesenseFilters = facetFilters.map((item) => {
       if (Array.isArray(item)) {
         // Need to transform:
         // facetFilters = ["field1:value1", "field1:value2", "facetN:valueN"]
@@ -51,7 +51,7 @@ export class SearchRequestAdapter {
         // }
 
         const intermediateFacetFilters = {};
-        item.forEach(facetFilter => {
+        item.forEach((facetFilter) => {
           const facetFilterMatches = facetFilter.match(this.constructor.FILER_STRING_MATCHING_REGEX);
           const fieldName = `${facetFilterMatches[1]}${facetFilterMatches[2]}`;
           const fieldValue = `${facetFilterMatches[3]}`;
@@ -128,7 +128,7 @@ export class SearchRequestAdapter {
     //   }
     // };
     const filtersHash = {};
-    numericFilters.forEach(filter => {
+    numericFilters.forEach((filter) => {
       const [, field, operator, value] = filter.match(new RegExp("(.*)(<=|>=|>|<|:)(.*)"));
       filtersHash[field] = filtersHash[field] || {};
       filtersHash[field][operator] = value;
@@ -137,7 +137,7 @@ export class SearchRequestAdapter {
     // Transform that to:
     //  "field1:=[634..289] && field2:<=5 && field3:>=3"
     const adaptedFilters = [];
-    Object.keys(filtersHash).forEach(field => {
+    Object.keys(filtersHash).forEach((field) => {
       if (filtersHash[field]["<="] != null && filtersHash[field][">="] != null) {
         adaptedFilters.push(`${field}:=[${filtersHash[field][">="]}..${filtersHash[field]["<="]}]`);
       } else if (filtersHash[field]["<="] != null) {
@@ -159,7 +159,7 @@ export class SearchRequestAdapter {
     adaptedFilters.push(this._adaptFacetFilters(facetFilters));
     adaptedFilters.push(this._adaptNumericFilters(numericFilters));
 
-    return adaptedFilters.filter(filter => filter !== "").join(" && ");
+    return adaptedFilters.filter((filter) => filter !== "").join(" && ");
   }
 
   _adaptIndexName(indexName) {
@@ -199,7 +199,7 @@ export class SearchRequestAdapter {
       filter_by: this._adaptFilters(params.facetFilters, params.numericFilters),
       sort_by: adaptedSortBy || this.additionalSearchParameters.sortBy,
       max_facet_values: params.maxValuesPerFacet,
-      page: (params.page || 0) + 1
+      page: (params.page || 0) + 1,
     });
 
     if (params.hitsPerPage) {
@@ -225,7 +225,7 @@ export class SearchRequestAdapter {
   }
 
   async request() {
-    const searches = this.instantsearchRequests.map(instantsearchRequest =>
+    const searches = this.instantsearchRequests.map((instantsearchRequest) =>
       this._buildSearchParameters(instantsearchRequest)
     );
 

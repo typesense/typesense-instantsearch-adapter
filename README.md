@@ -56,13 +56,14 @@ Since this is an adapter, it **will not install** the Instantsearch library auto
 - [vue-instantsearch](https://github.com/algolia/vue-instantsearch)
 - [angular-instantsearch](https://github.com/algolia/angular-instantsearch)
 
-You'll find information on how to get started with each of the above libraries in their respective repos. 
+You'll find information on how to get started with each of the above libraries in their respective repos.
 
 We'd also recommend checking out [create-instantsearch-app](https://github.com/algolia/create-instantsearch-app) to create your Search UI from a starter template.
 
-## Usage 
+## Usage
 
 ### With [instantsearch.js](https://github.com/algolia/instantsearch.js)
+
 ```javascript
 import instantsearch from "instantsearch.js";
 import { searchBox, hits } from "instantsearch.js/es/widgets";
@@ -75,27 +76,26 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
       {
         host: "localhost",
         port: "8108",
-        protocol: "http"
-      }
-    ]
+        protocol: "http",
+      },
+    ],
   },
   // The following parameters are directly passed to Typesense's search API endpoint.
-  //  So you can pass any parameters supported by the search endpoint below. 
-  //  queryBy is required. 
+  //  So you can pass any parameters supported by the search endpoint below.
+  //  queryBy is required.
   additionalSearchParameters: {
-    queryBy: "name,description,categories"
-  }
+    queryBy: "name,description,categories",
+  },
 });
 const searchClient = typesenseInstantsearchAdapter.searchClient;
 
-
 const search = instantsearch({
   searchClient,
-  indexName: "products"
+  indexName: "products",
 });
 search.addWidgets([
   searchBox({
-    container: "#searchbox"
+    container: "#searchbox",
   }),
   hits({
     container: "#hits",
@@ -104,9 +104,9 @@ search.addWidgets([
         <div class="hit-name">
           {{#helpers.highlight}}{ "attribute": "name" }{{/helpers.highlight}}
         </div>
-      `
-    }
-  })
+      `,
+    },
+  }),
 ]);
 
 search.start();
@@ -117,10 +117,11 @@ You can add any of the Instantsearch widgets [here](https://www.algolia.com/doc/
 You'll also find a working example in [test/support/testground](test/support/testground). To run it, run `npm run testground` from the project root folder.
 
 ### With [react-instantsearch](https://github.com/algolia/react-instantsearch)
+
 ```jsx harmony
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { SearchBox } from 'react-instantsearch-dom';
+import React from "react";
+import ReactDOM from "react-dom";
+import { SearchBox } from "react-instantsearch-dom";
 import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
 
 const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
@@ -130,24 +131,21 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
       {
         host: "localhost",
         port: "8108",
-        protocol: "http"
-      }
-    ]
+        protocol: "http",
+      },
+    ],
   },
   // The following parameters are directly passed to Typesense's search API endpoint.
-  //  So you can pass any parameters supported by the search endpoint below. 
-  //  queryBy is required. 
+  //  So you can pass any parameters supported by the search endpoint below.
+  //  queryBy is required.
   additionalSearchParameters: {
-    queryBy: "name,description,categories"
-  }
+    queryBy: "name,description,categories",
+  },
 });
 const searchClient = typesenseInstantsearchAdapter.searchClient;
 
 const App = () => (
-  <InstantSearch
-    indexName="products"
-    searchClient={searchClient}
-  >
+  <InstantSearch indexName="products" searchClient={searchClient}>
     <SearchBox />
     <Hits />
   </InstantSearch>
@@ -182,16 +180,16 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
       {
         host: "localhost",
         port: "8108",
-        protocol: "http"
-      }
-    ]
+        protocol: "http",
+      },
+    ],
   },
   // The following parameters are directly passed to Typesense's search API endpoint.
-  //  So you can pass any parameters supported by the search endpoint below. 
-  //  queryBy is required. 
+  //  So you can pass any parameters supported by the search endpoint below.
+  //  queryBy is required.
   additionalSearchParameters: {
-    queryBy: "name,description,categories"
-  }
+    queryBy: "name,description,categories",
+  },
 });
 const searchClient = typesenseInstantsearchAdapter.searchClient;
 
@@ -208,9 +206,10 @@ export default {
 You can then add any of the Instantsearch widgets [here](https://www.algolia.com/doc/guides/building-search-ui/widgets/showcase/vue/) that are [supported](#widget-compatibility) by the adapter.
 
 ### With [angular-instantsearch](https://github.com/algolia/angular-instantsearch)
+
 ```javascript
 // app.component.ts
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
 
 const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
@@ -220,28 +219,28 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
       {
         host: "localhost",
         port: "8108",
-        protocol: "http"
-      }
-    ]
+        protocol: "http",
+      },
+    ],
   },
   // The following parameters are directly passed to Typesense's search API endpoint.
-  //  So you can pass any parameters supported by the search endpoint below. 
-  //  queryBy is required. 
+  //  So you can pass any parameters supported by the search endpoint below.
+  //  queryBy is required.
   additionalSearchParameters: {
-    queryBy: "name,description,categories"
-  }
+    queryBy: "name,description,categories",
+  },
 });
 const searchClient = typesenseInstantsearchAdapter.searchClient;
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"],
 })
 export class AppComponent {
   config = {
-    indexName: 'products',
-    searchClient
+    indexName: "products",
+    searchClient,
   };
 }
 ```
@@ -254,7 +253,7 @@ You can then add any of the Instantsearch widgets [here](https://www.algolia.com
 
 For this widget, you want to create independent fields in the collection's schema with this specific naming convention:
 
-- `field.lvl0` 
+- `field.lvl0`
 - `field.lvl1`
 - `field.lvl2`
 
@@ -269,14 +268,14 @@ When instantiating this widget, you want to set the value of the index name to t
 ```javascript
 search.addWidgets([
   sortBy({
-      container: "#sort-by",
-      items: [
-        { label: "Default", value: "products" },
-        { label: "Price (asc)", value: "products/sort/price:asc" },
-        { label: "Price (desc)", value: "products/sort/price:desc" }
-      ]
-    })
-])
+    container: "#sort-by",
+    items: [
+      { label: "Default", value: "products" },
+      { label: "Price (asc)", value: "products/sort/price:asc" },
+      { label: "Price (desc)", value: "products/sort/price:desc" },
+    ],
+  }),
+]);
 ```
 
 The generalized pattern for the value attribute is: `<index_name>[/sort/<sort_by>]`. The adapter will use the value in `<sort_by>` as the value for the `sort_by` search parameter.
@@ -293,21 +292,21 @@ For Federated / Multi-Index Search, you'd need to use the `index` widget. To the
 const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   server: {
     apiKey: "abcd", // Be sure to use an API key that only allows search operations
-    nodes: [{ host: "localhost", port: "8108", protocol: "http" }]
+    nodes: [{ host: "localhost", port: "8108", protocol: "http" }],
   },
   // Search parameters that are common to all collections/indices go here:
   additionalSearchParameters: {
-    numTypos: 3 
+    numTypos: 3,
   },
   // Search parameters that need to be *overridden* on a per-collection-basis go here:
   collectionSpecificSearchParameters: {
     products: {
-      queryBy: "name,description,categories"
+      queryBy: "name,description,categories",
     },
     brands: {
-      queryBy: "name"
-    }
-  }
+      queryBy: "name",
+    },
+  },
 });
 const searchClient = typesenseInstantsearchAdapter.searchClient;
 ```
@@ -317,12 +316,12 @@ Essentially, any parameters set in `collectionSpecificSearchParameters` will be 
 ## Compatibility
 
 | Typesense Server | typesense-instantsearch-adapter | instantsearch.js | react-instantsearch | vue-instantsearch | angular-instantsearch |
-|------------------|----------------|----------------|----------------|----------------|----------------|
-| \>= v0.19 | \>= v1.0.0 | \>= 4.2.0 | \>= 6.0.0 | \>= 2.2.1 | \>= 3.0.0 |
-| \>= v0.15 | \>= v0.3.0 | \>= 4.2.0 | \>= 6.0.0 | \>= 2.2.1 | \>= 3.0.0 |
-| \>= v0.14 | \>= v0.2.0 | \>= 4.2.0 | \>= 6.0.0 | \>= 2.2.1 | \>= 3.0.0 |
-| \>= v0.13 | \>= v0.1.0 | \>= 4.2.0 | \>= 6.0.0 | \>= 2.2.1 | \>= 3.0.0 |
-| \>= v0.12 | \>= v0.0.4 | \>= 4.2.0 | \>= 6.0.0 | \>= 2.2.1 | \>= 3.0.0 |
+| ---------------- | ------------------------------- | ---------------- | ------------------- | ----------------- | --------------------- |
+| \>= v0.19        | \>= v1.0.0                      | \>= 4.2.0        | \>= 6.0.0           | \>= 2.2.1         | \>= 3.0.0             |
+| \>= v0.15        | \>= v0.3.0                      | \>= 4.2.0        | \>= 6.0.0           | \>= 2.2.1         | \>= 3.0.0             |
+| \>= v0.14        | \>= v0.2.0                      | \>= 4.2.0        | \>= 6.0.0           | \>= 2.2.1         | \>= 3.0.0             |
+| \>= v0.13        | \>= v0.1.0                      | \>= 4.2.0        | \>= 6.0.0           | \>= 2.2.1         | \>= 3.0.0             |
+| \>= v0.12        | \>= v0.0.4                      | \>= 4.2.0        | \>= 6.0.0           | \>= 2.2.1         | \>= 3.0.0             |
 
 If a particular version of the above libraries don't work with the adapter, please open a Github issue with details.
 
@@ -351,7 +350,7 @@ To release a new version, we use the [np](https://github.com/sindresorhus/np) pa
 
 ```shell
 $ npm install --global np
-$ np 
+$ np
 
 # Follow instructions that np shows you
 

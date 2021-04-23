@@ -10,16 +10,16 @@ module.exports = {
     library: {
       name: "TypesenseInstantsearchAdapter",
       type: "umd",
-      export: "default"
-    }
+      export: "default",
+    },
   },
   module: {
     rules: [
       {
         test: /\.(js)$/,
         exclude: /node_modules/,
-        use: ["babel-loader"]
-      }
-    ]
-  }
+        use: ["babel-loader"],
+      },
+    ],
+  },
 };

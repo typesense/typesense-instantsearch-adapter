@@ -12,8 +12,9 @@ export default class TypesenseInstantsearchAdapter {
     this.configuration.validate();
     this.typesenseClient = new TypesenseSearchClient(this.configuration.server);
     this.searchClient = {
-      search: instantsearchRequests => this.searchTypesenseAndAdapt(instantsearchRequests),
-      searchForFacetValues: instantsearchRequests => this.searchTypesenseForFacetValuesAndAdapt(instantsearchRequests)
+      search: (instantsearchRequests) => this.searchTypesenseAndAdapt(instantsearchRequests),
+      searchForFacetValues: (instantsearchRequests) =>
+        this.searchTypesenseForFacetValuesAndAdapt(instantsearchRequests),
     };
   }
 
@@ -29,7 +30,7 @@ export default class TypesenseInstantsearchAdapter {
       });
 
       return {
-        results: adaptedResponses
+        results: adaptedResponses,
       };
     } catch (error) {
       console.error(error);

@@ -7,10 +7,10 @@ module.exports = (async () => {
       {
         host: "localhost",
         port: "8108",
-        protocol: "http"
-      }
+        protocol: "http",
+      },
     ],
-    apiKey: "xyz"
+    apiKey: "xyz",
   });
 
   const schema = {
@@ -18,19 +18,19 @@ module.exports = (async () => {
     fields: [
       {
         name: "recipe_id",
-        type: "int32"
+        type: "int32",
       },
       {
         name: "title",
-        type: "string"
+        type: "string",
       },
       {
         name: "ingredient_names",
         type: "string[]",
-        facet: true
-      }
+        facet: true,
+      },
     ],
-    default_sorting_field: "recipe_id"
+    default_sorting_field: "recipe_id",
   };
 
   console.log("Populating index in Typesense");
@@ -68,14 +68,11 @@ module.exports = (async () => {
   console.log("Adding records: ");
 
   try {
-    const returnData = await typesense
-      .collections("recipes")
-      .documents()
-      .import(recipes);
+    const returnData = await typesense.collections("recipes").documents().import(recipes);
     console.log(returnData);
     console.log("Done indexing.");
 
-    const failedItems = returnData.filter(item => item.success === false);
+    const failedItems = returnData.filter((item) => item.success === false);
     if (failedItems.length > 0) {
       throw new Error(`Error indexing items ${JSON.stringify(failedItems, null, 2)}`);
     }

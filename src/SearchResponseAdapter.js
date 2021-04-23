@@ -11,7 +11,7 @@ export class SearchResponseAdapter {
   _adaptGroupedHits(typesenseGroupedHits) {
     let adaptedResult = [];
 
-    adaptedResult = typesenseGroupedHits.map(groupedHit => this._adaptHits(groupedHit.hits));
+    adaptedResult = typesenseGroupedHits.map((groupedHit) => this._adaptHits(groupedHit.hits));
 
     // adaptedResult is now in the form of [[{}, {}], [{}, {}], ...]
     //  where each element in the outer most array corresponds to a group.
@@ -23,9 +23,9 @@ export class SearchResponseAdapter {
 
   _adaptHits(typesenseHits) {
     let adaptedResult = [];
-    adaptedResult = typesenseHits.map(typesenseHit => {
+    adaptedResult = typesenseHits.map((typesenseHit) => {
       const adaptedHit = {
-        ...typesenseHit.document
+        ...typesenseHit.document,
       };
       adaptedHit.objectID = typesenseHit.document.id;
       adaptedHit._snippetResult = this._adaptHighlightResult(typesenseHit, "snippet");
@@ -45,16 +45,16 @@ export class SearchResponseAdapter {
         [attribute]: {
           value: value,
           matchLevel: "none",
-          matchedWords: []
-        }
+          matchedWords: [],
+        },
       }))
     );
 
-    typesenseHit.highlights.forEach(highlight => {
+    typesenseHit.highlights.forEach((highlight) => {
       result[highlight.field] = {
         value: highlight[snippetOrValue] || highlight[`${snippetOrValue}s`],
         matchLevel: "full",
-        matchedWords: [] // Todo: Fix MatchedWords
+        matchedWords: [], // Todo: Fix MatchedWords
       };
     });
 
@@ -65,7 +65,7 @@ export class SearchResponseAdapter {
       const { value, matchLevel, matchedWords } = v;
       if (Array.isArray(value)) {
         result[attribute] = [];
-        value.forEach(v => {
+        value.forEach((v) => {
           result[attribute].push({
             value: this._adaptHighlightTag(
               `${v}`,
@@ -73,7 +73,7 @@ export class SearchResponseAdapter {
               this.instantsearchRequest.params.highlightPostTag
             ),
             matchLevel: matchLevel, // TODO: Fix MatchLevel for array
-            matchedWords: matchedWords // TODO: Fix MatchedWords for array
+            matchedWords: matchedWords, // TODO: Fix MatchedWords for array
           });
         });
       } else {
@@ -90,9 +90,9 @@ export class SearchResponseAdapter {
 
   _adaptFacets(typesenseFacetCounts) {
     const adaptedResult = {};
-    typesenseFacetCounts.forEach(facet => {
+    typesenseFacetCounts.forEach((facet) => {
       Object.assign(adaptedResult, {
-        [facet.field_name]: Object.assign({}, ...facet.counts.map(count => ({ [count.value]: count.count })))
+        [facet.field_name]: Object.assign({}, ...facet.counts.map((count) => ({ [count.value]: count.count }))),
       });
     });
     return adaptedResult;
@@ -100,10 +100,10 @@ export class SearchResponseAdapter {
 
   _adaptFacetStats(typesenseFacetCounts) {
     const adaptedResult = {};
-    typesenseFacetCounts.forEach(facet => {
+    typesenseFacetCounts.forEach((facet) => {
       if (Object.keys(facet.stats).length > 0) {
         Object.assign(adaptedResult, {
-          [facet.field_name]: facet.stats
+          [facet.field_name]: facet.stats,
         });
       }
     });
@@ -122,7 +122,7 @@ export class SearchResponseAdapter {
       facets: this._adaptFacets(this.typesenseResponse.facet_counts || []),
       facets_stats: this._adaptFacetStats(this.typesenseResponse.facet_counts || {}),
       query: this.typesenseResponse.request_params.q,
-      processingTimeMS: this.typesenseResponse.search_time_ms
+      processingTimeMS: this.typesenseResponse.search_time_ms,
     };
 
     // console.log(adaptedResult);

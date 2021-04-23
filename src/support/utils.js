@@ -11,5 +11,5 @@ export const utils = {
     } else {
       return 1;
     }
-  }
+  },
 };

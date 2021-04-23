@@ -21,7 +21,7 @@ describe("Instant Search Widgets", () => {
   describe("breadcrumb", () => {
     it("renders", async () => {
       return expect(page).toMatchElement("#breadcrumb .ais-Breadcrumb a", {
-        text: "Home"
+        text: "Home",
       });
     });
   });
@@ -29,7 +29,7 @@ describe("Instant Search Widgets", () => {
   describe("stats", () => {
     it("renders", async () => {
       return expect(page).toMatchElement("#stats", {
-        text: /3,291 results found in \d*ms for \*/
+        text: /3,291 results found in \d*ms for \*/,
       });
     });
   });
@@ -55,7 +55,7 @@ describe("Instant Search Widgets", () => {
   describe("refinementList", () => {
     it("renders", async () => {
       return expect(page).toMatchElement("#brand-list", {
-        text: "Apple 165"
+        text: "Apple 165",
       });
     });
   });
@@ -63,7 +63,7 @@ describe("Instant Search Widgets", () => {
   describe("toggleRefinement", () => {
     it("renders", async () => {
       return expect(page).toMatchElement("#toggle-refinement", {
-        text: "Free shipping"
+        text: "Free shipping",
       });
     });
   });
@@ -71,7 +71,7 @@ describe("Instant Search Widgets", () => {
   describe("menu", () => {
     it("renders", async () => {
       return expect(page).toMatchElement("#categories-menu", {
-        text: "Bluetooth Headsets"
+        text: "Bluetooth Headsets",
       });
     });
   });
@@ -80,7 +80,7 @@ describe("Instant Search Widgets", () => {
     it("renders", async () => {
       await page.focus("#categories-hierarchical-menu");
       return expect(page).toMatchElement("#categories-hierarchical-menu", {
-        text: "Cell Phones"
+        text: "Cell Phones",
       });
     });
   });
@@ -94,7 +94,7 @@ describe("Instant Search Widgets", () => {
   describe("hits", () => {
     it("renders", async () => {
       return expect(page).toMatchElement("#hits .hit-name:first-of-type", {
-        text: "Samsung Galaxy Express"
+        text: "Samsung Galaxy Express",
       });
     });
   });
@@ -102,7 +102,7 @@ describe("Instant Search Widgets", () => {
   describe("infiniteHits", () => {
     it("renders", async () => {
       return expect(page).toMatchElement("#infinite-hits .infinite-hit-name:first-of-type", {
-        text: "Samsung Galaxy Express"
+        text: "Samsung Galaxy Express",
       });
     });
   });
@@ -110,7 +110,7 @@ describe("Instant Search Widgets", () => {
   describe("numericMenu", () => {
     it("renders", async () => {
       return expect(page).toMatchElement("#price-menu", {
-        text: "Less than 500$"
+        text: "Less than 500$",
       });
     });
   });
@@ -147,7 +147,7 @@ describe("Instant Search Widgets", () => {
     it("renders", async () => {
       await expect(page).toMatchElement("#autocomplete input");
       return expect(page).toMatchElement("#autocomplete .autocomplete-list", {
-        text: "Samsung Galaxy Express"
+        text: "Samsung Galaxy Express",
       });
     });
   });

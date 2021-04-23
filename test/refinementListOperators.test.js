@@ -13,22 +13,22 @@ describe("Refinement List Operators", () => {
     describe("applying AND filters", () => {
       it("renders the results, facets and pagination", async () => {
         await expect(page).toClick("#ingredients-list button", {
-          text: "Show more"
+          text: "Show more",
         });
         await expect(page).toClick("#ingredients-list input[type=checkbox][value=butter]");
         await expect(page).toMatchElement("#stats", {
-          text: "14 results found"
+          text: "14 results found",
         });
         await expect(page).toClick("#ingredients-list input[type=checkbox][value=fettucini]");
         await expect(page).toMatchElement("#stats", {
-          text: "2 results found"
+          text: "2 results found",
         });
 
         await expect(page).toMatchElement("#hits", {
-          text: "Chicken Fettucini"
+          text: "Chicken Fettucini",
         });
         return expect(page).toMatchElement("#hits", {
-          text: "Fettucini With Lemon"
+          text: "Fettucini With Lemon",
         });
       });
     });

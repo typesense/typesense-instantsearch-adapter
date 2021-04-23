@@ -7,10 +7,10 @@ module.exports = (async () => {
       {
         host: "localhost",
         port: "8108",
-        protocol: "http"
-      }
+        protocol: "http",
+      },
     ],
-    apiKey: "xyz"
+    apiKey: "xyz",
   });
 
   const schema = {
@@ -20,73 +20,73 @@ module.exports = (async () => {
       {
         name: "name",
         type: "string",
-        facet: false
+        facet: false,
       },
       {
         name: "description",
         type: "string",
-        facet: false
+        facet: false,
       },
       {
         name: "brand",
         type: "string",
-        facet: true
+        facet: true,
       },
       {
         name: "categories",
         type: "string[]",
-        facet: true
+        facet: true,
       },
       {
         name: "categories.lvl0",
         type: "string[]",
-        facet: true
+        facet: true,
       },
       {
         name: "categories.lvl1",
         type: "string[]",
         facet: true,
-        optional: true
+        optional: true,
       },
       {
         name: "categories.lvl2",
         type: "string[]",
         facet: true,
-        optional: true
+        optional: true,
       },
       {
         name: "categories.lvl3",
         type: "string[]",
         facet: true,
-        optional: true
+        optional: true,
       },
       {
         name: "price",
         type: "float",
-        facet: true
+        facet: true,
       },
       {
         name: "image",
         type: "string",
-        facet: false
+        facet: false,
       },
       {
         name: "popularity",
         type: "int32",
-        facet: false
+        facet: false,
       },
       {
         name: "free_shipping",
         type: "bool",
-        facet: true
+        facet: true,
       },
       {
         name: "rating",
         type: "int32",
-        facet: true
-      }
+        facet: true,
+      },
     ],
-    default_sorting_field: "popularity"
+    default_sorting_field: "popularity",
   };
 
   console.log("Populating index in Typesense");
@@ -124,7 +124,7 @@ module.exports = (async () => {
   console.log("Adding records: ");
 
   // Bulk Import
-  products.forEach(product => {
+  products.forEach((product) => {
     product.free_shipping = product.name.length % 2 === 1; // We need this to be deterministic for tests
     product.rating = (product.description.length % 5) + 1; // We need this to be deterministic for tests
     product.categories.forEach((category, index) => {
@@ -133,14 +133,11 @@ module.exports = (async () => {
   });
 
   try {
-    const returnData = await typesense
-      .collections("products")
-      .documents()
-      .import(products);
+    const returnData = await typesense.collections("products").documents().import(products);
     console.log(returnData);
     console.log("Done indexing.");
 
-    const failedItems = returnData.filter(item => item.success === false);
+    const failedItems = returnData.filter((item) => item.success === false);
     if (failedItems.length > 0) {
       throw new Error(`Error indexing items ${JSON.stringify(failedItems, null, 2)}`);
     }

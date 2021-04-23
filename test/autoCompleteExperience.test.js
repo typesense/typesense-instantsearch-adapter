@@ -12,7 +12,7 @@ describe("Search Experience", () => {
 
     it("renders autocomplete results", async () => {
       return expect(page).toMatchElement("#autocomplete .autocomplete-list", {
-        text: "Insignia™ - 17W Vehicle Charger with 2 USB Ports"
+        text: "Insignia™ - 17W Vehicle Charger with 2 USB Ports",
       });
     });
   });

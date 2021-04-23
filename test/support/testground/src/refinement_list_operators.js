@@ -1,25 +1,5 @@
 import instantsearch from "instantsearch.js";
-import {
-  searchBox,
-  pagination,
-  currentRefinements,
-  refinementList,
-  hits,
-  infiniteHits,
-  stats,
-  sortBy,
-  hierarchicalMenu,
-  menu,
-  numericMenu,
-  rangeInput,
-  rangeSlider,
-  ratingMenu,
-  toggleRefinement,
-  hitsPerPage,
-  clearRefinements,
-  breadcrumb
-} from "instantsearch.js/es/widgets";
-import { connectAutocomplete } from "instantsearch.js/es/connectors";
+import { searchBox, pagination, currentRefinements, refinementList, hits, stats } from "instantsearch.js/es/widgets";
 
 // ======= Uncomment to use typesense-instantsearch-adapter
 import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
@@ -31,8 +11,8 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
       {
         host: "localhost",
         port: "8108",
-        protocol: "http"
-      }
+        protocol: "http",
+      },
       // {
       //   host: "localhost",
       //   port: "7108",
@@ -43,32 +23,32 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
       //   port: "9108",
       //   protocol: "http"
       // }
-    ]
+    ],
   },
   // The following parameters are directly passed to Typesense's search API endpoint.
   //  So you can pass any parameters supported by the search endpoint below.
   //  queryBy is required.
   additionalSearchParameters: {
-    queryBy: "title"
-  }
+    queryBy: "title",
+  },
 });
 const searchClient = typesenseInstantsearchAdapter.searchClient;
 const search = instantsearch({
   searchClient,
   indexName: "recipes",
-  routing: true
+  routing: true,
 });
 
 // ============ Begin Widget Configuration
 search.addWidgets([
   searchBox({
-    container: "#searchbox"
+    container: "#searchbox",
   }),
   pagination({
-    container: "#pagination"
+    container: "#pagination",
   }),
   currentRefinements({
-    container: "#current-refinements"
+    container: "#current-refinements",
   }),
   refinementList({
     limit: 50,
@@ -78,7 +58,7 @@ search.addWidgets([
     searchable: true,
     showMore: true,
     sortBy: ["name:asc", "count:desc"],
-    operator: "and"
+    operator: "and",
   }),
   hits({
     container: "#hits",
@@ -92,8 +72,8 @@ search.addWidgets([
             {{ ingredient_names }}
           </div>
         </div>
-      `
-    }
+      `,
+    },
   }),
   stats({
     container: "#stats",
@@ -103,9 +83,9 @@ search.addWidgets([
       {{#hasOneResult}}1 result{{/hasOneResult}}
       {{#hasManyResults}}{{#helpers.formatNumber}}{{nbHits}}{{/helpers.formatNumber}} results{{/hasManyResults}}
       found in {{processingTimeMS}}ms for {{query}}
-    `
-    }
-  })
+    `,
+    },
+  }),
 ]);
 
 search.start();
