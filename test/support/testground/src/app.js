@@ -156,21 +156,25 @@ search.addWidgets([
   hits({
     container: "#hits",
     templates: {
-      item: `
+      item(item) {
+        return `
         <div>
-          <img src="{{image}}" align="left" alt="{{name}}" />
+          <img src="${item.image}" align="left" alt="${item.name}" />
           <div class="hit-name">
-            {{#helpers.highlight}}{ "attribute": "name" }{{/helpers.highlight}}
+            ${item._highlightResult.name.value}
           </div>
           <div class="hit-description">
-            {{#helpers.highlight}}{ "attribute": "description" }{{/helpers.highlight}}
+            ${item._highlightResult.description.value}
           </div>
-          <div class="hit-price">\${{price}}</div>
-          <div class="hit-rating">Categories: {{categories}}</div>
-          <div class="hit-rating">Rating: {{rating}}</div>
-          <div class="hit-free-shipping">Free Shipping: {{free_shipping}}</div>
+          <div class="hit-price">$${item.price}</div>
+          <div class="hit-categories">Categories:
+            ${item._highlightResult.categories.map((c) => c.value).join(" > ")}
+          </div>
+          <div class="hit-rating">Rating: ${item.rating}</div>
+          <div class="hit-free-shipping">Free Shipping: ${item.free_shipping}</div>
         </div>
-      `,
+      `;
+      },
     },
   }),
   infiniteHits({

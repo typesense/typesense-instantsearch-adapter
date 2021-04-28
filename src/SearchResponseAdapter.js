@@ -75,7 +75,7 @@ export class SearchResponseAdapter {
           if (matchedIndices && matchedIndices.includes(index)) {
             result[attribute].push({
               value: this._adaptHighlightTag(
-                `${value[index]}`,
+                `${value[matchedIndices.indexOf(index)]}`,
                 this.instantsearchRequest.params.highlightPreTag,
                 this.instantsearchRequest.params.highlightPostTag
               ),

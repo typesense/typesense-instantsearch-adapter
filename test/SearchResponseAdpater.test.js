@@ -15,23 +15,22 @@ describe("SearchResponseAdapter", () => {
       const result = subject._adaptHighlightResult(typesenseHit, "value");
       expect(result).toEqual({
         brand: {
-          value: "AT&T GoPhone",
+          value: "Verizon Prepaid",
           matchLevel: "none",
           matchedWords: [],
         },
         categories: [
           {
-            value: "<mark>Cell</mark> Phones",
-            matchLevel: "full",
-            matchedWords: ["Cell"],
-          },
-          {
-            value: "Prepaid Phones",
+            value: "Cell Phones",
             matchLevel: "none",
             matchedWords: [],
           },
           {
-            value: "All Prepaid Phones",
+            value: "Cell <mark>Phone</mark> Accessories",
+            matchLevel: "full",
+          },
+          {
+            value: "SIM Cards",
             matchLevel: "none",
             matchedWords: [],
           },
@@ -45,56 +44,56 @@ describe("SearchResponseAdapter", () => {
         ],
         "categories.lvl1": [
           {
-            value: "Cell Phones > Prepaid Phones",
+            value: "Cell Phones > Cell Phone Accessories",
             matchLevel: "none",
             matchedWords: [],
           },
         ],
         "categories.lvl2": [
           {
-            value: "Cell Phones > Prepaid Phones > All Prepaid Phones",
+            value: "Cell Phones > Cell Phone Accessories > SIM Cards",
             matchLevel: "none",
             matchedWords: [],
           },
         ],
         description: {
           value:
-            "Enjoy simplicity and speed with Alcatel's Ideal <mark>cell</mark> phone for AT&T. It fits neatly in almost any pocket and has a 4.5-inch display for easy one-handed use. Alcatel's Ideal phone from AT&T comes with 4G of memory and uses Wi-Fi or Bluetooth connectivity to keep connections active no matter what.",
+            "Set up your existing Verizon <mark>Prepaid</mark> 4G cell <mark>phone</mark> with this Verizon Wireless <mark>Prepaid</mark> kit, which contains a PIN for a 1-month airtime plan with 30 days of unlimited talk and text and 1GB of data, plus a nano SIM card and SIM card adapter tray.",
           matchLevel: "full",
-          matchedWords: ["cell"],
+          matchedWords: ["Prepaid", "phone"],
         },
         free_shipping: {
-          value: "true",
+          value: "false",
           matchLevel: "none",
           matchedWords: [],
         },
         id: {
-          value: "2",
+          value: "1172",
           matchLevel: "none",
           matchedWords: [],
         },
         image: {
-          value: "https://cdn-demo.algolia.com/bestbuy-0118/5443800_sb.jpg",
+          value: "https://cdn-demo.algolia.com/bestbuy-0118/4331711_sb.jpg",
           matchLevel: "none",
           matchedWords: [],
         },
         name: {
-          value: "AT&T GoPhone - Alcatel Ideal 4G LTE with 8GB Memory Prepaid <mark>Cell</mark> Phone - Slate Blue",
+          value: "Verizon <mark>Prepaid</mark> - Bring Your Own <mark>Phone</mark> SIM Kit + Airtime",
           matchLevel: "full",
-          matchedWords: ["Cell"],
+          matchedWords: ["Prepaid", "Phone"],
         },
         popularity: {
-          value: "21413",
+          value: "6955",
           matchLevel: "none",
           matchedWords: [],
         },
         price: {
-          value: "29.99",
+          value: "49.95",
           matchLevel: "none",
           matchedWords: [],
         },
         rating: {
-          value: "2",
+          value: "4",
           matchLevel: "none",
           matchedWords: [],
         },
