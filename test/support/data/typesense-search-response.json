@@ -1423,6 +1423,195 @@
       "hits": [
         {
           "document": {
+            "brand": "AT&T GoPhone",
+            "categories": [
+              "Cell Phones",
+              "Prepaid Phones",
+              "All Prepaid Phones"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Prepaid Phones"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Prepaid Phones > All Prepaid Phones"
+            ],
+            "description": "Enjoy simplicity and speed with Alcatel's Ideal cell phone for AT&T. It fits neatly in almost any pocket and has a 4.5-inch display for easy one-handed use. Alcatel's Ideal phone from AT&T comes with 4G of memory and uses Wi-Fi or Bluetooth connectivity to keep connections active no matter what.",
+            "free_shipping": true,
+            "id": "2",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/5443800_sb.jpg",
+            "name": "AT&T GoPhone - Alcatel Ideal 4G LTE with 8GB Memory Prepaid Cell Phone - Slate Blue",
+            "popularity": 21413,
+            "price": 29.99,
+            "rating": 2
+          },
+          "highlights": [
+            {
+              "field": "name",
+              "matched_tokens": [
+                "Cell"
+              ],
+              "snippet": "AT&T GoPhone - Alcatel Ideal 4G LTE with 8GB Memory Prepaid <mark>Cell</mark> Phone - Slate Blue",
+              "value": "AT&T GoPhone - Alcatel Ideal 4G LTE with 8GB Memory Prepaid <mark>Cell</mark> Phone - Slate Blue"
+            },
+            {
+              "field": "description",
+              "matched_tokens": [
+                "cell"
+              ],
+              "snippet": "speed with Alcatel's Ideal <mark>cell</mark> phone for AT&T. It",
+              "value": "Enjoy simplicity and speed with Alcatel's Ideal <mark>cell</mark> phone for AT&T. It fits neatly in almost any pocket and has a 4.5-inch display for easy one-handed use. Alcatel's Ideal phone from AT&T comes with 4G of memory and uses Wi-Fi or Bluetooth connectivity to keep connections active no matter what."
+            },
+            {
+              "field": "categories",
+              "indices": [
+                0
+              ],
+              "matched_tokens": [
+                [
+                  "Cell"
+                ]
+              ],
+              "snippets": [
+                "<mark>Cell</mark> Phones"
+              ],
+              "values": [
+                "<mark>Cell</mark> Phones"
+              ]
+            }
+          ],
+          "text_match": 50461022
+        },
+        {
+          "document": {
+            "brand": "Cricket Wireless",
+            "categories": [
+              "Cell Phones",
+              "Prepaid Phones",
+              "All Prepaid Phones"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Prepaid Phones"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Prepaid Phones > All Prepaid Phones"
+            ],
+            "description": "Alcatel OneTouch Flint Prepaid Cell Phone for Cricket Wireless:Stay connected to your friends and family with this Cricket Alcatel OneTouch Flint smartphone. It has a hefty 5.5-inch HD screen for easy viewing and navigation, and the color display is crisp and vibrant. The 2500 mAh battery in this Cricket Alcatel OneTouch Flint smartphone lets you talk up to 19 hours on a single charge..",
+            "free_shipping": false,
+            "id": "3",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/5215801_sb.jpg",
+            "name": "Cricket Wireless - Alcatel OneTouch Flint 4G with 16GB Memory Prepaid Cell Phone",
+            "popularity": 21343,
+            "price": 49.99,
+            "rating": 5
+          },
+          "highlights": [
+            {
+              "field": "name",
+              "matched_tokens": [
+                "Cell"
+              ],
+              "snippet": "Cricket Wireless - Alcatel OneTouch Flint 4G with 16GB Memory Prepaid <mark>Cell</mark> Phone",
+              "value": "Cricket Wireless - Alcatel OneTouch Flint 4G with 16GB Memory Prepaid <mark>Cell</mark> Phone"
+            },
+            {
+              "field": "description",
+              "matched_tokens": [
+                "Cell"
+              ],
+              "snippet": "Alcatel OneTouch Flint Prepaid <mark>Cell</mark> Phone for Cricket Wireless:Stay",
+              "value": "Alcatel OneTouch Flint Prepaid <mark>Cell</mark> Phone for Cricket Wireless:Stay connected to your friends and family with this Cricket Alcatel OneTouch Flint smartphone. It has a hefty 5.5-inch HD screen for easy viewing and navigation, and the color display is crisp and vibrant. The 2500 mAh battery in this Cricket Alcatel OneTouch Flint smartphone lets you talk up to 19 hours on a single charge.."
+            },
+            {
+              "field": "categories",
+              "indices": [
+                0
+              ],
+              "matched_tokens": [
+                [
+                  "Cell"
+                ]
+              ],
+              "snippets": [
+                "<mark>Cell</mark> Phones"
+              ],
+              "values": [
+                "<mark>Cell</mark> Phones"
+              ]
+            }
+          ],
+          "text_match": 50461022
+        },
+        {
+          "document": {
+            "brand": "Boost Mobile",
+            "categories": [
+              "Cell Phones",
+              "Prepaid Phones",
+              "All Prepaid Phones"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Prepaid Phones"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Prepaid Phones > All Prepaid Phones"
+            ],
+            "description": "LG K3 with 8GB Memory Prepaid Cell Phone for Boost Mobile: Call, text and contact your friends and family with the LG E0 smartphone. The 8GB of storage ensures you always have somewhere to put your photos and documents, and Bluetooth connectivity allows easy file sharing. Android 6 gives you access to a wide range of apps so that you can customize your LG E0 smartphone to your specifications.",
+            "free_shipping": true,
+            "id": "7",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/5020200_sb.jpg",
+            "name": "Boost Mobile - LG K3 with 8GB Memory Prepaid Cell Phone - Black",
+            "popularity": 21224,
+            "price": 49.99,
+            "rating": 1
+          },
+          "highlights": [
+            {
+              "field": "name",
+              "matched_tokens": [
+                "Cell"
+              ],
+              "snippet": "Boost Mobile - LG K3 with 8GB Memory Prepaid <mark>Cell</mark> Phone - Black",
+              "value": "Boost Mobile - LG K3 with 8GB Memory Prepaid <mark>Cell</mark> Phone - Black"
+            },
+            {
+              "field": "description",
+              "matched_tokens": [
+                "Cell"
+              ],
+              "snippet": "with 8GB Memory Prepaid <mark>Cell</mark> Phone for Boost Mobile:",
+              "value": "LG K3 with 8GB Memory Prepaid <mark>Cell</mark> Phone for Boost Mobile: Call, text and contact your friends and family with the LG E0 smartphone. The 8GB of storage ensures you always have somewhere to put your photos and documents, and Bluetooth connectivity allows easy file sharing. Android 6 gives you access to a wide range of apps so that you can customize your LG E0 smartphone to your specifications."
+            },
+            {
+              "field": "categories",
+              "indices": [
+                0
+              ],
+              "matched_tokens": [
+                [
+                  "Cell"
+                ]
+              ],
+              "snippets": [
+                "<mark>Cell</mark> Phones"
+              ],
+              "values": [
+                "<mark>Cell</mark> Phones"
+              ]
+            }
+          ],
+          "text_match": 50461022
+        },
+        {
+          "document": {
             "brand": "BLU",
             "categories": [
               "Cell Phones",
@@ -1451,21 +1640,18 @@
             {
               "field": "name",
               "matched_tokens": [
-                "Cell",
-                "Phone"
+                "Cell"
               ],
-              "snippet": "BLU - Studio G 4G <mark>Cell</mark> <mark>Phone</mark> with 4GB (Unlocked) - Black",
-              "value": "BLU - Studio G 4G <mark>Cell</mark> <mark>Phone</mark> with 4GB (Unlocked) - Black"
+              "snippet": "BLU - Studio G 4G <mark>Cell</mark> Phone with 4GB (Unlocked) - Black",
+              "value": "BLU - Studio G 4G <mark>Cell</mark> Phone with 4GB (Unlocked) - Black"
             },
             {
               "field": "description",
               "matched_tokens": [
-                "Cell",
-                "Phone:",
-                "phone"
+                "Cell"
               ],
-              "snippet": "Blu Studio G Unlocked <mark>Cell</mark> <mark>Phone:</mark> This unlocked <mark>phone</mark> will",
-              "value": "Blu Studio G Unlocked <mark>Cell</mark> <mark>Phone:</mark> This unlocked <mark>phone</mark> will meet your needs as you work, play and travel. It serves as a mobile hotspot when you're on the go, so you can access the Internet from just about anywhere. Use the dual SIM card slots to answer both local and international calls without needing multiple devices."
+              "snippet": "Blu Studio G Unlocked <mark>Cell</mark> Phone: This unlocked phone",
+              "value": "Blu Studio G Unlocked <mark>Cell</mark> Phone: This unlocked phone will meet your needs as you work, play and travel. It serves as a mobile hotspot when you're on the go, so you can access the Internet from just about anywhere. Use the dual SIM card slots to answer both local and international calls without needing multiple devices."
             },
             {
               "field": "categories",
@@ -1497,7 +1683,133 @@
               ]
             }
           ],
-          "text_match": 844424931702808
+          "text_match": 50461022
+        },
+        {
+          "document": {
+            "brand": "AT&T GoPhone",
+            "categories": [
+              "Cell Phones",
+              "Prepaid Phones",
+              "All Prepaid Phones"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Prepaid Phones"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Prepaid Phones > All Prepaid Phones"
+            ],
+            "description": "AT&T GoPhone LG Phoenix 2 Prepaid Cell Phone:Connect and make calls with friends and family with this LG M1V GoPhone, which lets you pay as you go for minutes and data. The slim profile fits easily in your hand, and a microSD slot lets you expand the memory capabilities for adding a playlist or saving pictures on this LG M1V GoPhone.",
+            "free_shipping": false,
+            "id": "14",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/5046702_sb.jpg",
+            "name": "AT&T GoPhone - LG Phoenix 2 4G LTE with 16GB Memory Prepaid Cell Phone - Black",
+            "popularity": 21191,
+            "price": 69.99,
+            "rating": 1
+          },
+          "highlights": [
+            {
+              "field": "name",
+              "matched_tokens": [
+                "Cell"
+              ],
+              "snippet": "AT&T GoPhone - LG Phoenix 2 4G LTE with 16GB Memory Prepaid <mark>Cell</mark> Phone - Black",
+              "value": "AT&T GoPhone - LG Phoenix 2 4G LTE with 16GB Memory Prepaid <mark>Cell</mark> Phone - Black"
+            },
+            {
+              "field": "description",
+              "matched_tokens": [
+                "Cell"
+              ],
+              "snippet": "LG Phoenix 2 Prepaid <mark>Cell</mark> Phone:Connect and make calls",
+              "value": "AT&T GoPhone LG Phoenix 2 Prepaid <mark>Cell</mark> Phone:Connect and make calls with friends and family with this LG M1V GoPhone, which lets you pay as you go for minutes and data. The slim profile fits easily in your hand, and a microSD slot lets you expand the memory capabilities for adding a playlist or saving pictures on this LG M1V GoPhone."
+            },
+            {
+              "field": "categories",
+              "indices": [
+                0
+              ],
+              "matched_tokens": [
+                [
+                  "Cell"
+                ]
+              ],
+              "snippets": [
+                "<mark>Cell</mark> Phones"
+              ],
+              "values": [
+                "<mark>Cell</mark> Phones"
+              ]
+            }
+          ],
+          "text_match": 50461022
+        },
+        {
+          "document": {
+            "brand": "Boost Mobile",
+            "categories": [
+              "Cell Phones",
+              "Prepaid Phones",
+              "All Prepaid Phones"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Prepaid Phones"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Prepaid Phones > All Prepaid Phones"
+            ],
+            "description": "LG Stylo 2 Prepaid Cell Phone for Boost Mobile:  Capture beautiful pictures with the 8-megapixel BSI laser autofocus camera on the LG G Stylo for Boost Mobile. The 5.7-inch HD IPS display lets you view vibrant colors. Use the live shot and video trim features to create unique movies, and use the optimized stylus pen to create art or easily navigate this LG G Stylo.",
+            "free_shipping": true,
+            "id": "17",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/5020700_sb.jpg",
+            "name": "Boost Mobile - LG Stylo 2 4G with 16GB Memory Prepaid Cell Phone - Titan Silver",
+            "popularity": 21146,
+            "price": 129.99,
+            "rating": 3
+          },
+          "highlights": [
+            {
+              "field": "name",
+              "matched_tokens": [
+                "Cell"
+              ],
+              "snippet": "Boost Mobile - LG Stylo 2 4G with 16GB Memory Prepaid <mark>Cell</mark> Phone - Titan Silver",
+              "value": "Boost Mobile - LG Stylo 2 4G with 16GB Memory Prepaid <mark>Cell</mark> Phone - Titan Silver"
+            },
+            {
+              "field": "description",
+              "matched_tokens": [
+                "Cell"
+              ],
+              "snippet": "LG Stylo 2 Prepaid <mark>Cell</mark> Phone for Boost Mobile:",
+              "value": "LG Stylo 2 Prepaid <mark>Cell</mark> Phone for Boost Mobile:  Capture beautiful pictures with the 8-megapixel BSI laser autofocus camera on the LG G Stylo for Boost Mobile. The 5.7-inch HD IPS display lets you view vibrant colors. Use the live shot and video trim features to create unique movies, and use the optimized stylus pen to create art or easily navigate this LG G Stylo."
+            },
+            {
+              "field": "categories",
+              "indices": [
+                0
+              ],
+              "matched_tokens": [
+                [
+                  "Cell"
+                ]
+              ],
+              "snippets": [
+                "<mark>Cell</mark> Phones"
+              ],
+              "values": [
+                "<mark>Cell</mark> Phones"
+              ]
+            }
+          ],
+          "text_match": 50461022
         },
         {
           "document": {
@@ -1529,20 +1841,18 @@
             {
               "field": "name",
               "matched_tokens": [
-                "Cell",
-                "Phone"
+                "Cell"
               ],
-              "snippet": "Motorola - Moto X Pure 4G with 32GB Memory <mark>Cell</mark> <mark>Phone</mark> (Unlocked) - Black",
-              "value": "Motorola - Moto X Pure 4G with 32GB Memory <mark>Cell</mark> <mark>Phone</mark> (Unlocked) - Black"
+              "snippet": "Motorola - Moto X Pure 4G with 32GB Memory <mark>Cell</mark> Phone (Unlocked) - Black",
+              "value": "Motorola - Moto X Pure 4G with 32GB Memory <mark>Cell</mark> Phone (Unlocked) - Black"
             },
             {
               "field": "description",
               "matched_tokens": [
-                "Cell",
-                "Phone:"
+                "Cell"
               ],
-              "snippet": "Moto X Pure Unlocked <mark>Cell</mark> <mark>Phone:</mark> Connect with friends and",
-              "value": "Moto X Pure Unlocked <mark>Cell</mark> <mark>Phone:</mark> Connect with friends and family wirelessly with help from the vibrant 5.7\" touch-screen display and 32GB of storage space for all your music, photos, contacts and apps. Capture group shots and selfies using the front and rear cameras."
+              "snippet": "Moto X Pure Unlocked <mark>Cell</mark> Phone: Connect with friends",
+              "value": "Moto X Pure Unlocked <mark>Cell</mark> Phone: Connect with friends and family wirelessly with help from the vibrant 5.7\" touch-screen display and 32GB of storage space for all your music, photos, contacts and apps. Capture group shots and selfies using the front and rear cameras."
             },
             {
               "field": "categories",
@@ -1574,470 +1884,70 @@
               ]
             }
           ],
-          "text_match": 844424931702808
+          "text_match": 50461022
         },
         {
           "document": {
-            "brand": "Samsung",
+            "brand": "Verizon Wireless Prepaid",
             "categories": [
               "Cell Phones",
-              "Unlocked Cell Phones",
-              "All Unlocked Cell Phones"
+              "Prepaid Phones",
+              "All Prepaid Phones"
             ],
             "categories.lvl0": [
               "Cell Phones"
             ],
             "categories.lvl1": [
-              "Cell Phones > Unlocked Cell Phones"
+              "Cell Phones > Prepaid Phones"
             ],
             "categories.lvl2": [
-              "Cell Phones > Unlocked Cell Phones > All Unlocked Cell Phones"
+              "Cell Phones > Prepaid Phones > All Prepaid Phones"
             ],
-            "description": "Samsung Galaxy S6 Unlocked Cell Phone: This phone delivers fast processing power and an HD display in a sleek, stylish design. A 16.0MP rear camera lets you capture vivid photos and stunning videos to preserve any moment.",
+            "description": "Stay in touch with loved ones with this Verizon Wireless Prepaid Samsung Gusto 3 SMB311VZPP cell phone that enables calling and text messaging and features 3G speed for Web access. A Bluetooth 2.1 + EDR interface allows pairing with select devices.",
             "free_shipping": true,
-            "id": "61",
-            "image": "https://cdn-demo.algolia.com/bestbuy-0118/1313937380_sb.jpg",
-            "name": "Samsung - Galaxy S6 4G with 32GB Memory Cell Phone (Unlocked) - Black",
-            "popularity": 20440,
-            "price": 449.99,
-            "rating": 2
-          },
-          "highlights": [
-            {
-              "field": "name",
-              "matched_tokens": [
-                "Cell",
-                "Phone"
-              ],
-              "snippet": "Samsung - Galaxy S6 4G with 32GB Memory <mark>Cell</mark> <mark>Phone</mark> (Unlocked) - Black",
-              "value": "Samsung - Galaxy S6 4G with 32GB Memory <mark>Cell</mark> <mark>Phone</mark> (Unlocked) - Black"
-            },
-            {
-              "field": "description",
-              "matched_tokens": [
-                "Cell",
-                "Phone:",
-                "phone"
-              ],
-              "snippet": "Samsung Galaxy S6 Unlocked <mark>Cell</mark> <mark>Phone:</mark> This <mark>phone</mark> delivers fast",
-              "value": "Samsung Galaxy S6 Unlocked <mark>Cell</mark> <mark>Phone:</mark> This <mark>phone</mark> delivers fast processing power and an HD display in a sleek, stylish design. A 16.0MP rear camera lets you capture vivid photos and stunning videos to preserve any moment."
-            },
-            {
-              "field": "categories",
-              "indices": [
-                0,
-                1,
-                2
-              ],
-              "matched_tokens": [
-                [
-                  "Cell"
-                ],
-                [
-                  "Cell"
-                ],
-                [
-                  "Cell"
-                ]
-              ],
-              "snippets": [
-                "<mark>Cell</mark> Phones",
-                "Unlocked <mark>Cell</mark> Phones",
-                "All Unlocked <mark>Cell</mark> Phones"
-              ],
-              "values": [
-                "<mark>Cell</mark> Phones",
-                "Unlocked <mark>Cell</mark> Phones",
-                "All Unlocked <mark>Cell</mark> Phones"
-              ]
-            }
-          ],
-          "text_match": 844424931702808
-        },
-        {
-          "document": {
-            "brand": "ZTE",
-            "categories": [
-              "Cell Phones",
-              "Unlocked Cell Phones",
-              "All Unlocked Cell Phones"
-            ],
-            "categories.lvl0": [
-              "Cell Phones"
-            ],
-            "categories.lvl1": [
-              "Cell Phones > Unlocked Cell Phones"
-            ],
-            "categories.lvl2": [
-              "Cell Phones > Unlocked Cell Phones > All Unlocked Cell Phones"
-            ],
-            "description": "Stay connected while on the road with this ZTE Axon 7 mini cell phone. It comes with 32GB of internal storage for saving pictures, videos and files, and a microSD slot lets you add additional storage or transfer files. This ZTE Axon 7 mini cell phone has a large touch screen display for watching movies or playing games.",
-            "free_shipping": false,
-            "id": "89",
-            "image": "https://cdn-demo.algolia.com/bestbuy-0118/5599700_sb.jpg",
-            "name": "ZTE - Axon 7 mini 4G LTE with 32GB Memory Cell Phone (Unlocked) - Ion Gold",
-            "popularity": 20097,
-            "price": 299.99,
-            "rating": 2
-          },
-          "highlights": [
-            {
-              "field": "name",
-              "matched_tokens": [
-                "Cell",
-                "Phone"
-              ],
-              "snippet": "ZTE - Axon 7 mini 4G LTE with 32GB Memory <mark>Cell</mark> <mark>Phone</mark> (Unlocked) - Ion Gold",
-              "value": "ZTE - Axon 7 mini 4G LTE with 32GB Memory <mark>Cell</mark> <mark>Phone</mark> (Unlocked) - Ion Gold"
-            },
-            {
-              "field": "description",
-              "matched_tokens": [
-                "cell",
-                "phone."
-              ],
-              "snippet": "ZTE Axon 7 mini <mark>cell</mark> <mark>phone.</mark> It comes with 32GB",
-              "value": "Stay connected while on the road with this ZTE Axon 7 mini <mark>cell</mark> <mark>phone.</mark> It comes with 32GB of internal storage for saving pictures, videos and files, and a microSD slot lets you add additional storage or transfer files. This ZTE Axon 7 mini <mark>cell</mark> <mark>phone</mark> has a large touch screen display for watching movies or playing games."
-            },
-            {
-              "field": "categories",
-              "indices": [
-                0,
-                1,
-                2
-              ],
-              "matched_tokens": [
-                [
-                  "Cell"
-                ],
-                [
-                  "Cell"
-                ],
-                [
-                  "Cell"
-                ]
-              ],
-              "snippets": [
-                "<mark>Cell</mark> Phones",
-                "Unlocked <mark>Cell</mark> Phones",
-                "All Unlocked <mark>Cell</mark> Phones"
-              ],
-              "values": [
-                "<mark>Cell</mark> Phones",
-                "Unlocked <mark>Cell</mark> Phones",
-                "All Unlocked <mark>Cell</mark> Phones"
-              ]
-            }
-          ],
-          "text_match": 844424931702808
-        },
-        {
-          "document": {
-            "brand": "Motorola",
-            "categories": [
-              "Cell Phones",
-              "Unlocked Cell Phones",
-              "All Unlocked Cell Phones"
-            ],
-            "categories.lvl0": [
-              "Cell Phones"
-            ],
-            "categories.lvl1": [
-              "Cell Phones > Unlocked Cell Phones"
-            ],
-            "categories.lvl2": [
-              "Cell Phones > Unlocked Cell Phones > All Unlocked Cell Phones"
-            ],
-            "description": "Moto X Pure Unlocked Cell Phone: With a vibrant 5.7\" touch-screen display and 32GB of storage space for all your music, photos, contacts and apps, this phone is what you've been looking for. Capture group shots and selfies using the front and rear cameras.",
-            "free_shipping": false,
-            "id": "119",
-            "image": "https://cdn-demo.algolia.com/bestbuy-0118/4344400_sb.jpg",
-            "name": "Motorola - Moto X Pure 4G with 32GB Memory Cell Phone (Unlocked) - White",
-            "popularity": 19544,
-            "price": 349.99,
-            "rating": 2
-          },
-          "highlights": [
-            {
-              "field": "name",
-              "matched_tokens": [
-                "Cell",
-                "Phone"
-              ],
-              "snippet": "Motorola - Moto X Pure 4G with 32GB Memory <mark>Cell</mark> <mark>Phone</mark> (Unlocked) - White",
-              "value": "Motorola - Moto X Pure 4G with 32GB Memory <mark>Cell</mark> <mark>Phone</mark> (Unlocked) - White"
-            },
-            {
-              "field": "description",
-              "matched_tokens": [
-                "Cell",
-                "Phone:"
-              ],
-              "snippet": "Moto X Pure Unlocked <mark>Cell</mark> <mark>Phone:</mark> With a vibrant 5.7\"",
-              "value": "Moto X Pure Unlocked <mark>Cell</mark> <mark>Phone:</mark> With a vibrant 5.7\" touch-screen display and 32GB of storage space for all your music, photos, contacts and apps, this <mark>phone</mark> is what you've been looking for. Capture group shots and selfies using the front and rear cameras."
-            },
-            {
-              "field": "categories",
-              "indices": [
-                0,
-                1,
-                2
-              ],
-              "matched_tokens": [
-                [
-                  "Cell"
-                ],
-                [
-                  "Cell"
-                ],
-                [
-                  "Cell"
-                ]
-              ],
-              "snippets": [
-                "<mark>Cell</mark> Phones",
-                "Unlocked <mark>Cell</mark> Phones",
-                "All Unlocked <mark>Cell</mark> Phones"
-              ],
-              "values": [
-                "<mark>Cell</mark> Phones",
-                "Unlocked <mark>Cell</mark> Phones",
-                "All Unlocked <mark>Cell</mark> Phones"
-              ]
-            }
-          ],
-          "text_match": 844424931702808
-        },
-        {
-          "document": {
-            "brand": "Huawei",
-            "categories": [
-              "Cell Phones",
-              "Unlocked Cell Phones",
-              "All Unlocked Cell Phones"
-            ],
-            "categories.lvl0": [
-              "Cell Phones"
-            ],
-            "categories.lvl1": [
-              "Cell Phones > Unlocked Cell Phones"
-            ],
-            "categories.lvl2": [
-              "Cell Phones > Unlocked Cell Phones > All Unlocked Cell Phones"
-            ],
-            "description": "Huawei Honor 5X Unlocked Cell Phone: Listen to music, stream videos or contact friends with this Huawei Honor 5X smartphone, using the microSD slots to expand your storage capabilities. The 13-megapixel rear-facing camera lets you take stunning pictures for sharing on social media. This Huawei Honor 5X smartphone operates on an Android 5.1 OS for fast response.",
-            "free_shipping": false,
-            "id": "122",
-            "image": "https://cdn-demo.algolia.com/bestbuy-0118/5217800_sb.jpg",
-            "name": "Huawei - Honor 5X 4G with 16GB Memory Cell Phone (Unlocked) - Gray",
-            "popularity": 19380,
-            "price": 199.99,
+            "id": "20",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/5358001_sb.jpg",
+            "name": "Verizon Wireless Prepaid - Samsung Gusto 3 No-Contract Cell Phone - Dark Blue",
+            "popularity": 21040,
+            "price": 19.99,
             "rating": 4
           },
           "highlights": [
             {
               "field": "name",
               "matched_tokens": [
-                "Cell",
-                "Phone"
+                "Cell"
               ],
-              "snippet": "Huawei - Honor 5X 4G with 16GB Memory <mark>Cell</mark> <mark>Phone</mark> (Unlocked) - Gray",
-              "value": "Huawei - Honor 5X 4G with 16GB Memory <mark>Cell</mark> <mark>Phone</mark> (Unlocked) - Gray"
+              "snippet": "Verizon Wireless Prepaid - Samsung Gusto 3 No-Contract <mark>Cell</mark> Phone - Dark Blue",
+              "value": "Verizon Wireless Prepaid - Samsung Gusto 3 No-Contract <mark>Cell</mark> Phone - Dark Blue"
             },
             {
               "field": "description",
               "matched_tokens": [
-                "Cell",
-                "Phone:"
+                "cell"
               ],
-              "snippet": "Huawei Honor 5X Unlocked <mark>Cell</mark> <mark>Phone:</mark> Listen to music, stream",
-              "value": "Huawei Honor 5X Unlocked <mark>Cell</mark> <mark>Phone:</mark> Listen to music, stream videos or contact friends with this Huawei Honor 5X smartphone, using the microSD slots to expand your storage capabilities. The 13-megapixel rear-facing camera lets you take stunning pictures for sharing on social media. This Huawei Honor 5X smartphone operates on an Android 5.1 OS for fast response."
+              "snippet": "Samsung Gusto 3 SMB311VZPP <mark>cell</mark> phone that enables calling",
+              "value": "Stay in touch with loved ones with this Verizon Wireless Prepaid Samsung Gusto 3 SMB311VZPP <mark>cell</mark> phone that enables calling and text messaging and features 3G speed for Web access. A Bluetooth 2.1 + EDR interface allows pairing with select devices."
             },
             {
               "field": "categories",
               "indices": [
-                0,
-                1,
-                2
+                0
               ],
               "matched_tokens": [
-                [
-                  "Cell"
-                ],
-                [
-                  "Cell"
-                ],
                 [
                   "Cell"
                 ]
               ],
               "snippets": [
-                "<mark>Cell</mark> Phones",
-                "Unlocked <mark>Cell</mark> Phones",
-                "All Unlocked <mark>Cell</mark> Phones"
+                "<mark>Cell</mark> Phones"
               ],
               "values": [
-                "<mark>Cell</mark> Phones",
-                "Unlocked <mark>Cell</mark> Phones",
-                "All Unlocked <mark>Cell</mark> Phones"
+                "<mark>Cell</mark> Phones"
               ]
             }
           ],
-          "text_match": 844424931702808
-        },
-        {
-          "document": {
-            "brand": "Motorola",
-            "categories": [
-              "Cell Phones",
-              "Unlocked Cell Phones",
-              "All Unlocked Cell Phones"
-            ],
-            "categories.lvl0": [
-              "Cell Phones"
-            ],
-            "categories.lvl1": [
-              "Cell Phones > Unlocked Cell Phones"
-            ],
-            "categories.lvl2": [
-              "Cell Phones > Unlocked Cell Phones > All Unlocked Cell Phones"
-            ],
-            "description": "Motorola Moto X Pure Unlocked Cell Phone: Stay connected to friends and family with 4G LTE speed and Wi-Fi connectivity. The 5.7\" touch screen offers QHD resolution to provide lifelike visuals for your games and videos.",
-            "free_shipping": false,
-            "id": "158",
-            "image": "https://cdn-demo.algolia.com/bestbuy-0118/4817502_sb.jpg",
-            "name": "Motorola - Moto X Pure 4G with 64GB Memory Cell Phone (Unlocked) - White",
-            "popularity": 18747,
-            "price": 399.99,
-            "rating": 5
-          },
-          "highlights": [
-            {
-              "field": "name",
-              "matched_tokens": [
-                "Cell",
-                "Phone"
-              ],
-              "snippet": "Motorola - Moto X Pure 4G with 64GB Memory <mark>Cell</mark> <mark>Phone</mark> (Unlocked) - White",
-              "value": "Motorola - Moto X Pure 4G with 64GB Memory <mark>Cell</mark> <mark>Phone</mark> (Unlocked) - White"
-            },
-            {
-              "field": "description",
-              "matched_tokens": [
-                "Cell",
-                "Phone:"
-              ],
-              "snippet": "Moto X Pure Unlocked <mark>Cell</mark> <mark>Phone:</mark> Stay connected to friends",
-              "value": "Motorola Moto X Pure Unlocked <mark>Cell</mark> <mark>Phone:</mark> Stay connected to friends and family with 4G LTE speed and Wi-Fi connectivity. The 5.7\" touch screen offers QHD resolution to provide lifelike visuals for your games and videos."
-            },
-            {
-              "field": "categories",
-              "indices": [
-                0,
-                1,
-                2
-              ],
-              "matched_tokens": [
-                [
-                  "Cell"
-                ],
-                [
-                  "Cell"
-                ],
-                [
-                  "Cell"
-                ]
-              ],
-              "snippets": [
-                "<mark>Cell</mark> Phones",
-                "Unlocked <mark>Cell</mark> Phones",
-                "All Unlocked <mark>Cell</mark> Phones"
-              ],
-              "values": [
-                "<mark>Cell</mark> Phones",
-                "Unlocked <mark>Cell</mark> Phones",
-                "All Unlocked <mark>Cell</mark> Phones"
-              ]
-            }
-          ],
-          "text_match": 844424931702808
-        },
-        {
-          "document": {
-            "brand": "Huawei",
-            "categories": [
-              "Cell Phones",
-              "Unlocked Cell Phones",
-              "All Unlocked Cell Phones"
-            ],
-            "categories.lvl0": [
-              "Cell Phones"
-            ],
-            "categories.lvl1": [
-              "Cell Phones > Unlocked Cell Phones"
-            ],
-            "categories.lvl2": [
-              "Cell Phones > Unlocked Cell Phones > All Unlocked Cell Phones"
-            ],
-            "description": "Huawei Google Nexus 6P Unlocked Cell Phone: Check messages, e-mail, social media and more on this phone's vivid 5.7\" AMOLED Quad HD touch screen. The 2.0GHz processor ensures powerful performance, and a fingerprint sensor offers security and simple access.",
-            "free_shipping": true,
-            "id": "161",
-            "image": "https://cdn-demo.algolia.com/bestbuy-0118/4796627_sb.jpg",
-            "name": "Huawei - Google Nexus 6P 4G with 32GB Memory Cell Phone (Unlocked) - Gold",
-            "popularity": 18716,
-            "price": 499.99,
-            "rating": 2
-          },
-          "highlights": [
-            {
-              "field": "name",
-              "matched_tokens": [
-                "Cell",
-                "Phone"
-              ],
-              "snippet": "Huawei - Google Nexus 6P 4G with 32GB Memory <mark>Cell</mark> <mark>Phone</mark> (Unlocked) - Gold",
-              "value": "Huawei - Google Nexus 6P 4G with 32GB Memory <mark>Cell</mark> <mark>Phone</mark> (Unlocked) - Gold"
-            },
-            {
-              "field": "description",
-              "matched_tokens": [
-                "Cell",
-                "Phone:"
-              ],
-              "snippet": "Google Nexus 6P Unlocked <mark>Cell</mark> <mark>Phone:</mark> Check messages, e-mail, social",
-              "value": "Huawei Google Nexus 6P Unlocked <mark>Cell</mark> <mark>Phone:</mark> Check messages, e-mail, social media and more on this phone's vivid 5.7\" AMOLED Quad HD touch screen. The 2.0GHz processor ensures powerful performance, and a fingerprint sensor offers security and simple access."
-            },
-            {
-              "field": "categories",
-              "indices": [
-                0,
-                1,
-                2
-              ],
-              "matched_tokens": [
-                [
-                  "Cell"
-                ],
-                [
-                  "Cell"
-                ],
-                [
-                  "Cell"
-                ]
-              ],
-              "snippets": [
-                "<mark>Cell</mark> Phones",
-                "Unlocked <mark>Cell</mark> Phones",
-                "All Unlocked <mark>Cell</mark> Phones"
-              ],
-              "values": [
-                "<mark>Cell</mark> Phones",
-                "Unlocked <mark>Cell</mark> Phones",
-                "All Unlocked <mark>Cell</mark> Phones"
-              ]
-            }
-          ],
-          "text_match": 844424931702808
+          "text_match": 50461022
         }
       ],
       "out_of": 3291,
@@ -2045,9 +1955,9 @@
       "request_params": {
         "collection_name": "products",
         "per_page": 8,
-        "q": "cell phone"
+        "q": "cell"
       },
-      "search_time_ms": 31
+      "search_time_ms": 21
     }
   ]
 }

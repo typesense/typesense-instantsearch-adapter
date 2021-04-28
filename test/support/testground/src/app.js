@@ -77,18 +77,15 @@ const suggestions = instantsearch({
 });
 
 // ======== Uncomment to use Algolia
-// const searchClient = algoliasearch(
-//   "B1G2GM9NG0",
-//   "aadef574be1f9252bb48d4ea09b5cfe5"
-// );
+// const searchClient = algoliasearch("B1G2GM9NG0", "aadef574be1f9252bb48d4ea09b5cfe5");
 // const search = instantsearch({
 //   indexName: "demo_ecommerce",
-//   searchClient
+//   searchClient,
 // });
 // const suggestions = instantsearch({
 //   indexName: "demo_ecommerce",
 //   searchClient,
-//   routing: true
+//   routing: true,
 // });
 
 // ============ Begin Widget Configuration

@@ -15,25 +15,25 @@ describe("SearchResponseAdapter", () => {
       const result = subject._adaptHighlightResult(typesenseHit, "value");
       expect(result).toEqual({
         brand: {
-          value: "BLU",
+          value: "AT&T GoPhone",
           matchLevel: "none",
           matchedWords: [],
         },
         categories: [
           {
-            value: "Cell Phones",
+            value: "<mark>Cell</mark> Phones",
             matchLevel: "full",
             matchedWords: ["Cell"],
           },
           {
-            value: "Unlocked Cell Phones",
-            matchLevel: "full",
-            matchedWords: ["Cell"],
+            value: "Prepaid Phones",
+            matchLevel: "none",
+            matchedWords: [],
           },
           {
-            value: "All Unlocked Cell Phones",
-            matchLevel: "full",
-            matchedWords: ["Cell"],
+            value: "All Prepaid Phones",
+            matchLevel: "none",
+            matchedWords: [],
           },
         ],
         "categories.lvl0": [
@@ -45,51 +45,51 @@ describe("SearchResponseAdapter", () => {
         ],
         "categories.lvl1": [
           {
-            value: "Cell Phones > Unlocked Cell Phones",
+            value: "Cell Phones > Prepaid Phones",
             matchLevel: "none",
             matchedWords: [],
           },
         ],
         "categories.lvl2": [
           {
-            value: "Cell Phones > Unlocked Cell Phones > All Unlocked Cell Phones",
+            value: "Cell Phones > Prepaid Phones > All Prepaid Phones",
             matchLevel: "none",
             matchedWords: [],
           },
         ],
         description: {
           value:
-            "Blu Studio G Unlocked <mark>Cell</mark> <mark>Phone:</mark> This unlocked <mark>phone</mark> will meet your needs as you work, play and travel. It serves as a mobile hotspot when you're on the go, so you can access the Internet from just about anywhere. Use the dual SIM card slots to answer both local and international calls without needing multiple devices.",
+            "Enjoy simplicity and speed with Alcatel's Ideal <mark>cell</mark> phone for AT&T. It fits neatly in almost any pocket and has a 4.5-inch display for easy one-handed use. Alcatel's Ideal phone from AT&T comes with 4G of memory and uses Wi-Fi or Bluetooth connectivity to keep connections active no matter what.",
           matchLevel: "full",
-          matchedWords: ["Cell", "Phone:", "phone"],
+          matchedWords: ["cell"],
         },
         free_shipping: {
-          value: "false",
+          value: "true",
           matchLevel: "none",
           matchedWords: [],
         },
         id: {
-          value: "11",
+          value: "2",
           matchLevel: "none",
           matchedWords: [],
         },
         image: {
-          value: "https://cdn-demo.algolia.com/bestbuy-0118/3902024_sb.jpg",
+          value: "https://cdn-demo.algolia.com/bestbuy-0118/5443800_sb.jpg",
           matchLevel: "none",
           matchedWords: [],
         },
         name: {
-          value: "BLU - Studio G 4G <mark>Cell</mark> <mark>Phone</mark> with 4GB (Unlocked) - Black",
+          value: "AT&T GoPhone - Alcatel Ideal 4G LTE with 8GB Memory Prepaid <mark>Cell</mark> Phone - Slate Blue",
           matchLevel: "full",
-          matchedWords: ["Cell", "Phone"],
+          matchedWords: ["Cell"],
         },
         popularity: {
-          value: "21209",
+          value: "21413",
           matchLevel: "none",
           matchedWords: [],
         },
         price: {
-          value: "79.99",
+          value: "29.99",
           matchLevel: "none",
           matchedWords: [],
         },

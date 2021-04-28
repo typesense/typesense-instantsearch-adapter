@@ -71,11 +71,11 @@ export class SearchResponseAdapter {
         // Algolia lists all values of the key in highlights, even those that don't have any highlights
         // So add all values of the array field, including highlights
         result[attribute] = [];
-        typesenseHit.document[attribute].forEach((valueFromArray, index) => {
+        typesenseHit.document[attribute].forEach((unhighlightedValueFromArray, index) => {
           if (matchedIndices && matchedIndices.includes(index)) {
             result[attribute].push({
               value: this._adaptHighlightTag(
-                `${valueFromArray}`,
+                `${value[index]}`,
                 this.instantsearchRequest.params.highlightPreTag,
                 this.instantsearchRequest.params.highlightPostTag
               ),
@@ -84,7 +84,7 @@ export class SearchResponseAdapter {
             });
           } else {
             result[attribute].push({
-              value: valueFromArray,
+              value: unhighlightedValueFromArray,
               matchLevel: "none",
               matchedWords: [],
             });
