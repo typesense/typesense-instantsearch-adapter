@@ -54,27 +54,41 @@ export class SearchResponseAdapter {
       result[highlight.field] = {
         value: highlight[snippetOrValue] || highlight[`${snippetOrValue}s`],
         matchLevel: "full",
-        matchedWords: [], // Todo: Fix MatchedWords
+        matchedWords: highlight.matched_tokens,
       };
+
+      if (highlight.indices) {
+        result[highlight.field]["matchedIndices"] = highlight.indices;
+      }
     });
 
     // Now convert any values that have an array value
     // Also, replace highlight tag
     Object.entries(result).forEach(([k, v]) => {
       const attribute = k;
-      const { value, matchLevel, matchedWords } = v;
+      const { value, matchLevel, matchedWords, matchedIndices } = v;
       if (Array.isArray(value)) {
+        // Algolia lists all values of the key in highlights, even those that don't have any highlights
+        // So add all values of the array field, including highlights
         result[attribute] = [];
-        value.forEach((v) => {
-          result[attribute].push({
-            value: this._adaptHighlightTag(
-              `${v}`,
-              this.instantsearchRequest.params.highlightPreTag,
-              this.instantsearchRequest.params.highlightPostTag
-            ),
-            matchLevel: matchLevel, // TODO: Fix MatchLevel for array
-            matchedWords: matchedWords, // TODO: Fix MatchedWords for array
-          });
+        typesenseHit.document[attribute].forEach((valueFromArray, index) => {
+          if (matchedIndices && matchedIndices.includes(index)) {
+            result[attribute].push({
+              value: this._adaptHighlightTag(
+                `${valueFromArray}`,
+                this.instantsearchRequest.params.highlightPreTag,
+                this.instantsearchRequest.params.highlightPostTag
+              ),
+              matchLevel: matchLevel,
+              matchedWords: matchedWords[index],
+            });
+          } else {
+            result[attribute].push({
+              value: valueFromArray,
+              matchLevel: "none",
+              matchedWords: [],
+            });
+          }
         });
       } else {
         // Convert all values to strings
