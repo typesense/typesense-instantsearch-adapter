@@ -3,12 +3,14 @@
 export class Configuration {
   constructor(options = {}) {
     this.server = options.server || {
-      masterNode: {
-        host: "localhost",
-        port: "8108",
-        path: "",
-        protocol: "http",
-      },
+      nodes: [
+        {
+          host: "localhost",
+          port: "8108",
+          path: "",
+          protocol: "http",
+        },
+      ],
     };
 
     this.additionalSearchParameters = options.additionalSearchParameters || {};
