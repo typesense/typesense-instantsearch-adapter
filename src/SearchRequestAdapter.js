@@ -194,7 +194,7 @@ export class SearchRequestAdapter {
 
     Object.assign(typesenseSearchParams, {
       collection: adaptedCollectionName,
-      q: params.query === "" ? "*" : params.query,
+      q: params.query === "" || params.query === undefined ? "*" : params.query,
       facet_by: [params.facets].flat().join(","),
       filter_by: this._adaptFilters(params.facetFilters, params.numericFilters),
       sort_by: adaptedSortBy || this.additionalSearchParameters.sortBy,
