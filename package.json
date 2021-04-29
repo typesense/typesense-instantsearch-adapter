@@ -4,10 +4,12 @@
   "description": "Adapter to use InstantSearch.js with Typesense Search",
   "homepage": "https://github.com/typesense/typesense-instantsearch-adapter",
   "main": "lib/TypesenseInstantsearchAdapter.js",
+  "types": "index.d.ts",
   "files": [
     "dist/",
     "lib/",
-    "scripts/"
+    "scripts/",
+    "index.d.ts"
   ],
   "keywords": [
     "typesense",
@@ -21,10 +23,11 @@
     "search client"
   ],
   "scripts": {
-    "pretest": "npm run lint",
+    "pretest": "npm run lint && npm run test:type",
     "postinstall": "node scripts/postinstall.js",
     "lint": "eslint .",
     "test": "jest --maxWorkers=1 --verbose",
+    "test:type": "tsd",
     "build:lib": "rm -r lib/* && babel src -d lib",
     "build:dist": "rm -r dist/* && webpack",
     "build": "npm run build:lib && npm run build:dist",
@@ -67,6 +70,8 @@
     "jest-puppeteer": "^4.4.0",
     "prettier": "1.19.1",
     "puppeteer": "^2.1.1",
+    "tsd": "^0.14.0",
+    "typescript": "^4.2.4",
     "webpack": "^5.30.0",
     "webpack-cli": "^4.6.0"
   },
