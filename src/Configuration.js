@@ -13,6 +13,9 @@ export class Configuration {
       ],
     };
 
+    this.server.cacheSearchResultsForSeconds =
+      this.server.cacheSearchResultsForSeconds == null ? 2 * 60 : this.server.cacheSearchResultsForSeconds;
+
     this.additionalSearchParameters = options.additionalSearchParameters || {};
 
     this.additionalSearchParameters.queryBy = this.additionalSearchParameters.queryBy || "";
