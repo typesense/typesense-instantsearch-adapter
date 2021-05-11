@@ -12,34 +12,25 @@ export default class TypesenseInstantsearchAdapter {
     this.configuration.validate();
     this.typesenseClient = new TypesenseSearchClient(this.configuration.server);
     this.searchClient = {
-      search: instantsearchRequests =>
-        this.searchTypesenseAndAdapt(instantsearchRequests),
-      searchForFacetValues: instantsearchRequests =>
-        this.searchTypesenseForFacetValuesAndAdapt(instantsearchRequests)
+      search: (instantsearchRequests) => this.searchTypesenseAndAdapt(instantsearchRequests),
+      searchForFacetValues: (instantsearchRequests) =>
+        this.searchTypesenseForFacetValuesAndAdapt(instantsearchRequests),
     };
   }
 
   async searchTypesenseAndAdapt(instantsearchRequests) {
     let typesenseResponse;
     try {
-      typesenseResponse = await this._adaptAndPerformTypesenseRequest(
-        instantsearchRequests
-      );
+      typesenseResponse = await this._adaptAndPerformTypesenseRequest(instantsearchRequests);
 
-      const adaptedResponses = typesenseResponse.results.map(
-        (typesenseResult, index) => {
-          this._validateTypesenseResult(typesenseResult);
-          const responseAdapter = new SearchResponseAdapter(
-            typesenseResult,
-            instantsearchRequests[index],
-            this.configuration
-          );
-          return responseAdapter.adapt();
-        }
-      );
+      const adaptedResponses = typesenseResponse.results.map((typesenseResult, index) => {
+        this._validateTypesenseResult(typesenseResult);
+        const responseAdapter = new SearchResponseAdapter(typesenseResult, instantsearchRequests[index], this.configuration);
+        return responseAdapter.adapt();
+      });
 
       return {
-        results: adaptedResponses
+        results: adaptedResponses,
       };
     } catch (error) {
       console.error(error);
@@ -50,21 +41,13 @@ export default class TypesenseInstantsearchAdapter {
   async searchTypesenseForFacetValuesAndAdapt(instantsearchRequests) {
     let typesenseResponse;
     try {
-      typesenseResponse = await this._adaptAndPerformTypesenseRequest(
-        instantsearchRequests
-      );
+      typesenseResponse = await this._adaptAndPerformTypesenseRequest(instantsearchRequests);
 
-      const adaptedResponses = typesenseResponse.results.map(
-        (typesenseResult, index) => {
-          this._validateTypesenseResult(typesenseResult);
-          const responseAdapter = new FacetSearchResponseAdapter(
-            typesenseResult,
-            instantsearchRequests[index],
-            this.configuration
-          );
-          return responseAdapter.adapt();
-        }
-      );
+      const adaptedResponses = typesenseResponse.results.map((typesenseResult, index) => {
+        this._validateTypesenseResult(typesenseResult);
+        const responseAdapter = new FacetSearchResponseAdapter(typesenseResult, instantsearchRequests[index], this.configuration);
+        return responseAdapter.adapt();
+      });
 
       return adaptedResponses;
     } catch (error) {
@@ -77,6 +60,8 @@ export default class TypesenseInstantsearchAdapter {
     const requestAdapter = new SearchRequestAdapter(
       instantsearchRequests,
       this.typesenseClient,
+      this.configuration.additionalSearchParameters,
+      this.configuration.collectionSpecificSearchParameters,
       this.configuration
     );
     const typesenseResponse = await requestAdapter.request();
@@ -88,9 +73,7 @@ export default class TypesenseInstantsearchAdapter {
       throw new Error(`${typesenseResult.code} - ${typesenseResult.error}`);
     }
     if (!typesenseResult.hits && !typesenseResult.grouped_hits) {
-      throw new Error(
-        `Did not find any hits. ${typesenseResult.code} - ${typesenseResult.error}`
-      );
+      throw new Error(`Did not find any hits. ${typesenseResult.code} - ${typesenseResult.error}`);
     }
   }
 }

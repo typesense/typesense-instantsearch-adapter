@@ -1,7 +1,6 @@
 "use strict";
 
 import { utils } from "./support/utils";
-import he from "he";
 
 export class SearchResponseAdapter {
   constructor(typesenseResponse, instantsearchRequest, configuration) {
@@ -13,9 +12,7 @@ export class SearchResponseAdapter {
   _adaptGroupedHits(typesenseGroupedHits) {
     let adaptedResult = [];
 
-    adaptedResult = typesenseGroupedHits.map(groupedHit =>
-      this._adaptHits(groupedHit.hits)
-    );
+    adaptedResult = typesenseGroupedHits.map((groupedHit) => this._adaptHits(groupedHit.hits));
 
     // adaptedResult is now in the form of [[{}, {}], [{}, {}], ...]
     //  where each element in the outer most array corresponds to a group.
@@ -27,19 +24,13 @@ export class SearchResponseAdapter {
 
   _adaptHits(typesenseHits) {
     let adaptedResult = [];
-    adaptedResult = typesenseHits.map(typesenseHit => {
+    adaptedResult = typesenseHits.map((typesenseHit) => {
       const adaptedHit = {
-        ...typesenseHit.document
+        ...typesenseHit.document,
       };
       adaptedHit.objectID = typesenseHit.document.id;
-      adaptedHit._snippetResult = this._adaptHighlightResult(
-        typesenseHit,
-        "snippet"
-      );
-      adaptedHit._highlightResult = this._adaptHighlightResult(
-        typesenseHit,
-        "value"
-      );
+      adaptedHit._snippetResult = this._adaptHighlightResult(typesenseHit, "snippet");
+      adaptedHit._highlightResult = this._adaptHighlightResult(typesenseHit, "value");
 
       const geoLocationValue = adaptedHit[this.configuration.geoLocationField];
       if (geoLocationValue) {
@@ -63,41 +54,55 @@ export class SearchResponseAdapter {
         [attribute]: {
           value: value,
           matchLevel: "none",
-          matchedWords: []
-        }
+          matchedWords: [],
+        },
       }))
     );
 
-    typesenseHit.highlights.forEach(highlight => {
+    typesenseHit.highlights.forEach((highlight) => {
       result[highlight.field] = {
         value: highlight[snippetOrValue] || highlight[`${snippetOrValue}s`],
         matchLevel: "full",
-        matchedWords: [] // Todo: Fix MatchedWords
+        matchedWords: highlight.matched_tokens,
       };
+
+      if (highlight.indices) {
+        result[highlight.field]["matchedIndices"] = highlight.indices;
+      }
     });
 
     // Now convert any values that have an array value
     // Also, replace highlight tag
     Object.entries(result).forEach(([k, v]) => {
       const attribute = k;
-      const { value, matchLevel, matchedWords } = v;
+      const { value, matchLevel, matchedWords, matchedIndices } = v;
       if (Array.isArray(value)) {
+        // Algolia lists all values of the key in highlights, even those that don't have any highlights
+        // So add all values of the array field, including highlights
         result[attribute] = [];
-        value.forEach(v => {
-          result[attribute].push({
-            value: this._adaptHighlightTag(
-              he.decode(`${v}`),
-              this.instantsearchRequest.params.highlightPreTag,
-              this.instantsearchRequest.params.highlightPostTag
-            ),
-            matchLevel: matchLevel, // TODO: Fix MatchLevel for array
-            matchedWords: matchedWords // TODO: Fix MatchedWords for array
-          });
+        typesenseHit.document[attribute].forEach((unhighlightedValueFromArray, index) => {
+          if (matchedIndices && matchedIndices.includes(index)) {
+            result[attribute].push({
+              value: this._adaptHighlightTag(
+                `${value[matchedIndices.indexOf(index)]}`,
+                this.instantsearchRequest.params.highlightPreTag,
+                this.instantsearchRequest.params.highlightPostTag
+              ),
+              matchLevel: matchLevel,
+              matchedWords: matchedWords[index],
+            });
+          } else {
+            result[attribute].push({
+              value: unhighlightedValueFromArray,
+              matchLevel: "none",
+              matchedWords: [],
+            });
+          }
         });
       } else {
         // Convert all values to strings
         result[attribute].value = this._adaptHighlightTag(
-          he.decode(`${value}`),
+          `${value}`,
           this.instantsearchRequest.params.highlightPreTag,
           this.instantsearchRequest.params.highlightPostTag
         );
@@ -108,12 +113,9 @@ export class SearchResponseAdapter {
 
   _adaptFacets(typesenseFacetCounts) {
     const adaptedResult = {};
-    typesenseFacetCounts.forEach(facet => {
+    typesenseFacetCounts.forEach((facet) => {
       Object.assign(adaptedResult, {
-        [facet.field_name]: Object.assign(
-          {},
-          ...facet.counts.map(count => ({ [count.value]: count.count }))
-        )
+        [facet.field_name]: Object.assign({}, ...facet.counts.map((count) => ({ [count.value]: count.count }))),
       });
     });
     return adaptedResult;
@@ -121,10 +123,10 @@ export class SearchResponseAdapter {
 
   _adaptFacetStats(typesenseFacetCounts) {
     const adaptedResult = {};
-    typesenseFacetCounts.forEach(facet => {
+    typesenseFacetCounts.forEach((facet) => {
       if (Object.keys(facet.stats).length > 0) {
         Object.assign(adaptedResult, {
-          [facet.field_name]: facet.stats
+          [facet.field_name]: facet.stats,
         });
       }
     });
@@ -141,11 +143,9 @@ export class SearchResponseAdapter {
       nbPages: this._adaptNumberOfPages(),
       hitsPerPage: this.typesenseResponse.request_params.per_page,
       facets: this._adaptFacets(this.typesenseResponse.facet_counts || []),
-      facets_stats: this._adaptFacetStats(
-        this.typesenseResponse.facet_counts || {}
-      ),
+      facets_stats: this._adaptFacetStats(this.typesenseResponse.facet_counts || {}),
       query: this.typesenseResponse.request_params.q,
-      processingTimeMS: this.typesenseResponse.search_time_ms
+      processingTimeMS: this.typesenseResponse.search_time_ms,
     };
 
     // console.log(adaptedResult);

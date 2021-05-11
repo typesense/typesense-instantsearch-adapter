@@ -3,22 +3,24 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "parcel index.html geosearch.html --port 3000",
+    "start": "parcel index.html federated_search.html refinement_list_operators.html geosearch.html --port 3000",
     "testground": "npm start",
     "build:instantsearch.js": "cd node_modules/instantsearch.js && yarn && yarn run build:es",
-    "build": "parcel build index.html geosearch.html",
+    "build": "parcel build index.html federated_search.html refinement_list_operators.html geosearch.html",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
+    "@parcel/packager-raw-url": "2.0.0-beta.2",
+    "@parcel/transformer-webmanifest": "2.0.0-beta.2",
     "babel-eslint": "10.0.3",
     "eslint": "5.7.0",
     "eslint-config-algolia": "13.2.3",
     "eslint-config-prettier": "3.6.0",
     "eslint-plugin-import": "2.19.1",
     "eslint-plugin-prettier": "3.1.2",
-    "parcel-bundler": "1.12.4",
+    "parcel-bundler": "^1.12.5",
     "prettier": "1.19.1"
   },
   "dependencies": {

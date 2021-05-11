@@ -17,19 +17,19 @@ jobs:
             libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates \
             fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget
       - run:
-          name: Install node@12.16.1, npm and yarn
+          name: Install node@12.18.3, npm and yarn
           command: |
             set +e
             curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.2/install.sh | bash
             export NVM_DIR="/opt/circleci/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            nvm install v12.16.1
-            nvm use v12.16.1
+            nvm install v12.18.3
+            nvm use v12.18.3
             npm install --global yarn
 
             echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
             echo "[ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\"" >> $BASH_ENV
-            echo 'nvm use v12.16.1' >> $BASH_ENV
+            echo 'nvm use v12.18.3' >> $BASH_ENV
       - restore_cache:
           key: dependency-cache-v1-{{ checksum "package-lock.json" }}-{{ checksum "test/support/testground/yarn.lock" }}
       - run:
