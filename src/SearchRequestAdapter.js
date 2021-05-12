@@ -9,12 +9,12 @@ export class SearchRequestAdapter {
     return new RegExp("(.*)((?!:).):(?!:)(.*)");
   }
 
-  constructor(instantsearchRequests, typesenseClient, additionalSearchParameters, collectionSpecificSearchParameters, configuration) {
+  constructor(instantsearchRequests, typesenseClient, configuration) {
     this.instantsearchRequests = instantsearchRequests;
     this.typesenseClient = typesenseClient;
-    this.additionalSearchParameters = additionalSearchParameters;
-    this.collectionSpecificSearchParameters = collectionSpecificSearchParameters;
     this.configuration = configuration;
+    this.additionalSearchParameters = configuration.additionalSearchParameters;
+    this.collectionSpecificSearchParameters = configuration.collectionSpecificSearchParameters;
   }
 
   _adaptFacetFilters(facetFilters) {
@@ -155,7 +155,8 @@ export class SearchRequestAdapter {
   }
 
   _adaptGeoFilter(boundingBox) {
-    return `${this.configuration.geoLocationField}:(${boundingBox})`;
+    const [x1, y1, x2, y2] = boundingBox.split(',')
+    return `${this.configuration.geoLocationField}:(${x1}, ${y1}, ${x1}, ${y2}, ${x2}, ${y2}, ${x2}, ${y1})`;
   }
 
   _adaptFilters(facetFilters, numericFilters, geoFilter) {
@@ -205,11 +206,7 @@ export class SearchRequestAdapter {
       collection: adaptedCollectionName,
       q: params.query === "" || params.query === undefined ? "*" : params.query,
       facet_by: [params.facets].flat().join(","),
-      filter_by: this._adaptFilters(
-        params.facetFilters,
-        params.numericFilters,
-        params.insideBoundingBox
-      ),
+      filter_by: this._adaptFilters(params.facetFilters, params.numericFilters, params.insideBoundingBox),
       sort_by: adaptedSortBy || this.additionalSearchParameters.sortBy,
       max_facet_values: params.maxValuesPerFacet,
       page: (params.page || 0) + 1,

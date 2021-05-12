@@ -60,8 +60,6 @@ export default class TypesenseInstantsearchAdapter {
     const requestAdapter = new SearchRequestAdapter(
       instantsearchRequests,
       this.typesenseClient,
-      this.configuration.additionalSearchParameters,
-      this.configuration.collectionSpecificSearchParameters,
       this.configuration
     );
     const typesenseResponse = await requestAdapter.request();

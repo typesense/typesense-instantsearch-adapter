@@ -1,19 +1,11 @@
-/* global algoliasearch */
 import instantsearch from "instantsearch.js";
-import {
-  searchBox,
-  pagination,
-  refinementList,
-  geoSearch,
-  stats,
-  sortBy
-} from "instantsearch.js/es/widgets";
+import { searchBox, pagination, refinementList, geoSearch, stats, sortBy } from "instantsearch.js/es/widgets";
 
 // ======= Uncomment to use typesense-instantsearch-adapter
 import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
 
 const additionalSearchParameters = {
-  queryBy: "name,city,country,iata_code"
+  queryBy: "name,city,country,iata_code",
 };
 
 const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
@@ -23,21 +15,21 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
       {
         host: "localhost",
         port: "8108",
-        protocol: "http"
-      }
-    ]
+        protocol: "http",
+      },
+    ],
   },
   // The following parameters are directly passed to Typesense's search API endpoint.
   //  So you can pass any parameters supported by the search endpoint below.
   //  queryBy is required.
   additionalSearchParameters,
-  geoLocationField: "lat_lng"
+  geoLocationField: "lat_lng",
 });
 const searchClient = typesenseInstantsearchAdapter.searchClient;
 const search = instantsearch({
   searchClient,
   indexName: "airports",
-  routing: true
+  routing: true,
 });
 
 // ======== Uncomment to use Algolia
@@ -52,13 +44,13 @@ const search = instantsearch({
 
 // ============ Begin Widget Configuration
 // eslint-disable-next-line no-unused-vars
-window.initMap = function() {
+window.initMap = function () {
   search.addWidgets([
     searchBox({
-      container: "#searchbox"
+      container: "#searchbox",
     }),
     pagination({
-      container: "#pagination"
+      container: "#pagination",
     }),
     stats({
       container: "#stats",
@@ -68,13 +60,13 @@ window.initMap = function() {
       {{#hasOneResult}}1 result{{/hasOneResult}}
       {{#hasManyResults}}{{#helpers.formatNumber}}{{nbHits}}{{/helpers.formatNumber}} results{{/hasManyResults}}
       found in {{processingTimeMS}}ms for {{query}}
-    `
-      }
+    `,
+      },
     }),
     geoSearch({
       container: "#map",
-      googleReference: window.google
-    })
+      googleReference: window.google,
+    }),
   ]);
 
   search.start();
