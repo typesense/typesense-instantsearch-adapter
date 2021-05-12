@@ -84,7 +84,11 @@ export class SearchResponseAdapter {
             });
           } else {
             result[attribute].push({
-              value: unhighlightedValueFromArray,
+              value: this._adaptHighlightTag(
+                `${unhighlightedValueFromArray}`,
+                this.instantsearchRequest.params.highlightPreTag,
+                this.instantsearchRequest.params.highlightPostTag
+              ),
               matchLevel: "none",
               matchedWords: [],
             });

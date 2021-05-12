@@ -6,7 +6,8 @@ export class SearchRequestAdapter {
   }
 
   static get FILER_STRING_MATCHING_REGEX() {
-    return new RegExp("(.*)((?!:).):(?!:)(.*)");
+    // I called group2, not sure because I am not sure why it is there
+    return new RegExp("(?<fieldName>.*)(?<notSure>(?!:).):(?<negative>-)?(?!:)(?<value>.*)");
   }
 
   constructor(instantsearchRequests, typesenseClient, additionalSearchParameters, collectionSpecificSearchParameters) {
@@ -39,7 +40,33 @@ export class SearchRequestAdapter {
      *  - Join strings by &&
      */
 
+    const parseFacetFilter = (facetFilter) => {
+      const facetFilterMatches = facetFilter.match(this.constructor.FILER_STRING_MATCHING_REGEX);
+      // console.log(facetFilterMatches)
+      const fieldName = `${facetFilterMatches.groups["fieldName"]}${facetFilterMatches.groups["notSure"]}`;
+      let fieldValue = `${facetFilterMatches.groups["value"]}`;
+      let negative = false;
+
+      // Check if is negative facet: https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/
+      // This is an insanely simple approach
+      if (facetFilterMatches.groups.negative) {
+        negative = true;
+      } else {
+        // replace \- with - so a facetValue can start with "-" assuming it was escaped before hand
+        // untested
+        fieldValue.replace("\\-", "-");
+      }
+
+      // Escape all facets except booleans
+      if (!(String(fieldValue) === "true" || String(fieldValue) === "false")) {
+        fieldValue = "`" + fieldValue + "`";
+      }
+
+      return { fieldName, fieldValue, negative };
+    };
+
     const transformedTypesenseFilters = facetFilters.map((item) => {
+      // console.log(item);
       if (Array.isArray(item)) {
         // Need to transform:
         // facetFilters = ["field1:value1", "field1:value2", "facetN:valueN"]
@@ -51,13 +78,22 @@ export class SearchRequestAdapter {
         // }
 
         const intermediateFacetFilters = {};
+        const intermediateNegativeFacetFilters = {};
+
         item.forEach((facetFilter) => {
-          const facetFilterMatches = facetFilter.match(this.constructor.FILER_STRING_MATCHING_REGEX);
-          const fieldName = `${facetFilterMatches[1]}${facetFilterMatches[2]}`;
-          const fieldValue = `${facetFilterMatches[3]}`;
-          intermediateFacetFilters[fieldName] = intermediateFacetFilters[fieldName] || [];
-          intermediateFacetFilters[fieldName].push(fieldValue);
+          const { fieldName, fieldValue, negative } = parseFacetFilter(facetFilter);
+
+          // console.log(fieldName, fieldValue, negative);
+          if (negative) {
+            intermediateNegativeFacetFilters[fieldName] = intermediateNegativeFacetFilters[fieldName] || [];
+            intermediateNegativeFacetFilters[fieldName].push(fieldValue);
+          } else {
+            intermediateFacetFilters[fieldName] = intermediateFacetFilters[fieldName] || [];
+            intermediateFacetFilters[fieldName].push(fieldValue);
+          }
         });
+
+        // console.log("intermediateFacetFilters", intermediateFacetFilters);
 
         if (Object.keys(intermediateFacetFilters).length > 1) {
           console.error(
@@ -65,11 +101,13 @@ export class SearchRequestAdapter {
               intermediateFacetFilters
             ).join(",")}`
           );
+        } else if (Object.keys(intermediateNegativeFacetFilters).length > 1) {
+          console.error(
+            `Typesense does not support cross-field ORs at the moment. The adapter could not OR values between these fields: ${Object.keys(
+              intermediateNegativeFacetFilters
+            ).join(",")}`
+          );
         }
-
-        // Pick first value from intermediateFacetFilters
-        const fieldName = Object.keys(intermediateFacetFilters)[0];
-        const fieldValues = intermediateFacetFilters[fieldName];
 
         // Need to transform:
         // intermediateFacetFilters = {
@@ -79,19 +117,40 @@ export class SearchRequestAdapter {
         // Into this:
         // field1:=[value1,value2]
 
-        const typesenseFilterString = `${fieldName}:=[${fieldValues.join(",")}]`;
+        const typesenseFilterString = [];
+        if (Object.keys(intermediateFacetFilters).length > 0) {
+          // Pick first value from intermediateFacetFilters
+          // const fieldName = Object.keys(intermediateFacetFilters)[0];
+          // const fieldValues = intermediateFacetFilters[fieldName];
+          const fieldName = Object.keys(intermediateFacetFilters)[0];
+          const fieldValues = intermediateFacetFilters[fieldName];
+          typesenseFilterString.push(`${fieldName}:=[${fieldValues.join(",")}]`);
+          // console.log(fieldName, fieldValues, typesenseFilterString);
+        }
 
-        return typesenseFilterString;
+        if (Object.keys(intermediateNegativeFacetFilters).length > 0) {
+          const fieldName = Object.keys(intermediateNegativeFacetFilters)[0];
+          const fieldValues = intermediateNegativeFacetFilters[fieldName];
+          // typesenseNegativeFilterString = `${fieldName}:-[${fieldValues.join(",")}]`;
+          typesenseFilterString.push(`${fieldName}:-[${fieldValues.join(",")}]`);
+        }
+
+        return typesenseFilterString.join(" && ");
       } else {
         // Need to transform:
         //  fieldName:fieldValue
         // Into
         //  fieldName:=fieldValue
 
-        const facetFilterMatches = item.match(this.constructor.FILER_STRING_MATCHING_REGEX);
-        const fieldName = `${facetFilterMatches[1]}${facetFilterMatches[2]}`;
-        const fieldValue = `${facetFilterMatches[3]}`;
-        const typesenseFilterString = `${fieldName}:=[${fieldValue}]`;
+        const { fieldName, fieldValue, negative } = parseFacetFilter(item);
+        let typesenseFilterString;
+        if (negative) {
+          typesenseFilterString = `${fieldName}:- [${fieldValue}]`;
+        } else {
+          typesenseFilterString = `${fieldName}:=[${fieldValue}]`;
+        }
+        // console.log(fieldName, fieldValue, negative);
+        // console.log(typesenseFilterString);
 
         return typesenseFilterString;
       }
@@ -191,6 +250,7 @@ export class SearchRequestAdapter {
     const typesenseSearchParams = Object.assign({}, snakeCasedAdditionalSearchParameters);
 
     const adaptedSortBy = this._adaptSortBy(indexName);
+    // console.log(params);
 
     Object.assign(typesenseSearchParams, {
       collection: adaptedCollectionName,
