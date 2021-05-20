@@ -84,7 +84,7 @@ export class SearchResponseAdapter {
             });
           } else {
             result[attribute].push({
-              value: unhighlightedValueFromArray,
+              value: `${unhighlightedValueFromArray}`,
               matchLevel: "none",
               matchedWords: [],
             });
