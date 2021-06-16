@@ -1,0 +1,187 @@
+{
+  "results": [
+    {
+      "facet_counts": [
+        {
+          "counts": [
+            {
+              "count": 2,
+              "highlighted": "1",
+              "value": "1"
+            },
+            {
+              "count": 2,
+              "highlighted": "0",
+              "value": "0"
+            },
+            {
+              "count": 1,
+              "highlighted": "53",
+              "value": "53"
+            },
+            {
+              "count": 1,
+              "highlighted": "12",
+              "value": "12"
+            },
+            {
+              "count": 1,
+              "highlighted": "10",
+              "value": "10"
+            },
+            {
+              "count": 1,
+              "highlighted": "13",
+              "value": "13"
+            }
+          ],
+          "field_name": "num_employees",
+          "stats": {
+            "avg": 11.25,
+            "max": 53.0,
+            "min": 0.0,
+            "sum": 90.0
+          }
+        },
+        {
+          "counts": [
+            {
+              "count": 4,
+              "highlighted": "String Value",
+              "value": "String Value"
+            }
+          ],
+          "field_name": "country",
+          "stats": {}
+        }
+      ],
+      "found": 4,
+      "hits": [
+        {
+          "document": {
+            "company_name": "String Value",
+            "country": "String Value",
+            "num_employees": [
+              0,
+              1
+            ]
+          },
+          "highlights": [
+            {
+              "field": "company_name",
+              "matched_tokens": [
+                "String"
+              ],
+              "snippet": "\u003cmark\u003eString\u003c/mark\u003e Value",
+              "value": "\u003cmark\u003eString\u003c/mark\u003e Value"
+            },
+            {
+              "field": "country",
+              "matched_tokens": [
+                "String"
+              ],
+              "snippet": "\u003cmark\u003eString\u003c/mark\u003e Value",
+              "value": "\u003cmark\u003eString\u003c/mark\u003e Value"
+            }
+          ],
+          "text_match": 129377
+        },
+        {
+          "document": {
+            "company_name": "String Value",
+            "country": "String Value",
+            "num_employees": [
+              0,
+              1
+            ]
+          },
+          "highlights": [
+            {
+              "field": "company_name",
+              "matched_tokens": [
+                "String"
+              ],
+              "snippet": "\u003cmark\u003eString\u003c/mark\u003e Value",
+              "value": "\u003cmark\u003eString\u003c/mark\u003e Value"
+            },
+            {
+              "field": "country",
+              "matched_tokens": [
+                "String"
+              ],
+              "snippet": "\u003cmark\u003eString\u003c/mark\u003e Value",
+              "value": "\u003cmark\u003eString\u003c/mark\u003e Value"
+            }
+          ],
+          "text_match": 129377
+        },
+        {
+          "document": {
+            "company_name": "String Value",
+            "country": "String Value",
+            "num_employees": [
+              53,
+              12
+            ]
+          },
+          "highlights": [
+            {
+              "field": "company_name",
+              "matched_tokens": [
+                "String"
+              ],
+              "snippet": "\u003cmark\u003eString\u003c/mark\u003e Value",
+              "value": "\u003cmark\u003eString\u003c/mark\u003e Value"
+            },
+            {
+              "field": "country",
+              "matched_tokens": [
+                "String"
+              ],
+              "snippet": "\u003cmark\u003eString\u003c/mark\u003e Value",
+              "value": "\u003cmark\u003eString\u003c/mark\u003e Value"
+            }
+          ],
+          "text_match": 129377
+        },
+        {
+          "document": {
+            "company_name": "String Value",
+            "country": "String Value",
+            "num_employees": [
+              10,
+              13
+            ]
+          },
+          "highlights": [
+            {
+              "field": "company_name",
+              "matched_tokens": [
+                "String"
+              ],
+              "snippet": "\u003cmark\u003eString\u003c/mark\u003e Value",
+              "value": "\u003cmark\u003eString\u003c/mark\u003e Value"
+            },
+            {
+              "field": "country",
+              "matched_tokens": [
+                "String"
+              ],
+              "snippet": "\u003cmark\u003eString\u003c/mark\u003e Value",
+              "value": "\u003cmark\u003eString\u003c/mark\u003e Value"
+            }
+          ],
+          "text_match": 129377
+        }
+      ],
+      "out_of": 4,
+      "page": 1,
+      "request_params": {
+        "collection_name": "companies",
+        "per_page": 5,
+        "q": "str"
+      },
+      "search_time_ms": 0
+    }
+  ]
+}

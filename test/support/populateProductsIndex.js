@@ -1,6 +1,3 @@
-// This script can also be executed from the command line directly:
-// $ node populateTypesenseIndex.js
-
 const Typesense = require("typesense");
 
 module.exports = (async () => {
@@ -10,10 +7,10 @@ module.exports = (async () => {
       {
         host: "localhost",
         port: "8108",
-        protocol: "http"
-      }
+        protocol: "http",
+      },
     ],
-    apiKey: "xyz"
+    apiKey: "xyz",
   });
 
   const schema = {
@@ -23,73 +20,73 @@ module.exports = (async () => {
       {
         name: "name",
         type: "string",
-        facet: false
+        facet: false,
       },
       {
         name: "description",
         type: "string",
-        facet: false
+        facet: false,
       },
       {
         name: "brand",
         type: "string",
-        facet: true
+        facet: true,
       },
       {
         name: "categories",
         type: "string[]",
-        facet: true
+        facet: true,
       },
       {
         name: "categories.lvl0",
         type: "string[]",
-        facet: true
+        facet: true,
       },
       {
         name: "categories.lvl1",
         type: "string[]",
         facet: true,
-        optional: true
+        optional: true,
       },
       {
         name: "categories.lvl2",
         type: "string[]",
         facet: true,
-        optional: true
+        optional: true,
       },
       {
         name: "categories.lvl3",
         type: "string[]",
         facet: true,
-        optional: true
+        optional: true,
       },
       {
         name: "price",
         type: "float",
-        facet: true
+        facet: true,
       },
       {
         name: "image",
         type: "string",
-        facet: false
+        facet: false,
       },
       {
         name: "popularity",
         type: "int32",
-        facet: false
+        facet: false,
       },
       {
         name: "free_shipping",
         type: "bool",
-        facet: true
+        facet: true,
       },
       {
         name: "rating",
         type: "int32",
-        facet: true
-      }
+        facet: true,
+      },
     ],
-    default_sorting_field: "popularity"
+    default_sorting_field: "popularity",
   };
 
   console.log("Populating index in Typesense");
@@ -101,10 +98,7 @@ module.exports = (async () => {
     const collection = await typesense.collections("products").retrieve();
     console.log("Found existing schema");
     // console.log(JSON.stringify(collection, null, 2));
-    if (
-      collection.num_documents !== products.length ||
-      process.env.FORCE_REINDEX === "true"
-    ) {
+    if (collection.num_documents !== products.length || process.env.FORCE_REINDEX === "true") {
       console.log("Deleting existing schema");
       reindexNeeded = true;
       await typesense.collections("products").delete();
@@ -130,29 +124,22 @@ module.exports = (async () => {
   console.log("Adding records: ");
 
   // Bulk Import
-  products.forEach(product => {
+  products.forEach((product) => {
     product.free_shipping = product.name.length % 2 === 1; // We need this to be deterministic for tests
     product.rating = (product.description.length % 5) + 1; // We need this to be deterministic for tests
     product.categories.forEach((category, index) => {
-      product[`categories.lvl${index}`] = [
-        product.categories.slice(0, index + 1).join(" > ")
-      ];
+      product[`categories.lvl${index}`] = [product.categories.slice(0, index + 1).join(" > ")];
     });
   });
 
   try {
-    const returnData = await typesense
-      .collections("products")
-      .documents()
-      .import(products);
+    const returnData = await typesense.collections("products").documents().import(products);
     console.log(returnData);
     console.log("Done indexing.");
 
-    const failedItems = returnData.filter(item => item.success === false);
+    const failedItems = returnData.filter((item) => item.success === false);
     if (failedItems.length > 0) {
-      throw new Error(
-        `Error indexing items ${JSON.stringify(failedItems, null, 2)}`
-      );
+      throw new Error(`Error indexing items ${JSON.stringify(failedItems, null, 2)}`);
     }
 
     return returnData;

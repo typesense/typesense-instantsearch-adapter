@@ -5,14 +5,15 @@ export class SearchRequestAdapter {
     return new RegExp("^(.+?)(?=(/sort/(.*))|$)");
   }
 
-  constructor(
-    instantsearchRequests,
-    typesenseClient,
-    additionalSearchParameters
-  ) {
+  static get FILER_STRING_MATCHING_REGEX() {
+    return new RegExp("(.*)((?!:).):(?!:)(.*)");
+  }
+
+  constructor(instantsearchRequests, typesenseClient, additionalSearchParameters, collectionSpecificSearchParameters) {
     this.instantsearchRequests = instantsearchRequests;
     this.typesenseClient = typesenseClient;
     this.additionalSearchParameters = additionalSearchParameters;
+    this.collectionSpecificSearchParameters = collectionSpecificSearchParameters;
   }
 
   _adaptFacetFilters(facetFilters) {
@@ -22,40 +23,82 @@ export class SearchRequestAdapter {
       return adaptedResult;
     }
 
-    const intermediateFacetFilters = {};
+    /**
+     * Need to transform:
+     *  facetFilters = [["field1:value1", "field1:value2"], "field2:value3", "field2:value4"]
+     *
+     * Into this:
+     *  field1:=[value1,value2] && field2:=value3 && field2:=value4
+     *
+     * Steps:
+     *  - For each item in facetFilters
+     *    - If item is array
+     *      - OR values together.
+     *      - Warn if field names are not the same
+     *    - If item is string, convert to facet:=value format
+     *  - Join strings by &&
+     */
 
-    // Need to transform:
-    // faceFilters = [["facet1:value1", "facet1:value2"], "facet2:value3"]]
-    //
-    // Into this:
-    // intermediateFacetFilters = {
-    //     "facet1": ["value1", "value2"],
-    //     "facet2": ["value1", "value2"]
-    // }
+    const transformedTypesenseFilters = facetFilters.map((item) => {
+      if (Array.isArray(item)) {
+        // Need to transform:
+        // facetFilters = ["field1:value1", "field1:value2", "facetN:valueN"]
+        //
+        // Into this:
+        // intermediateFacetFilters = {
+        //     "field1": ["value1", "value2"],
+        //     "fieldN": ["valueN"]
+        // }
 
-    facetFilters.flat().forEach(facetFilter => {
-      const facetFilterMatches = facetFilter.match(
-        new RegExp("(.*)((?!:).):(?!:)(.*)")
-      );
-      const facetName = `${facetFilterMatches[1]}${facetFilterMatches[2]}`;
-      const facetValue = `${facetFilterMatches[3]}`;
-      intermediateFacetFilters[facetName] =
-        intermediateFacetFilters[facetName] || [];
-      intermediateFacetFilters[facetName].push(facetValue);
+        const intermediateFacetFilters = {};
+        item.forEach((facetFilter) => {
+          const facetFilterMatches = facetFilter.match(this.constructor.FILER_STRING_MATCHING_REGEX);
+          const fieldName = `${facetFilterMatches[1]}${facetFilterMatches[2]}`;
+          const fieldValue = `${facetFilterMatches[3]}`;
+          intermediateFacetFilters[fieldName] = intermediateFacetFilters[fieldName] || [];
+          intermediateFacetFilters[fieldName].push(fieldValue);
+        });
+
+        if (Object.keys(intermediateFacetFilters).length > 1) {
+          console.error(
+            `Typesense does not support cross-field ORs at the moment. The adapter could not OR values between these fields: ${Object.keys(
+              intermediateFacetFilters
+            ).join(",")}`
+          );
+        }
+
+        // Pick first value from intermediateFacetFilters
+        const fieldName = Object.keys(intermediateFacetFilters)[0];
+        const fieldValues = intermediateFacetFilters[fieldName];
+
+        // Need to transform:
+        // intermediateFacetFilters = {
+        //     "field1": ["value1", "value2"],
+        // }
+        //
+        // Into this:
+        // field1:=[value1,value2]
+
+        const typesenseFilterString = `${fieldName}:=[${fieldValues.join(",")}]`;
+
+        return typesenseFilterString;
+      } else {
+        // Need to transform:
+        //  fieldName:fieldValue
+        // Into
+        //  fieldName:=fieldValue
+
+        const facetFilterMatches = item.match(this.constructor.FILER_STRING_MATCHING_REGEX);
+        const fieldName = `${facetFilterMatches[1]}${facetFilterMatches[2]}`;
+        const fieldValue = `${facetFilterMatches[3]}`;
+        const typesenseFilterString = `${fieldName}:=[${fieldValue}]`;
+
+        return typesenseFilterString;
+      }
     });
 
-    // Need to transform this:
-    // intermediateFacetFilters = {
-    //     "facet1": ["value1", "value2"],
-    //     "facet2": ["value1"]
-    // }
-    //
-    // Into this:
-    // facet1:=[value1,value2] && facet2:=value1
-
-    adaptedResult = Object.entries(intermediateFacetFilters)
-      .map(([facet, values]) => `${facet}:=[${values.join(",")}]`)
-      .join(" && ");
+    adaptedResult = transformedTypesenseFilters.join(" && ");
+    // console.log(`${JSON.stringify(facetFilters)} => ${adaptedResult}`);
 
     return adaptedResult;
   }
@@ -85,10 +128,8 @@ export class SearchRequestAdapter {
     //   }
     // };
     const filtersHash = {};
-    numericFilters.forEach(filter => {
-      const [, field, operator, value] = filter.match(
-        new RegExp("(.*)(<=|>=|>|<|:)(.*)")
-      );
+    numericFilters.forEach((filter) => {
+      const [, field, operator, value] = filter.match(new RegExp("(.*)(<=|>=|>|<|:)(.*)"));
       filtersHash[field] = filtersHash[field] || {};
       filtersHash[field][operator] = value;
     });
@@ -96,22 +137,15 @@ export class SearchRequestAdapter {
     // Transform that to:
     //  "field1:=[634..289] && field2:<=5 && field3:>=3"
     const adaptedFilters = [];
-    Object.keys(filtersHash).forEach(field => {
-      if (
-        filtersHash[field]["<="] != null &&
-        filtersHash[field][">="] != null
-      ) {
-        adaptedFilters.push(
-          `${field}:=[${filtersHash[field][">="]}..${filtersHash[field]["<="]}]`
-        );
+    Object.keys(filtersHash).forEach((field) => {
+      if (filtersHash[field]["<="] != null && filtersHash[field][">="] != null) {
+        adaptedFilters.push(`${field}:=[${filtersHash[field][">="]}..${filtersHash[field]["<="]}]`);
       } else if (filtersHash[field]["<="] != null) {
         adaptedFilters.push(`${field}:<=${filtersHash[field]["<="]}`);
       } else if (filtersHash[field][">="] != null) {
         adaptedFilters.push(`${field}:>=${filtersHash[field][">="]}`);
       } else {
-        console.warn(
-          `Unsupported operator found ${JSON.stringify(filtersHash[field])}`
-        );
+        console.warn(`Unsupported operator found ${JSON.stringify(filtersHash[field])}`);
       }
     });
 
@@ -125,7 +159,7 @@ export class SearchRequestAdapter {
     adaptedFilters.push(this._adaptFacetFilters(facetFilters));
     adaptedFilters.push(this._adaptNumericFilters(numericFilters));
 
-    return adaptedFilters.filter(filter => filter !== "").join(" && ");
+    return adaptedFilters.filter((filter) => filter !== "").join(" && ");
   }
 
   _adaptIndexName(indexName) {
@@ -139,29 +173,33 @@ export class SearchRequestAdapter {
   _buildSearchParameters(instantsearchRequest) {
     const params = instantsearchRequest.params;
     const indexName = instantsearchRequest.indexName;
+    const adaptedCollectionName = this._adaptIndexName(indexName);
 
+    // Convert all common parameters to snake case
     const snakeCasedAdditionalSearchParameters = {};
-    for (const [key, value] of Object.entries(
-      this.additionalSearchParameters
-    )) {
+    for (const [key, value] of Object.entries(this.additionalSearchParameters)) {
       snakeCasedAdditionalSearchParameters[this._camelToSnakeCase(key)] = value;
     }
 
-    const typesenseSearchParams = Object.assign(
-      {},
-      snakeCasedAdditionalSearchParameters
-    );
+    // Override, collection specific parameters
+    if (this.collectionSpecificSearchParameters[adaptedCollectionName]) {
+      for (const [key, value] of Object.entries(this.collectionSpecificSearchParameters[adaptedCollectionName])) {
+        snakeCasedAdditionalSearchParameters[this._camelToSnakeCase(key)] = value;
+      }
+    }
+
+    const typesenseSearchParams = Object.assign({}, snakeCasedAdditionalSearchParameters);
 
     const adaptedSortBy = this._adaptSortBy(indexName);
 
     Object.assign(typesenseSearchParams, {
-      collection: this._adaptIndexName(instantsearchRequest.indexName),
+      collection: adaptedCollectionName,
       q: params.query === "" || params.query === undefined ? "*" : params.query,
       facet_by: [params.facets].flat().join(","),
       filter_by: this._adaptFilters(params.facetFilters, params.numericFilters),
       sort_by: adaptedSortBy || this.additionalSearchParameters.sortBy,
       max_facet_values: params.maxValuesPerFacet,
-      page: (params.page || 0) + 1
+      page: (params.page || 0) + 1,
     });
 
     if (params.hitsPerPage) {
@@ -174,7 +212,7 @@ export class SearchRequestAdapter {
     }
 
     // console.log(params);
-    // console.log(sanitizedParams);
+    // console.log(typesenseSearchParams);
 
     return typesenseSearchParams;
   }
@@ -187,7 +225,7 @@ export class SearchRequestAdapter {
   }
 
   async request() {
-    const searches = this.instantsearchRequests.map(instantsearchRequest =>
+    const searches = this.instantsearchRequests.map((instantsearchRequest) =>
       this._buildSearchParameters(instantsearchRequest)
     );
 
