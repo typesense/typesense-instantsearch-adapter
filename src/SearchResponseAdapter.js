@@ -32,7 +32,7 @@ export class SearchResponseAdapter {
       adaptedHit._highlightResult = this._adaptHighlightResult(typesenseHit, "value");
 
       // Add text_match score to result, if a field with that name doesn't already exist
-      if(!adaptedHit.text_match) {
+      if (!adaptedHit.text_match) {
         adaptedHit.text_match = typesenseHit.text_match;
       }
 
