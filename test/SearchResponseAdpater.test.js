@@ -2,7 +2,7 @@ import { SearchResponseAdapter } from "../src/SearchResponseAdapter";
 
 describe("SearchResponseAdapter", () => {
   describe("._adaptHighlightResult", () => {
-    it("adapts the given hit's highlight", (done) => {
+    it("adapts the given hit's highlight", () => {
       const typesenseResponse = require("./support/data/typesense-search-response.json");
       const subject = new SearchResponseAdapter(typesenseResponse, {
         params: {
@@ -98,7 +98,6 @@ describe("SearchResponseAdapter", () => {
           matchedWords: [],
         },
       });
-      done();
     });
   });
 });
