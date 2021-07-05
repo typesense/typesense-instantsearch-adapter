@@ -67,7 +67,7 @@
     "fs-extra": "^10.0.0"
   },
   "dependencies": {
-    "typesense": "^0.14.0-0"
+    "typesense": "^0.14.0-1"
   },
   "peerDependencies": {
     "@babel/runtime": "^7.13.17"
