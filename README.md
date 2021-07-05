@@ -324,6 +324,7 @@ Essentially, any parameters set in `collectionSpecificSearchParameters` will be 
 
 | Typesense Server | typesense-instantsearch-adapter | instantsearch.js | react-instantsearch | vue-instantsearch | angular-instantsearch |
 | ---------------- | ------------------------------- | ---------------- | ------------------- | ----------------- | --------------------- |
+| \>= v0.21        | \>= v2.0.0                      | \>= 4.2.0        | \>= 6.0.0           | \>= 2.2.1         | \>= 3.0.0             |
 | \>= v0.19        | \>= v1.0.0                      | \>= 4.2.0        | \>= 6.0.0           | \>= 2.2.1         | \>= 3.0.0             |
 | \>= v0.15        | \>= v0.3.0                      | \>= 4.2.0        | \>= 6.0.0           | \>= 2.2.1         | \>= 3.0.0             |
 | \>= v0.14        | \>= v0.2.0                      | \>= 4.2.0        | \>= 6.0.0           | \>= 2.2.1         | \>= 3.0.0             |
