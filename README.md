@@ -11,6 +11,7 @@ Here is an example of UI you can build with this adapater: [songs-search.typesen
 
 - [Background](#background)
 - [Quick Start](#quick-start)
+  - [Starter App](#starter-app)
 - [Installation](#installation)
 - [Usage](#usage)
   - [With instantsearch.js](#with-instantsearchjs)
@@ -33,9 +34,11 @@ Once you go through the guide, follow the instructions below to plug the Typesen
 
 ## Quick Start
 
-Here's a guide on building a quick search interface with Typesense and InstantSearch.js: [https://typesense.org/docs/0.18.0/guide/#search-ui](https://typesense.org/docs/0.18.0/guide/#search-ui)
+Here's a guide on building a quick search interface with Typesense and InstantSearch.js: [https://typesense.org/docs/0.20.0/guide/search-ui-components.html](https://typesense.org/docs/0.20.0/guide/search-ui-components.html)
 
-Here's a demo app that showcases the adapter in action: [https://github.com/typesense/typesense-instantsearch-demo](https://github.com/typesense/typesense-instantsearch-demo)
+### Starter App
+
+Here's a demo starter app that shows you how to use the adapter: [https://github.com/typesense/typesense-instantsearch-demo](https://github.com/typesense/typesense-instantsearch-demo)
 
 ## Installation
 

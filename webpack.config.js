@@ -8,7 +8,7 @@ module.exports = {
     path: path.resolve(__dirname, "./dist"),
     filename: "typesense-instantsearch-adapter.min.js",
     library: {
-      name: "TypesenseInstantsearchAdapter",
+      name: "TypesenseInstantSearchAdapter",
       type: "umd",
       export: "default",
     },

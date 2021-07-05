@@ -99,5 +99,37 @@ describe("SearchResponseAdapter", () => {
         },
       });
     });
+
+    describe("when the result has an int array", () => {
+      it("adapts the given hit's highlight", (done) => {
+        const typesenseResponse = require("./support/data/typesense-search-response-with-int-arrays.json");
+        const subject = new SearchResponseAdapter(typesenseResponse, {
+          params: {
+            highlightPreTag: "<mark>",
+            highlightPostTag: "</mark>",
+          },
+        });
+        const typesenseHit = typesenseResponse.results[0].hits[0];
+
+        const result = subject._adaptHighlightResult(typesenseHit, "value");
+        expect(result).toEqual({
+          company_name: {
+            value: "<mark>String</mark> Value",
+            matchLevel: "full",
+            matchedWords: ["String"],
+          },
+          country: {
+            value: "<mark>String</mark> Value",
+            matchLevel: "full",
+            matchedWords: ["String"],
+          },
+          num_employees: [
+            { value: "0", matchLevel: "none", matchedWords: [] },
+            { value: "1", matchLevel: "none", matchedWords: [] },
+          ],
+        });
+        done();
+      });
+    });
   });
 });

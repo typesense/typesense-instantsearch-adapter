@@ -32,6 +32,11 @@ export class SearchResponseAdapter {
       adaptedHit._snippetResult = this._adaptHighlightResult(typesenseHit, "snippet");
       adaptedHit._highlightResult = this._adaptHighlightResult(typesenseHit, "value");
 
+      // Add text_match score to result, if a field with that name doesn't already exist
+      if (!adaptedHit.text_match) {
+        adaptedHit.text_match = typesenseHit.text_match;
+      }
+
       const geoLocationValue = adaptedHit[this.configuration.geoLocationField];
       if (geoLocationValue) {
         adaptedHit._geoloc = {
@@ -39,6 +44,7 @@ export class SearchResponseAdapter {
           lng: geoLocationValue[1],
         };
       }
+
       return adaptedHit;
     });
     return adaptedResult;
@@ -93,7 +99,7 @@ export class SearchResponseAdapter {
             });
           } else {
             result[attribute].push({
-              value: unhighlightedValueFromArray,
+              value: `${unhighlightedValueFromArray}`,
               matchLevel: "none",
               matchedWords: [],
             });

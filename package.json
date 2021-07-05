@@ -62,8 +62,8 @@
     "jest-puppeteer": "^5.0.2",
     "prettier": "^2.2.1",
     "puppeteer": "^9.0.0",
-    "webpack": "^5.35.0",
-    "webpack-cli": "^4.6.0",
+    "webpack": "^5.37.0",
+    "webpack-cli": "^4.7.0",
     "fs-extra": "^10.0.0"
   },
   "dependencies": {
