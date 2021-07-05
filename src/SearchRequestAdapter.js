@@ -80,7 +80,7 @@ export class SearchRequestAdapter {
         // Into this:
         // field1:=[value1,value2]
 
-        const typesenseFilterString = `${fieldName}:=[${fieldValues.join(",")}]`;
+        const typesenseFilterString = `${fieldName}:=[\`${fieldValues.join(",")}\`]`;
 
         return typesenseFilterString;
       } else {
@@ -92,7 +92,7 @@ export class SearchRequestAdapter {
         const facetFilterMatches = item.match(this.constructor.FILER_STRING_MATCHING_REGEX);
         const fieldName = `${facetFilterMatches[1]}${facetFilterMatches[2]}`;
         const fieldValue = `${facetFilterMatches[3]}`;
-        const typesenseFilterString = `${fieldName}:=[${fieldValue}]`;
+        const typesenseFilterString = `${fieldName}:=[\`${fieldValue}\`]`;
 
         return typesenseFilterString;
       }
