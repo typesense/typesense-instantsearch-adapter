@@ -155,7 +155,7 @@ export class SearchRequestAdapter {
   }
 
   _adaptGeoFilter(boundingBox) {
-    const [x1, y1, x2, y2] = boundingBox.split(',')
+    const [x1, y1, x2, y2] = boundingBox.split(",");
     return `${this.configuration.geoLocationField}:(${x1}, ${y1}, ${x1}, ${y2}, ${x2}, ${y2}, ${x2}, ${y1})`;
   }
 

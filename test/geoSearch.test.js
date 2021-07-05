@@ -2,7 +2,8 @@ describe("Geo Search", () => {
   beforeAll(require("./support/beforeAll"), 60 * 1000);
 
   beforeEach(async () => {
-    return page.goto("http://localhost:3000/geosearch.html");
+    await page.goto("http://localhost:3000/geosearch.html");
+    return await new Promise((r) => setTimeout(r, 5000));
   }, 30 * 1000);
 
   describe("when the page loads", () => {

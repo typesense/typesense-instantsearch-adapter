@@ -10,10 +10,10 @@ module.exports = (async () => {
       {
         host: "localhost",
         port: "8108",
-        protocol: "http"
-      }
+        protocol: "http",
+      },
     ],
-    apiKey: "xyz"
+    apiKey: "xyz",
   });
 
   const schema = {
@@ -21,32 +21,32 @@ module.exports = (async () => {
     fields: [
       {
         name: "name",
-        type: "string"
+        type: "string",
       },
       {
         name: "city",
         type: "string",
-        facet: true
+        facet: true,
       },
       {
         name: "country",
         type: "string",
-        facet: true
+        facet: true,
       },
       {
         name: "iata_code",
-        type: "string"
+        type: "string",
       },
       {
         name: "lat_lng",
-        type: "geopoint"
+        type: "geopoint",
       },
       {
         name: "links_count",
-        type: "int32"
-      }
+        type: "int32",
+      },
     ],
-    default_sorting_field: "links_count"
+    default_sorting_field: "links_count",
   };
 
   console.log("Populating airports index in Typesense");
@@ -58,10 +58,7 @@ module.exports = (async () => {
     const collection = await typesense.collections("airports").retrieve();
     console.log("Found existing schema");
     // console.log(JSON.stringify(collection, null, 2));
-    if (
-      collection.num_documents !== airports.length ||
-      process.env.FORCE_REINDEX === "true"
-    ) {
+    if (collection.num_documents !== airports.length || process.env.FORCE_REINDEX === "true") {
       console.log("Deleting existing schema");
       reindexNeeded = true;
       await typesense.collections("airports").delete();
@@ -87,24 +84,19 @@ module.exports = (async () => {
   console.log("Adding records: ");
 
   // Bulk Import
-  airports.forEach(airport => {
+  airports.forEach((airport) => {
     airport.lat_lng = [airport._geoloc.lat, airport._geoloc.lng];
     delete airport._geoloc;
   });
 
   try {
-    const returnData = await typesense
-      .collections("airports")
-      .documents()
-      .import(airports);
+    const returnData = await typesense.collections("airports").documents().import(airports);
     console.log(returnData);
     console.log("Done indexing.");
 
-    const failedItems = returnData.filter(item => item.success === false);
+    const failedItems = returnData.filter((item) => item.success === false);
     if (failedItems.length > 0) {
-      throw new Error(
-        `Error indexing items ${JSON.stringify(failedItems, null, 2)}`
-      );
+      throw new Error(`Error indexing items ${JSON.stringify(failedItems, null, 2)}`);
     }
 
     return returnData;

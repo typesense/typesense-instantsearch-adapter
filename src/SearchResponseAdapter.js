@@ -36,7 +36,7 @@ export class SearchResponseAdapter {
       if (geoLocationValue) {
         adaptedHit._geoloc = {
           lat: geoLocationValue[0],
-          lng: geoLocationValue[1]
+          lng: geoLocationValue[1],
         };
       }
       return adaptedHit;
