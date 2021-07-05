@@ -7,7 +7,7 @@ describe("Refinement List Operators", () => {
 
   describe("when searching for a term", () => {
     beforeEach(async () => {
-      return expect(page).toFill("#searchbox input[type=search]", "egg");
+      return await expect(page).toFill("#searchbox input[type=search]", "egg");
     });
 
     describe("applying AND filters", () => {
@@ -17,16 +17,13 @@ describe("Refinement List Operators", () => {
         });
         await expect(page).toClick("#ingredients-list input[type=checkbox][value=butter]");
         await expect(page).toMatchElement("#stats", {
-          text: "14 results found",
+          text: "13 results found",
         });
         await expect(page).toClick("#ingredients-list input[type=checkbox][value=fettucini]");
         await expect(page).toMatchElement("#stats", {
-          text: "2 results found",
+          text: "1 result found",
         });
 
-        await expect(page).toMatchElement("#hits", {
-          text: "Chicken Fettucini",
-        });
         return expect(page).toMatchElement("#hits", {
           text: "Fettucini With Lemon",
         });

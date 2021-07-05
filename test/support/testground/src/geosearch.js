@@ -1,5 +1,5 @@
 import instantsearch from "instantsearch.js";
-import { searchBox, pagination, refinementList, geoSearch, stats, sortBy } from "instantsearch.js/es/widgets";
+import { searchBox, pagination, geoSearch, stats } from "instantsearch.js/es/widgets";
 
 // ======= Uncomment to use typesense-instantsearch-adapter
 import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";

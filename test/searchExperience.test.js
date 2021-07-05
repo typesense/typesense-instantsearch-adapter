@@ -39,10 +39,10 @@ describe("Search Experience", () => {
           });
           await expect(page).toClick("#brand-list input[type=checkbox][value=Samsung]");
           await expect(page).toMatchElement("#stats", {
-            text: "25 results found",
+            text: "37 results found",
           });
-          await expect(page).toMatchElement('#price-range-input form input[type=number][placeholder="14"]');
-          await expect(page).toMatchElement('#price-range-input form input[type=number][placeholder="770"]');
+          await expect(page).toMatchElement('#price-range-input form input[type=number][placeholder="12"]');
+          await expect(page).toMatchElement('#price-range-input form input[type=number][placeholder="500"]');
           await expect(page).toMatchElement("#hits", {
             text: "Fast Charge Wireless Charger",
           });
@@ -56,7 +56,7 @@ describe("Search Experience", () => {
           // Pagination
           await page.waitForSelector("#pagination a.ais-Pagination-link");
           const length = (await page.$$("#pagination a.ais-Pagination-link")).length;
-          expect(length).toEqual(4 + 2);
+          expect(length).toEqual(5 + 2);
         });
       });
 
@@ -82,7 +82,7 @@ describe("Search Experience", () => {
             text: "Car & Travel Accessories",
           });
           await expect(page).toMatchElement("#stats", {
-            text: "13 results found",
+            text: "19 results found",
           });
           await expect(page).toMatchElement("#hits", {
             text: "Samsung - Adaptive Fast Charging Vehicle Charger",
@@ -110,7 +110,7 @@ describe("Search Experience", () => {
             text: "Car & Travel Accessories",
           });
           await expect(page).toMatchElement("#stats", {
-            text: "13 results found",
+            text: "19 results found",
           });
 
           // clearRefinements
@@ -169,17 +169,17 @@ describe("Search Experience", () => {
             text: "Between 500$ - 1000$",
           });
           await expect(page).toMatchElement("#stats", {
-            text: "7 results found",
+            text: "18 results found",
           });
           await expect(page).toMatchElement("#hits", {
-            text: "Motorola - Moto Z 4G LTE",
+            text: "Motorola - Moto Z Play 4G",
           });
           await expect(page).toMatchElement("#infinite-hits", {
-            text: "Sony - Xperia™ XZ 4G LTE with 32GB Memory Cell Phone",
+            text: "Sony - XPERIA XA Ultra",
           });
           await page.waitForSelector("#pagination a.ais-Pagination-link");
           const length = (await page.$$("#pagination a.ais-Pagination-link")).length;
-          expect(length).toEqual(1);
+          expect(length).toEqual(5);
         });
       });
       describe("using the rangeInput", () => {
@@ -188,7 +188,7 @@ describe("Search Experience", () => {
           await expect(page).toFill("#price-range-input form input[type=number].ais-RangeInput-input--max", "100");
           await expect(page).toClick("#price-range-input button");
           await expect(page).toMatchElement("#stats", {
-            text: "32 results found",
+            text: "33 results found",
           });
           await expect(page).toMatchElement("#hits", {
             text: "mophie - Powerstation 20,000 mAh Portable Charger",
@@ -204,7 +204,7 @@ describe("Search Experience", () => {
           await expect(page).toMatchElement("#rating-menu a[aria-label='4 & up'] span");
           await expect(page).toClick("#rating-menu a[aria-label='4 & up'] span");
           await expect(page).toMatchElement("#stats", {
-            text: "113 results found",
+            text: "114 results found",
           });
           await expect(page).toMatchElement("#hits", {
             text: "Insignia™ - Vehicle Charger - Sea",

@@ -2,7 +2,7 @@ module.exports = {
   launch: {
     dumpio: true,
     // headless: process.env.HEADLESS === "true" || process.env.CI === "true",
-    headless: true,
+    headless: false,
     slowMo: 10,
     defaultViewport: null,
     // devtools: true

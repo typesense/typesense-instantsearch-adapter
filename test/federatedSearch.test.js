@@ -18,7 +18,7 @@ describe("Federated Search", () => {
         text: "Charger",
       });
       await expect(page).toMatchElement("#brand-stats", {
-        text: "3 results found",
+        text: "2 results found",
       });
       return await expect(page).toMatchElement("#brand-hits .ais-Hits-item:nth-of-type(1) .hit-name", {
         text: "ChargeHub",
