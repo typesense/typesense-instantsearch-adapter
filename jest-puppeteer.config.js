@@ -10,14 +10,18 @@ module.exports = {
   server: [
     {
       command: "npm run testground",
+      host: "0.0.0.0",
       port: 3000,
       launchTimeout: 120 * 1000,
+      usedPortAction: "ignore",
       debug: false,
     },
     {
       command: "npm run typesenseServer",
+      host: "0.0.0.0",
       port: 8108,
       launchTimeout: 60 * 1000,
+      usedPortAction: "ignore",
       debug: false,
     },
   ],

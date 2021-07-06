@@ -17,7 +17,7 @@ describe("Refinement List Operators", () => {
         });
         await expect(page).toClick("#ingredients-list input[type=checkbox][value=butter]");
         await expect(page).toMatchElement("#stats", {
-          text: "13 results found",
+          text: "12 results found",
         });
         await expect(page).toClick("#ingredients-list input[type=checkbox][value=fettucini]");
         await expect(page).toMatchElement("#stats", {

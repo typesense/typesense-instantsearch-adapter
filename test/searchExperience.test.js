@@ -39,10 +39,10 @@ describe("Search Experience", () => {
           });
           await expect(page).toClick("#brand-list input[type=checkbox][value=Samsung]");
           await expect(page).toMatchElement("#stats", {
-            text: "37 results found",
+            text: "28 results found",
           });
-          await expect(page).toMatchElement('#price-range-input form input[type=number][placeholder="12"]');
-          await expect(page).toMatchElement('#price-range-input form input[type=number][placeholder="500"]');
+          await expect(page).toMatchElement('#price-range-input form input[type=number][placeholder="14"]');
+          await expect(page).toMatchElement('#price-range-input form input[type=number][placeholder="770"]');
           await expect(page).toMatchElement("#hits", {
             text: "Fast Charge Wireless Charger",
           });
@@ -56,7 +56,7 @@ describe("Search Experience", () => {
           // Pagination
           await page.waitForSelector("#pagination a.ais-Pagination-link");
           const length = (await page.$$("#pagination a.ais-Pagination-link")).length;
-          expect(length).toEqual(5 + 2);
+          expect(length).toEqual(4 + 2);
         });
       });
 
@@ -82,7 +82,7 @@ describe("Search Experience", () => {
             text: "Car & Travel Accessories",
           });
           await expect(page).toMatchElement("#stats", {
-            text: "19 results found",
+            text: "17 results found",
           });
           await expect(page).toMatchElement("#hits", {
             text: "Samsung - Adaptive Fast Charging Vehicle Charger",
@@ -110,7 +110,7 @@ describe("Search Experience", () => {
             text: "Car & Travel Accessories",
           });
           await expect(page).toMatchElement("#stats", {
-            text: "19 results found",
+            text: "17 results found",
           });
 
           // clearRefinements
@@ -169,7 +169,7 @@ describe("Search Experience", () => {
             text: "Between 500$ - 1000$",
           });
           await expect(page).toMatchElement("#stats", {
-            text: "18 results found",
+            text: "17 results found",
           });
           await expect(page).toMatchElement("#hits", {
             text: "Motorola - Moto Z Play 4G",
@@ -204,7 +204,7 @@ describe("Search Experience", () => {
           await expect(page).toMatchElement("#rating-menu a[aria-label='4 & up'] span");
           await expect(page).toClick("#rating-menu a[aria-label='4 & up'] span");
           await expect(page).toMatchElement("#stats", {
-            text: "114 results found",
+            text: "113 results found",
           });
           await expect(page).toMatchElement("#hits", {
             text: "Insignia™ - Vehicle Charger - Sea",

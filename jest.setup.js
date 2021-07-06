@@ -6,7 +6,7 @@ global.it = async function (name, func) {
       await func();
     } catch (e) {
       await fs.ensureDir("screenshots");
-      await page.screenshot({ path: `screenshots/${name}.png` });
+      await page.screenshot({ path: `screenshots/${name}-${Date.now()}.png` });
       throw e;
     }
   });

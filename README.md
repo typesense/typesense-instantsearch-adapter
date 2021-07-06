@@ -322,7 +322,7 @@ Essentially, any parameters set in `collectionSpecificSearchParameters` will be 
 
 ### `geoSearch`
 
-Algolia uses `_geoloc` by default for the name of the field that stores the lat long values for a record. 
+Algolia uses `_geoloc` by default for the name of the field that stores the lat long values for a record.
 In Typesense, you can name the geo location field anything. If you use a name other than `_geoloc`, you need to specify it when initializing the adapter like below, so InstantSearch can access it:
 
 ```js
@@ -340,7 +340,6 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   geoLocationField: "lat_lng_field", // <<======
   additionalSearchParameters,
 });
-
 ```
 
 ## Compatibility
