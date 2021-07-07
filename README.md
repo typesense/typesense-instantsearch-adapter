@@ -55,7 +55,7 @@ $ yarn add typesense-instantsearch-adapter
 or, you can also directly include the adapter via a script tag in your HTML:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/typesense-instantsearch-adapter@latest/dist/typesense-instantsearch-adapter.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/typesense-instantsearch-adapter@1.2.2/dist/typesense-instantsearch-adapter.min.js"></script>
 ```
 
 Since this is an adapter, it **will not install** the Instantsearch library automatically for you. You need to install one of the following in your application directly:
