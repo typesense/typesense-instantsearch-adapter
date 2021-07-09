@@ -1,7 +1,7 @@
 {
   "name": "typesense-instantsearch-adapter",
   "version": "2.0.0-0",
-  "description": "Adapter to use InstantSearch.js with Typesense Search",
+  "description": "Adapter to use InstantSearch UI widgets with Typesense Search",
   "homepage": "https://github.com/typesense/typesense-instantsearch-adapter",
   "main": "lib/TypesenseInstantsearchAdapter.js",
   "files": [
@@ -15,10 +15,16 @@
     "client",
     "search",
     "instantsearch.js",
+    "vue-instantsearch",
+    "react-instantsearch",
+    "angular-instantsearch",
     "instant search",
     "algolia",
     "adapter",
-    "search client"
+    "search client",
+    "search ui",
+    "search ui widgets",
+    "instantsearch"
   ],
   "scripts": {
     "pretest": "npm run lint",
