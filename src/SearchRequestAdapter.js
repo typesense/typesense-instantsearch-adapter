@@ -207,7 +207,7 @@ export class SearchRequestAdapter {
       q: params.query === "" || params.query === undefined ? "*" : params.query,
       facet_by: [params.facets].flat().join(","),
       filter_by: this._adaptFilters(params.facetFilters, params.numericFilters, params.insideBoundingBox),
-      sort_by: adaptedSortBy || this.additionalSearchParameters.sortBy,
+      sort_by: adaptedSortBy || snakeCasedAdditionalSearchParameters.sort_by,
       max_facet_values: params.maxValuesPerFacet,
       page: (params.page || 0) + 1,
     });
