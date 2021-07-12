@@ -24,4 +24,15 @@ describe("SearchRequestAdapter", () => {
       );
     });
   });
+
+  describe("._adaptGeoFilter", () => {
+    it("adapts the given geo bounding box filter", () => {
+      const subject = new SearchRequestAdapter([], null, {
+        geoLocationField: "geoField",
+      });
+
+      const result = subject._adaptGeoFilter("x1,y1,x2,y2");
+      expect(result).toEqual(`geoField:(x1, y1, x1, y2, x2, y2, x2, y1)`);
+    });
+  });
 });
