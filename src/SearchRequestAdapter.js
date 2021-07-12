@@ -80,7 +80,7 @@ export class SearchRequestAdapter {
         // Into this:
         // field1:=[value1,value2]
 
-        const typesenseFilterString = `${fieldName}:=[\`${fieldValues.join(",")}\`]`;
+        const typesenseFilterString = `${fieldName}:=[${fieldValues.map((v) => `\`${v}\``).join(",")}]`;
 
         return typesenseFilterString;
       } else {
