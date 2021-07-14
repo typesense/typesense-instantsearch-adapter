@@ -25,6 +25,8 @@ export class Configuration {
     this.additionalSearchParameters.highlightFullFields =
       this.additionalSearchParameters.highlightFullFields || this.additionalSearchParameters.queryBy;
 
+    this.geoLocationField = options.geoLocationField || "_geoloc";
+
     this.collectionSpecificSearchParameters = options.collectionSpecificSearchParameters || {};
 
     Object.keys(this.collectionSpecificSearchParameters).forEach((collection) => {

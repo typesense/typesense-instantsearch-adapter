@@ -3,9 +3,10 @@
 import { utils } from "./support/utils";
 
 export class SearchResponseAdapter {
-  constructor(typesenseResponse, instantsearchRequest) {
+  constructor(typesenseResponse, instantsearchRequest, configuration) {
     this.typesenseResponse = typesenseResponse;
     this.instantsearchRequest = instantsearchRequest;
+    this.configuration = configuration;
   }
 
   _adaptGroupedHits(typesenseGroupedHits) {
@@ -34,6 +35,14 @@ export class SearchResponseAdapter {
       // Add text_match score to result, if a field with that name doesn't already exist
       if (!adaptedHit.text_match) {
         adaptedHit.text_match = typesenseHit.text_match;
+      }
+
+      const geoLocationValue = adaptedHit[this.configuration.geoLocationField];
+      if (geoLocationValue) {
+        adaptedHit._geoloc = {
+          lat: geoLocationValue[0],
+          lng: geoLocationValue[1],
+        };
       }
 
       return adaptedHit;

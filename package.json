@@ -1,7 +1,7 @@
 {
   "name": "typesense-instantsearch-adapter",
-  "version": "1.2.2",
-  "description": "Adapter to use InstantSearch.js with Typesense Search",
+  "version": "2.0.0-2",
+  "description": "Adapter to use InstantSearch UI widgets with Typesense Search",
   "homepage": "https://github.com/typesense/typesense-instantsearch-adapter",
   "main": "lib/TypesenseInstantsearchAdapter.js",
   "files": [
@@ -15,10 +15,16 @@
     "client",
     "search",
     "instantsearch.js",
+    "vue-instantsearch",
+    "react-instantsearch",
+    "angular-instantsearch",
     "instant search",
     "algolia",
     "adapter",
-    "search client"
+    "search client",
+    "search ui",
+    "search ui widgets",
+    "instantsearch"
   ],
   "scripts": {
     "pretest": "npm run lint",
@@ -28,13 +34,13 @@
     "build:lib": "babel src -d lib --source-maps",
     "build:dist": "webpack",
     "build": "npm run build:lib && npm run build:dist",
-    "typesenseServer": "docker run -i -p 8108:8108 -v/tmp/typesense-server-data/:/data typesense/typesense:0.19.0 --data-dir /data --api-key=xyz --listen-port 8108 --enable-cors",
+    "typesenseServer": "docker run -i -p 8108:8108 -v/tmp/typesense-server-data/:/data typesense/typesense:0.21.0.rc24 --data-dir /data --api-key=xyz --listen-port 8108 --enable-cors",
     "createServerNodesFile": "echo '172.17.0.2:8107:8108,172.17.0.3:7107:7108,172.17.0.4:9107:9108' > `pwd`/typesense-server-nodes",
     "typesenseServer:0": "docker run -i -p 8108:8108 -p 8107:8107 -v/tmp/typesense-server-data-node-1/:/data -v`pwd`/typesense-server-nodes:/typesense-server-nodes typesense/typesense:0.19.0 --data-dir /data --api-key=xyz --listen-port 8108 --peering-port 8107 --enable-cors --nodes=/typesense-server-nodes",
     "typesenseServer:1": "docker run -i -p 7108:7108 -p 7107:7107 -v/tmp/.typesense-server-data-node-2/:/data -v`pwd`/typesense-server-nodes:/typesense-server-nodes typesense/typesense:0.19.0 --data-dir /data --api-key=xyz --listen-port 7108 --peering-port 7107 --enable-cors --nodes=/typesense-server-nodes",
     "typesenseServer:2": "docker run -i -p 9108:9108 -p 9107:9107 -v/tmp/.typesense-server-data-node-3/:/data -v`pwd`/typesense-server-nodes:/typesense-server-nodes typesense/typesense:0.19.0 --data-dir /data --api-key=xyz --listen-port 9108 --peering-port 9107 --enable-cors --nodes=/typesense-server-nodes",
     "testground": "yarn link && cd test/support/testground && yarn link typesense-instantsearch-adapter && yarn install && yarn start",
-    "indexTestData": "node test/support/populateProductsIndex.js && node test/support/populateBrandsIndex.js && node test/support/populateRecipesIndex.js"
+    "indexTestData": "node test/support/populateProductsIndex.js && node test/support/populateBrandsIndex.js && node test/support/populateRecipesIndex.js && node test/support/populateAirportsTypesenseIndex.js"
   },
   "author": {
     "name": "Typesense, Inc.",
@@ -63,10 +69,11 @@
     "prettier": "^2.2.1",
     "puppeteer": "^9.0.0",
     "webpack": "^5.37.0",
-    "webpack-cli": "^4.7.0"
+    "webpack-cli": "^4.7.0",
+    "fs-extra": "^10.0.0"
   },
   "dependencies": {
-    "typesense": "^0.13.0"
+    "typesense": "^0.14.0"
   },
   "peerDependencies": {
     "@babel/runtime": "^7.13.17"

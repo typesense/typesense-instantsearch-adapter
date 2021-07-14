@@ -9,11 +9,12 @@ export class SearchRequestAdapter {
     return new RegExp("(.*)((?!:).):(?!:)(.*)");
   }
 
-  constructor(instantsearchRequests, typesenseClient, additionalSearchParameters, collectionSpecificSearchParameters) {
+  constructor(instantsearchRequests, typesenseClient, configuration) {
     this.instantsearchRequests = instantsearchRequests;
     this.typesenseClient = typesenseClient;
-    this.additionalSearchParameters = additionalSearchParameters;
-    this.collectionSpecificSearchParameters = collectionSpecificSearchParameters;
+    this.configuration = configuration;
+    this.additionalSearchParameters = configuration.additionalSearchParameters;
+    this.collectionSpecificSearchParameters = configuration.collectionSpecificSearchParameters;
   }
 
   _adaptFacetFilters(facetFilters) {
@@ -79,7 +80,7 @@ export class SearchRequestAdapter {
         // Into this:
         // field1:=[value1,value2]
 
-        const typesenseFilterString = `${fieldName}:=[${fieldValues.join(",")}]`;
+        const typesenseFilterString = `${fieldName}:=[${fieldValues.map((v) => `\`${v}\``).join(",")}]`;
 
         return typesenseFilterString;
       } else {
@@ -91,7 +92,7 @@ export class SearchRequestAdapter {
         const facetFilterMatches = item.match(this.constructor.FILER_STRING_MATCHING_REGEX);
         const fieldName = `${facetFilterMatches[1]}${facetFilterMatches[2]}`;
         const fieldValue = `${facetFilterMatches[3]}`;
-        const typesenseFilterString = `${fieldName}:=[${fieldValue}]`;
+        const typesenseFilterString = `${fieldName}:=[\`${fieldValue}\`]`;
 
         return typesenseFilterString;
       }
@@ -153,11 +154,20 @@ export class SearchRequestAdapter {
     return adaptedResult;
   }
 
-  _adaptFilters(facetFilters, numericFilters) {
+  _adaptGeoFilter(boundingBox) {
+    const [x1, y1, x2, y2] = boundingBox.split(",");
+    return `${this.configuration.geoLocationField}:(${x1}, ${y1}, ${x1}, ${y2}, ${x2}, ${y2}, ${x2}, ${y1})`;
+  }
+
+  _adaptFilters(facetFilters, numericFilters, geoFilter) {
     const adaptedFilters = [];
 
     adaptedFilters.push(this._adaptFacetFilters(facetFilters));
     adaptedFilters.push(this._adaptNumericFilters(numericFilters));
+
+    if (geoFilter != null) {
+      adaptedFilters.push(this._adaptGeoFilter(geoFilter));
+    }
 
     return adaptedFilters.filter((filter) => filter !== "").join(" && ");
   }
@@ -196,8 +206,8 @@ export class SearchRequestAdapter {
       collection: adaptedCollectionName,
       q: params.query === "" || params.query === undefined ? "*" : params.query,
       facet_by: [params.facets].flat().join(","),
-      filter_by: this._adaptFilters(params.facetFilters, params.numericFilters),
-      sort_by: adaptedSortBy || this.additionalSearchParameters.sortBy,
+      filter_by: this._adaptFilters(params.facetFilters, params.numericFilters, params.insideBoundingBox),
+      sort_by: adaptedSortBy || snakeCasedAdditionalSearchParameters.sort_by,
       max_facet_values: params.maxValuesPerFacet,
       page: (params.page || 0) + 1,
     });

@@ -1,3 +1,6 @@
+// This script can also be executed from the command line directly:
+// $ node populateTypesenseIndex.js
+
 const Typesense = require("typesense");
 
 module.exports = (async () => {
@@ -11,42 +14,54 @@ module.exports = (async () => {
       },
     ],
     apiKey: "xyz",
-    retryIntervalSeconds: 5,
   });
 
   const schema = {
-    name: "brands",
-    num_documents: 0,
+    name: "airports",
     fields: [
       {
         name: "name",
         type: "string",
       },
       {
-        name: "popularity",
+        name: "city",
+        type: "string",
+        facet: true,
+      },
+      {
+        name: "country",
+        type: "string",
+        facet: true,
+      },
+      {
+        name: "iata_code",
+        type: "string",
+      },
+      {
+        name: "lat_lng",
+        type: "geopoint",
+      },
+      {
+        name: "links_count",
         type: "int32",
       },
     ],
-    default_sorting_field: "popularity",
+    default_sorting_field: "links_count",
   };
 
-  console.log("Populating brands index in Typesense");
+  console.log("Populating airports index in Typesense");
 
-  const brands = require("./data/brands.json");
-
-  brands.forEach((brand) => {
-    brand.popularity = brand.name.length;
-  });
+  const airports = require("./data/airports.json");
 
   let reindexNeeded = false;
   try {
-    const collection = await typesense.collections("brands").retrieve();
+    const collection = await typesense.collections("airports").retrieve();
     console.log("Found existing schema");
     // console.log(JSON.stringify(collection, null, 2));
-    if (collection.num_documents !== brands.length || process.env.FORCE_REINDEX === "true") {
+    if (collection.num_documents !== airports.length || process.env.FORCE_REINDEX === "true") {
       console.log("Deleting existing schema");
       reindexNeeded = true;
-      await typesense.collections("brands").delete();
+      await typesense.collections("airports").delete();
     }
   } catch (e) {
     reindexNeeded = true;
@@ -61,15 +76,21 @@ module.exports = (async () => {
   await typesense.collections().create(schema);
 
   // const collectionRetrieved = await typesense
-  //   .collections("products")
+  //   .collections("airports")
   //   .retrieve();
   // console.log("Retrieving created schema: ");
   // console.log(JSON.stringify(collectionRetrieved, null, 2));
 
   console.log("Adding records: ");
 
+  // Bulk Import
+  airports.forEach((airport) => {
+    airport.lat_lng = [airport._geoloc.lat, airport._geoloc.lng];
+    delete airport._geoloc;
+  });
+
   try {
-    const returnData = await typesense.collections("brands").documents().import(brands);
+    const returnData = await typesense.collections("airports").documents().import(airports);
     console.log(returnData);
     console.log("Done indexing.");
 
@@ -81,5 +102,6 @@ module.exports = (async () => {
     return returnData;
   } catch (error) {
     console.log(error);
+    throw error;
   }
 })();

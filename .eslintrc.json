@@ -2,12 +2,19 @@
   "env": {
     "browser": true,
     "amd": true,
-    "node": true
+    "node": true,
+    "es6": true,
+    "jest/globals": true
   },
   "extends": ["eslint:recommended", "prettier"],
+  "plugins": ["jest"],
   "globals": {
     "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly"
+    "SharedArrayBuffer": "readonly",
+    "page": true,
+    "browser": true,
+    "context": true,
+    "jestPuppeteer": true
   },
   "parserOptions": {
     "ecmaVersion": 2018,

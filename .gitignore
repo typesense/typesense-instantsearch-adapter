@@ -1,7 +1,9 @@
 .idea
 node_modules
 .typesense-server-data*
+typesense-server-data*
 typesense-server-nodes
 yarn-error.log
 junit.xml
 .DS_Store
+screenshots

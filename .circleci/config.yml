@@ -49,6 +49,8 @@ jobs:
           path: reports/junit
       - store_artifacts:
           path: reports/junit
+      - store_artifacts:
+          path: screenshots
 
 workflows:
   build-and-test:

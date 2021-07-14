@@ -11,6 +11,7 @@ module.exports = (async () => {
       },
     ],
     apiKey: "xyz",
+    retryIntervalSeconds: 5,
   });
 
   const schema = {

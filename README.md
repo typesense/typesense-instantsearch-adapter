@@ -326,10 +326,33 @@ const searchClient = typesenseInstantsearchAdapter.searchClient;
 
 Essentially, any parameters set in `collectionSpecificSearchParameters` will be merged with the values in `additionalSearchParameters` when querying Typesense, effectively overriding values in `additionalSearchParameters` on a per-collection-basis.
 
+### `geoSearch`
+
+Algolia uses `_geoloc` by default for the name of the field that stores the lat long values for a record.
+In Typesense, you can name the geo location field anything. If you use a name other than `_geoloc`, you need to specify it when initializing the adapter like below, so InstantSearch can access it:
+
+```js
+const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
+  server: {
+    apiKey: "xyz",
+    nodes: [
+      {
+        host: "localhost",
+        port: "8108",
+        protocol: "http",
+      },
+    ],
+  },
+  geoLocationField: "lat_lng_field", // <<======
+  additionalSearchParameters,
+});
+```
+
 ## Compatibility
 
 | Typesense Server | typesense-instantsearch-adapter | instantsearch.js | react-instantsearch | vue-instantsearch | angular-instantsearch |
 | ---------------- | ------------------------------- | ---------------- | ------------------- | ----------------- | --------------------- |
+| \>= v0.21        | \>= v2.0.0                      | \>= 4.2.0        | \>= 6.0.0           | \>= 2.2.1         | \>= 3.0.0             |
 | \>= v0.19        | \>= v1.0.0                      | \>= 4.2.0        | \>= 6.0.0           | \>= 2.2.1         | \>= 3.0.0             |
 | \>= v0.15        | \>= v0.3.0                      | \>= 4.2.0        | \>= 6.0.0           | \>= 2.2.1         | \>= 3.0.0             |
 | \>= v0.14        | \>= v0.2.0                      | \>= 4.2.0        | \>= 6.0.0           | \>= 2.2.1         | \>= 3.0.0             |
@@ -342,7 +365,6 @@ If a particular version of the above libraries don't work with the adapter, plea
 
 This adapter works with all widgets in [this list](https://www.algolia.com/doc/api-reference/widgets/js/), _except_ for the following:
 
-- `geoSearch`
 - `queryRuleCustomData`
 - `queryRuleContext`
 

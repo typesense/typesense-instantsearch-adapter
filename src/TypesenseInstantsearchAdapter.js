@@ -25,7 +25,11 @@ export default class TypesenseInstantsearchAdapter {
 
       const adaptedResponses = typesenseResponse.results.map((typesenseResult, index) => {
         this._validateTypesenseResult(typesenseResult);
-        const responseAdapter = new SearchResponseAdapter(typesenseResult, instantsearchRequests[index]);
+        const responseAdapter = new SearchResponseAdapter(
+          typesenseResult,
+          instantsearchRequests[index],
+          this.configuration
+        );
         return responseAdapter.adapt();
       });
 
@@ -45,7 +49,11 @@ export default class TypesenseInstantsearchAdapter {
 
       const adaptedResponses = typesenseResponse.results.map((typesenseResult, index) => {
         this._validateTypesenseResult(typesenseResult);
-        const responseAdapter = new FacetSearchResponseAdapter(typesenseResult, instantsearchRequests[index]);
+        const responseAdapter = new FacetSearchResponseAdapter(
+          typesenseResult,
+          instantsearchRequests[index],
+          this.configuration
+        );
         return responseAdapter.adapt();
       });
 
@@ -57,12 +65,7 @@ export default class TypesenseInstantsearchAdapter {
   }
 
   async _adaptAndPerformTypesenseRequest(instantsearchRequests) {
-    const requestAdapter = new SearchRequestAdapter(
-      instantsearchRequests,
-      this.typesenseClient,
-      this.configuration.additionalSearchParameters,
-      this.configuration.collectionSpecificSearchParameters
-    );
+    const requestAdapter = new SearchRequestAdapter(instantsearchRequests, this.typesenseClient, this.configuration);
     const typesenseResponse = await requestAdapter.request();
     return typesenseResponse;
   }
