@@ -73,6 +73,26 @@ describe("Search Experience", () => {
         });
       });
 
+      describe("using the toggle refinement widget", () => {
+        it("renders the results, facets and pagination", async () => {
+          await expect(page).toClick("#free-shipping-toggle-refinement input[type=checkbox]");
+          await expect(page).toMatchElement("#stats", {
+            text: "154 results found",
+          });
+          await expect(page).toMatchElement("#hits", {
+            text: "Free Shipping: true",
+          });
+          await expect(page).toMatchElement("#current-refinements", {
+            text: "Free_shipping:true",
+          });
+
+          // Pagination
+          await page.waitForSelector("#pagination a.ais-Pagination-link");
+          const length = (await page.$$("#pagination a.ais-Pagination-link")).length;
+          expect(length).toEqual(7 + 2);
+        });
+      });
+
       describe("using the menu widget", () => {
         it("renders the filtered results and updates the breadcrumb", async () => {
           await expect(page).toMatchElement("#categories-menu a", {

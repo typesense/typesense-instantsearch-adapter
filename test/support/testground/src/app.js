@@ -127,7 +127,7 @@ search.addWidgets([
     ],
   }),
   toggleRefinement({
-    container: "#toggle-refinement",
+    container: "#free-shipping-toggle-refinement",
     attribute: "free_shipping",
     templates: {
       labelText: "Free shipping",

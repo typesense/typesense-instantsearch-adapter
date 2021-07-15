@@ -62,7 +62,7 @@ describe("Instant Search Widgets", () => {
 
   describe("toggleRefinement", () => {
     it("renders", async () => {
-      return expect(page).toMatchElement("#toggle-refinement", {
+      return expect(page).toMatchElement("#free-shipping-toggle-refinement", {
         text: "Free shipping",
       });
     });

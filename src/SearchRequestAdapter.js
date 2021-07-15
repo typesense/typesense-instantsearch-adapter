@@ -80,7 +80,7 @@ export class SearchRequestAdapter {
         // Into this:
         // field1:=[value1,value2]
 
-        const typesenseFilterString = `${fieldName}:=[${fieldValues.map((v) => `\`${v}\``).join(",")}]`;
+        const typesenseFilterString = `${fieldName}:=[${fieldValues.map(this._escapeFacetValue).join(",")}]`;
 
         return typesenseFilterString;
       } else {
@@ -92,7 +92,7 @@ export class SearchRequestAdapter {
         const facetFilterMatches = item.match(this.constructor.FILER_STRING_MATCHING_REGEX);
         const fieldName = `${facetFilterMatches[1]}${facetFilterMatches[2]}`;
         const fieldValue = `${facetFilterMatches[3]}`;
-        const typesenseFilterString = `${fieldName}:=[\`${fieldValue}\`]`;
+        const typesenseFilterString = `${fieldName}:=[${this._escapeFacetValue(fieldValue)}]`;
 
         return typesenseFilterString;
       }
@@ -102,6 +102,14 @@ export class SearchRequestAdapter {
     // console.log(`${JSON.stringify(facetFilters)} => ${adaptedResult}`);
 
     return adaptedResult;
+  }
+
+  _escapeFacetValue(value) {
+    // Don't escape booleans
+    if (typeof value === "boolean" || value === "true" || value === "false") {
+      return value;
+    }
+    return `\`${value}\``;
   }
 
   _adaptNumericFilters(numericFilters) {
