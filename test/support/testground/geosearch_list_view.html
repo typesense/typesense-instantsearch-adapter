@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="theme-color" content="#000000" />
+
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="shortcut icon" href="./favicon.png" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css@7/themes/algolia-min.css" />
+    <link rel="stylesheet" href="./src/geosearch.css" />
+    <link rel="stylesheet" href="./src/app.css" />
+
+    <title>geosearch / testground</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="ais-InstantSearch">
+        <h1>Geosearch demo</h1>
+
+        <div class="left-panel">
+          <div id="country-filter"></div>
+        </div>
+
+        <div class="right-panel">
+          <div id="searchbox"></div>
+          <div id="stats"></div>
+          <h3>Sort By</h3>
+          <div id="sort-by"></div>
+          <h3>Results</h3>
+          <div id="hits"></div>
+          <div id="pagination"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/algoliasearch/3.32.0/algoliasearchLite.js"></script>
+    <script src="./src/geosearch_list_view.js"></script>
+  </body>
+</html>

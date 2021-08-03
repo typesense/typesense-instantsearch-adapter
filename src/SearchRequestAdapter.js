@@ -62,7 +62,7 @@ export class SearchRequestAdapter {
 
         if (Object.keys(intermediateFacetFilters).length > 1) {
           console.error(
-            `Typesense does not support cross-field ORs at the moment. The adapter could not OR values between these fields: ${Object.keys(
+            `[Typesense-Instantsearch-Adapter] Typesense does not support cross-field ORs at the moment. The adapter could not OR values between these fields: ${Object.keys(
               intermediateFacetFilters
             ).join(",")}`
           );
@@ -154,7 +154,9 @@ export class SearchRequestAdapter {
       } else if (filtersHash[field][">="] != null) {
         adaptedFilters.push(`${field}:>=${filtersHash[field][">="]}`);
       } else {
-        console.warn(`Unsupported operator found ${JSON.stringify(filtersHash[field])}`);
+        console.warn(
+          `[Typesense-Instantsearch-Adapter] Unsupported operator found ${JSON.stringify(filtersHash[field])}`
+        );
       }
     });
 
@@ -162,22 +164,34 @@ export class SearchRequestAdapter {
     return adaptedResult;
   }
 
-  _adaptGeoFilter(boundingBox) {
-    const [x1, y1, x2, y2] = boundingBox.split(",");
-    return `${this.configuration.geoLocationField}:(${x1}, ${y1}, ${x1}, ${y2}, ${x2}, ${y2}, ${x2}, ${y1})`;
-  }
-
-  _adaptFilters(facetFilters, numericFilters, geoFilter) {
-    const adaptedFilters = [];
-
-    adaptedFilters.push(this._adaptFacetFilters(facetFilters));
-    adaptedFilters.push(this._adaptNumericFilters(numericFilters));
-
-    if (geoFilter != null) {
-      adaptedFilters.push(this._adaptGeoFilter(geoFilter));
+  _adaptGeoFilter({ insideBoundingBox, aroundRadius, aroundLatLng }) {
+    // Give this parameter first priority if it exists, since
+    if (insideBoundingBox) {
+      const [x1, y1, x2, y2] = insideBoundingBox.split(",");
+      return `${this.configuration.geoLocationField}:(${x1}, ${y1}, ${x1}, ${y2}, ${x2}, ${y2}, ${x2}, ${y1})`;
     }
 
-    return adaptedFilters.filter((filter) => filter !== "").join(" && ");
+    if (aroundLatLng || aroundRadius) {
+      if (!aroundRadius || aroundRadius === "all") {
+        throw new Error(
+          "[Typesense-Instantsearch-Adapter] In Typesense, geo-filtering around a lat/lng also requires a numerical radius. " +
+            "So the `aroundRadius` parameter is required when `aroundLatLng` is used. " +
+            "If you intend to just geo-sort around a lat/long, you want to use the sortBy InstantSearch widget (or a virtual sortBy custom widget)."
+        );
+      }
+      const adaptedAroundRadius = `${parseFloat(aroundRadius) / 1000} km`; // aroundRadius is in meters
+      return `${this.configuration.geoLocationField}:(${aroundLatLng}, ${adaptedAroundRadius})`;
+    }
+  }
+
+  _adaptFilters(instantsearchParams) {
+    const adaptedFilters = [];
+
+    adaptedFilters.push(this._adaptFacetFilters(instantsearchParams.facetFilters));
+    adaptedFilters.push(this._adaptNumericFilters(instantsearchParams.numericFilters));
+    adaptedFilters.push(this._adaptGeoFilter(instantsearchParams));
+
+    return adaptedFilters.filter((filter) => filter && filter !== "").join(" && ");
   }
 
   _adaptIndexName(indexName) {
@@ -214,7 +228,7 @@ export class SearchRequestAdapter {
       collection: adaptedCollectionName,
       q: params.query === "" || params.query === undefined ? "*" : params.query,
       facet_by: [params.facets].flat().join(","),
-      filter_by: this._adaptFilters(params.facetFilters, params.numericFilters, params.insideBoundingBox),
+      filter_by: this._adaptFilters(params),
       sort_by: adaptedSortBy || snakeCasedAdditionalSearchParameters.sort_by,
       max_facet_values: params.maxValuesPerFacet,
       page: (params.page || 0) + 1,
