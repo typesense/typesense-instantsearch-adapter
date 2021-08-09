@@ -6,10 +6,26 @@ export interface TypesenseNode {
   protocol: string;
 }
 
-export interface TypesenseSearchParameters {
+export interface TypesenseAdditionalSearchParameters {
   queryBy: string;
+  queryByWeights?: string;
+  prefix?: string;
+  filterBy?: string;
   sortBy?: string;
+  maxFacetValues?: number;
+  perPage?: number;
+  includeFields?: string;
+  excludeFields?: string;
+  highlightFields?: string;
   highlightFullFields?: string;
+  numTypos?: number;
+  typoTokensThreshold?: number;
+  dropTokensThreshold?: number;
+  pinnedHits?: string;
+  hiddenHits?: string;
+  enableOverrides?: boolean;
+  perSegmentedQuery?: boolean;
+  limitHits?: number;
 }
 
 export interface TypesenseServer {
@@ -19,7 +35,7 @@ export interface TypesenseServer {
 
 export interface TypesenseInstantsearchAdapterOptions {
   server?: TypesenseServer;
-  additionalSearchParameters: TypesenseSearchParameters;
+  additionalSearchParameters: TypesenseAdditionalSearchParameters;
 }
 
 export default class TypesenseInstantsearchAdapter {
