@@ -71,10 +71,10 @@ interface CollectionSpecificSearchParametersOptionalQueryBy extends BaseAdapterO
   collectionSpecificSearchParameters?: CollectionSearchParametersOptionalQueryBy;
 }
 
-type AdapterOptions1 = AdditionalSearchParametersWithQueryBy & CollectionSpecificSearchParametersOptionalQueryBy;
-type AdapterOption2 = AdditionalSearchParametersOptionalQueryBy & CollectionSpecificSearchParametersWithQueryBy;
+type AdapterOptionsWithQueryByInAdditionalSearchParameters = AdditionalSearchParametersWithQueryBy & CollectionSpecificSearchParametersOptionalQueryBy;
+type AdapterOptionWithQueryByInCollectionSpecificSearchParameters = AdditionalSearchParametersOptionalQueryBy & CollectionSpecificSearchParametersWithQueryBy;
 
-type TypesenseInstantsearchAdapterOptions = AdapterOption2 | AdapterOptions1;
+type TypesenseInstantsearchAdapterOptions = AdapterOptionWithQueryByInCollectionSpecificSearchParameters | AdapterOptionsWithQueryByInAdditionalSearchParameters;
 
 export default class TypesenseInstantsearchAdapter {
   readonly searchClient: SearchClient;
