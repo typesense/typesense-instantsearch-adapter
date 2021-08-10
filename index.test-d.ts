@@ -18,7 +18,16 @@ expectAssignable<TypesenseServer>({
 
 expectAssignable<TypesenseInstantsearchAdapterOptions>({
   additionalSearchParameters: { queryBy: "a,b,c" },
+  collectionSpecificSearchParameters: {
+    books: {
+      queryBy: "a, b, c"
+    },
+    books1: {
+      queryBy: "h, i, j",
+    }
+  },
 });
+
 expectAssignable<TypesenseInstantsearchAdapterOptions>({
   server: {
     apiKey: "foo",

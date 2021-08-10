@@ -4,6 +4,7 @@ export interface TypesenseNode {
   host: string;
   port: string;
   protocol: string;
+  path?: string;
 }
 
 export interface TypesenseAdditionalSearchParameters {
@@ -33,13 +34,27 @@ export interface TypesenseServer {
   nodes: TypesenseNode[];
 }
 
-export interface TypesenseInstantsearchAdapterOptions {
+export interface BaseTypesenseInstantsearchAdapterOptions {
   server?: TypesenseServer;
+  geoLocationField?: string;
+  cacheSearchResultsForSeconds?: number;
+}
+
+export interface AdditionalSearchParameters extends BaseTypesenseInstantsearchAdapterOptions {
   additionalSearchParameters: TypesenseAdditionalSearchParameters;
+}
+
+export interface CollectionSpecificSearchParameters extends BaseTypesenseInstantsearchAdapterOptions {
+  collectionSpecificSearchParameters: TypesenseCollectionSearchParameters;
+}
+
+export type TypesenseInstantsearchAdapterOptions = AdditionalSearchParameters | CollectionSpecificSearchParameters;
+
+export interface TypesenseCollectionSearchParameters {
+  [key: string]: TypesenseAdditionalSearchParameters;
 }
 
 export default class TypesenseInstantsearchAdapter {
   readonly searchClient: SearchClient;
-
   constructor(options: TypesenseInstantsearchAdapterOptions);
 }
