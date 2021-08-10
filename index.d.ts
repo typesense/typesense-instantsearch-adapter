@@ -1,14 +1,13 @@
 type SearchClient = object;
 
-export interface TypesenseNode {
+interface TypesenseNode {
   host: string;
   port: string;
   protocol: string;
   path?: string;
 }
 
-export interface TypesenseAdditionalSearchParameters {
-  queryBy: string;
+interface BaseSearchParameters {
   queryByWeights?: string;
   prefix?: string;
   sortBy?: string;
@@ -28,30 +27,54 @@ export interface TypesenseAdditionalSearchParameters {
   limitHits?: number;
 }
 
-export interface TypesenseServer {
+interface SearchParametersWithQueryBy extends BaseSearchParameters {
+  queryBy: string;
+}
+
+interface SearchParametersOptionalQueryBy extends BaseSearchParameters {
+  queryBy?: string;
+}
+
+interface CollectionSearchParametersWithQueryBy {
+  [key: string]: SearchParametersWithQueryBy;
+}
+
+interface CollectionSearchParametersOptionalQueryBy {
+  [key: string]: SearchParametersOptionalQueryBy;
+}
+
+interface TypesenseServer {
   apiKey: string;
   nodes: TypesenseNode[];
 }
 
-export interface BaseTypesenseInstantsearchAdapterOptions {
+interface BaseAdapterOptions {
   server?: TypesenseServer;
   geoLocationField?: string;
   cacheSearchResultsForSeconds?: number;
 }
 
-export interface AdditionalSearchParameters extends BaseTypesenseInstantsearchAdapterOptions {
-  additionalSearchParameters: TypesenseAdditionalSearchParameters;
+interface AdditionalSearchParametersWithQueryBy extends BaseAdapterOptions {
+  additionalSearchParameters: SearchParametersWithQueryBy;
 }
 
-export interface CollectionSpecificSearchParameters extends BaseTypesenseInstantsearchAdapterOptions {
-  collectionSpecificSearchParameters: TypesenseCollectionSearchParameters;
+interface AdditionalSearchParametersOptionalQueryBy extends BaseAdapterOptions {
+  additionalSearchParameters?: SearchParametersOptionalQueryBy;
 }
 
-export type TypesenseInstantsearchAdapterOptions = AdditionalSearchParameters | CollectionSpecificSearchParameters;
 
-export interface TypesenseCollectionSearchParameters {
-  [key: string]: TypesenseAdditionalSearchParameters;
+interface CollectionSpecificSearchParametersWithQueryBy extends BaseAdapterOptions {
+  collectionSpecificSearchParameters: CollectionSearchParametersWithQueryBy;
 }
+
+interface CollectionSpecificSearchParametersOptionalQueryBy extends BaseAdapterOptions {
+  collectionSpecificSearchParameters?: CollectionSearchParametersOptionalQueryBy;
+}
+
+type AdapterOptions1 = AdditionalSearchParametersWithQueryBy & CollectionSpecificSearchParametersOptionalQueryBy;
+type AdapterOption2 = AdditionalSearchParametersOptionalQueryBy & CollectionSpecificSearchParametersWithQueryBy;
+
+type TypesenseInstantsearchAdapterOptions = AdapterOption2 | AdapterOptions1;
 
 export default class TypesenseInstantsearchAdapter {
   readonly searchClient: SearchClient;
