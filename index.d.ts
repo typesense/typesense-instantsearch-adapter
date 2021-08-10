@@ -11,7 +11,6 @@ export interface TypesenseAdditionalSearchParameters {
   queryBy: string;
   queryByWeights?: string;
   prefix?: string;
-  filterBy?: string;
   sortBy?: string;
   maxFacetValues?: number;
   perPage?: number;
