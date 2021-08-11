@@ -7,6 +7,11 @@ interface TypesenseNode {
   path?: string;
 }
 
+interface TypesenseServer {
+  apiKey: string;
+  nodes: TypesenseNode[];
+}
+
 interface BaseSearchParameters {
   queryByWeights?: string;
   prefix?: string;
@@ -23,7 +28,7 @@ interface BaseSearchParameters {
   pinnedHits?: string;
   hiddenHits?: string;
   enableOverrides?: boolean;
-  perSegmentedQuery?: boolean;
+  preSegmentedQuery?: boolean;
   limitHits?: number;
 }
 
@@ -43,13 +48,8 @@ interface CollectionSearchParametersOptionalQueryBy {
   [key: string]: SearchParametersOptionalQueryBy;
 }
 
-interface TypesenseServer {
-  apiKey: string;
-  nodes: TypesenseNode[];
-}
-
 interface BaseAdapterOptions {
-  server?: TypesenseServer;
+  server: TypesenseServer;
   geoLocationField?: string;
   cacheSearchResultsForSeconds?: number;
 }
@@ -62,7 +62,6 @@ interface AdditionalSearchParametersOptionalQueryBy extends BaseAdapterOptions {
   additionalSearchParameters?: SearchParametersOptionalQueryBy;
 }
 
-
 interface CollectionSpecificSearchParametersWithQueryBy extends BaseAdapterOptions {
   collectionSpecificSearchParameters: CollectionSearchParametersWithQueryBy;
 }
@@ -71,10 +70,14 @@ interface CollectionSpecificSearchParametersOptionalQueryBy extends BaseAdapterO
   collectionSpecificSearchParameters?: CollectionSearchParametersOptionalQueryBy;
 }
 
-type AdapterOptionsWithQueryByInAdditionalSearchParameters = AdditionalSearchParametersWithQueryBy & CollectionSpecificSearchParametersOptionalQueryBy;
-type AdapterOptionWithQueryByInCollectionSpecificSearchParameters = AdditionalSearchParametersOptionalQueryBy & CollectionSpecificSearchParametersWithQueryBy;
+type AdapterOptionsWithQueryByInAdditionalSearchParameters = AdditionalSearchParametersWithQueryBy &
+  CollectionSpecificSearchParametersOptionalQueryBy;
+type AdapterOptionWithQueryByInCollectionSpecificSearchParameters = AdditionalSearchParametersOptionalQueryBy &
+  CollectionSpecificSearchParametersWithQueryBy;
 
-type TypesenseInstantsearchAdapterOptions = AdapterOptionWithQueryByInCollectionSpecificSearchParameters | AdapterOptionsWithQueryByInAdditionalSearchParameters;
+type TypesenseInstantsearchAdapterOptions =
+  | AdapterOptionWithQueryByInCollectionSpecificSearchParameters
+  | AdapterOptionsWithQueryByInAdditionalSearchParameters;
 
 export default class TypesenseInstantsearchAdapter {
   readonly searchClient: SearchClient;
