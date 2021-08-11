@@ -137,3 +137,28 @@ expectAssignable<TypesenseInstantsearchAdapterOptions>({
   },
   additionalSearchParameters: { queryBy: "a,b,c", sortBy: "a" },
 });
+
+expectNotAssignable<TypesenseInstantsearchAdapterOptions>({
+  server: {
+    nodes: [
+      {
+        port: "443",
+        host: "server.harisaran.live",
+        protocol: "https",
+      },
+    ],
+  },
+});
+
+expectNotAssignable<TypesenseInstantsearchAdapterOptions>({
+  server: {
+    nodes: [
+      {
+        port: "443",
+        host: "server.harisaran.live",
+        protocol: "https",
+      },
+    ],
+    apiKey: "foo",
+  },
+});
