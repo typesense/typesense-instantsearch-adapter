@@ -3,7 +3,7 @@ type SearchClient = object;
 interface TypesenseNode {
   host: string;
   port: string;
-  protocol: string;
+  protocol: "https" | "http";
   path?: string;
 }
 
