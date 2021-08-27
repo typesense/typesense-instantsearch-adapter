@@ -31,8 +31,37 @@ describe("SearchRequestAdapter", () => {
         geoLocationField: "geoField",
       });
 
-      const result = subject._adaptGeoFilter("x1,y1,x2,y2");
+      let result = subject._adaptGeoFilter({ insideBoundingBox: "x1,y1,x2,y2" });
       expect(result).toEqual(`geoField:(x1, y1, x1, y2, x2, y2, x2, y1)`);
+
+      result = subject._adaptGeoFilter({ insideBoundingBox: ["x1", "y1", "x2", "y2"] });
+      expect(result).toEqual(`geoField:(x1, y1, x1, y2, x2, y2, x2, y1)`);
+    });
+
+    it("adapts the given geo aroundLatLng filter", () => {
+      const subject = new SearchRequestAdapter([], null, {
+        geoLocationField: "geoField",
+      });
+
+      expect(() => {
+        subject._adaptGeoFilter({ aroundLatLng: "x1,y1" });
+      }).toThrowError("filtering around a lat/lng also requires a numerical radius");
+
+      expect(() => {
+        subject._adaptGeoFilter({ aroundLatLng: "x1,y1", aroundRadius: "all" });
+      }).toThrowError("filtering around a lat/lng also requires a numerical radius");
+
+      const result = subject._adaptGeoFilter({ aroundLatLng: "x1,y1", aroundRadius: 10000 });
+      expect(result).toEqual(`geoField:(x1,y1, 10 km)`);
+    });
+
+    it("adapts the given geo polygon filter", () => {
+      const subject = new SearchRequestAdapter([], null, {
+        geoLocationField: "geoField",
+      });
+
+      const result = subject._adaptGeoFilter({ insidePolygon: ["x1", "y1", "x2", "y2", "x3", "y3"] });
+      expect(result).toEqual(`geoField:(x1,y1,x2,y2,x3,y3)`);
     });
   });
 });
