@@ -2,7 +2,7 @@ describe("Geo Search - List View", () => {
   beforeAll(require("./support/beforeAll"), 60 * 1000);
 
   describe("aroundLatLng via configure widget", () => {
-    it("renders results within a within the specified radius around lat/lng", async () => {
+    it("renders results within a within the specified radius around lat lng", async () => {
       await page.goto("http://localhost:3000/geosearch_list_view.html");
       await expect(page).toMatchElement("#stats", {
         text: "56 results found",
