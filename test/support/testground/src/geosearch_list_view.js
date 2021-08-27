@@ -44,10 +44,6 @@ const search = instantsearch({
 
 // ============ Begin Widget Configuration
 search.addWidgets([
-  configure({
-    aroundLatLng: "34.0522, -118.2437",
-    aroundRadius: "1000000", // (or "all"),
-  }),
   searchBox({
     container: "#searchbox",
   }),
@@ -91,5 +87,27 @@ search.addWidgets([
     },
   }),
 ]);
+
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.has("insideBoundingBox")) {
+  search.addWidgets([
+    configure({
+      insideBoundingBox: [[47.6062, -122.3321, 32.7767, -96.797]],
+    }),
+  ]);
+} else if (urlParams.has("insidePolygon")) {
+  search.addWidgets([
+    configure({
+      insidePolygon: [[41.8781, -87.6298, 40.7128, -74.006, 40.7608, -111.891]],
+    }),
+  ]);
+} else {
+  search.addWidgets([
+    configure({
+      aroundLatLng: "34.0522, -118.2437",
+      aroundRadius: "1000000", // (or "all"),
+    }),
+  ]);
+}
 
 search.start();

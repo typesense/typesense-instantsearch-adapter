@@ -164,7 +164,7 @@ export class SearchRequestAdapter {
     return adaptedResult;
   }
 
-  _adaptGeoFilter({ insideBoundingBox, aroundRadius, aroundLatLng }) {
+  _adaptGeoFilter({ insideBoundingBox, aroundRadius, aroundLatLng, insidePolygon }) {
     // Give this parameter first priority if it exists, since
     if (insideBoundingBox) {
       let x1, y1, x2, y2;
@@ -186,6 +186,14 @@ export class SearchRequestAdapter {
       }
       const adaptedAroundRadius = `${parseFloat(aroundRadius) / 1000} km`; // aroundRadius is in meters
       return `${this.configuration.geoLocationField}:(${aroundLatLng}, ${adaptedAroundRadius})`;
+    }
+
+    if (insidePolygon) {
+      let coordinates = insidePolygon;
+      if (Array.isArray(insidePolygon)) {
+        coordinates = insidePolygon.flat().join(",");
+      }
+      return `${this.configuration.geoLocationField}:(${coordinates})`;
     }
   }
 
