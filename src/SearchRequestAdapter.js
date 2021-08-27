@@ -167,7 +167,12 @@ export class SearchRequestAdapter {
   _adaptGeoFilter({ insideBoundingBox, aroundRadius, aroundLatLng }) {
     // Give this parameter first priority if it exists, since
     if (insideBoundingBox) {
-      const [x1, y1, x2, y2] = insideBoundingBox.split(",");
+      let x1, y1, x2, y2;
+      if (Array.isArray(insideBoundingBox)) {
+        [x1, y1, x2, y2] = insideBoundingBox.flat();
+      } else {
+        [x1, y1, x2, y2] = insideBoundingBox.split(",");
+      }
       return `${this.configuration.geoLocationField}:(${x1}, ${y1}, ${x1}, ${y2}, ${x2}, ${y2}, ${x2}, ${y1})`;
     }
 
