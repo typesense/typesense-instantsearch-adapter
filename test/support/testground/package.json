@@ -6,7 +6,7 @@
     "start": "parcel index.html federated_search.html refinement_list_operators.html geosearch.html geosearch_list_view.html --port 3000",
     "testground": "npm start",
     "build:instantsearch.js": "cd node_modules/instantsearch.js && yarn && yarn run build:es",
-    "build": "parcel build index.html federated_search.html refinement_list_operators.html geosearch.html eosearch-list-view.html",
+    "build": "parcel build index.html federated_search.html refinement_list_operators.html geosearch.html geosearch_list_view.html",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix"
   },

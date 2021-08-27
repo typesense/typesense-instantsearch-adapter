@@ -31,5 +31,6 @@ module.exports = async () => {
 
   await require("./populateProductsIndex");
   await require("./populateBrandsIndex");
-  return require("./populateRecipesIndex");
+  await require("./populateRecipesIndex");
+  return require("./populateAirportsIndex");
 };
