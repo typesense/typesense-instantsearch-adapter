@@ -33,6 +33,8 @@ export default class TypesenseInstantsearchAdapter {
         return responseAdapter.adapt();
       });
 
+      this._fixFacetCounts(adaptedResponses);
+
       return {
         results: adaptedResponses,
       };
@@ -77,5 +79,28 @@ export default class TypesenseInstantsearchAdapter {
     if (!typesenseResult.hits && !typesenseResult.grouped_hits) {
       throw new Error(`Did not find any hits. ${typesenseResult.code} - ${typesenseResult.error}`);
     }
+  }
+
+  _fixFacetCounts(adaptedResponses) {
+    const [primaryResponse, ...ancillaryResponses] = adaptedResponses;
+
+    console.log(ancillaryResponses.length);
+
+    ancillaryResponses.forEach((ancillaryResponse) => {
+      console.log(ancillaryResponse);
+      Object.keys(ancillaryResponse.facets).forEach((facetFieldName) => {
+        Object.keys(ancillaryResponse.facets[facetFieldName]).forEach((facetFieldValue) => {
+          console.log(
+            `${facetFieldName} ${facetFieldValue} ${ancillaryResponse.facets[facetFieldName][facetFieldValue]}`
+          );
+          if (primaryResponse.facets[facetFieldName][facetFieldValue]) {
+            ancillaryResponse.facets[facetFieldName][facetFieldValue] =
+              primaryResponse.facets[facetFieldName][facetFieldValue];
+          }
+        });
+      });
+    });
+
+    console.log(adaptedResponses);
   }
 }
