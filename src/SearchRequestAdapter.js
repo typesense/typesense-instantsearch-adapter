@@ -105,8 +105,14 @@ export class SearchRequestAdapter {
   }
 
   _escapeFacetValue(value) {
-    // Don't escape booleans
-    if (typeof value === "boolean" || value === "true" || value === "false") {
+    // Don't escape booleans, integers or floats
+    if (
+      typeof value === "boolean" ||
+      value === "true" ||
+      value === "false" ||
+      Number.isInteger(value % 1) || // Mod 1 will automatically try converting string values to integer/float
+      !!(value % 1) // Is Float
+    ) {
       return value;
     }
     return `\`${value}\``;
