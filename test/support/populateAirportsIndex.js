@@ -44,6 +44,7 @@ module.exports = (async () => {
       {
         name: "links_count",
         type: "int32",
+        facet: true,
       },
     ],
     default_sorting_field: "links_count",
