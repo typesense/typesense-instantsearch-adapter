@@ -5,7 +5,7 @@ export class SearchRequestAdapter {
     return new RegExp("^(.+?)(?=(/sort/(.*))|$)");
   }
 
-  static get FILER_STRING_MATCHING_REGEX() {
+  static get FILTER_STRING_MATCHING_REGEX() {
     return new RegExp("(.*)((?!:).):(?!:)(.*)");
   }
 
@@ -53,7 +53,7 @@ export class SearchRequestAdapter {
 
         const intermediateFacetFilters = {};
         item.forEach((facetFilter) => {
-          const facetFilterMatches = facetFilter.match(this.constructor.FILER_STRING_MATCHING_REGEX);
+          const facetFilterMatches = facetFilter.match(this.constructor.FILTER_STRING_MATCHING_REGEX);
           const fieldName = `${facetFilterMatches[1]}${facetFilterMatches[2]}`;
           const fieldValue = `${facetFilterMatches[3]}`;
           intermediateFacetFilters[fieldName] = intermediateFacetFilters[fieldName] || [];
@@ -80,7 +80,32 @@ export class SearchRequestAdapter {
         // Into this:
         // field1:=[value1,value2]
 
-        const typesenseFilterString = `${fieldName}:=[${fieldValues.map(this._escapeFacetValue).join(",")}]`;
+        // Partition values into included and excluded values
+        const [excludedFieldValues, includedFieldValues] = fieldValues.reduce(
+          (result, fieldValue) => {
+            if (fieldValue.startsWith("-") && !this._isNumber(fieldValue)) {
+              result[0].push(fieldValue.substring(1));
+            } else {
+              result[1].push(fieldValue);
+            }
+            return result;
+          },
+          [[], []]
+        );
+
+        const typesenseFilterStringComponents = [];
+        if (includedFieldValues.length > 0) {
+          typesenseFilterStringComponents.push(
+            `${fieldName}:=[${includedFieldValues.map((v) => this._escapeFacetValue(v)).join(",")}]`
+          );
+        }
+        if (excludedFieldValues.length > 0) {
+          typesenseFilterStringComponents.push(
+            `${fieldName}:!=[${excludedFieldValues.map((v) => this._escapeFacetValue(v)).join(",")}]`
+          );
+        }
+
+        const typesenseFilterString = typesenseFilterStringComponents.filter((f) => f).join(" && ");
 
         return typesenseFilterString;
       } else {
@@ -89,10 +114,15 @@ export class SearchRequestAdapter {
         // Into
         //  fieldName:=fieldValue
 
-        const facetFilterMatches = item.match(this.constructor.FILER_STRING_MATCHING_REGEX);
+        const facetFilterMatches = item.match(this.constructor.FILTER_STRING_MATCHING_REGEX);
         const fieldName = `${facetFilterMatches[1]}${facetFilterMatches[2]}`;
         const fieldValue = `${facetFilterMatches[3]}`;
-        const typesenseFilterString = `${fieldName}:=[${this._escapeFacetValue(fieldValue)}]`;
+        let typesenseFilterString;
+        if (fieldValue.startsWith("-") && !this._isNumber(fieldValue)) {
+          typesenseFilterString = `${fieldName}:!=[${this._escapeFacetValue(fieldValue.substring(1))}]`;
+        } else {
+          typesenseFilterString = `${fieldName}:=[${this._escapeFacetValue(fieldValue)}]`;
+        }
 
         return typesenseFilterString;
       }
@@ -106,16 +136,17 @@ export class SearchRequestAdapter {
 
   _escapeFacetValue(value) {
     // Don't escape booleans, integers or floats
-    if (
-      typeof value === "boolean" ||
-      value === "true" ||
-      value === "false" ||
-      Number.isInteger(value % 1) || // Mod 1 will automatically try converting string values to integer/float
-      !!(value % 1) // Is Float
-    ) {
+    if (typeof value === "boolean" || value === "true" || value === "false" || this._isNumber(value)) {
       return value;
     }
     return `\`${value}\``;
+  }
+
+  _isNumber(value) {
+    return (
+      Number.isInteger(value % 1) || // Mod 1 will automatically try converting string values to integer/float
+      !!(value % 1)
+    ); // Is Float
   }
 
   _adaptNumericFilters(numericFilters) {
