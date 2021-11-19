@@ -43,13 +43,13 @@ Here's a demo starter app that shows you how to use the adapter: [https://github
 ## Installation
 
 ```shell
-$ npm install --save typesense-instantsearch-adapter
+$ npm install --save typesense-instantsearch-adapter @babel/runtime
 ```
 
 or
 
 ```shell
-$ yarn add typesense-instantsearch-adapter
+$ yarn add typesense-instantsearch-adapter @babel/runtime
 ```
 
 or, you can also directly include the adapter via a script tag in your HTML:
