@@ -43,13 +43,13 @@ Here's a demo starter app that shows you how to use the adapter: [https://github
 ## Installation
 
 ```shell
-$ npm install --save typesense-instantsearch-adapter
+$ npm install --save typesense-instantsearch-adapter @babel/runtime
 ```
 
 or
 
 ```shell
-$ yarn add typesense-instantsearch-adapter
+$ yarn add typesense-instantsearch-adapter @babel/runtime
 ```
 
 or, you can also directly include the adapter via a script tag in your HTML:
@@ -90,8 +90,8 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
         protocol: "http",
       },
     ],
-    cacheSearchResultsForSeconds: 2 * 60, // Cache search results from server. Defaults to 2 minutes. Set to 0 to disable caching.
   },
+  cacheSearchResultsForSeconds: 2 * 60, // Cache search results from server. Defaults to 2 minutes. Set to 0 to disable caching.
   // The following parameters are directly passed to Typesense's search API endpoint.
   //  So you can pass any parameters supported by the search endpoint below.
   //  queryBy is required.
@@ -146,8 +146,8 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
         protocol: "http",
       },
     ],
-    cacheSearchResultsForSeconds: 2 * 60, // Cache search results from server. Defaults to 2 minutes. Set to 0 to disable caching.
   },
+  cacheSearchResultsForSeconds: 2 * 60, // Cache search results from server. Defaults to 2 minutes. Set to 0 to disable caching.
   // The following parameters are directly passed to Typesense's search API endpoint.
   //  So you can pass any parameters supported by the search endpoint below.
   //  queryBy is required.
@@ -196,8 +196,8 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
         protocol: "http",
       },
     ],
-    cacheSearchResultsForSeconds: 2 * 60, // Cache search results from server. Defaults to 2 minutes. Set to 0 to disable caching.
   },
+  cacheSearchResultsForSeconds: 2 * 60, // Cache search results from server. Defaults to 2 minutes. Set to 0 to disable caching.
   // The following parameters are directly passed to Typesense's search API endpoint.
   //  So you can pass any parameters supported by the search endpoint below.
   //  queryBy is required.
@@ -236,8 +236,8 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
         protocol: "http",
       },
     ],
-    cacheSearchResultsForSeconds: 2 * 60, // Cache search results from server. Defaults to 2 minutes. Set to 0 to disable caching.
   },
+  cacheSearchResultsForSeconds: 2 * 60, // Cache search results from server. Defaults to 2 minutes. Set to 0 to disable caching.
   // The following parameters are directly passed to Typesense's search API endpoint.
   //  So you can pass any parameters supported by the search endpoint below.
   //  queryBy is required.
