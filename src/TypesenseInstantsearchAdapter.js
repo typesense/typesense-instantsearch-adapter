@@ -12,6 +12,7 @@ export default class TypesenseInstantsearchAdapter {
     this.configuration.validate();
     this.typesenseClient = new TypesenseSearchClient(this.configuration.server);
     this.searchClient = {
+      clearCache: () => this.clearCache(),
       search: (instantsearchRequests) => this.searchTypesenseAndAdapt(instantsearchRequests),
       searchForFacetValues: (instantsearchRequests) =>
         this.searchTypesenseForFacetValuesAndAdapt(instantsearchRequests),
@@ -68,6 +69,11 @@ export default class TypesenseInstantsearchAdapter {
     const requestAdapter = new SearchRequestAdapter(instantsearchRequests, this.typesenseClient, this.configuration);
     const typesenseResponse = await requestAdapter.request();
     return typesenseResponse;
+  }
+
+  clearCache() {
+    this.typesenseClient = new TypesenseSearchClient(this.configuration.server);
+    return this.searchClient;
   }
 
   _validateTypesenseResult(typesenseResult) {
