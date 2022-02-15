@@ -22,7 +22,7 @@ interface BaseSearchParameters {
   excludeFields?: string;
   highlightFields?: string;
   highlightFullFields?: string;
-  numTypos?: number;
+  numTypos?: string;
   typoTokensThreshold?: number;
   dropTokensThreshold?: number;
   pinnedHits?: string;
@@ -30,6 +30,9 @@ interface BaseSearchParameters {
   enableOverrides?: boolean;
   preSegmentedQuery?: boolean;
   limitHits?: number;
+  groupBy?: string;
+  groupLimit?: number;
+  exhaustiveSearch?: boolean;
 }
 
 interface SearchParametersWithQueryBy extends BaseSearchParameters {
