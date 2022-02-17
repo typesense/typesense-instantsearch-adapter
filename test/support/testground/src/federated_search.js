@@ -18,14 +18,14 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   //  So you can pass any parameters supported by the search endpoint below.
   // Parameters set in collectionSpecificSearchParameters override parameters set in additionalSearchParameters
   additionalSearchParameters: {
-    queryBy: "name",
+    query_by: "name",
   },
   collectionSpecificSearchParameters: {
     products: {
       queryBy: "name,description,categories",
     },
     brands: {
-      queryBy: "name",
+      query_by: "name",
     },
   },
 });

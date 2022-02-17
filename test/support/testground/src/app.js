@@ -25,10 +25,10 @@ import { connectAutocomplete } from "instantsearch.js/es/connectors";
 import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
 
 const additionalSearchParameters = {
-  queryBy: "name,description,categories",
-  // groupBy: "categories",
-  // groupLimit: 1
-  // pinnedHits: "23:2"
+  query_by: "name,description,categories",
+  // group_by: "categories",
+  // group_limit: 1
+  // pinned_hits: "23:2"
 };
 
 // Allow search params to be specified in the URL, for the test suite
@@ -62,7 +62,7 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   },
   // The following parameters are directly passed to Typesense's search API endpoint.
   //  So you can pass any parameters supported by the search endpoint below.
-  //  queryBy is required.
+  //  query_by is required.
   additionalSearchParameters,
 });
 const searchClient = typesenseInstantsearchAdapter.searchClient;

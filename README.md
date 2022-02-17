@@ -90,13 +90,13 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
         protocol: "http",
       },
     ],
+    cacheSearchResultsForSeconds: 2 * 60, // Cache search results from server. Defaults to 2 minutes. Set to 0 to disable caching.
   },
-  cacheSearchResultsForSeconds: 2 * 60, // Cache search results from server. Defaults to 2 minutes. Set to 0 to disable caching.
   // The following parameters are directly passed to Typesense's search API endpoint.
   //  So you can pass any parameters supported by the search endpoint below.
-  //  queryBy is required.
+  //  query_by is required.
   additionalSearchParameters: {
-    queryBy: "name,description,categories",
+    query_by: "name,description,categories",
   },
 });
 const searchClient = typesenseInstantsearchAdapter.searchClient;
@@ -146,13 +146,13 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
         protocol: "http",
       },
     ],
+    cacheSearchResultsForSeconds: 2 * 60, // Cache search results from server. Defaults to 2 minutes. Set to 0 to disable caching.
   },
-  cacheSearchResultsForSeconds: 2 * 60, // Cache search results from server. Defaults to 2 minutes. Set to 0 to disable caching.
   // The following parameters are directly passed to Typesense's search API endpoint.
   //  So you can pass any parameters supported by the search endpoint below.
-  //  queryBy is required.
+  //  query_by is required.
   additionalSearchParameters: {
-    queryBy: "name,description,categories",
+    query_by: "name,description,categories",
   },
 });
 const searchClient = typesenseInstantsearchAdapter.searchClient;
@@ -196,13 +196,13 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
         protocol: "http",
       },
     ],
+    cacheSearchResultsForSeconds: 2 * 60, // Cache search results from server. Defaults to 2 minutes. Set to 0 to disable caching.
   },
-  cacheSearchResultsForSeconds: 2 * 60, // Cache search results from server. Defaults to 2 minutes. Set to 0 to disable caching.
   // The following parameters are directly passed to Typesense's search API endpoint.
   //  So you can pass any parameters supported by the search endpoint below.
-  //  queryBy is required.
+  //  query_by is required.
   additionalSearchParameters: {
-    queryBy: "name,description,categories",
+    query_by: "name,description,categories",
   },
 });
 const searchClient = typesenseInstantsearchAdapter.searchClient;
@@ -236,13 +236,13 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
         protocol: "http",
       },
     ],
+    cacheSearchResultsForSeconds: 2 * 60, // Cache search results from server. Defaults to 2 minutes. Set to 0 to disable caching.
   },
-  cacheSearchResultsForSeconds: 2 * 60, // Cache search results from server. Defaults to 2 minutes. Set to 0 to disable caching.
   // The following parameters are directly passed to Typesense's search API endpoint.
   //  So you can pass any parameters supported by the search endpoint below.
-  //  queryBy is required.
+  //  query_by is required.
   additionalSearchParameters: {
-    queryBy: "name,description,categories",
+    query_by: "name,description,categories",
   },
 });
 const searchClient = typesenseInstantsearchAdapter.searchClient;
@@ -316,10 +316,10 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   // Search parameters that need to be *overridden* on a per-collection-basis go here:
   collectionSpecificSearchParameters: {
     products: {
-      queryBy: "name,description,categories",
+      query_by: "name,description,categories",
     },
     brands: {
-      queryBy: "name",
+      query_by: "name",
     },
   },
 });

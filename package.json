@@ -81,7 +81,7 @@
     "typescript": "^4.2.4"
   },
   "dependencies": {
-    "typesense": "^1.1.4-3"
+    "typesense": "^1.2.0-0"
   },
   "peerDependencies": {
     "@babel/runtime": "^7.13.17"

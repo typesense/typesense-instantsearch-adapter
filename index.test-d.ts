@@ -1,29 +1,19 @@
 import { expectAssignable, expectNotAssignable } from "tsd";
-import { TypesenseInstantsearchAdapterOptions, TypesenseNode, TypesenseServer } from ".";
-
-expectAssignable<TypesenseNode>({
-  host: "example.com",
-  port: "1234",
-  protocol: "http",
-});
-
-expectAssignable<TypesenseServer>({
-  apiKey: "foo",
-  nodes: [{ host: "example.com", port: "1234", protocol: "http" }],
-});
+import { TypesenseInstantsearchAdapterOptions } from ".";
+import { NodeConfiguration } from "typesense/lib/Typesense/Configuration";
 
 expectAssignable<TypesenseInstantsearchAdapterOptions>({
   server: {
     apiKey: "foo",
-    nodes: [{ host: "example.com", port: "1234", protocol: "http" }],
+    nodes: [{ host: "example.com", port: 1234, protocol: "http" }],
   },
-  additionalSearchParameters: { queryBy: "a,b,c" },
+  additionalSearchParameters: { query_by: "a,b,c" },
   collectionSpecificSearchParameters: {
     books: {
-      queryBy: "a, b, c",
+      query_by: "a, b, c",
     },
     books1: {
-      queryBy: "h, i, j",
+      query_by: "h, i, j",
     },
   },
 });
@@ -31,7 +21,7 @@ expectAssignable<TypesenseInstantsearchAdapterOptions>({
 expectNotAssignable<TypesenseInstantsearchAdapterOptions>({
   server: {
     apiKey: "foo",
-    nodes: [{ host: "example.com", port: "1234", protocol: "http" }],
+    nodes: [{ host: "example.com", port: 1234, protocol: "http" }],
   },
   additionalSearchParameters: { hiddenHits: "1, 2, 3" },
   collectionSpecificSearchParameters: {
@@ -44,9 +34,9 @@ expectNotAssignable<TypesenseInstantsearchAdapterOptions>({
 expectAssignable<TypesenseInstantsearchAdapterOptions>({
   server: {
     apiKey: "foo",
-    nodes: [{ host: "example.com", port: "1234", protocol: "http" }],
+    nodes: [{ host: "example.com", port: 1234, protocol: "http" }],
   },
-  additionalSearchParameters: { queryBy: "a,b,c" },
+  additionalSearchParameters: { query_by: "a,b,c" },
   collectionSpecificSearchParameters: {
     books: {
       includeFields: "title",
@@ -60,15 +50,15 @@ expectAssignable<TypesenseInstantsearchAdapterOptions>({
 expectAssignable<TypesenseInstantsearchAdapterOptions>({
   server: {
     apiKey: "foo",
-    nodes: [{ host: "example.com", port: "1234", protocol: "http" }],
+    nodes: [{ host: "example.com", port: 1234, protocol: "http" }],
   },
   additionalSearchParameters: { includeFields: "title" },
   collectionSpecificSearchParameters: {
     books: {
-      queryBy: "a,b,c",
+      query_by: "a,b,c",
     },
     books1: {
-      queryBy: "h,i,j",
+      query_by: "h,i,j",
     },
   },
 });
@@ -76,12 +66,12 @@ expectAssignable<TypesenseInstantsearchAdapterOptions>({
 expectNotAssignable<TypesenseInstantsearchAdapterOptions>({
   server: {
     apiKey: "foo",
-    nodes: [{ host: "example.com", port: "1234", protocol: "http" }],
+    nodes: [{ host: "example.com", port: 1234, protocol: "http" }],
   },
   additionalSearchParameters: { includeFields: "title" },
   collectionSpecificSearchParameters: {
     books: {
-      queryBy: "a,b,c",
+      query_by: "a,b,c",
     },
     books1: {
       includeFields: "hello",
@@ -92,23 +82,23 @@ expectNotAssignable<TypesenseInstantsearchAdapterOptions>({
 expectAssignable<TypesenseInstantsearchAdapterOptions>({
   server: {
     apiKey: "foo",
-    nodes: [{ host: "example.com", port: "1234", protocol: "http" }],
+    nodes: [{ host: "example.com", port: 1234, protocol: "http" }],
   },
-  additionalSearchParameters: { includeFields: "title", queryBy: "a,b,c" },
+  additionalSearchParameters: { includeFields: "title", query_by: "a,b,c" },
 });
 
 expectAssignable<TypesenseInstantsearchAdapterOptions>({
   server: {
     apiKey: "foo",
-    nodes: [{ host: "example.com", port: "1234", protocol: "http" }],
+    nodes: [{ host: "example.com", port: 1234, protocol: "http" }],
   },
   collectionSpecificSearchParameters: {
     books: {
-      queryBy: "title",
+      query_by: "title",
       includeFields: "title",
     },
     books1: {
-      queryBy: "title",
+      query_by: "title",
       excludeFields: "hello",
     },
   },
@@ -117,25 +107,25 @@ expectAssignable<TypesenseInstantsearchAdapterOptions>({
 expectAssignable<TypesenseInstantsearchAdapterOptions>({
   server: {
     apiKey: "foo",
-    nodes: [{ host: "example.com", port: "1234", protocol: "http" }],
+    nodes: [{ host: "example.com", port: 1234, protocol: "http" }],
   },
-  additionalSearchParameters: { queryBy: "a,b,c" },
+  additionalSearchParameters: { query_by: "a,b,c" },
 });
 
 expectAssignable<TypesenseInstantsearchAdapterOptions>({
   server: {
     apiKey: "foo",
-    nodes: [{ host: "example.com", port: "1234", protocol: "http" }],
+    nodes: [{ host: "example.com", port: 1234, protocol: "http" }],
   },
-  additionalSearchParameters: { queryBy: "a,b,c", highlightFullFields: "abc" },
+  additionalSearchParameters: { query_by: "a,b,c", highlightFullFields: "abc" },
 });
 
 expectAssignable<TypesenseInstantsearchAdapterOptions>({
   server: {
     apiKey: "foo",
-    nodes: [{ host: "example.com", port: "1234", protocol: "http" }],
+    nodes: [{ host: "example.com", port: 1234, protocol: "http" }],
   },
-  additionalSearchParameters: { queryBy: "a,b,c", sortBy: "a" },
+  additionalSearchParameters: { query_by: "a,b,c", sort_by: "a" },
 });
 
 expectNotAssignable<TypesenseInstantsearchAdapterOptions>({

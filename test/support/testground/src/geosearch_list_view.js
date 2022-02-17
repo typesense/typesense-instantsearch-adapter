@@ -5,7 +5,7 @@ import { searchBox, pagination, stats, hits, configure, sortBy, refinementList }
 import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
 
 const additionalSearchParameters = {
-  queryBy: "iata_code,name,city,country",
+  query_by: "iata_code,name,city,country",
 };
 
 const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
@@ -21,7 +21,7 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   },
   // The following parameters are directly passed to Typesense's search API endpoint.
   //  So you can pass any parameters supported by the search endpoint below.
-  //  queryBy is required.
+  //  query_by is required.
   additionalSearchParameters,
   geoLocationField: "lat_lng",
 });
