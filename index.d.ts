@@ -11,10 +11,6 @@ interface BaseSearchParameters extends Omit<SearchParams, "q" | "query_by" | "fi
   /**
    * @deprecated Please use the snake_cased version of this parameter
    */
-  prefix?: string;
-  /**
-   * @deprecated Please use the snake_cased version of this parameter
-   */
   sortBy?: string;
   /**
    * @deprecated Please use the snake_cased version of this parameter
