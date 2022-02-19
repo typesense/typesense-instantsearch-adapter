@@ -13,31 +13,34 @@ export class Configuration {
       ],
     };
 
-    this.server.cacheSearchResultsForSeconds =
-      this.server.cacheSearchResultsForSeconds == null ? 2 * 60 : this.server.cacheSearchResultsForSeconds;
+    this.server.cacheSearchResultsForSeconds = this.server.cacheSearchResultsForSeconds ?? 2 * 60;
 
-    this.additionalSearchParameters = options.additionalSearchParameters || {};
+    this.additionalSearchParameters = options.additionalSearchParameters ?? {};
 
     this.additionalSearchParameters.query_by =
-      this.additionalSearchParameters.queryBy || this.additionalSearchParameters.query_by || "";
+      this.additionalSearchParameters.queryBy ?? this.additionalSearchParameters.query_by ?? "";
 
     this.additionalSearchParameters.sort_by =
-      this.additionalSearchParameters.sortBy || this.additionalSearchParameters.sort_by || "";
+      this.additionalSearchParameters.sortBy ?? this.additionalSearchParameters.sort_by ?? "";
 
     this.additionalSearchParameters.highlightFullFields =
-      this.additionalSearchParameters.highlightFullFields ||
-      this.additionalSearchParameters.highlight_full_fields ||
+      this.additionalSearchParameters.highlightFullFields ??
+      this.additionalSearchParameters.highlight_full_fields ??
       this.additionalSearchParameters.query_by;
 
-    this.geoLocationField = options.geoLocationField || "_geoloc";
+    this.geoLocationField = options.geoLocationField ?? "_geoloc";
 
-    this.collectionSpecificSearchParameters = options.collectionSpecificSearchParameters || {};
+    this.collectionSpecificSearchParameters = options.collectionSpecificSearchParameters ?? {};
 
     Object.keys(this.collectionSpecificSearchParameters).forEach((collection) => {
       const params = this.collectionSpecificSearchParameters[collection];
-      params.query_by = params.queryBy || params.query_by || "";
-      params.sort_by = params.sortBy || params.sort_by || "";
-      params.highlightFullFields = params.highlightFullFields || params.highlight_full_fields || params.query_by;
+      params.query_by = params.queryBy ?? params.query_by;
+      params.sort_by = params.sortBy ?? params.sort_by;
+      params.highlightFullFields =
+        params.highlightFullFields ??
+        params.highlight_full_fields ??
+        this.additionalSearchParameters.highlight_full_fields ??
+        params.query_by;
     });
   }
 
