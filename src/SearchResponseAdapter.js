@@ -32,10 +32,12 @@ export class SearchResponseAdapter {
       adaptedHit._snippetResult = this._adaptHighlightResult(typesenseHit, "snippet");
       adaptedHit._highlightResult = this._adaptHighlightResult(typesenseHit, "value");
 
-      // Add text_match score to result, if a field with that name doesn't already exist
-      if (!adaptedHit.text_match) {
-        adaptedHit.text_match = typesenseHit.text_match;
-      }
+      // Add metadata fields to result, if a field with that name doesn't already exist
+      ['text_match', 'geo_distance_meters', 'curated'].forEach((metadataField) => {
+        if (Object.keys(typesenseHit).includes(metadataField) && !Object.keys(adaptedHit).includes(metadataField)) {
+          adaptedHit[metadataField] = typesenseHit[metadataField];
+        }
+      })
 
       const geoLocationValue = adaptedHit[this.configuration.geoLocationField];
       if (geoLocationValue) {
