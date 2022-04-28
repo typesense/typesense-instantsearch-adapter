@@ -237,6 +237,11 @@ export class SearchRequestAdapter {
   _adaptFilters(instantsearchParams) {
     const adaptedFilters = [];
 
+    // `filters` can be used with the `Configure` widget
+    // However the format needs to be in the Typesense filter_by format, instead of Algolia filter format.
+    if (instantsearchParams.filters) {
+      adaptedFilters.push(instantsearchParams.filters);
+    }
     adaptedFilters.push(this._adaptFacetFilters(instantsearchParams.facetFilters));
     adaptedFilters.push(this._adaptNumericFilters(instantsearchParams.numericFilters));
     adaptedFilters.push(this._adaptGeoFilter(instantsearchParams));
