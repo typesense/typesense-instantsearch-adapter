@@ -41,9 +41,9 @@ export class Configuration {
         params.highlight_full_fields ??
         this.additionalSearchParameters.highlight_full_fields ??
         params.query_by;
-      
+
       // Remove undefined values
-      Object.keys(params).forEach(key => params[key] === undefined ? delete params[key] : {});
+      Object.keys(params).forEach((key) => (params[key] === undefined ? delete params[key] : {}));
     });
   }
 

@@ -33,11 +33,11 @@ export class SearchResponseAdapter {
       adaptedHit._highlightResult = this._adaptHighlightResult(typesenseHit, "value");
 
       // Add metadata fields to result, if a field with that name doesn't already exist
-      ['text_match', 'geo_distance_meters', 'curated'].forEach((metadataField) => {
+      ["text_match", "geo_distance_meters", "curated"].forEach((metadataField) => {
         if (Object.keys(typesenseHit).includes(metadataField) && !Object.keys(adaptedHit).includes(metadataField)) {
           adaptedHit[metadataField] = typesenseHit[metadataField];
         }
-      })
+      });
 
       const geoLocationValue = adaptedHit[this.configuration.geoLocationField];
       if (geoLocationValue) {

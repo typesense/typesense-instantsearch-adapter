@@ -297,12 +297,12 @@ The generalized pattern for the value attribute is: `<index_name>[/sort/<sort_by
 
 ### `configure`
 
-If you need to specify a `filter_by` search parameter for Typesense, you want to use the `configure` InstantSearch widget, along with `facetFilters`, `numericFilters` or `filters`. 
+If you need to specify a `filter_by` search parameter for Typesense, you want to use the `configure` InstantSearch widget, along with `facetFilters`, `numericFilters` or `filters`.
 
 The format for `facetFilters` and `numericFilters` is the same as Algolia's as described [here](https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/).
 But `filters` needs to be in Typesense's `filter_by` format as described in this table [here](https://typesense.org/docs/latest/api/documents.html#query-parameters).
 
-Setting `filter_by` inside the `additionalQueryParameters` config only works when the widgets are loaded initially, because InstantSearch internally overrides the `filter_by` field subsequently. 
+Setting `filter_by` inside the `additionalQueryParameters` config only works when the widgets are loaded initially, because InstantSearch internally overrides the `filter_by` field subsequently.
 Read more [here](https://github.com/typesense/typesense-instantsearch-adapter/issues/17#issuecomment-746912375).
 
 ### `index`
