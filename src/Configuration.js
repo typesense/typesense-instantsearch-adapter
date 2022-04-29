@@ -23,7 +23,7 @@ export class Configuration {
     this.additionalSearchParameters.sort_by =
       this.additionalSearchParameters.sortBy ?? this.additionalSearchParameters.sort_by ?? "";
 
-    this.additionalSearchParameters.highlightFullFields =
+    this.additionalSearchParameters.highlight_full_fields =
       this.additionalSearchParameters.highlightFullFields ??
       this.additionalSearchParameters.highlight_full_fields ??
       this.additionalSearchParameters.query_by;
@@ -36,11 +36,14 @@ export class Configuration {
       const params = this.collectionSpecificSearchParameters[collection];
       params.query_by = params.queryBy ?? params.query_by;
       params.sort_by = params.sortBy ?? params.sort_by;
-      params.highlightFullFields =
+      params.highlight_full_fields =
         params.highlightFullFields ??
         params.highlight_full_fields ??
         this.additionalSearchParameters.highlight_full_fields ??
         params.query_by;
+      
+      // Remove undefined values
+      Object.keys(params).forEach(key => params[key] === undefined ? delete params[key] : {});
     });
   }
 
