@@ -17,7 +17,7 @@ Here is an example of UI you can build with this adapater: [songs-search.typesen
 - [Installation](#installation)
 - [Usage](#usage)
   - [With instantsearch.js](#with-instantsearchjs)
-  - [With react-instantsearch](#with-react-instantsearch)
+  - [With react-instantsearch](#with-react-instantsearch) (also works with React Native)
   - [With vue-instantsearch](#with-vue-instantsearch)
   - [With angular-instantsearch](#with-angular-instantsearch)
 - [Widget Specific Instructions](#widget-specific-instructions)
@@ -168,6 +168,8 @@ const App = () => (
 ```
 
 You can then add any of the Instantsearch-React widgets [here](https://www.algolia.com/doc/guides/building-search-ui/widgets/showcase/react/) that are [supported](#widget-compatibility) by the adapter.
+
+The instructions above also apply to React Native. 
 
 ### With [vue-instantsearch](https://github.com/algolia/vue-instantsearch)
 
