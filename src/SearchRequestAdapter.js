@@ -175,7 +175,7 @@ export class SearchRequestAdapter {
     // };
     const filtersHash = {};
     numericFilters.forEach((filter) => {
-      const [, field, operator, value] = filter.match(new RegExp("(.*)(<=|>=|>|<|:)(.*)"));
+      const [, field, operator, value] = filter.match(new RegExp("(.*?)(<=|>=|>|<|:|=)(.*)"));
       filtersHash[field] = filtersHash[field] || {};
       filtersHash[field][operator] = value;
     });
@@ -190,6 +190,8 @@ export class SearchRequestAdapter {
         adaptedFilters.push(`${field}:<=${filtersHash[field]["<="]}`);
       } else if (filtersHash[field][">="] != null) {
         adaptedFilters.push(`${field}:>=${filtersHash[field][">="]}`);
+      } else if (filtersHash[field]["="] != null) {
+        adaptedFilters.push(`${field}:=${filtersHash[field]["="]}`);
       } else {
         console.warn(
           `[Typesense-Instantsearch-Adapter] Unsupported operator found ${JSON.stringify(filtersHash[field])}`
