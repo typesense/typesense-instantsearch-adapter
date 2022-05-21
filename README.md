@@ -7,7 +7,7 @@ An adapter to use the awesome [Instantsearch.js](https://github.com/algolia/inst
 
 Here is an example of UI you can build with this adapater: [songs-search.typesense.org](https://songs-search.typesense.org)
 
-**Note:**  If your search interface is built on a custom autocomplete component, or is based on  [@algolia/autocomplete-js](https://www.algolia.com/doc/ui-libraries/autocomplete/introduction/what-is-autocomplete/), then you don't need this adapter to use it with Typesense, as [typesense-js](https://github.com/typesense/typesense-js) library already supports client-side fetching data from any async data sources. Read more [here](https://github.com/typesense/typesense-instantsearch-adapter/issues/88#issuecomment-1021597634).
+**Note:** If your search interface is built on a custom autocomplete component, or is based on [@algolia/autocomplete-js](https://www.algolia.com/doc/ui-libraries/autocomplete/introduction/what-is-autocomplete/), then you don't need this adapter to use it with Typesense, as [typesense-js](https://github.com/typesense/typesense-js) library already supports client-side fetching data from any async data sources. Read more [here](https://github.com/typesense/typesense-instantsearch-adapter/issues/88#issuecomment-1021597634).
 
 ## Quick Links
 
@@ -169,7 +169,7 @@ const App = () => (
 
 You can then add any of the Instantsearch-React widgets [here](https://www.algolia.com/doc/guides/building-search-ui/widgets/showcase/react/) that are [supported](#widget-compatibility) by the adapter.
 
-The instructions above also apply to React Native. 
+The instructions above also apply to React Native.
 
 ### With [vue-instantsearch](https://github.com/algolia/vue-instantsearch)
 
