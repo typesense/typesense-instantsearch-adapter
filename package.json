@@ -8,6 +8,7 @@
   "files": [
     "dist/",
     "lib/",
+    "src/",
     "scripts/",
     "index.d.ts"
   ],
