@@ -12,7 +12,11 @@ export class SearchResponseAdapter {
   _adaptGroupedHits(typesenseGroupedHits) {
     let adaptedResult = [];
 
-    adaptedResult = typesenseGroupedHits.map((groupedHit) => this._adaptHits(groupedHit.hits));
+    adaptedResult = typesenseGroupedHits.map((groupedHit) => {
+      const adaptedHits = this._adaptHits(groupedHit.hits);
+      adaptedHits.forEach((hit) => (hit["group_key"] = groupedHit.group_key));
+      return adaptedHits;
+    });
 
     // adaptedResult is now in the form of [[{}, {}], [{}, {}], ...]
     //  where each element in the outer most array corresponds to a group.
