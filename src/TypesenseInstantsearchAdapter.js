@@ -8,9 +8,7 @@ import { FacetSearchResponseAdapter } from "./FacetSearchResponseAdapter";
 
 export default class TypesenseInstantsearchAdapter {
   constructor(options) {
-    this.configuration = new Configuration(options);
-    this.configuration.validate();
-    this.typesenseClient = new TypesenseSearchClient(this.configuration.server);
+    this.updateConfiguration(options);
     this.searchClient = {
       clearCache: () => this.clearCache(),
       search: (instantsearchRequests) => this.searchTypesenseAndAdapt(instantsearchRequests),
@@ -74,6 +72,13 @@ export default class TypesenseInstantsearchAdapter {
   clearCache() {
     this.typesenseClient = new TypesenseSearchClient(this.configuration.server);
     return this.searchClient;
+  }
+
+  updateConfiguration(options) {
+    this.configuration = new Configuration(options);
+    this.configuration.validate();
+    this.typesenseClient = new TypesenseSearchClient(this.configuration.server);
+    return true;
   }
 
   _validateTypesenseResult(typesenseResult) {

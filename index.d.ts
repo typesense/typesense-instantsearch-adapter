@@ -139,4 +139,6 @@ type TypesenseInstantsearchAdapterOptions =
 export default class TypesenseInstantsearchAdapter {
   readonly searchClient: SearchClient;
   constructor(options: TypesenseInstantsearchAdapterOptions);
+  clearCache(): SearchClient;
+  updateConfiguration(options: TypesenseInstantsearchAdapterOptions): boolean;
 }
