@@ -88,7 +88,7 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
     nodes: [
       {
         host: "localhost",
-        path: '/', // Optional. Example: If you have your typesense mounted in localhost:8108/typesense, path should be equal to '/typesense'
+        path: '', // Optional. Example: If you have your typesense mounted in localhost:8108/typesense, path should be equal to '/typesense'
         port: "8108",
         protocol: "http",
       },
@@ -146,7 +146,7 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
       {
         host: "localhost",
         port: "8108",
-        path: '/', // Optional. Example: If you have your typesense mounted in localhost:8108/typesense, path should be equal to '/typesense'
+        path: '', // Optional. Example: If you have your typesense mounted in localhost:8108/typesense, path should be equal to '/typesense'
         protocol: "http",
       },
     ],
@@ -198,7 +198,7 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
     nodes: [
       {
         host: "localhost",
-        path: '/', // Optional. Example: If you have your typesense mounted in localhost:8108/typesense, path should be equal to '/typesense'
+        path: '', // Optional. Example: If you have your typesense mounted in localhost:8108/typesense, path should be equal to '/typesense'
         port: "8108",
         protocol: "http",
       },
@@ -239,7 +239,7 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
     nodes: [
       {
         host: "localhost",
-        path: '/', // Optional. Example: If you have your typesense mounted in localhost:8108/typesense, path should be equal to '/typesense'
+        path: '', // Optional. Example: If you have your typesense mounted in localhost:8108/typesense, path should be equal to '/typesense'
         port: "8108",
         protocol: "http",
       },
