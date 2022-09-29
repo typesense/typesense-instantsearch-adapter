@@ -74,6 +74,7 @@
     "jest-dev-server": "^6.0.3",
     "jest-junit": "^13.0.0",
     "jest-puppeteer": "^6.1.0",
+    "lodash.clonedeep": "^4.5.0",
     "prettier": "^2.5.1",
     "puppeteer": "^13.5.0",
     "tsd": "^0.19.1",
