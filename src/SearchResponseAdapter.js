@@ -71,6 +71,17 @@ export class SearchResponseAdapter {
       }))
     );
 
+    // If there is a highlight object available (as of v0.24.0),
+    //  use that instead of the array, since it supports highlights of nested fields
+    if (typesenseHit.highlight != null) {
+      this.adaptHighlightsObject(typesenseHit, result, snippetOrValue);
+    } else {
+      this.adaptHighlightsArray(typesenseHit, result, snippetOrValue);
+    }
+    return result;
+  }
+
+  adaptHighlightsArray(typesenseHit, result, snippetOrValue) {
     typesenseHit.highlights.forEach((highlight) => {
       result[highlight.field] = {
         value: highlight[snippetOrValue] || highlight[`${snippetOrValue}s`],
@@ -120,7 +131,21 @@ export class SearchResponseAdapter {
         );
       }
     });
-    return result;
+  }
+
+  adaptHighlightsObject(typesenseHit, result, snippetOrValue) {
+    const highlightSubKey = snippetOrValue === "value" ? "full" : "snippet";
+    Object.entries(typesenseHit.highlight[highlightSubKey]).forEach(([field, value]) => {
+      result[field] = {
+        value: this._adaptHighlightTag( // Need to account for objects and arrays
+          `${value}`,
+          this.instantsearchRequest.params.highlightPreTag,
+          this.instantsearchRequest.params.highlightPostTag
+        ),
+        matchLevel: "full",
+        matchedWords: typesenseHit.highlight.meta[field].matched_tokens,
+      };
+    });
   }
 
   _adaptFacets(typesenseFacetCounts) {
