@@ -2769,12 +2769,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "SearchResponseAdapter": () => (/* binding */ SearchResponseAdapter)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ "./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js");
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
-/* harmony import */ var _support_utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./support/utils */ "./src/support/utils.js");
+/* harmony import */ var _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/typeof */ "./node_modules/@babel/runtime/helpers/esm/typeof.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ "./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _support_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./support/utils */ "./src/support/utils.js");
+
 
 
 
@@ -2785,19 +2787,19 @@ __webpack_require__.r(__webpack_exports__);
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_2__["default"])(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__["default"])(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 
 var SearchResponseAdapter = /*#__PURE__*/function () {
   function SearchResponseAdapter(typesenseResponse, instantsearchRequest, configuration) {
-    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_3__["default"])(this, SearchResponseAdapter);
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_4__["default"])(this, SearchResponseAdapter);
 
     this.typesenseResponse = typesenseResponse;
     this.instantsearchRequest = instantsearchRequest;
     this.configuration = configuration;
   }
 
-  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4__["default"])(SearchResponseAdapter, [{
+  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_5__["default"])(SearchResponseAdapter, [{
     key: "_adaptGroupedHits",
     value: function _adaptGroupedHits(typesenseGroupedHits) {
       var _this = this;
@@ -2851,23 +2853,11 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
   }, {
     key: "_adaptHighlightResult",
     value: function _adaptHighlightResult(typesenseHit, snippetOrValue) {
-      // Algolia lists all searchable attributes in this key, even if there are no matches
-      // So do the same and then override highlights
-      var result = Object.assign.apply(Object, [{}].concat((0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1__["default"])(Object.entries(typesenseHit.document).map(function (_ref) {
-        var _ref2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_ref, 2),
-            attribute = _ref2[0],
-            value = _ref2[1];
-
-        return (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_2__["default"])({}, attribute, {
-          value: value,
-          matchLevel: "none",
-          matchedWords: []
-        });
-      })))); // If there is a highlight object available (as of v0.24.0),
-      //  use that instead of the array, since it supports highlights of nested fields
+      var result = {}; // If there is a highlight object available (as of v0.24.0),
+      //  use that instead of the highlights array, since it supports highlights of nested fields
 
       if (typesenseHit.highlight != null) {
-        this.adaptHighlightsObject(typesenseHit, result, snippetOrValue);
+        this.adaptHighlightObject(typesenseHit, result, snippetOrValue);
       } else {
         this.adaptHighlightsArray(typesenseHit, result, snippetOrValue);
       }
@@ -2879,6 +2869,19 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
     value: function adaptHighlightsArray(typesenseHit, result, snippetOrValue) {
       var _this3 = this;
 
+      // Algolia lists all searchable attributes in this key, even if there are no matches
+      // So do the same and then override highlights
+      Object.assign.apply(Object, [result].concat((0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2__["default"])(Object.entries(typesenseHit.document).map(function (_ref) {
+        var _ref2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_ref, 2),
+            attribute = _ref2[0],
+            value = _ref2[1];
+
+        return (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__["default"])({}, attribute, {
+          value: value,
+          matchLevel: "none",
+          matchedWords: []
+        });
+      }))));
       typesenseHit.highlights.forEach(function (highlight) {
         result[highlight.field] = {
           value: highlight[snippetOrValue] || highlight["".concat(snippetOrValue, "s")],
@@ -2893,7 +2896,7 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
       // Also, replace highlight tag
 
       Object.entries(result).forEach(function (_ref4) {
-        var _ref5 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_ref4, 2),
+        var _ref5 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_ref4, 2),
             k = _ref5[0],
             v = _ref5[1];
 
@@ -2929,31 +2932,83 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
       });
     }
   }, {
-    key: "adaptHighlightsObject",
-    value: function adaptHighlightsObject(typesenseHit, result, snippetOrValue) {
+    key: "adaptHighlightObject",
+    value: function adaptHighlightObject(typesenseHit, result, snippetOrValue) {
+      var highlightSubKey = snippetOrValue === "value" ? "full" : "snippet";
+      Object.assign(result, this._adaptHighlightInObjectValue(typesenseHit.document, typesenseHit.highlight[highlightSubKey], typesenseHit.highlight.meta));
+    }
+  }, {
+    key: "_adaptHighlightInObjectValue",
+    value: function _adaptHighlightInObjectValue(objectValue, highlightObjectValue, highlightMeta) {
       var _this4 = this;
 
-      var highlightSubKey = snippetOrValue === "value" ? "full" : "snippet";
-      Object.entries(typesenseHit.highlight[highlightSubKey]).forEach(function (_ref6) {
-        var _ref7 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_ref6, 2),
-            field = _ref7[0],
+      return Object.assign.apply(Object, [{}].concat((0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2__["default"])(Object.entries(objectValue).map(function (_ref6) {
+        var _ref7 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_ref6, 2),
+            attribute = _ref7[0],
             value = _ref7[1];
 
-        result[field] = {
-          value: _this4._adaptHighlightTag( // Need to account for objects and arrays
-          "".concat(value), _this4.instantsearchRequest.params.highlightPreTag, _this4.instantsearchRequest.params.highlightPostTag),
-          matchLevel: "full",
-          matchedWords: typesenseHit.highlight.meta[field].matched_tokens
-        };
+        var adaptedValue;
+
+        if (Array.isArray(value)) {
+          var _highlightObjectValue, _highlightMeta$attrib;
+
+          adaptedValue = _this4._adaptHighlightInArrayValue(value, (_highlightObjectValue = highlightObjectValue[attribute]) !== null && _highlightObjectValue !== void 0 ? _highlightObjectValue : {}, (_highlightMeta$attrib = highlightMeta[attribute]) !== null && _highlightMeta$attrib !== void 0 ? _highlightMeta$attrib : {});
+        } else if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(value) === "object") {
+          var _highlightObjectValue2, _highlightMeta$attrib2;
+
+          adaptedValue = _this4._adaptHighlightInObjectValue(value, (_highlightObjectValue2 = highlightObjectValue[attribute]) !== null && _highlightObjectValue2 !== void 0 ? _highlightObjectValue2 : {}, (_highlightMeta$attrib2 = highlightMeta[attribute]) !== null && _highlightMeta$attrib2 !== void 0 ? _highlightMeta$attrib2 : {});
+        } else {
+          adaptedValue = _this4._adaptHighlightInPrimitiveValue(value, highlightObjectValue[attribute], highlightMeta[attribute]);
+        }
+
+        return (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__["default"])({}, attribute, adaptedValue);
+      }))));
+    }
+  }, {
+    key: "_adaptHighlightInArrayValue",
+    value: function _adaptHighlightInArrayValue(arrayValue, highlightArrayValue, highlightMeta) {
+      var _this5 = this;
+
+      return arrayValue.map(function (value, index) {
+        var adaptedValue;
+
+        if (Array.isArray(value)) {
+          adaptedValue = _this5._adaptHighlightInArrayValue(value, highlightArrayValue[index], highlightMeta[index]);
+        } else if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(value) === "object") {
+          adaptedValue = _this5._adaptHighlightInObjectValue(value, highlightArrayValue[index], highlightMeta[index]);
+        } else {
+          adaptedValue = _this5._adaptHighlightInPrimitiveValue(value, highlightArrayValue[index], highlightMeta[index]);
+        }
+
+        return adaptedValue;
       });
+    }
+  }, {
+    key: "_adaptHighlightInPrimitiveValue",
+    value: function _adaptHighlightInPrimitiveValue(primitiveValue, highlightPrimitiveValue, highlightMeta) {
+      if (highlightPrimitiveValue != null) {
+        return {
+          value: this._adaptHighlightTag("".concat(highlightPrimitiveValue), this.instantsearchRequest.params.highlightPreTag, this.instantsearchRequest.params.highlightPostTag),
+          matchLevel: "full",
+          matchedWords: highlightMeta.matched_tokens,
+          matchedIndices: highlightMeta.matched_indices
+        };
+      } else {
+        return {
+          // Convert all values to strings
+          value: this._adaptHighlightTag("".concat(primitiveValue), this.instantsearchRequest.params.highlightPreTag, this.instantsearchRequest.params.highlightPostTag),
+          matchLevel: "none",
+          matchedWords: []
+        };
+      }
     }
   }, {
     key: "_adaptFacets",
     value: function _adaptFacets(typesenseFacetCounts) {
       var adaptedResult = {};
       typesenseFacetCounts.forEach(function (facet) {
-        Object.assign(adaptedResult, (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_2__["default"])({}, facet.field_name, Object.assign.apply(Object, [{}].concat((0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1__["default"])(facet.counts.map(function (count) {
-          return (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_2__["default"])({}, count.value, count.count);
+        Object.assign(adaptedResult, (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__["default"])({}, facet.field_name, Object.assign.apply(Object, [{}].concat((0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2__["default"])(facet.counts.map(function (count) {
+          return (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__["default"])({}, count.value, count.count);
         }))))));
       });
       return adaptedResult;
@@ -2964,7 +3019,7 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
       var adaptedResult = {};
       typesenseFacetCounts.forEach(function (facet) {
         if (Object.keys(facet.stats).length > 0) {
-          Object.assign(adaptedResult, (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_2__["default"])({}, facet.field_name, facet.stats));
+          Object.assign(adaptedResult, (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__["default"])({}, facet.field_name, facet.stats));
         }
       });
       return adaptedResult;
@@ -2982,15 +3037,15 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
         facets_stats: this._adaptFacetStats(this.typesenseResponse.facet_counts || {}),
         query: this.typesenseResponse.request_params.q,
         processingTimeMS: this.typesenseResponse.search_time_ms
-      }; // console.log(adaptedResult);
-
+      };
+      console.log(adaptedResult);
       return adaptedResult;
     }
   }]);
 
   return SearchResponseAdapter;
 }();
-Object.assign(SearchResponseAdapter.prototype, _support_utils__WEBPACK_IMPORTED_MODULE_5__.utils);
+Object.assign(SearchResponseAdapter.prototype, _support_utils__WEBPACK_IMPORTED_MODULE_6__.utils);
 
 /***/ }),
 
@@ -7321,6 +7376,29 @@ __webpack_require__.r(__webpack_exports__);
 
 function _toConsumableArray(arr) {
   return (0,_arrayWithoutHoles_js__WEBPACK_IMPORTED_MODULE_0__["default"])(arr) || (0,_iterableToArray_js__WEBPACK_IMPORTED_MODULE_1__["default"])(arr) || (0,_unsupportedIterableToArray_js__WEBPACK_IMPORTED_MODULE_2__["default"])(arr) || (0,_nonIterableSpread_js__WEBPACK_IMPORTED_MODULE_3__["default"])();
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/typeof.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/typeof.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _typeof)
+/* harmony export */ });
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) {
+    return typeof obj;
+  } : function (obj) {
+    return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+  }, _typeof(obj);
 }
 
 /***/ }),

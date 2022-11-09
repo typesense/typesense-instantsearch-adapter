@@ -25,7 +25,7 @@ import { connectAutocomplete } from "instantsearch.js/es/connectors";
 import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
 
 const additionalSearchParameters = {
-  query_by: "name,description,categories",
+  query_by: "name,description,categories,hierarchicalCategories",
   // group_by: "categories",
   // group_limit: 1
   // pinned_hits: "23:2"
@@ -114,7 +114,12 @@ search.addWidgets([
   }),
   hierarchicalMenu({
     container: "#categories-hierarchical-menu",
-    attributes: ["categories.lvl0", "categories.lvl1", "categories.lvl2", "categories.lvl3"],
+    attributes: [
+      "hierarchicalCategories.lvl0",
+      "hierarchicalCategories.lvl1",
+      "hierarchicalCategories.lvl2",
+      "hierarchicalCategories.lvl3",
+    ],
   }),
   numericMenu({
     container: "#price-menu",
@@ -213,7 +218,12 @@ search.addWidgets([
   }),
   breadcrumb({
     container: "#breadcrumb",
-    attributes: ["categories.lvl0", "categories.lvl1", "categories.lvl2", "categories.lvl3"],
+    attributes: [
+      "hierarchicalCategories.lvl0",
+      "hierarchicalCategories.lvl1",
+      "hierarchicalCategories.lvl2",
+      "hierarchicalCategories.lvl3",
+    ],
   }),
 ]);
 
