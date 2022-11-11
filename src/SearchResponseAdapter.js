@@ -19,7 +19,7 @@ export class SearchResponseAdapter {
     });
 
     // adaptedResult is now in the form of [[{}, {}], [{}, {}], ...]
-    //  where each element in the outer most array corresponds to a group.
+    //  where each element in the outermost array corresponds to a group.
     // We now flatten it to [{}, {}, {}]
     adaptedResult = adaptedResult.flat();
 
@@ -136,25 +136,23 @@ export class SearchResponseAdapter {
   }
 
   adaptHighlightObject(typesenseHit, result, snippetOrValue) {
-    const highlightSubKey = snippetOrValue === "value" ? "full" : "snippet";
-
     Object.assign(
       result,
-      this._adaptHighlightInObjectValue(typesenseHit.document, typesenseHit.highlight[highlightSubKey], typesenseHit.highlight.meta)
+      this._adaptHighlightInObjectValue(typesenseHit.document, typesenseHit.highlight, snippetOrValue)
     );
   }
 
-  _adaptHighlightInObjectValue(objectValue, highlightObjectValue, highlightMeta) {
+  _adaptHighlightInObjectValue(objectValue, highlightObjectValue, snippetOrValue) {
     return Object.assign(
       {},
       ...Object.entries(objectValue).map(([attribute, value]) => {
         let adaptedValue;
         if (Array.isArray(value)) {
-          adaptedValue = this._adaptHighlightInArrayValue(value, highlightObjectValue[attribute] ?? {}, highlightMeta[attribute] ?? {});
+          adaptedValue = this._adaptHighlightInArrayValue(value, highlightObjectValue[attribute] ?? {}, snippetOrValue);
         } else if (typeof value === "object") {
-          adaptedValue = this._adaptHighlightInObjectValue(value, highlightObjectValue[attribute] ?? {}, highlightMeta[attribute] ?? {});
+          adaptedValue = this._adaptHighlightInObjectValue(value, highlightObjectValue[attribute] ?? {}, snippetOrValue);
         } else {
-          adaptedValue = this._adaptHighlightInPrimitiveValue(value, highlightObjectValue[attribute], highlightMeta[attribute]);
+          adaptedValue = this._adaptHighlightInPrimitiveValue(value, highlightObjectValue[attribute], snippetOrValue);
         }
 
         return {
@@ -164,31 +162,30 @@ export class SearchResponseAdapter {
     );
   }
 
-  _adaptHighlightInArrayValue(arrayValue, highlightArrayValue, highlightMeta) {
+  _adaptHighlightInArrayValue(arrayValue, highlightArrayValue, snippetOrValue) {
     return arrayValue.map((value, index) => {
       let adaptedValue;
       if (Array.isArray(value)) {
-        adaptedValue = this._adaptHighlightInArrayValue(value, highlightArrayValue[index], highlightMeta[index]);
+        adaptedValue = this._adaptHighlightInArrayValue(value, highlightArrayValue[index], snippetOrValue);
       } else if (typeof value === "object") {
-        adaptedValue = this._adaptHighlightInObjectValue(value, highlightArrayValue[index], highlightMeta[index]);
+        adaptedValue = this._adaptHighlightInObjectValue(value, highlightArrayValue[index], snippetOrValue);
       } else {
-        adaptedValue = this._adaptHighlightInPrimitiveValue(value, highlightArrayValue[index], highlightMeta[index]);
+        adaptedValue = this._adaptHighlightInPrimitiveValue(value, highlightArrayValue[index], snippetOrValue);
       }
       return adaptedValue;
     });
   }
 
-  _adaptHighlightInPrimitiveValue(primitiveValue, highlightPrimitiveValue, highlightMeta) {
+  _adaptHighlightInPrimitiveValue(primitiveValue, highlightPrimitiveValue, snippetOrValue) {
     if (highlightPrimitiveValue != null) {
       return {
         value: this._adaptHighlightTag(
-          `${highlightPrimitiveValue}`,
+          `${highlightPrimitiveValue[snippetOrValue]}`,
           this.instantsearchRequest.params.highlightPreTag,
           this.instantsearchRequest.params.highlightPostTag
         ),
         matchLevel: "full",
-        matchedWords: highlightMeta.matched_tokens,
-        matchedIndices: highlightMeta.matched_indices,
+        matchedWords: highlightPrimitiveValue.matched_tokens,
       };
     } else {
       return {
