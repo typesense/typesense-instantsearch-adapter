@@ -2832,7 +2832,7 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
         adaptedHit._snippetResult = _this2._adaptHighlightResult(typesenseHit, "snippet");
         adaptedHit._highlightResult = _this2._adaptHighlightResult(typesenseHit, "value"); // Add metadata fields to result, if a field with that name doesn't already exist
 
-        ["text_match", "geo_distance_meters", "curated"].forEach(function (metadataField) {
+        ["text_match", "geo_distance_meters", "curated", "text_match_info"].forEach(function (metadataField) {
           if (Object.keys(typesenseHit).includes(metadataField) && !Object.keys(adaptedHit).includes(metadataField)) {
             adaptedHit[metadataField] = typesenseHit[metadataField];
           }
@@ -4410,8 +4410,12 @@ var ApiCall = /** @class */ (function () {
     function ApiCall(configuration) {
         this.configuration = configuration;
         this.apiKey = this.configuration.apiKey;
-        this.nodes = JSON.parse(JSON.stringify(this.configuration.nodes)); // Make a copy, since we'll be adding additional metadata to the nodes
-        this.nearestNode = JSON.parse(JSON.stringify(this.configuration.nearestNode));
+        this.nodes =
+            this.configuration.nodes == null ? this.configuration.nodes : JSON.parse(JSON.stringify(this.configuration.nodes)); // Make a copy, since we'll be adding additional metadata to the nodes
+        this.nearestNode =
+            this.configuration.nearestNode == null
+                ? this.configuration.nearestNode
+                : JSON.parse(JSON.stringify(this.configuration.nearestNode));
         this.connectionTimeoutSeconds = this.configuration.connectionTimeoutSeconds;
         this.healthcheckIntervalSeconds = this.configuration.healthcheckIntervalSeconds;
         this.numRetriesPerRequest = this.configuration.numRetries;
@@ -4424,7 +4428,7 @@ var ApiCall = /** @class */ (function () {
     }
     ApiCall.prototype.get = function (endpoint, queryParameters, _a) {
         if (queryParameters === void 0) { queryParameters = {}; }
-        var _b = _a === void 0 ? {} : _a, _c = _b.abortSignal, abortSignal = _c === void 0 ? null : _c, _d = _b.responseType, responseType = _d === void 0 ? null : _d;
+        var _b = _a === void 0 ? {} : _a, _c = _b.abortSignal, abortSignal = _c === void 0 ? null : _c, _d = _b.responseType, responseType = _d === void 0 ? undefined : _d;
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_e) {
                 return [2 /*return*/, this.performRequest('get', endpoint, { queryParameters: queryParameters, abortSignal: abortSignal, responseType: responseType })];
@@ -4469,7 +4473,7 @@ var ApiCall = /** @class */ (function () {
     };
     ApiCall.prototype.performRequest = function (requestType, endpoint, _a) {
         var _b, _c, _d;
-        var _e = _a.queryParameters, queryParameters = _e === void 0 ? null : _e, _f = _a.bodyParameters, bodyParameters = _f === void 0 ? null : _f, _g = _a.additionalHeaders, additionalHeaders = _g === void 0 ? {} : _g, _h = _a.abortSignal, abortSignal = _h === void 0 ? null : _h, _j = _a.responseType, responseType = _j === void 0 ? null : _j;
+        var _e = _a.queryParameters, queryParameters = _e === void 0 ? null : _e, _f = _a.bodyParameters, bodyParameters = _f === void 0 ? null : _f, _g = _a.additionalHeaders, additionalHeaders = _g === void 0 ? {} : _g, _h = _a.abortSignal, abortSignal = _h === void 0 ? null : _h, _j = _a.responseType, responseType = _j === void 0 ? undefined : _j;
         return __awaiter(this, void 0, void 0, function () {
             var requestNumber, lastException, _loop_1, this_1, numTries, state_1;
             return __generator(this, function (_k) {
@@ -4621,7 +4625,7 @@ var ApiCall = /** @class */ (function () {
         this.logger.debug("Request #".concat(requestNumber, ": Nodes Health: ").concat(this.nodes
             .map(function (node) { return "Node ".concat(node.index, " is ").concat(node.isHealthy === true ? 'Healthy' : 'Unhealthy'); })
             .join(' || ')));
-        var candidateNode;
+        var candidateNode = this.nodes[0];
         for (var i = 0; i <= this.nodes.length; i++) {
             this.currentNodeIndex = (this.currentNodeIndex + 1) % this.nodes.length;
             candidateNode = this.nodes[this.currentNodeIndex];
@@ -5005,10 +5009,11 @@ var Collections = /** @class */ (function () {
     function Collections(apiCall) {
         this.apiCall = apiCall;
     }
-    Collections.prototype.create = function (schema) {
+    Collections.prototype.create = function (schema, options) {
+        if (options === void 0) { options = {}; }
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, this.apiCall.post(RESOURCEPATH, schema)];
+                return [2 /*return*/, this.apiCall.post(RESOURCEPATH, schema, options)];
             });
         });
     };
@@ -5092,7 +5097,7 @@ var Configuration = /** @class */ (function () {
         if (options.randomizeNodes === true) {
             this.shuffleArray(this.nodes);
         }
-        this.nearestNode = options.nearestNode || null;
+        this.nearestNode = options.nearestNode;
         this.nearestNode = this.setDefaultPathInNode(this.nearestNode);
         this.nearestNode = this.setDefaultPortInNode(this.nearestNode);
         this.connectionTimeoutSeconds = options.connectionTimeoutSeconds || options.timeoutSeconds || 5;
