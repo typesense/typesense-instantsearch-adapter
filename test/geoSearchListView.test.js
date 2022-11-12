@@ -17,10 +17,10 @@ describe("Geo Search - List View", () => {
       await page.goto("http://localhost:3000/geosearch_list_view.html?insideBoundingBox");
 
       await expect(page).toMatchElement("#stats", {
-        text: "3,163 results found",
+        text: "119 results found",
       });
       return await expect(page).toMatchElement("#hits .ais-Hits-item:nth-of-type(1)", {
-        text: "ATL",
+        text: "LAX",
       });
     });
   });

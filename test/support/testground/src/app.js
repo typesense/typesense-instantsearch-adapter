@@ -25,7 +25,7 @@ import { connectAutocomplete } from "instantsearch.js/es/connectors";
 import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
 
 const additionalSearchParameters = {
-  query_by: "name,description,categories,hierarchicalCategories",
+  query_by: "name,description,categories",
   // group_by: "categories",
   // group_limit: 1
   // pinned_hits: "23:2"

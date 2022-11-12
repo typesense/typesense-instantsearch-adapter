@@ -21,7 +21,7 @@ describe("Federated Search", () => {
         text: "2 results found",
       });
       return await expect(page).toMatchElement("#brand-hits .ais-Hits-item:nth-of-type(1) .hit-name", {
-        text: "ChargeHub",
+        text: "ChargeIt",
       });
     });
   });

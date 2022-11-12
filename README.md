@@ -88,7 +88,7 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
     nodes: [
       {
         host: "localhost",
-        path: '', // Optional. Example: If you have your typesense mounted in localhost:8108/typesense, path should be equal to '/typesense'
+        path: "", // Optional. Example: If you have your typesense mounted in localhost:8108/typesense, path should be equal to '/typesense'
         port: "8108",
         protocol: "http",
       },
@@ -146,7 +146,7 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
       {
         host: "localhost",
         port: "8108",
-        path: '', // Optional. Example: If you have your typesense mounted in localhost:8108/typesense, path should be equal to '/typesense'
+        path: "", // Optional. Example: If you have your typesense mounted in localhost:8108/typesense, path should be equal to '/typesense'
         protocol: "http",
       },
     ],
@@ -198,7 +198,7 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
     nodes: [
       {
         host: "localhost",
-        path: '', // Optional. Example: If you have your typesense mounted in localhost:8108/typesense, path should be equal to '/typesense'
+        path: "", // Optional. Example: If you have your typesense mounted in localhost:8108/typesense, path should be equal to '/typesense'
         port: "8108",
         protocol: "http",
       },
@@ -239,7 +239,7 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
     nodes: [
       {
         host: "localhost",
-        path: '', // Optional. Example: If you have your typesense mounted in localhost:8108/typesense, path should be equal to '/typesense'
+        path: "", // Optional. Example: If you have your typesense mounted in localhost:8108/typesense, path should be equal to '/typesense'
         port: "8108",
         protocol: "http",
       },
@@ -321,7 +321,7 @@ For Federated / Multi-Index Search, you'd need to use the `index` widget. To the
 const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   server: {
     apiKey: "abcd", // Be sure to use an API key that only allows search operations
-    nodes: [{ host: "localhost", path:'/', port: "8108", protocol: "http" }],
+    nodes: [{ host: "localhost", path: "/", port: "8108", protocol: "http" }],
   },
   // Search parameters that are common to all collections/indices go here:
   additionalSearchParameters: {

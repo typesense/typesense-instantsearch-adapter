@@ -39,10 +39,10 @@ describe("Search Experience", () => {
           });
           await expect(page).toClick("#brand-list input[type=checkbox][value=Samsung]");
           await expect(page).toMatchElement("#stats", {
-            text: "28 results found",
+            text: "17 results found",
           });
-          await expect(page).toMatchElement('#price-range-input form input[type=number][placeholder="14"]');
-          await expect(page).toMatchElement('#price-range-input form input[type=number][placeholder="770"]');
+          await expect(page).toMatchElement('#price-range-input form input[type=number][placeholder="19"]');
+          await expect(page).toMatchElement('#price-range-input form input[type=number][placeholder="130"]');
           await expect(page).toMatchElement("#hits", {
             text: "Fast Charge Wireless Charger",
           });
@@ -56,7 +56,7 @@ describe("Search Experience", () => {
           // Pagination
           await page.waitForSelector("#pagination a.ais-Pagination-link");
           const length = (await page.$$("#pagination a.ais-Pagination-link")).length;
-          expect(length).toEqual(4 + 2);
+          expect(length).toEqual(3 + 2);
         });
       });
 
@@ -102,7 +102,7 @@ describe("Search Experience", () => {
             text: "Car & Travel Accessories",
           });
           await expect(page).toMatchElement("#stats", {
-            text: "17 results found",
+            text: "13 results found",
           });
           await expect(page).toMatchElement("#hits", {
             text: "Samsung - Adaptive Fast Charging Vehicle Charger",
@@ -130,7 +130,7 @@ describe("Search Experience", () => {
             text: "Car & Travel Accessories",
           });
           await expect(page).toMatchElement("#stats", {
-            text: "17 results found",
+            text: "13 results found",
           });
 
           // clearRefinements
@@ -189,7 +189,7 @@ describe("Search Experience", () => {
             text: "Between 500$ - 1000$",
           });
           await expect(page).toMatchElement("#stats", {
-            text: "17 results found",
+            text: "3 results found",
           });
           await expect(page).toMatchElement("#hits", {
             text: "Motorola - Moto Z Play 4G",
@@ -199,7 +199,7 @@ describe("Search Experience", () => {
           });
           await page.waitForSelector("#pagination a.ais-Pagination-link");
           const length = (await page.$$("#pagination a.ais-Pagination-link")).length;
-          expect(length).toEqual(5);
+          expect(length).toEqual(1);
         });
       });
       describe("using the rangeInput", () => {
@@ -208,7 +208,7 @@ describe("Search Experience", () => {
           await expect(page).toFill("#price-range-input form input[type=number].ais-RangeInput-input--max", "100");
           await expect(page).toClick("#price-range-input button");
           await expect(page).toMatchElement("#stats", {
-            text: "33 results found",
+            text: "8 results found",
           });
           await expect(page).toMatchElement("#hits", {
             text: "mophie - Powerstation 20,000 mAh Portable Charger",
@@ -224,13 +224,13 @@ describe("Search Experience", () => {
           await expect(page).toMatchElement("#rating-menu a[aria-label='4 & up'] span");
           await expect(page).toClick("#rating-menu a[aria-label='4 & up'] span");
           await expect(page).toMatchElement("#stats", {
-            text: "113 results found",
+            text: "112 results found",
           });
           await expect(page).toMatchElement("#hits", {
-            text: "Insignia™ - Vehicle Charger - Sea",
+            text: "Dynex™ - Portable Charger - Green",
           });
           await expect(page).toMatchElement("#infinite-hits", {
-            text: "Insignia™ - Vehicle Charger",
+            text: "Insignia™ - USB Vehicle Charger - Black",
           });
           await page.waitForSelector("#pagination a.ais-Pagination-link");
           const length = (await page.$$("#pagination a.ais-Pagination-link")).length;
