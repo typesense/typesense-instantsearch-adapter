@@ -150,7 +150,11 @@ export class SearchResponseAdapter {
         if (Array.isArray(value)) {
           adaptedValue = this._adaptHighlightInArrayValue(value, highlightObjectValue[attribute] ?? {}, snippetOrValue);
         } else if (typeof value === "object") {
-          adaptedValue = this._adaptHighlightInObjectValue(value, highlightObjectValue[attribute] ?? {}, snippetOrValue);
+          adaptedValue = this._adaptHighlightInObjectValue(
+            value,
+            highlightObjectValue[attribute] ?? {},
+            snippetOrValue
+          );
         } else {
           adaptedValue = this._adaptHighlightInPrimitiveValue(value, highlightObjectValue[attribute], snippetOrValue);
         }
@@ -238,7 +242,7 @@ export class SearchResponseAdapter {
       processingTimeMS: this.typesenseResponse.search_time_ms,
     };
 
-    console.log(adaptedResult);
+    // console.log(adaptedResult);
     return adaptedResult;
   }
 }
