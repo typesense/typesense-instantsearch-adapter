@@ -148,15 +148,19 @@ export class SearchResponseAdapter {
       ...Object.entries(objectValue).map(([attribute, value]) => {
         let adaptedValue;
         if (Array.isArray(value)) {
-          adaptedValue = this._adaptHighlightInArrayValue(value, highlightObjectValue[attribute] ?? {}, snippetOrValue);
+          adaptedValue = this._adaptHighlightInArrayValue(
+            value,
+            highlightObjectValue?.[attribute] ?? [],
+            snippetOrValue
+          );
         } else if (typeof value === "object") {
           adaptedValue = this._adaptHighlightInObjectValue(
             value,
-            highlightObjectValue[attribute] ?? {},
+            highlightObjectValue?.[attribute] ?? {},
             snippetOrValue
           );
         } else {
-          adaptedValue = this._adaptHighlightInPrimitiveValue(value, highlightObjectValue[attribute], snippetOrValue);
+          adaptedValue = this._adaptHighlightInPrimitiveValue(value, highlightObjectValue?.[attribute], snippetOrValue);
         }
 
         return {
@@ -170,11 +174,11 @@ export class SearchResponseAdapter {
     return arrayValue.map((value, index) => {
       let adaptedValue;
       if (Array.isArray(value)) {
-        adaptedValue = this._adaptHighlightInArrayValue(value, highlightArrayValue[index], snippetOrValue);
+        adaptedValue = this._adaptHighlightInArrayValue(value, highlightArrayValue?.[index] ?? [], snippetOrValue);
       } else if (typeof value === "object") {
-        adaptedValue = this._adaptHighlightInObjectValue(value, highlightArrayValue[index], snippetOrValue);
+        adaptedValue = this._adaptHighlightInObjectValue(value, highlightArrayValue?.[index] ?? {}, snippetOrValue);
       } else {
-        adaptedValue = this._adaptHighlightInPrimitiveValue(value, highlightArrayValue[index], snippetOrValue);
+        adaptedValue = this._adaptHighlightInPrimitiveValue(value, highlightArrayValue?.[index], snippetOrValue);
       }
       return adaptedValue;
     });

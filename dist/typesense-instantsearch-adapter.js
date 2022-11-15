@@ -2951,13 +2951,13 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
         if (Array.isArray(value)) {
           var _highlightObjectValue;
 
-          adaptedValue = _this4._adaptHighlightInArrayValue(value, (_highlightObjectValue = highlightObjectValue[attribute]) !== null && _highlightObjectValue !== void 0 ? _highlightObjectValue : {}, snippetOrValue);
+          adaptedValue = _this4._adaptHighlightInArrayValue(value, (_highlightObjectValue = highlightObjectValue === null || highlightObjectValue === void 0 ? void 0 : highlightObjectValue[attribute]) !== null && _highlightObjectValue !== void 0 ? _highlightObjectValue : [], snippetOrValue);
         } else if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(value) === "object") {
           var _highlightObjectValue2;
 
-          adaptedValue = _this4._adaptHighlightInObjectValue(value, (_highlightObjectValue2 = highlightObjectValue[attribute]) !== null && _highlightObjectValue2 !== void 0 ? _highlightObjectValue2 : {}, snippetOrValue);
+          adaptedValue = _this4._adaptHighlightInObjectValue(value, (_highlightObjectValue2 = highlightObjectValue === null || highlightObjectValue === void 0 ? void 0 : highlightObjectValue[attribute]) !== null && _highlightObjectValue2 !== void 0 ? _highlightObjectValue2 : {}, snippetOrValue);
         } else {
-          adaptedValue = _this4._adaptHighlightInPrimitiveValue(value, highlightObjectValue[attribute], snippetOrValue);
+          adaptedValue = _this4._adaptHighlightInPrimitiveValue(value, highlightObjectValue === null || highlightObjectValue === void 0 ? void 0 : highlightObjectValue[attribute], snippetOrValue);
         }
 
         return (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__["default"])({}, attribute, adaptedValue);
@@ -2972,11 +2972,15 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
         var adaptedValue;
 
         if (Array.isArray(value)) {
-          adaptedValue = _this5._adaptHighlightInArrayValue(value, highlightArrayValue[index], snippetOrValue);
+          var _highlightArrayValue$;
+
+          adaptedValue = _this5._adaptHighlightInArrayValue(value, (_highlightArrayValue$ = highlightArrayValue === null || highlightArrayValue === void 0 ? void 0 : highlightArrayValue[index]) !== null && _highlightArrayValue$ !== void 0 ? _highlightArrayValue$ : [], snippetOrValue);
         } else if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(value) === "object") {
-          adaptedValue = _this5._adaptHighlightInObjectValue(value, highlightArrayValue[index], snippetOrValue);
+          var _highlightArrayValue$2;
+
+          adaptedValue = _this5._adaptHighlightInObjectValue(value, (_highlightArrayValue$2 = highlightArrayValue === null || highlightArrayValue === void 0 ? void 0 : highlightArrayValue[index]) !== null && _highlightArrayValue$2 !== void 0 ? _highlightArrayValue$2 : {}, snippetOrValue);
         } else {
-          adaptedValue = _this5._adaptHighlightInPrimitiveValue(value, highlightArrayValue[index], snippetOrValue);
+          adaptedValue = _this5._adaptHighlightInPrimitiveValue(value, highlightArrayValue === null || highlightArrayValue === void 0 ? void 0 : highlightArrayValue[index], snippetOrValue);
         }
 
         return adaptedValue;
