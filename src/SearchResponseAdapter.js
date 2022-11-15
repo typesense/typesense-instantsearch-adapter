@@ -61,7 +61,7 @@ export class SearchResponseAdapter {
 
     // If there is a highlight object available (as of v0.24.0),
     //  use that instead of the highlights array, since it supports highlights of nested fields
-    if (typesenseHit.highlight != null) {
+    if (this.configuration.useHighlightV2Structure && typesenseHit.highlight != null) {
       this.adaptHighlightObject(typesenseHit, result, snippetOrValue);
     } else {
       this.adaptHighlightsArray(typesenseHit, result, snippetOrValue);

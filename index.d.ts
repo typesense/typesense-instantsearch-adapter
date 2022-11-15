@@ -109,6 +109,7 @@ interface CollectionSearchParametersOptionalQueryBy {
 interface BaseAdapterOptions {
   server: ConfigurationOptions;
   geoLocationField?: string;
+  useHighlightV2Structure?: boolean;
 }
 
 interface AdditionalSearchParametersWithQueryBy extends BaseAdapterOptions {
