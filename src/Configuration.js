@@ -15,7 +15,7 @@ export class Configuration {
 
     this.server.cacheSearchResultsForSeconds = this.server.cacheSearchResultsForSeconds ?? 2 * 60;
 
-    this.useHighlightV2Structure = this.options.useHighlightV2Structure || true
+    this.useHighlightV2Structure = options.useHighlightV2Structure ?? true
 
     this.additionalSearchParameters = options.additionalSearchParameters ?? {};
 

@@ -2204,6 +2204,7 @@ __webpack_require__.r(__webpack_exports__);
 var Configuration = /*#__PURE__*/function () {
   function Configuration() {
     var _this$server$cacheSea,
+        _options$useHighlight,
         _options$additionalSe,
         _ref,
         _this$additionalSearc,
@@ -2228,7 +2229,7 @@ var Configuration = /*#__PURE__*/function () {
       }]
     };
     this.server.cacheSearchResultsForSeconds = (_this$server$cacheSea = this.server.cacheSearchResultsForSeconds) !== null && _this$server$cacheSea !== void 0 ? _this$server$cacheSea : 2 * 60;
-    this.useHighlightV2Structure = this.options.useHighlightV2Structure || true;
+    this.useHighlightV2Structure = (_options$useHighlight = options.useHighlightV2Structure) !== null && _options$useHighlight !== void 0 ? _options$useHighlight : true;
     this.additionalSearchParameters = (_options$additionalSe = options.additionalSearchParameters) !== null && _options$additionalSe !== void 0 ? _options$additionalSe : {};
     this.additionalSearchParameters.query_by = (_ref = (_this$additionalSearc = this.additionalSearchParameters.queryBy) !== null && _this$additionalSearc !== void 0 ? _this$additionalSearc : this.additionalSearchParameters.query_by) !== null && _ref !== void 0 ? _ref : "";
     this.additionalSearchParameters.sort_by = (_ref2 = (_this$additionalSearc2 = this.additionalSearchParameters.sortBy) !== null && _this$additionalSearc2 !== void 0 ? _this$additionalSearc2 : this.additionalSearchParameters.sort_by) !== null && _ref2 !== void 0 ? _ref2 : "";
@@ -2857,7 +2858,7 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
       var result = {}; // If there is a highlight object available (as of v0.24.0),
       //  use that instead of the highlights array, since it supports highlights of nested fields
 
-      if (this.configuration.useHighlightV2Structure && typesenseHit.highlight != null) {
+      if (this.configuration.useHighlightV2Structure === true && typesenseHit.highlight != null) {
         this.adaptHighlightObject(typesenseHit, result, snippetOrValue);
       } else {
         this.adaptHighlightsArray(typesenseHit, result, snippetOrValue);
