@@ -147,7 +147,9 @@ export class SearchResponseAdapter {
       {},
       ...Object.entries(objectValue).map(([attribute, value]) => {
         let adaptedValue;
-        if (Array.isArray(value)) {
+        if (value == null) {
+          adaptedValue = this._adaptHighlightNullValue(value);
+        } else if (Array.isArray(value)) {
           adaptedValue = this._adaptHighlightInArrayValue(
             value,
             highlightObjectValue?.[attribute] ?? [],
@@ -173,7 +175,9 @@ export class SearchResponseAdapter {
   _adaptHighlightInArrayValue(arrayValue, highlightArrayValue, snippetOrValue) {
     return arrayValue.map((value, index) => {
       let adaptedValue;
-      if (Array.isArray(value)) {
+      if (value == null) {
+        adaptedValue = this._adaptHighlightNullValue(value);
+      } else if (Array.isArray(value)) {
         adaptedValue = this._adaptHighlightInArrayValue(value, highlightArrayValue?.[index] ?? [], snippetOrValue);
       } else if (typeof value === "object") {
         adaptedValue = this._adaptHighlightInObjectValue(value, highlightArrayValue?.[index] ?? {}, snippetOrValue);
@@ -207,6 +211,14 @@ export class SearchResponseAdapter {
         matchedWords: [],
       };
     }
+  }
+
+  _adaptHighlightNullValue(value) {
+    return {
+      value: value,
+      matchLevel: "none",
+      matchedWords: [],
+    };
   }
 
   _adaptFacets(typesenseFacetCounts) {

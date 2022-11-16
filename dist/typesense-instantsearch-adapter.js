@@ -2950,7 +2950,9 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
 
         var adaptedValue;
 
-        if (Array.isArray(value)) {
+        if (value == null) {
+          adaptedValue = _this4._adaptHighlightNullValue(value);
+        } else if (Array.isArray(value)) {
           var _highlightObjectValue;
 
           adaptedValue = _this4._adaptHighlightInArrayValue(value, (_highlightObjectValue = highlightObjectValue === null || highlightObjectValue === void 0 ? void 0 : highlightObjectValue[attribute]) !== null && _highlightObjectValue !== void 0 ? _highlightObjectValue : [], snippetOrValue);
@@ -2973,7 +2975,9 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
       return arrayValue.map(function (value, index) {
         var adaptedValue;
 
-        if (Array.isArray(value)) {
+        if (value == null) {
+          adaptedValue = _this5._adaptHighlightNullValue(value);
+        } else if (Array.isArray(value)) {
           var _highlightArrayValue$;
 
           adaptedValue = _this5._adaptHighlightInArrayValue(value, (_highlightArrayValue$ = highlightArrayValue === null || highlightArrayValue === void 0 ? void 0 : highlightArrayValue[index]) !== null && _highlightArrayValue$ !== void 0 ? _highlightArrayValue$ : [], snippetOrValue);
@@ -3005,6 +3009,15 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
           matchedWords: []
         };
       }
+    }
+  }, {
+    key: "_adaptHighlightNullValue",
+    value: function _adaptHighlightNullValue(value) {
+      return {
+        value: value,
+        matchLevel: "none",
+        matchedWords: []
+      };
     }
   }, {
     key: "_adaptFacets",
