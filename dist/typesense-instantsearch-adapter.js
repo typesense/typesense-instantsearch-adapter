@@ -2951,7 +2951,7 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
         var adaptedValue;
 
         if (value == null) {
-          adaptedValue = _this4._adaptHighlightNullValue(value);
+          adaptedValue = _this4._adaptHighlightNullValue();
         } else if (Array.isArray(value)) {
           var _highlightObjectValue;
 
@@ -2976,7 +2976,7 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
         var adaptedValue;
 
         if (value == null) {
-          adaptedValue = _this5._adaptHighlightNullValue(value);
+          adaptedValue = _this5._adaptHighlightNullValue();
         } else if (Array.isArray(value)) {
           var _highlightArrayValue$;
 
@@ -3012,9 +3012,9 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
     }
   }, {
     key: "_adaptHighlightNullValue",
-    value: function _adaptHighlightNullValue(value) {
+    value: function _adaptHighlightNullValue() {
       return {
-        value: value,
+        value: "",
         matchLevel: "none",
         matchedWords: []
       };

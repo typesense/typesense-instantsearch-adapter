@@ -148,7 +148,7 @@ export class SearchResponseAdapter {
       ...Object.entries(objectValue).map(([attribute, value]) => {
         let adaptedValue;
         if (value == null) {
-          adaptedValue = this._adaptHighlightNullValue(value);
+          adaptedValue = this._adaptHighlightNullValue();
         } else if (Array.isArray(value)) {
           adaptedValue = this._adaptHighlightInArrayValue(
             value,
@@ -176,7 +176,7 @@ export class SearchResponseAdapter {
     return arrayValue.map((value, index) => {
       let adaptedValue;
       if (value == null) {
-        adaptedValue = this._adaptHighlightNullValue(value);
+        adaptedValue = this._adaptHighlightNullValue();
       } else if (Array.isArray(value)) {
         adaptedValue = this._adaptHighlightInArrayValue(value, highlightArrayValue?.[index] ?? [], snippetOrValue);
       } else if (typeof value === "object") {
@@ -213,9 +213,9 @@ export class SearchResponseAdapter {
     }
   }
 
-  _adaptHighlightNullValue(value) {
+  _adaptHighlightNullValue() {
     return {
-      value: value,
+      value: "",
       matchLevel: "none",
       matchedWords: [],
     };
