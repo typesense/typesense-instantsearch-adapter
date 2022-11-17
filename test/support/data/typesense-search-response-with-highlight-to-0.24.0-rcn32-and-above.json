@@ -1,0 +1,82 @@
+{
+  "results": [
+    {
+      "facet_counts": [],
+      "found": 1,
+      "hits": [
+        {
+          "document": {
+            "addresses": [
+              {
+                "city": "Fries",
+                "street": "33rd St"
+              },
+              {
+                "city": "Houston",
+                "street": "5th St"
+              }
+            ],
+            "company_name": "Stark Industries",
+            "id": "533",
+            "num_employees": 403,
+            "test_null_value": null
+          },
+          "highlight": {
+            "addresses": [
+              {
+                "city": {
+                  "matched_tokens": [],
+                  "snippet": "Fries",
+                  "value": "Fries"
+                }
+              },
+              {
+                "city": {
+                  "matched_tokens": [
+                    "Houston"
+                  ],
+                  "snippet": "<mark>Houston</mark>",
+                  "value": "<mark>Houston</mark>"
+                }
+              }
+            ],
+            "company_name": {
+              "matched_tokens": [
+                "Stark"
+              ],
+              "snippet": "<mark>Stark</mark> Industries",
+              "value": "<mark>Stark</mark> Industries"
+            }
+          },
+          "highlights": [
+            {
+              "field": "company_name",
+              "matched_tokens": [
+                "Stark"
+              ],
+              "snippet": "<mark>Stark</mark> Industries",
+              "value": "<mark>Stark</mark> Industries"
+            }
+          ],
+          "text_match": 1155190875668611000,
+          "text_match_info": {
+            "best_field_score": "1108091338752",
+            "best_field_weight": 15,
+            "fields_matched": 2,
+            "score": "1155190875668611194",
+            "tokens_matched": 2
+          }
+        }
+      ],
+      "out_of": 2,
+      "page": 1,
+      "request_params": {
+        "collection_name": "companies",
+        "per_page": 5,
+        "q": "stark houston"
+      },
+      "search_cutoff": false,
+      "search_time_ms": 0
+    }
+  ]
+}

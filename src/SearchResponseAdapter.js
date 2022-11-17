@@ -60,13 +60,18 @@ export class SearchResponseAdapter {
     const result = {};
 
     // If there is a highlight object available (as of v0.24.0),
+    // And the highlight object uses the highlight format available in v0.24.0.rcn32 and above
     //  use that instead of the highlights array, since it supports highlights of nested fields
-    if (this.configuration.useHighlightV2Structure === true && typesenseHit.highlight != null) {
+    if (typesenseHit.highlight != null && this.isHighlightPost0240RCN32Format(typesenseHit.highlight)) {
       this.adaptHighlightObject(typesenseHit, result, snippetOrValue);
     } else {
       this.adaptHighlightsArray(typesenseHit, result, snippetOrValue);
     }
     return result;
+  }
+
+  isHighlightPost0240RCN32Format(highlight) {
+    return highlight.full == null && highlight.snippet == null;
   }
 
   adaptHighlightsArray(typesenseHit, result, snippetOrValue) {
@@ -101,7 +106,9 @@ export class SearchResponseAdapter {
     Object.entries(result).forEach(([k, v]) => {
       const attribute = k;
       const { value, matchLevel, matchedWords, matchedIndices } = v;
-      if (Array.isArray(value)) {
+      if (value == null) {
+        result[attribute] = this._adaptHighlightNullValue();
+      } else if (Array.isArray(value)) {
         // Algolia lists all values of the key in highlights, even those that don't have any highlights
         // So add all values of the array field, including highlights
         result[attribute] = [];
@@ -116,6 +123,11 @@ export class SearchResponseAdapter {
               matchLevel: matchLevel,
               matchedWords: matchedWords[index],
             });
+          } else if (typeof unhighlightedValueFromArray === "object") {
+            // Handle arrays of objects
+            // Side note: Typesense does not support highlights for nested objects in this `highlights` array,
+            //  so we pass in an empty object below
+            result[attribute].push(this._adaptHighlightInObjectValue(unhighlightedValueFromArray, {}, snippetOrValue));
           } else {
             result[attribute].push({
               value: `${unhighlightedValueFromArray}`,
@@ -124,6 +136,11 @@ export class SearchResponseAdapter {
             });
           }
         });
+      } else if (typeof value === "object") {
+        // Handle nested objects
+        // Side note: Typesense does not support highlights for nested objects in this `highlights` array,
+        //  so we pass in an empty object below
+        result[attribute] = this._adaptHighlightInObjectValue(value, {}, snippetOrValue);
       } else {
         // Convert all values to strings
         result[attribute].value = this._adaptHighlightTag(
@@ -196,8 +213,8 @@ export class SearchResponseAdapter {
           this.instantsearchRequest.params.highlightPreTag,
           this.instantsearchRequest.params.highlightPostTag
         ),
-        matchLevel: "full",
-        matchedWords: highlightPrimitiveValue.matched_tokens,
+        matchLevel: (highlightPrimitiveValue.matched_tokens || []).length > 0 ? "full" : "none",
+        matchedWords: highlightPrimitiveValue.matched_tokens || [],
       };
     } else {
       return {

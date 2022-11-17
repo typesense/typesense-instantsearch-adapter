@@ -2204,7 +2204,6 @@ __webpack_require__.r(__webpack_exports__);
 var Configuration = /*#__PURE__*/function () {
   function Configuration() {
     var _this$server$cacheSea,
-        _options$useHighlight,
         _options$additionalSe,
         _ref,
         _this$additionalSearc,
@@ -2229,7 +2228,6 @@ var Configuration = /*#__PURE__*/function () {
       }]
     };
     this.server.cacheSearchResultsForSeconds = (_this$server$cacheSea = this.server.cacheSearchResultsForSeconds) !== null && _this$server$cacheSea !== void 0 ? _this$server$cacheSea : 2 * 60;
-    this.useHighlightV2Structure = (_options$useHighlight = options.useHighlightV2Structure) !== null && _options$useHighlight !== void 0 ? _options$useHighlight : true;
     this.additionalSearchParameters = (_options$additionalSe = options.additionalSearchParameters) !== null && _options$additionalSe !== void 0 ? _options$additionalSe : {};
     this.additionalSearchParameters.query_by = (_ref = (_this$additionalSearc = this.additionalSearchParameters.queryBy) !== null && _this$additionalSearc !== void 0 ? _this$additionalSearc : this.additionalSearchParameters.query_by) !== null && _ref !== void 0 ? _ref : "";
     this.additionalSearchParameters.sort_by = (_ref2 = (_this$additionalSearc2 = this.additionalSearchParameters.sortBy) !== null && _this$additionalSearc2 !== void 0 ? _this$additionalSearc2 : this.additionalSearchParameters.sort_by) !== null && _ref2 !== void 0 ? _ref2 : "";
@@ -2856,15 +2854,21 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
     key: "_adaptHighlightResult",
     value: function _adaptHighlightResult(typesenseHit, snippetOrValue) {
       var result = {}; // If there is a highlight object available (as of v0.24.0),
+      // And the highlight object uses the highlight format available in v0.24.0.rcn32 and above
       //  use that instead of the highlights array, since it supports highlights of nested fields
 
-      if (this.configuration.useHighlightV2Structure === true && typesenseHit.highlight != null) {
+      if (typesenseHit.highlight != null && this.isHighlightPost0240RCN32Format(typesenseHit.highlight)) {
         this.adaptHighlightObject(typesenseHit, result, snippetOrValue);
       } else {
         this.adaptHighlightsArray(typesenseHit, result, snippetOrValue);
       }
 
       return result;
+    }
+  }, {
+    key: "isHighlightPost0240RCN32Format",
+    value: function isHighlightPost0240RCN32Format(highlight) {
+      return highlight.full == null && highlight.snippet == null;
     }
   }, {
     key: "adaptHighlightsArray",
@@ -2908,7 +2912,9 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
             matchedWords = v.matchedWords,
             matchedIndices = v.matchedIndices;
 
-        if (Array.isArray(value)) {
+        if (value == null) {
+          result[attribute] = _this3._adaptHighlightNullValue();
+        } else if (Array.isArray(value)) {
           // Algolia lists all values of the key in highlights, even those that don't have any highlights
           // So add all values of the array field, including highlights
           result[attribute] = [];
@@ -2919,6 +2925,11 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
                 matchLevel: matchLevel,
                 matchedWords: matchedWords[index]
               });
+            } else if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(unhighlightedValueFromArray) === "object") {
+              // Handle arrays of objects
+              // Side note: Typesense does not support highlights for nested objects in this `highlights` array,
+              //  so we pass in an empty object below
+              result[attribute].push(_this3._adaptHighlightInObjectValue(unhighlightedValueFromArray, {}, snippetOrValue));
             } else {
               result[attribute].push({
                 value: "".concat(unhighlightedValueFromArray),
@@ -2927,6 +2938,11 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
               });
             }
           });
+        } else if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(value) === "object") {
+          // Handle nested objects
+          // Side note: Typesense does not support highlights for nested objects in this `highlights` array,
+          //  so we pass in an empty object below
+          result[attribute] = _this3._adaptHighlightInObjectValue(value, {}, snippetOrValue);
         } else {
           // Convert all values to strings
           result[attribute].value = _this3._adaptHighlightTag("".concat(value), _this3.instantsearchRequest.params.highlightPreTag, _this3.instantsearchRequest.params.highlightPostTag);
@@ -2998,8 +3014,8 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
       if (highlightPrimitiveValue != null) {
         return {
           value: this._adaptHighlightTag("".concat(highlightPrimitiveValue[snippetOrValue]), this.instantsearchRequest.params.highlightPreTag, this.instantsearchRequest.params.highlightPostTag),
-          matchLevel: "full",
-          matchedWords: highlightPrimitiveValue.matched_tokens
+          matchLevel: (highlightPrimitiveValue.matched_tokens || []).length > 0 ? "full" : "none",
+          matchedWords: highlightPrimitiveValue.matched_tokens || []
         };
       } else {
         return {
