@@ -269,7 +269,7 @@ describe("Search Experience", () => {
           text: "iBattz - Optimus Battstation Power Bank",
         });
         await expect(page).toMatchElement("#infinite-hits", {
-          text: "Samsung - Power Pack Fast Charge bundle",
+          text: "Belkin - Valet 6700 mAh Portable Charger",
         });
       });
     });
@@ -291,7 +291,7 @@ describe("Search Experience", () => {
 
     it("renders the grouped results", async () => {
       await expect(page).toMatchElement("#brand-list", {
-        text: "AT&T GoPhone",
+        text: "AT&T",
       });
       await expect(page).toMatchElement("#stats", {
         text: "250 results found",

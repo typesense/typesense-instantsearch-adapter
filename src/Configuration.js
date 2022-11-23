@@ -14,7 +14,7 @@ export class Configuration {
     };
 
     this.server.cacheSearchResultsForSeconds = this.server.cacheSearchResultsForSeconds ?? 2 * 60;
-    
+
     this.additionalSearchParameters = options.additionalSearchParameters ?? {};
 
     this.additionalSearchParameters.query_by =
