@@ -2271,7 +2271,7 @@ var Configuration = /*#__PURE__*/function () {
       if (this.additionalSearchParameters.query_by.length === 0 && this.additionalSearchParameters.preset.length === 0 && (Object.keys(this.collectionSpecificSearchParameters).length === 0 || Object.values(this.collectionSpecificSearchParameters).some(function (c) {
         return (c.query_by || "").length === 0 && (c.preset || "").length === 0;
       }))) {
-        throw new Error("[typesense-instantsearch-adapter] Missing parameter: Either additionalSearchParameters.query_by needs to be set, or all collectionSpecificSearchParameters need to have .query_by set");
+        throw new Error("[typesense-instantsearch-adapter] Missing parameter: One of additionalSearchParameters.query_by or additionalSearchParameters.preset needs to be set, or all collectionSpecificSearchParameters need to have either .query_by or .preset set.");
       }
     }
   }]);

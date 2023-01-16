@@ -77,7 +77,7 @@ export class Configuration {
         ))
     ) {
       throw new Error(
-        "[typesense-instantsearch-adapter] Missing parameter: Either additionalSearchParameters.query_by needs to be set, or all collectionSpecificSearchParameters need to have .query_by set"
+        "[typesense-instantsearch-adapter] Missing parameter: One of additionalSearchParameters.query_by or additionalSearchParameters.preset needs to be set, or all collectionSpecificSearchParameters need to have either .query_by or .preset set."
       );
     }
   }
