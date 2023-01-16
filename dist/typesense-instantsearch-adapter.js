@@ -2704,9 +2704,17 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
         typesenseSearchParams.per_page = 0;
       } // console.log(params);
       // console.log(typesenseSearchParams);
+      // Filter out empty or null values, so we don't accidentally override values set in presets
+      // eslint-disable-next-line no-unused-vars
 
 
-      return typesenseSearchParams;
+      return Object.fromEntries(Object.entries(typesenseSearchParams).filter(function (_ref2) {
+        var _ref3 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_ref2, 2),
+            _ = _ref3[0],
+            v = _ref3[1];
+
+        return v != null && v !== "";
+      }));
     }
   }, {
     key: "_camelToSnakeCase",

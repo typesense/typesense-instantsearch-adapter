@@ -303,7 +303,9 @@ export class SearchRequestAdapter {
     // console.log(params);
     // console.log(typesenseSearchParams);
 
-    return typesenseSearchParams;
+    // Filter out empty or null values, so we don't accidentally override values set in presets
+    // eslint-disable-next-line no-unused-vars
+    return Object.fromEntries(Object.entries(typesenseSearchParams).filter(([_, v]) => v != null && v !== ""));
   }
 
   _camelToSnakeCase(str) {
