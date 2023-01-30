@@ -15,17 +15,17 @@ describe("Refinement List Operators", () => {
         await expect(page).toClick("#ingredients-list button", {
           text: "Show more",
         });
-        await expect(page).toClick("#ingredients-list input[type=checkbox][value=butter]");
+        await expect(page).toClick("#ingredients-list input[type=checkbox][value=salt]");
         await expect(page).toMatchElement("#stats", {
-          text: "12 results found",
+          text: "6 results found",
         });
-        await expect(page).toClick("#ingredients-list input[type=checkbox][value=fettucini]");
+        await expect(page).toClick("#ingredients-list input[type=checkbox][value=milk]");
         await expect(page).toMatchElement("#stats", {
           text: "1 result found",
         });
 
         return expect(page).toMatchElement("#hits", {
-          text: "Fettucini With Lemon",
+          text: "Egg Cheese Souffle",
         });
       });
     });

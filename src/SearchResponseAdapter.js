@@ -19,7 +19,7 @@ export class SearchResponseAdapter {
     });
 
     // adaptedResult is now in the form of [[{}, {}], [{}, {}], ...]
-    //  where each element in the outer most array corresponds to a group.
+    //  where each element in the outermost array corresponds to a group.
     // We now flatten it to [{}, {}, {}]
     adaptedResult = adaptedResult.flat();
 
@@ -37,7 +37,7 @@ export class SearchResponseAdapter {
       adaptedHit._highlightResult = this._adaptHighlightResult(typesenseHit, "value");
 
       // Add metadata fields to result, if a field with that name doesn't already exist
-      ["text_match", "geo_distance_meters", "curated"].forEach((metadataField) => {
+      ["text_match", "geo_distance_meters", "curated", "text_match_info"].forEach((metadataField) => {
         if (Object.keys(typesenseHit).includes(metadataField) && !Object.keys(adaptedHit).includes(metadataField)) {
           adaptedHit[metadataField] = typesenseHit[metadataField];
         }
@@ -57,11 +57,29 @@ export class SearchResponseAdapter {
   }
 
   _adaptHighlightResult(typesenseHit, snippetOrValue) {
+    const result = {};
+
+    // If there is a highlight object available (as of v0.24.0),
+    // And the highlight object uses the highlight format available in v0.24.0.rcn32 and above
+    //  use that instead of the highlights array, since it supports highlights of nested fields
+    if (typesenseHit.highlight != null && this.isHighlightPost0240RCN32Format(typesenseHit.highlight)) {
+      this.adaptHighlightObject(typesenseHit, result, snippetOrValue);
+    } else {
+      this.adaptHighlightsArray(typesenseHit, result, snippetOrValue);
+    }
+    return result;
+  }
+
+  isHighlightPost0240RCN32Format(highlight) {
+    return highlight.full == null && highlight.snippet == null;
+  }
+
+  adaptHighlightsArray(typesenseHit, result, snippetOrValue) {
     // Algolia lists all searchable attributes in this key, even if there are no matches
     // So do the same and then override highlights
 
-    const result = Object.assign(
-      {},
+    Object.assign(
+      result,
       ...Object.entries(typesenseHit.document).map(([attribute, value]) => ({
         [attribute]: {
           value: value,
@@ -88,7 +106,9 @@ export class SearchResponseAdapter {
     Object.entries(result).forEach(([k, v]) => {
       const attribute = k;
       const { value, matchLevel, matchedWords, matchedIndices } = v;
-      if (Array.isArray(value)) {
+      if (value == null) {
+        result[attribute] = this._adaptHighlightNullValue();
+      } else if (Array.isArray(value)) {
         // Algolia lists all values of the key in highlights, even those that don't have any highlights
         // So add all values of the array field, including highlights
         result[attribute] = [];
@@ -103,6 +123,11 @@ export class SearchResponseAdapter {
               matchLevel: matchLevel,
               matchedWords: matchedWords[index],
             });
+          } else if (typeof unhighlightedValueFromArray === "object") {
+            // Handle arrays of objects
+            // Side note: Typesense does not support highlights for nested objects in this `highlights` array,
+            //  so we pass in an empty object below
+            result[attribute].push(this._adaptHighlightInObjectValue(unhighlightedValueFromArray, {}, snippetOrValue));
           } else {
             result[attribute].push({
               value: `${unhighlightedValueFromArray}`,
@@ -111,6 +136,11 @@ export class SearchResponseAdapter {
             });
           }
         });
+      } else if (typeof value === "object") {
+        // Handle nested objects
+        // Side note: Typesense does not support highlights for nested objects in this `highlights` array,
+        //  so we pass in an empty object below
+        result[attribute] = this._adaptHighlightInObjectValue(value, {}, snippetOrValue);
       } else {
         // Convert all values to strings
         result[attribute].value = this._adaptHighlightTag(
@@ -120,7 +150,92 @@ export class SearchResponseAdapter {
         );
       }
     });
-    return result;
+  }
+
+  adaptHighlightObject(typesenseHit, result, snippetOrValue) {
+    Object.assign(
+      result,
+      this._adaptHighlightInObjectValue(typesenseHit.document, typesenseHit.highlight, snippetOrValue)
+    );
+  }
+
+  _adaptHighlightInObjectValue(objectValue, highlightObjectValue, snippetOrValue) {
+    return Object.assign(
+      {},
+      ...Object.entries(objectValue).map(([attribute, value]) => {
+        let adaptedValue;
+        if (value == null) {
+          adaptedValue = this._adaptHighlightNullValue();
+        } else if (Array.isArray(value)) {
+          adaptedValue = this._adaptHighlightInArrayValue(
+            value,
+            highlightObjectValue?.[attribute] ?? [],
+            snippetOrValue
+          );
+        } else if (typeof value === "object") {
+          adaptedValue = this._adaptHighlightInObjectValue(
+            value,
+            highlightObjectValue?.[attribute] ?? {},
+            snippetOrValue
+          );
+        } else {
+          adaptedValue = this._adaptHighlightInPrimitiveValue(value, highlightObjectValue?.[attribute], snippetOrValue);
+        }
+
+        return {
+          [attribute]: adaptedValue,
+        };
+      })
+    );
+  }
+
+  _adaptHighlightInArrayValue(arrayValue, highlightArrayValue, snippetOrValue) {
+    return arrayValue.map((value, index) => {
+      let adaptedValue;
+      if (value == null) {
+        adaptedValue = this._adaptHighlightNullValue();
+      } else if (Array.isArray(value)) {
+        adaptedValue = this._adaptHighlightInArrayValue(value, highlightArrayValue?.[index] ?? [], snippetOrValue);
+      } else if (typeof value === "object") {
+        adaptedValue = this._adaptHighlightInObjectValue(value, highlightArrayValue?.[index] ?? {}, snippetOrValue);
+      } else {
+        adaptedValue = this._adaptHighlightInPrimitiveValue(value, highlightArrayValue?.[index], snippetOrValue);
+      }
+      return adaptedValue;
+    });
+  }
+
+  _adaptHighlightInPrimitiveValue(primitiveValue, highlightPrimitiveValue, snippetOrValue) {
+    if (highlightPrimitiveValue != null) {
+      return {
+        value: this._adaptHighlightTag(
+          `${highlightPrimitiveValue[snippetOrValue]}`,
+          this.instantsearchRequest.params.highlightPreTag,
+          this.instantsearchRequest.params.highlightPostTag
+        ),
+        matchLevel: (highlightPrimitiveValue.matched_tokens || []).length > 0 ? "full" : "none",
+        matchedWords: highlightPrimitiveValue.matched_tokens || [],
+      };
+    } else {
+      return {
+        // Convert all values to strings
+        value: this._adaptHighlightTag(
+          `${primitiveValue}`,
+          this.instantsearchRequest.params.highlightPreTag,
+          this.instantsearchRequest.params.highlightPostTag
+        ),
+        matchLevel: "none",
+        matchedWords: [],
+      };
+    }
+  }
+
+  _adaptHighlightNullValue() {
+    return {
+      value: "",
+      matchLevel: "none",
+      matchedWords: [],
+    };
   }
 
   _adaptFacets(typesenseFacetCounts) {

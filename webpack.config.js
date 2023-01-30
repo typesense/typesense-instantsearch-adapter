@@ -1,6 +1,7 @@
 const path = require("path");
+const clonedeep = require("lodash.clonedeep");
 
-module.exports = {
+const minifiedConfiguration = {
   entry: path.resolve(__dirname, "./src/TypesenseInstantsearchAdapter"),
   mode: "production",
   devtool: "source-map",
@@ -23,3 +24,9 @@ module.exports = {
     ],
   },
 };
+
+const unminifiedConfiguration = clonedeep(minifiedConfiguration);
+unminifiedConfiguration.mode = "development";
+unminifiedConfiguration.output.filename = "typesense-instantsearch-adapter.js";
+
+module.exports = [minifiedConfiguration, unminifiedConfiguration];

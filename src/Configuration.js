@@ -20,6 +20,9 @@ export class Configuration {
     this.additionalSearchParameters.query_by =
       this.additionalSearchParameters.queryBy ?? this.additionalSearchParameters.query_by ?? "";
 
+    this.additionalSearchParameters.preset =
+      this.additionalSearchParameters.preset ?? this.additionalSearchParameters.preset ?? "";
+
     this.additionalSearchParameters.sort_by =
       this.additionalSearchParameters.sortBy ?? this.additionalSearchParameters.sort_by ?? "";
 
@@ -35,6 +38,7 @@ export class Configuration {
     Object.keys(this.collectionSpecificSearchParameters).forEach((collection) => {
       const params = this.collectionSpecificSearchParameters[collection];
       params.query_by = params.queryBy ?? params.query_by;
+      params.preset = params.preset ?? params.preset;
       params.sort_by = params.sortBy ?? params.sort_by;
       params.highlight_full_fields =
         params.highlightFullFields ??
@@ -60,17 +64,20 @@ export class Configuration {
     }
 
     /*
-     * Either additionalSearchParameters.query_by needs to be set, or
-     *   All collectionSpecificSearchParameters need to have query_by
+     * Either additionalSearchParameters.query_by or additionalSearchParameters.preset needs to be set, or
+     *   All collectionSpecificSearchParameters need to have query_by or preset
      *
      * */
     if (
       this.additionalSearchParameters.query_by.length === 0 &&
+      this.additionalSearchParameters.preset.length === 0 &&
       (Object.keys(this.collectionSpecificSearchParameters).length === 0 ||
-        Object.values(this.collectionSpecificSearchParameters).some((c) => (c.query_by || "").length === 0))
+        Object.values(this.collectionSpecificSearchParameters).some(
+          (c) => (c.query_by || "").length === 0 && (c.preset || "").length === 0
+        ))
     ) {
       throw new Error(
-        "[typesense-instantsearch-adapter] Missing parameter: Either additionalSearchParameters.query_by needs to be set, or all collectionSpecificSearchParameters need to have .query_by set"
+        "[typesense-instantsearch-adapter] Missing parameter: One of additionalSearchParameters.query_by or additionalSearchParameters.preset needs to be set, or all collectionSpecificSearchParameters need to have either .query_by or .preset set."
       );
     }
   }

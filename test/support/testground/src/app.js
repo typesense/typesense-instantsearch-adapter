@@ -114,7 +114,12 @@ search.addWidgets([
   }),
   hierarchicalMenu({
     container: "#categories-hierarchical-menu",
-    attributes: ["categories.lvl0", "categories.lvl1", "categories.lvl2", "categories.lvl3"],
+    attributes: [
+      "hierarchicalCategories.lvl0",
+      "hierarchicalCategories.lvl1",
+      "hierarchicalCategories.lvl2",
+      "hierarchicalCategories.lvl3",
+    ],
   }),
   numericMenu({
     container: "#price-menu",
@@ -213,7 +218,12 @@ search.addWidgets([
   }),
   breadcrumb({
     container: "#breadcrumb",
-    attributes: ["categories.lvl0", "categories.lvl1", "categories.lvl2", "categories.lvl3"],
+    attributes: [
+      "hierarchicalCategories.lvl0",
+      "hierarchicalCategories.lvl1",
+      "hierarchicalCategories.lvl2",
+      "hierarchicalCategories.lvl3",
+    ],
   }),
 ]);
 

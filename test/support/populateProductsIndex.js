@@ -16,7 +16,7 @@ module.exports = (async () => {
 
   const schema = {
     name: "products",
-    num_documents: 0,
+    enable_nested_fields: true,
     fields: [
       {
         name: "name",
@@ -39,27 +39,9 @@ module.exports = (async () => {
         facet: true,
       },
       {
-        name: "categories.lvl0",
-        type: "string[]",
+        name: "hierarchicalCategories",
+        type: "object",
         facet: true,
-      },
-      {
-        name: "categories.lvl1",
-        type: "string[]",
-        facet: true,
-        optional: true,
-      },
-      {
-        name: "categories.lvl2",
-        type: "string[]",
-        facet: true,
-        optional: true,
-      },
-      {
-        name: "categories.lvl3",
-        type: "string[]",
-        facet: true,
-        optional: true,
       },
       {
         name: "price",
@@ -128,8 +110,9 @@ module.exports = (async () => {
   products.forEach((product) => {
     product.free_shipping = product.name.length % 2 === 1; // We need this to be deterministic for tests
     product.rating = (product.description.length % 5) + 1; // We need this to be deterministic for tests
+    product.hierarchicalCategories = {};
     product.categories.forEach((category, index) => {
-      product[`categories.lvl${index}`] = [product.categories.slice(0, index + 1).join(" > ")];
+      product.hierarchicalCategories[`lvl${index}`] = [product.categories.slice(0, index + 1).join(" > ")];
     });
   });
 

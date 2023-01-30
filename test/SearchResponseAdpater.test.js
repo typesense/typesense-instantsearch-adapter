@@ -1,4 +1,5 @@
 import { SearchResponseAdapter } from "../src/SearchResponseAdapter";
+import { Configuration } from "../src/Configuration";
 
 describe("SearchResponseAdapter", () => {
   describe("._adaptHighlightResult", () => {
@@ -124,9 +125,151 @@ describe("SearchResponseAdapter", () => {
             matchedWords: ["String"],
           },
           num_employees: [
-            { value: "0", matchLevel: "none", matchedWords: [] },
-            { value: "1", matchLevel: "none", matchedWords: [] },
+            {
+              value: "0",
+              matchLevel: "none",
+              matchedWords: [],
+            },
+            {
+              value: "1",
+              matchLevel: "none",
+              matchedWords: [],
+            },
           ],
+        });
+      });
+    });
+
+    describe("when the result uses the highlight structure between 0.24.0.rcn1 to 0.24.0.rcn31", () => {
+      it("only highlights non-nested fields", () => {
+        const typesenseResponse = require("./support/data/typesense-search-response-with-highlight-0.24.0.rcn1-to-0.24.0-rcn31.json");
+        const subject = new SearchResponseAdapter(
+          typesenseResponse,
+          {
+            params: {
+              highlightPreTag: "<mark>",
+              highlightPostTag: "</mark>",
+            },
+          },
+          new Configuration()
+        );
+        const typesenseHit = typesenseResponse.results[0].hits[0];
+
+        const result = subject._adaptHighlightResult(typesenseHit, "value");
+        expect(result).toEqual({
+          addresses: [
+            {
+              city: {
+                value: "Fries",
+                matchLevel: "none",
+                matchedWords: [],
+              },
+              street: {
+                value: "33rd St",
+                matchLevel: "none",
+                matchedWords: [],
+              },
+            },
+            {
+              city: {
+                value: "Houston",
+                matchLevel: "none",
+                matchedWords: [],
+              },
+              street: {
+                value: "5th St",
+                matchLevel: "none",
+                matchedWords: [],
+              },
+            },
+          ],
+          company_name: {
+            value: "<mark>Stark</mark> Industries",
+            matchLevel: "full",
+            matchedWords: ["Stark"],
+          },
+          id: {
+            value: "533",
+            matchLevel: "none",
+            matchedWords: [],
+          },
+          num_employees: {
+            value: "403",
+            matchLevel: "none",
+            matchedWords: [],
+          },
+          test_null_value: {
+            value: "",
+            matchLevel: "none",
+            matchedWords: [],
+          },
+        });
+      });
+    });
+
+    describe("when the result uses the highlight structure post 0.24.0.rcn32", () => {
+      it("only highlights non-nested fields", () => {
+        const typesenseResponse = require("./support/data/typesense-search-response-with-highlight-to-0.24.0-rcn32-and-above.json");
+        const subject = new SearchResponseAdapter(
+          typesenseResponse,
+          {
+            params: {
+              highlightPreTag: "<mark>",
+              highlightPostTag: "</mark>",
+            },
+          },
+          new Configuration()
+        );
+        const typesenseHit = typesenseResponse.results[0].hits[0];
+
+        const result = subject._adaptHighlightResult(typesenseHit, "value");
+        expect(result).toEqual({
+          addresses: [
+            {
+              city: {
+                value: "Fries",
+                matchLevel: "none",
+                matchedWords: [],
+              },
+              street: {
+                value: "33rd St",
+                matchLevel: "none",
+                matchedWords: [],
+              },
+            },
+            {
+              city: {
+                value: "<mark>Houston</mark>",
+                matchLevel: "full",
+                matchedWords: ["Houston"],
+              },
+              street: {
+                value: "5th St",
+                matchLevel: "none",
+                matchedWords: [],
+              },
+            },
+          ],
+          company_name: {
+            value: "<mark>Stark</mark> Industries",
+            matchLevel: "full",
+            matchedWords: ["Stark"],
+          },
+          id: {
+            value: "533",
+            matchLevel: "none",
+            matchedWords: [],
+          },
+          num_employees: {
+            value: "403",
+            matchLevel: "none",
+            matchedWords: [],
+          },
+          test_null_value: {
+            value: "",
+            matchLevel: "none",
+            matchedWords: [],
+          },
         });
       });
     });
