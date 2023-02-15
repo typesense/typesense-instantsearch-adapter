@@ -209,7 +209,11 @@ export class SearchResponseAdapter {
     if (highlightPrimitiveValue != null) {
       return {
         value: this._adaptHighlightTag(
-          `${highlightPrimitiveValue[snippetOrValue]}`,
+          `${
+            highlightPrimitiveValue[snippetOrValue] ??
+            highlightPrimitiveValue["highlight"] ??
+            highlightPrimitiveValue["snippet"]
+          }`,
           this.instantsearchRequest.params.highlightPreTag,
           this.instantsearchRequest.params.highlightPostTag
         ),

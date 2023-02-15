@@ -35,8 +35,7 @@
                   "matched_tokens": [
                     "Houston"
                   ],
-                  "snippet": "<mark>Houston</mark>",
-                  "value": "<mark>Houston</mark>"
+                  "snippet": "<mark>Houston</mark>"
                 }
               }
             ],
@@ -44,8 +43,7 @@
               "matched_tokens": [
                 "Stark"
               ],
-              "snippet": "<mark>Stark</mark> Industries",
-              "value": "<mark>Stark</mark> Industries"
+              "snippet": "<mark>Stark</mark> Industries"
             }
           },
           "highlights": [

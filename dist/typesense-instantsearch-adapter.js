@@ -3024,8 +3024,10 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
     key: "_adaptHighlightInPrimitiveValue",
     value: function _adaptHighlightInPrimitiveValue(primitiveValue, highlightPrimitiveValue, snippetOrValue) {
       if (highlightPrimitiveValue != null) {
+        var _ref9, _highlightPrimitiveVa;
+
         return {
-          value: this._adaptHighlightTag("".concat(highlightPrimitiveValue[snippetOrValue]), this.instantsearchRequest.params.highlightPreTag, this.instantsearchRequest.params.highlightPostTag),
+          value: this._adaptHighlightTag("".concat((_ref9 = (_highlightPrimitiveVa = highlightPrimitiveValue[snippetOrValue]) !== null && _highlightPrimitiveVa !== void 0 ? _highlightPrimitiveVa : highlightPrimitiveValue["highlight"]) !== null && _ref9 !== void 0 ? _ref9 : highlightPrimitiveValue["snippet"]), this.instantsearchRequest.params.highlightPreTag, this.instantsearchRequest.params.highlightPostTag),
           matchLevel: (highlightPrimitiveValue.matched_tokens || []).length > 0 ? "full" : "none",
           matchedWords: highlightPrimitiveValue.matched_tokens || []
         };
