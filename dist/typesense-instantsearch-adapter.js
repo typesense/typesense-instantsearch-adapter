@@ -3073,8 +3073,27 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
       return adaptedResult;
     }
   }, {
+    key: "_adaptRenderingContent",
+    value: function _adaptRenderingContent(typesenseFacetCounts) {
+      var _adaptedResult$facetO, _adaptedResult$facetO2;
+
+      var adaptedResult = Object.assign({}, this.configuration.renderingContent); // Only set facet ordering if the user has not set one
+
+      if (((_adaptedResult$facetO = adaptedResult.facetOrdering) === null || _adaptedResult$facetO === void 0 ? void 0 : (_adaptedResult$facetO2 = _adaptedResult$facetO.facets) === null || _adaptedResult$facetO2 === void 0 ? void 0 : _adaptedResult$facetO2.order) == null) {
+        adaptedResult.facetOrdering = adaptedResult.facetOrdering || {};
+        adaptedResult.facetOrdering.facets = adaptedResult.facetOrdering.facets || {};
+        adaptedResult.facetOrdering.facets.order = typesenseFacetCounts.map(function (fc) {
+          return fc["field_name"];
+        });
+      }
+
+      return adaptedResult;
+    }
+  }, {
     key: "adapt",
     value: function adapt() {
+      var adaptedRenderingContent = this._adaptRenderingContent(this.typesenseResponse.facet_counts || []);
+
       var adaptedResult = _objectSpread({
         hits: this.typesenseResponse.grouped_hits ? this._adaptGroupedHits(this.typesenseResponse.grouped_hits) : this._adaptHits(this.typesenseResponse.hits),
         nbHits: this.typesenseResponse.found,
@@ -3085,9 +3104,9 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
         facets_stats: this._adaptFacetStats(this.typesenseResponse.facet_counts || {}),
         query: this.typesenseResponse.request_params.q,
         processingTimeMS: this.typesenseResponse.search_time_ms
-      }, this.configuration.renderingContent != null && {
-        renderingContent: this.configuration.renderingContent
-      }); // console.log(adaptedResult);
+      }, Object.keys(adaptedRenderingContent).length > 0 ? {
+        renderingContent: adaptedRenderingContent
+      } : null); // console.log(adaptedResult);
 
 
       return adaptedResult;

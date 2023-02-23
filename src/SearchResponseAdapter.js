@@ -264,7 +264,21 @@ export class SearchResponseAdapter {
     return adaptedResult;
   }
 
+  _adaptRenderingContent(typesenseFacetCounts) {
+    const adaptedResult = Object.assign({}, this.configuration.renderingContent);
+
+    // Only set facet ordering if the user has not set one
+    if (adaptedResult.facetOrdering?.facets?.order == null) {
+      adaptedResult.facetOrdering = adaptedResult.facetOrdering || {};
+      adaptedResult.facetOrdering.facets = adaptedResult.facetOrdering.facets || {};
+      adaptedResult.facetOrdering.facets.order = typesenseFacetCounts.map((fc) => fc["field_name"]);
+    }
+
+    return adaptedResult;
+  }
+
   adapt() {
+    const adaptedRenderingContent = this._adaptRenderingContent(this.typesenseResponse.facet_counts || []);
     const adaptedResult = {
       hits: this.typesenseResponse.grouped_hits
         ? this._adaptGroupedHits(this.typesenseResponse.grouped_hits)
@@ -277,7 +291,7 @@ export class SearchResponseAdapter {
       facets_stats: this._adaptFacetStats(this.typesenseResponse.facet_counts || {}),
       query: this.typesenseResponse.request_params.q,
       processingTimeMS: this.typesenseResponse.search_time_ms,
-      ...(this.configuration.renderingContent != null && { renderingContent: this.configuration.renderingContent }),
+      ...(Object.keys(adaptedRenderingContent).length > 0 ? { renderingContent: adaptedRenderingContent } : null),
     };
 
     // console.log(adaptedResult);

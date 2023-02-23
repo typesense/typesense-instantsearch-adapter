@@ -369,12 +369,9 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
 
 > Available as of Typesense Server `v0.25.0.rc12`
 
-In order to use [`dynamicWidgets`](https://www.algolia.com/doc/api-reference/widgets/dynamic-facets/js/),
-Instantsearch expects a parameter called [`renderingContent`](https://www.algolia.com/doc/api-reference/api-parameters/renderingContent/) to be set
-which controls the display logic for this widget.
-
-In Algolia, this configuration can be set via the dashboard or via the API.
-But when using Typesense and this adapter, this setting has to be configured when instantiating the adapter like this:
+This [`dynamicWidgets`](https://www.algolia.com/doc/api-reference/widgets/dynamic-facets/js/) widget works out of the box with no additional changes, 
+but if you want to control the order in which these facets are displayed in the UI 
+Instantsearch expects a parameter called [`renderingContent`](https://www.algolia.com/doc/api-reference/api-parameters/renderingContent/) to be set.
 
 ```js
 const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
@@ -389,10 +386,8 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
       },
     ],
   },
-  renderingContent: {
-    // <<====== Required
+  renderingContent: { // <<===== Add this, only if you want to control the order of the widgets displayed by dynamicWidgets
     facetOrdering: {
-      // <<====== Required: this controls the order in which the dynamic facets are displayed, and is *required* for the dynamicWidget to render
       facets: {
         order: ["size", "brand"], // <<===== Change this as needed
       },

@@ -1,5 +1,6 @@
 import { SearchResponseAdapter } from "../src/SearchResponseAdapter";
 import { Configuration } from "../src/Configuration";
+import typesenseResponse from "./support/data/typesense-search-response.json";
 
 describe("SearchResponseAdapter", () => {
   describe("._adaptHighlightResult", () => {
@@ -269,6 +270,111 @@ describe("SearchResponseAdapter", () => {
             value: "",
             matchLevel: "none",
             matchedWords: [],
+          },
+        });
+      });
+    });
+  });
+
+  describe("._adaptRenderingContent", () => {
+    describe("when user does not specify any renderingContent", () => {
+      it("generates the facet ordering for the user automatically", () => {
+        const typesenseResponse = require("./support/data/typesense-search-response.json");
+        const subject = new SearchResponseAdapter(
+          typesenseResponse["results"][0],
+          {
+            params: {
+              highlightPreTag: "<mark>",
+              highlightPostTag: "</mark>",
+            },
+          },
+          {}
+        );
+
+        const result = subject.adapt();
+        expect(result?.renderingContent?.facetOrdering?.facets?.order).toEqual([
+          "brand",
+          "free_shipping",
+          "price",
+          "rating",
+          "categories",
+          "categories.lvl0",
+        ]);
+      });
+    });
+    describe("when user specifies partial renderingContent, without facet ordering", () => {
+      it("generates the facet ordering for the user automatically, and merges with the provided data", () => {
+        const typesenseResponse = require("./support/data/typesense-search-response.json");
+        const subject = new SearchResponseAdapter(
+          typesenseResponse["results"][0],
+          {
+            params: {
+              highlightPreTag: "<mark>",
+              highlightPostTag: "</mark>",
+            },
+          },
+          {
+            renderingContent: {
+              facetOrdering: {
+                somevalue: "abc",
+                anothervalue: {
+                  key: "value",
+                },
+              },
+            },
+          }
+        );
+
+        const result = subject.adapt();
+        expect(result?.renderingContent).toEqual({
+          facetOrdering: {
+            somevalue: "abc",
+            anothervalue: {
+              key: "value",
+            },
+            facets: {
+              order: ["brand", "free_shipping", "price", "rating", "categories", "categories.lvl0"],
+            },
+          },
+        });
+      });
+    });
+    describe("when user specifies facet ordering", () => {
+      it("it uses that and doesn't override", () => {
+        const typesenseResponse = require("./support/data/typesense-search-response.json");
+        const subject = new SearchResponseAdapter(
+          typesenseResponse["results"][0],
+          {
+            params: {
+              highlightPreTag: "<mark>",
+              highlightPostTag: "</mark>",
+            },
+          },
+          {
+            renderingContent: {
+              facetOrdering: {
+                somevalue: "abc",
+                anothervalue: {
+                  key: "value",
+                },
+                facets: {
+                  order: ["brand", "free_shipping"],
+                },
+              },
+            },
+          }
+        );
+
+        const result = subject.adapt();
+        expect(result?.renderingContent).toEqual({
+          facetOrdering: {
+            somevalue: "abc",
+            anothervalue: {
+              key: "value",
+            },
+            facets: {
+              order: ["brand", "free_shipping"],
+            },
           },
         });
       });
