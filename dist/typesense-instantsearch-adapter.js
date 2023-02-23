@@ -2250,6 +2250,7 @@ var Configuration = /*#__PURE__*/function () {
         return params[key] === undefined ? delete params[key] : {};
       });
     });
+    this.renderingContent = options.renderingContent;
   }
 
   (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(Configuration, [{
@@ -3074,7 +3075,7 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
   }, {
     key: "adapt",
     value: function adapt() {
-      var adaptedResult = {
+      var adaptedResult = _objectSpread({
         hits: this.typesenseResponse.grouped_hits ? this._adaptGroupedHits(this.typesenseResponse.grouped_hits) : this._adaptHits(this.typesenseResponse.hits),
         nbHits: this.typesenseResponse.found,
         page: this.typesenseResponse.page - 1,
@@ -3084,7 +3085,10 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
         facets_stats: this._adaptFacetStats(this.typesenseResponse.facet_counts || {}),
         query: this.typesenseResponse.request_params.q,
         processingTimeMS: this.typesenseResponse.search_time_ms
-      }; // console.log(adaptedResult);
+      }, this.configuration.renderingContent != null && {
+        renderingContent: this.configuration.renderingContent
+      }); // console.log(adaptedResult);
+
 
       return adaptedResult;
     }

@@ -55,7 +55,7 @@ describe("Instant Search Widgets", () => {
   describe("refinementList", () => {
     it("renders", async () => {
       return expect(page).toMatchElement("#brand-list", {
-        text: "Apple 165",
+        text: "Apple165",
       });
     });
   });

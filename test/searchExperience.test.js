@@ -11,7 +11,7 @@ describe("Search Experience", () => {
     });
 
     it("renders the results, facets and pagination", async () => {
-      await expect(page).toMatchElement("#brand-list", { text: "Belkin 19" });
+      await expect(page).toMatchElement("#brand-list", { text: "Belkin19" });
       await expect(page).toMatchElement("#categories-menu", {
         text: "Cell Phone Accessories",
       });
@@ -66,7 +66,7 @@ describe("Search Experience", () => {
           await expect(page).toMatchElement("#brand-list", {
             text: "No results",
           });
-          await expect(page).toFill("#brand-list input[type=search]", "ottie");
+          await expect(page).toFill("#brand-list input[type=search]", "iottie");
           await expect(page).toMatchElement("#brand-list", {
             text: "iOttie",
           });
