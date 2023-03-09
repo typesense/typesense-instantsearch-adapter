@@ -365,10 +365,45 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
 });
 ```
 
+### `dynamicWidgets`
+
+> Available as of Typesense Server `v0.25.0.rc12`
+
+This [`dynamicWidgets`](https://www.algolia.com/doc/api-reference/widgets/dynamic-facets/js/) widget works out of the box with no additional changes, 
+but if you want to control the order in which these facets are displayed in the UI 
+Instantsearch expects a parameter called [`renderingContent`](https://www.algolia.com/doc/api-reference/api-parameters/renderingContent/) to be set.
+
+```js
+const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
+  server: {
+    apiKey: "xyz",
+    nodes: [
+      {
+        host: "localhost",
+        port: "8108",
+        path: "/",
+        protocol: "http",
+      },
+    ],
+  },
+  renderingContent: { // <<===== Add this, only if you want to control the order of the widgets displayed by dynamicWidgets
+    facetOrdering: {
+      facets: {
+        order: ["size", "brand"], // <<===== Change this as needed
+      },
+    },
+  },
+  additionalSearchParameters,
+});
+```
+
+Read more about all available options for `renderingContent` in [Algolia's documentation here](https://www.algolia.com/doc/api-reference/api-parameters/renderingContent/?client=javascript#examples).
+
 ## Compatibility
 
 | Typesense Server | typesense-instantsearch-adapter | instantsearch.js | react-instantsearch | vue-instantsearch | angular-instantsearch |
 | ---------------- | ------------------------------- | ---------------- | ------------------- | ----------------- | --------------------- |
+| \>= v0.25.0.rc12 | \>= v2.6.0                      | \>= 4.51         | \>= 6.39            | \>= 4.8           | \>= 4.4               |
 | \>= v0.24        | \>= v2.5.0                      | \>= 4.2.0        | \>= 6.0.0           | \>= 2.2.1         | \>= 3.0.0             |
 | \>= v0.21        | \>= v2.0.0                      | \>= 4.2.0        | \>= 6.0.0           | \>= 2.2.1         | \>= 3.0.0             |
 | \>= v0.19        | \>= v1.0.0                      | \>= 4.2.0        | \>= 6.0.0           | \>= 2.2.1         | \>= 3.0.0             |

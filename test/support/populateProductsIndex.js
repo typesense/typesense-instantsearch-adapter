@@ -112,7 +112,7 @@ module.exports = (async () => {
     product.rating = (product.description.length % 5) + 1; // We need this to be deterministic for tests
     product.hierarchicalCategories = {};
     product.categories.forEach((category, index) => {
-      product.hierarchicalCategories[`lvl${index}`] = [product.categories.slice(0, index + 1).join(" > ")];
+      product.hierarchicalCategories[`lvl${index}`] = product.categories.slice(0, index + 1).join(" > ");
     });
   });
 

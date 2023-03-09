@@ -49,6 +49,8 @@ export class Configuration {
       // Remove undefined values
       Object.keys(params).forEach((key) => (params[key] === undefined ? delete params[key] : {}));
     });
+
+    this.renderingContent = options.renderingContent;
   }
 
   validate() {
