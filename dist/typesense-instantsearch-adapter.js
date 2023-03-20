@@ -7,7 +7,7 @@
 		exports["TypesenseInstantSearchAdapter"] = factory();
 	else
 		root["TypesenseInstantSearchAdapter"] = factory();
-})(self, function() {
+})(self, () => {
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -2822,7 +2822,11 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
         var adaptedHits = _this._adaptHits(groupedHit.hits);
 
         adaptedHits.forEach(function (hit) {
-          return hit["group_key"] = groupedHit.group_key;
+          hit["group_key"] = hit["_group_key"] = groupedHit.group_key;
+
+          if (groupedHit.found) {
+            hit["_group_found"] = groupedHit.found;
+          }
         });
         return adaptedHits;
       }); // adaptedResult is now in the form of [[{}, {}], [{}, {}], ...]

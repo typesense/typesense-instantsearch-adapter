@@ -14,7 +14,12 @@ export class SearchResponseAdapter {
 
     adaptedResult = typesenseGroupedHits.map((groupedHit) => {
       const adaptedHits = this._adaptHits(groupedHit.hits);
-      adaptedHits.forEach((hit) => (hit["group_key"] = groupedHit.group_key));
+      adaptedHits.forEach((hit) => {
+        hit["group_key"] = hit["_group_key"] = groupedHit.group_key;
+        if (groupedHit.found) {
+          hit["_group_found"] = groupedHit.found;
+        }
+      });
       return adaptedHits;
     });
 
