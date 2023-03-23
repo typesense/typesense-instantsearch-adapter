@@ -5,8 +5,12 @@ export class SearchRequestAdapter {
     return new RegExp("^(.+?)(?=(/sort/(.*))|$)");
   }
 
-  static get FILTER_STRING_MATCHING_REGEX() {
+  static get DEFAULT_FACET_FILTER_STRING_MATCHING_REGEX() {
     return new RegExp("(.*)((?!:).):(?!:)(.*)");
+  }
+
+  static get DEFAULT_NUMERIC_FILTER_STRING_MATCHING_REGEX() {
+    return new RegExp("(.*?)(<=|>=|>|<|=)(.*)");
   }
 
   constructor(instantsearchRequests, typesenseClient, configuration) {
@@ -53,9 +57,7 @@ export class SearchRequestAdapter {
 
         const intermediateFacetFilters = {};
         item.forEach((facetFilter) => {
-          const facetFilterMatches = facetFilter.match(this.constructor.FILTER_STRING_MATCHING_REGEX);
-          const fieldName = `${facetFilterMatches[1]}${facetFilterMatches[2]}`;
-          const fieldValue = `${facetFilterMatches[3]}`;
+          const { fieldName, fieldValue } = this._parseFacetFilter(facetFilter);
           intermediateFacetFilters[fieldName] = intermediateFacetFilters[fieldName] || [];
           intermediateFacetFilters[fieldName].push(fieldValue);
         });
@@ -114,9 +116,7 @@ export class SearchRequestAdapter {
         // Into
         //  fieldName:=fieldValue
 
-        const facetFilterMatches = item.match(this.constructor.FILTER_STRING_MATCHING_REGEX);
-        const fieldName = `${facetFilterMatches[1]}${facetFilterMatches[2]}`;
-        const fieldValue = `${facetFilterMatches[3]}`;
+        const { fieldName, fieldValue } = this._parseFacetFilter(item);
         let typesenseFilterString;
         if (fieldValue.startsWith("-") && !this._isNumber(fieldValue)) {
           typesenseFilterString = `${fieldName}:!=[${this._escapeFacetValue(fieldValue.substring(1))}]`;
@@ -132,6 +132,54 @@ export class SearchRequestAdapter {
     // console.log(`${JSON.stringify(facetFilters)} => ${adaptedResult}`);
 
     return adaptedResult;
+  }
+
+  _parseFacetFilter(facetFilter) {
+    let filterStringMatchingRegex, facetFilterMatches, fieldName, fieldValue;
+
+    // This is helpful when the filter looks like `facetName:with:colons:facetValue:with:colons` and the default regex above parses the filter as `facetName:with:colons:facetValue:with` and `colon`.
+    // So if a facetValue can contain a colon, we ask users to pass in all possible facetable fields in `facetableFieldsWithSpecialCharacters` when instantiating the adapter, so we can explicitly match against that.
+    if (this.configuration.facetableFieldsWithSpecialCharacters?.length > 0) {
+      // escape any Regex special characters, source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
+      const sanitizedFacetableFieldsWithSpecialCharacters = this.configuration.facetableFieldsWithSpecialCharacters
+        .flat()
+        .map((f) => f.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+      filterStringMatchingRegex = new RegExp(`^(${sanitizedFacetableFieldsWithSpecialCharacters.join("|")}):(.*)$`);
+      facetFilterMatches = facetFilter.match(filterStringMatchingRegex);
+
+      if (facetFilterMatches != null) {
+        fieldName = `${facetFilterMatches[1]}`;
+        fieldValue = `${facetFilterMatches[2]}`;
+
+        return {
+          fieldName,
+          fieldValue,
+        };
+      }
+    }
+
+    // If we haven't found any matches yet
+    // Use the default filter parsing regex, which assumes that only facet names have colons, and not facet values
+    filterStringMatchingRegex = this.constructor.DEFAULT_FACET_FILTER_STRING_MATCHING_REGEX;
+    facetFilterMatches = facetFilter.match(filterStringMatchingRegex);
+
+    // console.log(filterStringMatchingRegex);
+    // console.log(facetFilter);
+    // console.log(facetFilterMatches);
+
+    if (facetFilterMatches == null) {
+      console.error(
+        `[Typesense-Instantsearch-Adapter] Parsing failed for a facet filter \`${facetFilter}\` with the Regex \`${filterStringMatchingRegex}\`. If you have field names with special characters, be sure to add them to a parameter called \`facetableFieldsWithSpecialCharacters\` when instantiating the adapter.`
+      );
+    } else {
+      fieldName = `${facetFilterMatches[1]}${facetFilterMatches[2]}`;
+      fieldValue = `${facetFilterMatches[3]}`;
+    }
+
+    return {
+      fieldName,
+      fieldValue,
+    };
   }
 
   _escapeFacetValue(value) {
@@ -175,9 +223,9 @@ export class SearchRequestAdapter {
     // };
     const filtersHash = {};
     numericFilters.forEach((filter) => {
-      const [, field, operator, value] = filter.match(new RegExp("(.*?)(<=|>=|>|<|:|=)(.*)"));
-      filtersHash[field] = filtersHash[field] || {};
-      filtersHash[field][operator] = value;
+      const { fieldName, operator, fieldValue } = this._parseNumericFilter(filter);
+      filtersHash[fieldName] = filtersHash[fieldName] || {};
+      filtersHash[fieldName][operator] = fieldValue;
     });
 
     // Transform that to:
@@ -201,6 +249,57 @@ export class SearchRequestAdapter {
 
     adaptedResult = adaptedFilters.join(" && ");
     return adaptedResult;
+  }
+
+  _parseNumericFilter(numericFilter) {
+    let filterStringMatchingRegex, numericFilterMatches;
+    let fieldName, operator, fieldValue;
+
+    // The following is helpful when the facetName has special characters like > and the default regex fails to parse it properly.
+    // So we ask users to pass in facetable fields in `facetableFieldsWithSpecialCharactersWithSpecialCharacters` when instantiating the adapter, so we can explicitly match against that.
+    if (this.configuration.facetableFieldsWithSpecialCharacters?.length > 0) {
+      // escape any Regex special characters, source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
+      const sanitizedFacetableFieldsWithSpecialCharacters = this.configuration.facetableFieldsWithSpecialCharacters.map(
+        (f) => f.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+      );
+      filterStringMatchingRegex = new RegExp(
+        `^(${sanitizedFacetableFieldsWithSpecialCharacters.join("|")})(<=|>=|>|<|=)(.*)$`
+      );
+
+      numericFilterMatches = numericFilter.match(filterStringMatchingRegex);
+
+      if (numericFilterMatches != null) {
+        // If no matches are found or if the above didn't trigger, fall back to the default regex
+        [, fieldName, operator, fieldValue] = numericFilterMatches;
+        return {
+          fieldName,
+          operator,
+          fieldValue,
+        };
+      }
+    }
+
+    // If we haven't found any matches yet, fall back to the default regex
+    filterStringMatchingRegex = this.constructor.DEFAULT_NUMERIC_FILTER_STRING_MATCHING_REGEX;
+    numericFilterMatches = numericFilter.match(filterStringMatchingRegex);
+
+    // console.log(filterStringMatchingRegex);
+    // console.log(numericFilter);
+    // console.log(numericFilterMatches);
+
+    if (numericFilterMatches == null) {
+      console.error(
+        `[Typesense-Instantsearch-Adapter] Parsing failed for a numeric filter \`${numericFilter}\` with the Regex \`${filterStringMatchingRegex}\`. If you have field names with special characters, be sure to add them to a parameter called \`facetableFieldsWithSpecialCharacters\` when instantiating the adapter.`
+      );
+    } else {
+      [, fieldName, operator, fieldValue] = numericFilterMatches;
+    }
+
+    return {
+      fieldName,
+      operator,
+      fieldValue,
+    };
   }
 
   _adaptGeoFilter({ insideBoundingBox, aroundRadius, aroundLatLng, insidePolygon }) {
@@ -316,6 +415,8 @@ export class SearchRequestAdapter {
   }
 
   async request() {
+    // console.log(this.instantsearchRequests);
+
     const searches = this.instantsearchRequests.map((instantsearchRequest) =>
       this._buildSearchParameters(instantsearchRequest)
     );

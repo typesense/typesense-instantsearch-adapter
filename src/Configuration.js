@@ -32,6 +32,7 @@ export class Configuration {
       this.additionalSearchParameters.query_by;
 
     this.geoLocationField = options.geoLocationField ?? "_geoloc";
+    this.facetableFieldsWithSpecialCharacters = options.facetableFieldsWithSpecialCharacters ?? [];
 
     this.collectionSpecificSearchParameters = options.collectionSpecificSearchParameters ?? {};
 

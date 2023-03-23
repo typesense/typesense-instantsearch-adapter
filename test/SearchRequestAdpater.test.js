@@ -2,26 +2,73 @@ import { SearchRequestAdapter } from "../src/SearchRequestAdapter";
 
 describe("SearchRequestAdapter", () => {
   describe("._adaptNumericFilters", () => {
-    it("adapts the given numeric filters", () => {
-      const subject = new SearchRequestAdapter([], null, {});
+    describe("when the fieldName doesn't have any numeric operator special characters", () => {
+      it("adapts the given numeric filters", () => {
+        const subject = new SearchRequestAdapter([], null, {});
 
-      const result = subject._adaptNumericFilters(["field1<=634", "field1>=289", "field2<=5", "field3>=3"]);
-      expect(result).toEqual("field1:=[289..634] && field2:<=5 && field3:>=3");
+        const result = subject._adaptNumericFilters([
+          "field1<=634",
+          "field1>=289",
+          "field2<=5",
+          "field3>=3",
+          "field4:with:colon.and.dot:<=3",
+        ]);
+        expect(result).toEqual("field1:=[289..634] && field2:<=5 && field3:>=3 && field4:with:colon.and.dot::<=3");
+      });
+    });
+
+    describe("when the fieldName has numeric operator special characters", () => {
+      it("adapts the given numeric filters, given an additional facetableFieldsWithSpecialCharacters configuration", () => {
+        const subject = new SearchRequestAdapter([], null, {
+          facetableFieldsWithSpecialCharacters: ["field4>numeric-special=characters:and:colon"],
+        });
+
+        const result = subject._adaptNumericFilters([
+          "field1<=634",
+          "field1>=289",
+          "field2<=5",
+          "field3>=3",
+          "field4>numeric-special=characters:and:colon<=3",
+        ]);
+        expect(result).toEqual(
+          "field1:=[289..634] && field2:<=5 && field3:>=3 && field4>numeric-special=characters:and:colon:<=3"
+        );
+      });
     });
   });
 
   describe("._adaptFacetFilters", () => {
-    it("adapts the given facet filters", () => {
-      const subject = new SearchRequestAdapter([], null, {});
+    describe("when the fieldName only has colons in the facet name", () => {
+      it("adapts the given facet filters", () => {
+        const subject = new SearchRequestAdapter([], null, {});
 
-      const result = subject._adaptFacetFilters([
-        ["field1:value1", "field1:value2"],
-        "field2:with:colons:value3",
-        "field2:with:colons:value4",
-      ]);
-      expect(result).toEqual(
-        "field1:=[`value1`,`value2`] && field2:with:colons:=[`value3`] && field2:with:colons:=[`value4`]"
-      );
+        const result = subject._adaptFacetFilters([
+          ["field1:value1", "field1:value2"],
+          "field2:with:colons:value3",
+          "field2:with:colons:value4",
+        ]);
+        expect(result).toEqual(
+          "field1:=[`value1`,`value2`] && field2:with:colons:=[`value3`] && field2:with:colons:=[`value4`]"
+        );
+      });
+    });
+    describe("when the fieldName has colons in the facet value", () => {
+      it("adapts the given facet filters, given a configuration called facetableFieldsWithSpecialCharacters ", () => {
+        const subject = new SearchRequestAdapter([], null, {
+          facetableFieldsWithSpecialCharacters: ["field3", "field4:with:colons"],
+        });
+
+        const result = subject._adaptFacetFilters([
+          ["field1:value1", "field1:value2"],
+          "field2:with:colons:value3",
+          "field2:with:colons:value4",
+          "field3:value5:with:colon",
+          "field4:with:colons:value6:with:colon",
+        ]);
+        expect(result).toEqual(
+          "field1:=[`value1`,`value2`] && field2:with:colons:=[`value3`] && field2:with:colons:=[`value4`] && field3:=[`value5:with:colon`] && field4:with:colons:=[`value6:with:colon`]"
+        );
+      });
     });
   });
 

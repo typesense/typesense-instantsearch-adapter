@@ -398,12 +398,54 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
 });
 ```
 
+### Special characters in field names / values
+
+- If any string fields in your documents have a colon `:` in their values (for eg, let's say there's a field called `{ brand: "a:b" }`, then you would need to add a parameter like below when instantiating the adapter:
+
+  ```js
+  const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
+    server: {
+      apiKey: "xyz",
+      nodes: [
+        {
+          host: "localhost",
+          port: "8108",
+          path: "/",
+          protocol: "http",
+        },
+      ],
+    },
+    facetableFieldsWithSpecialCharacters: ["brand"], // <======= Add string fields that have colons in their values here, to aid in parsing
+    additionalSearchParameters,
+  });
+  ```
+
+- If any numeric field _names_ in your documents have special characters like `>`, `<`, `=` (for eg, let's say there's a field called `{ price>discount: 3.0 }`) then you would need to add a parameter like below when instantiating the adapter:
+
+  ```js
+  const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
+    server: {
+      apiKey: "xyz",
+      nodes: [
+        {
+          host: "localhost",
+          port: "8108",
+          path: "/",
+          protocol: "http",
+        },
+      ],
+    },
+    facetableFieldsWithSpecialCharacters: ["price>discount"], // // <======= Add numeric fields that have >, < or = in their names, to aid in parsing
+    additionalSearchParameters,
+  });
+  ```
+
 Read more about all available options for `renderingContent` in [Algolia's documentation here](https://www.algolia.com/doc/api-reference/api-parameters/renderingContent/?client=javascript#examples).
 
 ## Compatibility
 
 | Typesense Server | typesense-instantsearch-adapter | instantsearch.js | react-instantsearch | vue-instantsearch | angular-instantsearch |
-|------------------|---------------------------------| ---------------- | ------------------- | ----------------- | --------------------- |
+| ---------------- | ------------------------------- | ---------------- | ------------------- | ----------------- | --------------------- |
 | \>= v0.25.0.rc14 | \>= v2.7.0-1                    | \>= 4.51         | \>= 6.39            | \>= 4.8           | \>= 4.4               |
 | \>= v0.25.0.rc12 | \>= v2.6.0                      | \>= 4.51         | \>= 6.39            | \>= 4.8           | \>= 4.4               |
 | \>= v0.24        | \>= v2.5.0                      | \>= 4.2.0        | \>= 6.0.0           | \>= 2.2.1         | \>= 3.0.0             |

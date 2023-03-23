@@ -2214,6 +2214,7 @@ var Configuration = /*#__PURE__*/function () {
         _ref4,
         _this$additionalSearc4,
         _options$geoLocationF,
+        _options$facetableFie,
         _options$collectionSp,
         _this = this;
 
@@ -2236,6 +2237,7 @@ var Configuration = /*#__PURE__*/function () {
     this.additionalSearchParameters.sort_by = (_ref3 = (_this$additionalSearc3 = this.additionalSearchParameters.sortBy) !== null && _this$additionalSearc3 !== void 0 ? _this$additionalSearc3 : this.additionalSearchParameters.sort_by) !== null && _ref3 !== void 0 ? _ref3 : "";
     this.additionalSearchParameters.highlight_full_fields = (_ref4 = (_this$additionalSearc4 = this.additionalSearchParameters.highlightFullFields) !== null && _this$additionalSearc4 !== void 0 ? _this$additionalSearc4 : this.additionalSearchParameters.highlight_full_fields) !== null && _ref4 !== void 0 ? _ref4 : this.additionalSearchParameters.query_by;
     this.geoLocationField = (_options$geoLocationF = options.geoLocationField) !== null && _options$geoLocationF !== void 0 ? _options$geoLocationF : "_geoloc";
+    this.facetableFieldsWithSpecialCharacters = (_options$facetableFie = options.facetableFieldsWithSpecialCharacters) !== null && _options$facetableFie !== void 0 ? _options$facetableFie : [];
     this.collectionSpecificSearchParameters = (_options$collectionSp = options.collectionSpecificSearchParameters) !== null && _options$collectionSp !== void 0 ? _options$collectionSp : {};
     Object.keys(this.collectionSpecificSearchParameters).forEach(function (collection) {
       var _params$queryBy, _params$preset, _params$sortBy, _ref5, _ref6, _params$highlightFull;
@@ -2419,9 +2421,10 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
           // }
           var intermediateFacetFilters = {};
           item.forEach(function (facetFilter) {
-            var facetFilterMatches = facetFilter.match(_this.constructor.FILTER_STRING_MATCHING_REGEX);
-            var fieldName = "".concat(facetFilterMatches[1]).concat(facetFilterMatches[2]);
-            var fieldValue = "".concat(facetFilterMatches[3]);
+            var _this$_parseFacetFilt = _this._parseFacetFilter(facetFilter),
+                fieldName = _this$_parseFacetFilt.fieldName,
+                fieldValue = _this$_parseFacetFilt.fieldValue;
+
             intermediateFacetFilters[fieldName] = intermediateFacetFilters[fieldName] || [];
             intermediateFacetFilters[fieldName].push(fieldValue);
           });
@@ -2477,11 +2480,9 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
           //  fieldName:fieldValue
           // Into
           //  fieldName:=fieldValue
-          var facetFilterMatches = item.match(_this.constructor.FILTER_STRING_MATCHING_REGEX);
-
-          var _fieldName = "".concat(facetFilterMatches[1]).concat(facetFilterMatches[2]);
-
-          var fieldValue = "".concat(facetFilterMatches[3]);
+          var _this$_parseFacetFilt2 = _this._parseFacetFilter(item),
+              _fieldName = _this$_parseFacetFilt2.fieldName,
+              fieldValue = _this$_parseFacetFilt2.fieldValue;
 
           var _typesenseFilterString;
 
@@ -2497,6 +2498,51 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
       adaptedResult = transformedTypesenseFilters.join(" && "); // console.log(`${JSON.stringify(facetFilters)} => ${adaptedResult}`);
 
       return adaptedResult;
+    }
+  }, {
+    key: "_parseFacetFilter",
+    value: function _parseFacetFilter(facetFilter) {
+      var _this$configuration$f;
+
+      var filterStringMatchingRegex, facetFilterMatches, fieldName, fieldValue; // This is helpful when the filter looks like `facetName:with:colons:facetValue:with:colons` and the default regex above parses the filter as `facetName:with:colons:facetValue:with` and `colon`.
+      // So if a facetValue can contain a colon, we ask users to pass in all possible facetable fields in `facetableFieldsWithSpecialCharacters` when instantiating the adapter, so we can explicitly match against that.
+
+      if (((_this$configuration$f = this.configuration.facetableFieldsWithSpecialCharacters) === null || _this$configuration$f === void 0 ? void 0 : _this$configuration$f.length) > 0) {
+        // escape any Regex special characters, source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
+        var sanitizedFacetableFieldsWithSpecialCharacters = this.configuration.facetableFieldsWithSpecialCharacters.flat().map(function (f) {
+          return f.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        });
+        filterStringMatchingRegex = new RegExp("^(".concat(sanitizedFacetableFieldsWithSpecialCharacters.join("|"), "):(.*)$"));
+        facetFilterMatches = facetFilter.match(filterStringMatchingRegex);
+
+        if (facetFilterMatches != null) {
+          fieldName = "".concat(facetFilterMatches[1]);
+          fieldValue = "".concat(facetFilterMatches[2]);
+          return {
+            fieldName: fieldName,
+            fieldValue: fieldValue
+          };
+        }
+      } // If we haven't found any matches yet
+      // Use the default filter parsing regex, which assumes that only facet names have colons, and not facet values
+
+
+      filterStringMatchingRegex = this.constructor.DEFAULT_FACET_FILTER_STRING_MATCHING_REGEX;
+      facetFilterMatches = facetFilter.match(filterStringMatchingRegex); // console.log(filterStringMatchingRegex);
+      // console.log(facetFilter);
+      // console.log(facetFilterMatches);
+
+      if (facetFilterMatches == null) {
+        console.error("[Typesense-Instantsearch-Adapter] Parsing failed for a facet filter `".concat(facetFilter, "` with the Regex `").concat(filterStringMatchingRegex, "`. If you have field names with special characters, be sure to add them to a parameter called `facetableFieldsWithSpecialCharacters` when instantiating the adapter."));
+      } else {
+        fieldName = "".concat(facetFilterMatches[1]).concat(facetFilterMatches[2]);
+        fieldValue = "".concat(facetFilterMatches[3]);
+      }
+
+      return {
+        fieldName: fieldName,
+        fieldValue: fieldValue
+      };
     }
   }, {
     key: "_escapeFacetValue",
@@ -2517,6 +2563,8 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
   }, {
     key: "_adaptNumericFilters",
     value: function _adaptNumericFilters(numericFilters) {
+      var _this2 = this;
+
       // Need to transform this:
       // ["field1<=634", "field1>=289", "field2<=5", "field3>=3"]
       // to:
@@ -2542,14 +2590,13 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
 
       var filtersHash = {};
       numericFilters.forEach(function (filter) {
-        var _filter$match = filter.match(new RegExp("(.*?)(<=|>=|>|<|:|=)(.*)")),
-            _filter$match2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_filter$match, 4),
-            field = _filter$match2[1],
-            operator = _filter$match2[2],
-            value = _filter$match2[3];
+        var _this2$_parseNumericF = _this2._parseNumericFilter(filter),
+            fieldName = _this2$_parseNumericF.fieldName,
+            operator = _this2$_parseNumericF.operator,
+            fieldValue = _this2$_parseNumericF.fieldValue;
 
-        filtersHash[field] = filtersHash[field] || {};
-        filtersHash[field][operator] = value;
+        filtersHash[fieldName] = filtersHash[fieldName] || {};
+        filtersHash[fieldName][operator] = fieldValue;
       }); // Transform that to:
       //  "field1:=[634..289] && field2:<=5 && field3:>=3"
 
@@ -2569,6 +2616,64 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
       });
       adaptedResult = adaptedFilters.join(" && ");
       return adaptedResult;
+    }
+  }, {
+    key: "_parseNumericFilter",
+    value: function _parseNumericFilter(numericFilter) {
+      var _this$configuration$f2;
+
+      var filterStringMatchingRegex, numericFilterMatches;
+      var fieldName, operator, fieldValue; // The following is helpful when the facetName has special characters like > and the default regex fails to parse it properly.
+      // So we ask users to pass in facetable fields in `facetableFieldsWithSpecialCharactersWithSpecialCharacters` when instantiating the adapter, so we can explicitly match against that.
+
+      if (((_this$configuration$f2 = this.configuration.facetableFieldsWithSpecialCharacters) === null || _this$configuration$f2 === void 0 ? void 0 : _this$configuration$f2.length) > 0) {
+        // escape any Regex special characters, source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
+        var sanitizedFacetableFieldsWithSpecialCharacters = this.configuration.facetableFieldsWithSpecialCharacters.map(function (f) {
+          return f.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        });
+        filterStringMatchingRegex = new RegExp("^(".concat(sanitizedFacetableFieldsWithSpecialCharacters.join("|"), ")(<=|>=|>|<|=)(.*)$"));
+        numericFilterMatches = numericFilter.match(filterStringMatchingRegex);
+
+        if (numericFilterMatches != null) {
+          // If no matches are found or if the above didn't trigger, fall back to the default regex
+          var _numericFilterMatches = numericFilterMatches;
+
+          var _numericFilterMatches2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_numericFilterMatches, 4);
+
+          fieldName = _numericFilterMatches2[1];
+          operator = _numericFilterMatches2[2];
+          fieldValue = _numericFilterMatches2[3];
+          return {
+            fieldName: fieldName,
+            operator: operator,
+            fieldValue: fieldValue
+          };
+        }
+      } // If we haven't found any matches yet, fall back to the default regex
+
+
+      filterStringMatchingRegex = this.constructor.DEFAULT_NUMERIC_FILTER_STRING_MATCHING_REGEX;
+      numericFilterMatches = numericFilter.match(filterStringMatchingRegex); // console.log(filterStringMatchingRegex);
+      // console.log(numericFilter);
+      // console.log(numericFilterMatches);
+
+      if (numericFilterMatches == null) {
+        console.error("[Typesense-Instantsearch-Adapter] Parsing failed for a numeric filter `".concat(numericFilter, "` with the Regex `").concat(filterStringMatchingRegex, "`. If you have field names with special characters, be sure to add them to a parameter called `facetableFieldsWithSpecialCharacters` when instantiating the adapter."));
+      } else {
+        var _numericFilterMatches3 = numericFilterMatches;
+
+        var _numericFilterMatches4 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_numericFilterMatches3, 4);
+
+        fieldName = _numericFilterMatches4[1];
+        operator = _numericFilterMatches4[2];
+        fieldValue = _numericFilterMatches4[3];
+      }
+
+      return {
+        fieldName: fieldName,
+        operator: operator,
+        fieldValue: fieldValue
+      };
     }
   }, {
     key: "_adaptGeoFilter",
@@ -2726,15 +2831,16 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
     key: "request",
     value: function () {
       var _request = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee() {
-        var _this2 = this;
+        var _this3 = this;
 
         var searches;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                // console.log(this.instantsearchRequests);
                 searches = this.instantsearchRequests.map(function (instantsearchRequest) {
-                  return _this2._buildSearchParameters(instantsearchRequest);
+                  return _this3._buildSearchParameters(instantsearchRequest);
                 });
                 return _context.abrupt("return", this.typesenseClient.multiSearch.perform({
                   searches: searches
@@ -2760,9 +2866,14 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
       return new RegExp("^(.+?)(?=(/sort/(.*))|$)");
     }
   }, {
-    key: "FILTER_STRING_MATCHING_REGEX",
+    key: "DEFAULT_FACET_FILTER_STRING_MATCHING_REGEX",
     get: function get() {
       return new RegExp("(.*)((?!:).):(?!:)(.*)");
+    }
+  }, {
+    key: "DEFAULT_NUMERIC_FILTER_STRING_MATCHING_REGEX",
+    get: function get() {
+      return new RegExp("(.*?)(<=|>=|>|<|=)(.*)");
     }
   }]);
 
