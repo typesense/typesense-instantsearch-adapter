@@ -398,7 +398,11 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
 });
 ```
 
+Read more about all available options for `renderingContent` in [Algolia's documentation here](https://www.algolia.com/doc/api-reference/api-parameters/renderingContent/?client=javascript#examples).
+
 ### Special characters in field names / values
+
+> Available as of typesense-instantsearch-adapter `2.7.0-2`
 
 - If any string fields in your documents have a colon `:` in their values (for eg, let's say there's a field called `{ brand: "a:b" }`, then you would need to add a parameter like below when instantiating the adapter:
 
@@ -440,7 +444,62 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   });
   ```
 
-Read more about all available options for `renderingContent` in [Algolia's documentation here](https://www.algolia.com/doc/api-reference/api-parameters/renderingContent/?client=javascript#examples).
+### Vector Search
+
+> Available as of typesense-instantsearch-adapter `2.7.0-3`
+
+The general idea is to first hook into the query life-cycle of Instantsearch, intercept the typed query and send it to an embedding API, fetch the embeddings and then send the vectors to Typesense to do a nearest neighbor vector search.
+
+Here's a demo that you can run locally to see this in action: [https://github.com/typesense/typesense-instantsearch-semantic-search-demo](https://github.com/typesense/typesense-instantsearch-semantic-search-demo).
+
+Here's how to do this in Instantsearch.js:
+
+```javascript
+const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
+  server: {
+    apiKey: "xyz",
+    nodes: [
+      {
+        host: "localhost",
+        port: "8108",
+        path: "/",
+        protocol: "http",
+      },
+    ],
+  },
+  additionalSearchParameters,
+});
+const searchClient = typesenseInstantsearchAdapter.searchClient;
+const search = instantsearch({
+  searchClient,
+  indexName: 'products',
+  routing: true,
+  async searchFunction(helper) {
+    let query = helper.getQuery().query;
+
+    if (query !== '') {
+      // Get embedding for the query
+      let response = await fetch(
+        'http://localhost:8000/embedding?' + new URLSearchParams({ q: query }) // <=== Embedding API
+      );
+
+      let parsedResponse = await response.json();
+
+      console.log(parsedResponse);
+
+      // Send the embedding to Typesense to do a nearest neighbor search
+      helper
+        .setQueryParameter(
+          'typesenseVectorQuery', // <=== Special parameter that only works in typesense-instantsearch-adapter@2.7.0-3 and above
+          `vectors:([${parsedResponse['embedding'].join(',')}])`
+        )
+        .search();
+    } else {
+      helper.setQueryParameter('typesenseVectorQuery', null).search();
+    }
+  },
+});
+```
 
 ## Compatibility
 

@@ -2808,6 +2808,12 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
       if (params.facetQuery) {
         typesenseSearchParams.facet_query = "".concat(params.facetName, ":").concat(params.facetQuery);
         typesenseSearchParams.per_page = 0;
+      } // If a custom vector query is specified, set q=*
+
+
+      if (params.typesenseVectorQuery) {
+        typesenseSearchParams.vector_query = params.typesenseVectorQuery;
+        typesenseSearchParams.q = "*";
       } // console.log(params);
       // console.log(typesenseSearchParams);
       // Filter out empty or null values, so we don't accidentally override values set in presets

@@ -399,6 +399,12 @@ export class SearchRequestAdapter {
       typesenseSearchParams.per_page = 0;
     }
 
+    // If a custom vector query is specified, set q=*
+    if (params.typesenseVectorQuery) {
+      typesenseSearchParams.vector_query = params.typesenseVectorQuery;
+      typesenseSearchParams.q = "*";
+    }
+
     // console.log(params);
     // console.log(typesenseSearchParams);
 
