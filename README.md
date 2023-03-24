@@ -475,7 +475,9 @@ const search = instantsearch({
   indexName: 'products',
   routing: true,
   async searchFunction(helper) {
-    let query = helper.getQuery().query;
+    const query = helper.getQuery().query;
+    const page = helper.getPage(); // Retrieve the current page
+    const totalNearestNeighborsToFetch = 1000;
 
     if (query !== '') {
       // Get embedding for the query
@@ -491,11 +493,15 @@ const search = instantsearch({
       helper
         .setQueryParameter(
           'typesenseVectorQuery', // <=== Special parameter that only works in typesense-instantsearch-adapter@2.7.0-3 and above
-          `vectors:([${parsedResponse['embedding'].join(',')}])`
+          `vectors:([${parsedResponse['embedding'].join(',')}], k:${totalNearestNeighborsToFetch})`
         )
+        .setPage(page)
         .search();
     } else {
-      helper.setQueryParameter('typesenseVectorQuery', null).search();
+      helper
+        .setQueryParameter('typesenseVectorQuery', null)
+        .setPage(page)
+        .search();
     }
   },
 });
