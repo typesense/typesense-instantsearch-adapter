@@ -166,9 +166,20 @@ export class SearchResponseAdapter {
   }
 
   _adaptHighlightInObjectValue(objectValue, highlightObjectValue, snippetOrValue) {
+    let fieldValueEntriesToHighlight = Object.entries(objectValue);
+    let fieldsToHighlightNotInDocument = Object.keys(highlightObjectValue).filter(
+      (field) => !Object.keys(objectValue).includes(field)
+    );
+    if (fieldsToHighlightNotInDocument) {
+      let hiddenEntries = fieldsToHighlightNotInDocument.map((field) => {
+        return [field, highlightObjectValue[field][snippetOrValue] || highlightObjectValue[field]["snippet"] || ""];
+      });
+      fieldValueEntriesToHighlight.push(...hiddenEntries);
+    }
+
     return Object.assign(
       {},
-      ...Object.entries(objectValue).map(([attribute, value]) => {
+      ...fieldValueEntriesToHighlight.map(([attribute, value]) => {
         let adaptedValue;
         if (value == null) {
           adaptedValue = this._adaptHighlightNullValue();

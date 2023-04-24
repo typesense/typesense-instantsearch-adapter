@@ -270,6 +270,11 @@ describe("SearchResponseAdapter", () => {
             matchLevel: "none",
             matchedWords: [],
           },
+          hidden_field_to_highlight: {
+            value: "Secret <mark>Stark</mark> Industries",
+            matchLevel: "full",
+            matchedWords: ["Stark"],
+          },
         });
       });
     });

@@ -32,26 +32,24 @@
               },
               {
                 "city": {
-                  "matched_tokens": [
-                    "Houston"
-                  ],
+                  "matched_tokens": ["Houston"],
                   "snippet": "<mark>Houston</mark>"
                 }
               }
             ],
             "company_name": {
-              "matched_tokens": [
-                "Stark"
-              ],
+              "matched_tokens": ["Stark"],
               "snippet": "<mark>Stark</mark> Industries"
+            },
+            "hidden_field_to_highlight": {
+              "matched_tokens": ["Stark"],
+              "snippet": "Secret <mark>Stark</mark> Industries"
             }
           },
           "highlights": [
             {
               "field": "company_name",
-              "matched_tokens": [
-                "Stark"
-              ],
+              "matched_tokens": ["Stark"],
               "snippet": "<mark>Stark</mark> Industries",
               "value": "<mark>Stark</mark> Industries"
             }
