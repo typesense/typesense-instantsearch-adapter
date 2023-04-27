@@ -2379,6 +2379,7 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
     this.typesenseClient = typesenseClient;
     this.configuration = configuration;
     this.additionalSearchParameters = configuration.additionalSearchParameters;
+    console.log("suca", this.additionalSearchParameters);
     this.collectionSpecificSearchParameters = configuration.collectionSpecificSearchParameters;
   }
 
@@ -2761,6 +2762,7 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
     key: "_buildSearchParameters",
     value: function _buildSearchParameters(instantsearchRequest) {
       var params = instantsearchRequest.params;
+      console.log("configuration is", this.configuration);
       var indexName = instantsearchRequest.indexName;
 
       var adaptedCollectionName = this._adaptIndexName(indexName); // Convert all common parameters to snake case
@@ -2796,7 +2798,7 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
         q: params.query === "" || params.query === undefined ? "*" : params.query,
         facet_by: [params.facets].flat().join(","),
         filter_by: this._adaptFilters(params) || snakeCasedAdditionalSearchParameters.filter_by,
-        sort_by: adaptedSortBy || snakeCasedAdditionalSearchParameters.sort_by,
+        sort_by: adaptedSortBy || snakeCasedAdditionalSearchParameters.sort_by || (params.additionalSearchParameters || {}).sort_by,
         max_facet_values: params.maxValuesPerFacet,
         page: (params.page || 0) + 1
       });
