@@ -1,9 +1,9 @@
 type SearchClient = any;
 
 import type { ConfigurationOptions } from "typesense/lib/Typesense/Configuration";
-import type { SearchParams } from "typesense/lib/Typesense/Documents";
+import type { SearchParamsWithPreset } from "typesense/lib/Typesense/Documents";
 
-interface BaseSearchParameters extends Omit<SearchParams, "q" | "query_by" | "filter_by"> {
+interface BaseSearchParameters extends Partial<Omit<SearchParamsWithPreset, "q" | "filter_by">> {
   /**
    * @deprecated Please use the snake_cased version of this parameter
    */
@@ -82,49 +82,31 @@ interface BaseSearchParameters extends Omit<SearchParams, "q" | "query_by" | "fi
   exhaustiveSearch?: boolean;
 }
 
-interface SearchParametersWithQueryBy extends BaseSearchParameters {
-  /**
-   * @deprecated Please use the snake_cased version of this parameter
-   */
-  queryBy?: string;
-  query_by: string;
-}
-
-interface SearchParametersOptionalQueryBy extends BaseSearchParameters {
-  /**
-   * @deprecated Please use the snake_cased version of this parameter
-   */
-  queryBy?: string;
-  query_by?: string;
-}
-
-interface CollectionSearchParametersWithQueryBy {
-  [key: string]: SearchParametersWithQueryBy;
-}
-
-interface CollectionSearchParametersOptionalQueryBy {
-  [key: string]: SearchParametersOptionalQueryBy;
-}
-
 interface BaseAdapterOptions {
   server: ConfigurationOptions;
   geoLocationField?: string;
+  facetableFieldsWithSpecialCharacters?: string[];
+  renderingContent?: object;
+}
+
+interface CollectionSearchParameters {
+  [key: string]: BaseSearchParameters;
 }
 
 interface AdditionalSearchParametersWithQueryBy extends BaseAdapterOptions {
-  additionalSearchParameters: SearchParametersWithQueryBy;
+  additionalSearchParameters: BaseSearchParameters;
 }
 
 interface AdditionalSearchParametersOptionalQueryBy extends BaseAdapterOptions {
-  additionalSearchParameters?: SearchParametersOptionalQueryBy;
+  additionalSearchParameters?: BaseSearchParameters;
 }
 
 interface CollectionSpecificSearchParametersWithQueryBy extends BaseAdapterOptions {
-  collectionSpecificSearchParameters: CollectionSearchParametersWithQueryBy;
+  collectionSpecificSearchParameters: CollectionSearchParameters;
 }
 
 interface CollectionSpecificSearchParametersOptionalQueryBy extends BaseAdapterOptions {
-  collectionSpecificSearchParameters?: CollectionSearchParametersOptionalQueryBy;
+  collectionSpecificSearchParameters?: CollectionSearchParameters;
 }
 
 type AdapterOptionsWithQueryByInAdditionalSearchParameters = AdditionalSearchParametersWithQueryBy &

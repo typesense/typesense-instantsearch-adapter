@@ -18,7 +18,7 @@ expectAssignable<TypesenseInstantsearchAdapterOptions>({
   },
 });
 
-expectNotAssignable<TypesenseInstantsearchAdapterOptions>({
+expectAssignable<TypesenseInstantsearchAdapterOptions>({
   server: {
     apiKey: "foo",
     nodes: [{ host: "example.com", port: 1234, protocol: "http" }],
@@ -63,7 +63,7 @@ expectAssignable<TypesenseInstantsearchAdapterOptions>({
   },
 });
 
-expectNotAssignable<TypesenseInstantsearchAdapterOptions>({
+expectAssignable<TypesenseInstantsearchAdapterOptions>({
   server: {
     apiKey: "foo",
     nodes: [{ host: "example.com", port: 1234, protocol: "http" }],
