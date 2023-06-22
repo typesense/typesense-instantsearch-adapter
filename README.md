@@ -3,7 +3,7 @@
 An adapter to use the awesome [Instantsearch.js](https://github.com/algolia/instantsearch.js) library with a [Typesense](https://typesense.org) Search Server, to build rich search interfaces.
 
 [![NPM version][npm-image]][npm-url]
-[![CircleCI](https://circleci.com/gh/typesense/typesense-instantsearch-adapter.svg?style=shield)](https://circleci.com/gh/typesense/typesense-instantsearch-adapter)
+![downloads](https://img.shields.io/npm/dt/typesense-instantsearch-adapter?label=downloads)
 
 Here is an example of UI you can build with this adapater: [songs-search.typesense.org](https://songs-search.typesense.org)
 
