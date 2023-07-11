@@ -27,7 +27,8 @@ export default class TypesenseInstantsearchAdapter {
         const responseAdapter = new SearchResponseAdapter(
           typesenseResult,
           instantsearchRequests[index],
-          this.configuration
+          this.configuration,
+          typesenseResponse.results
         );
         return responseAdapter.adapt();
       });
