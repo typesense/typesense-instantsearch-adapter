@@ -2921,7 +2921,9 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 
 var SearchResponseAdapter = /*#__PURE__*/function () {
-  function SearchResponseAdapter(typesenseResponse, instantsearchRequest, configuration, allTypesenseResponses) {
+  function SearchResponseAdapter(typesenseResponse, instantsearchRequest, configuration) {
+    var allTypesenseResponses = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
+
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_4__["default"])(this, SearchResponseAdapter);
 
     this.typesenseResponse = typesenseResponse;
@@ -3197,7 +3199,7 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
     }
   }, {
     key: "_adaptRenderingContent",
-    value: function _adaptRenderingContent() {
+    value: function _adaptRenderingContent(typesenseFacetCounts) {
       var _adaptedResult$facetO, _adaptedResult$facetO2;
 
       var adaptedResult = Object.assign({}, this.configuration.renderingContent); // Only set facet ordering if the user has not set one
@@ -3205,13 +3207,15 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
       if (((_adaptedResult$facetO = adaptedResult.facetOrdering) === null || _adaptedResult$facetO === void 0 ? void 0 : (_adaptedResult$facetO2 = _adaptedResult$facetO.facets) === null || _adaptedResult$facetO2 === void 0 ? void 0 : _adaptedResult$facetO2.order) == null) {
         adaptedResult.facetOrdering = adaptedResult.facetOrdering || {};
         adaptedResult.facetOrdering.facets = adaptedResult.facetOrdering.facets || {};
-        adaptedResult.facetOrdering.facets.order = (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2__["default"])(new Set(this.allTypesenseResponses.map(function (r) {
+        adaptedResult.facetOrdering.facets.order = (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2__["default"])(new Set(typesenseFacetCounts.map(function (fc) {
+          return fc["field_name"];
+        }).concat(this.allTypesenseResponses.map(function (r) {
           return r.facet_counts || [];
         }).map(function (fc) {
           return fc["field_name"];
-        }).flatten().filter(function (f) {
+        }).flat().filter(function (f) {
           return f;
-        })));
+        }))));
       }
 
       return adaptedResult;
@@ -3219,7 +3223,7 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
   }, {
     key: "adapt",
     value: function adapt() {
-      var adaptedRenderingContent = this._adaptRenderingContent();
+      var adaptedRenderingContent = this._adaptRenderingContent(this.typesenseResponse.facet_counts || []);
 
       var adaptedResult = _objectSpread({
         hits: this.typesenseResponse.grouped_hits ? this._adaptGroupedHits(this.typesenseResponse.grouped_hits) : this._adaptHits(this.typesenseResponse.hits),
@@ -3233,9 +3237,9 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
         processingTimeMS: this.typesenseResponse.search_time_ms
       }, Object.keys(adaptedRenderingContent).length > 0 ? {
         renderingContent: adaptedRenderingContent
-      } : null);
+      } : null); // console.log(adaptedResult);
 
-      console.log(adaptedResult);
+
       return adaptedResult;
     }
   }]);

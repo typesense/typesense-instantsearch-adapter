@@ -3,7 +3,7 @@
 import { utils } from "./support/utils";
 
 export class SearchResponseAdapter {
-  constructor(typesenseResponse, instantsearchRequest, configuration, allTypesenseResponses) {
+  constructor(typesenseResponse, instantsearchRequest, configuration, allTypesenseResponses = []) {
     this.typesenseResponse = typesenseResponse;
     this.instantsearchRequest = instantsearchRequest;
     this.configuration = configuration;
@@ -271,7 +271,7 @@ export class SearchResponseAdapter {
     return adaptedResult;
   }
 
-  _adaptRenderingContent() {
+  _adaptRenderingContent(typesenseFacetCounts) {
     const adaptedResult = Object.assign({}, this.configuration.renderingContent);
 
     // Only set facet ordering if the user has not set one
@@ -280,11 +280,15 @@ export class SearchResponseAdapter {
       adaptedResult.facetOrdering.facets = adaptedResult.facetOrdering.facets || {};
       adaptedResult.facetOrdering.facets.order = [
         ...new Set(
-          this.allTypesenseResponses
-            .map((r) => r.facet_counts || [])
+          typesenseFacetCounts
             .map((fc) => fc["field_name"])
-            .flatten()
-            .filter((f) => f)
+            .concat(
+              this.allTypesenseResponses
+                .map((r) => r.facet_counts || [])
+                .map((fc) => fc["field_name"])
+                .flat()
+                .filter((f) => f)
+            )
         ),
       ];
     }
@@ -293,7 +297,7 @@ export class SearchResponseAdapter {
   }
 
   adapt() {
-    const adaptedRenderingContent = this._adaptRenderingContent();
+    const adaptedRenderingContent = this._adaptRenderingContent(this.typesenseResponse.facet_counts || []);
     const adaptedResult = {
       hits: this.typesenseResponse.grouped_hits
         ? this._adaptGroupedHits(this.typesenseResponse.grouped_hits)
@@ -309,7 +313,7 @@ export class SearchResponseAdapter {
       ...(Object.keys(adaptedRenderingContent).length > 0 ? { renderingContent: adaptedRenderingContent } : null),
     };
 
-    console.log(adaptedResult);
+    // console.log(adaptedResult);
     return adaptedResult;
   }
 }
