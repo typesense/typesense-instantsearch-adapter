@@ -1,6 +1,5 @@
 import { SearchResponseAdapter } from "../src/SearchResponseAdapter";
 import { Configuration } from "../src/Configuration";
-import typesenseResponse from "./support/data/typesense-search-response-no-results.json";
 
 describe("SearchResponseAdapter", () => {
   describe("._adaptHighlightResult", () => {
