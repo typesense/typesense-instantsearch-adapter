@@ -1,0 +1,1046 @@
+{
+  "results": [
+    {
+      "facet_counts": [],
+      "found": 0,
+      "hits": [],
+      "out_of": 3291,
+      "page": 1,
+      "request_params": {
+        "collection_name": "products",
+        "per_page": 9,
+        "q": "*"
+      },
+      "search_cutoff": false,
+      "search_time_ms": 0
+    },
+    {
+      "facet_counts": [
+        {
+          "counts": [
+            {
+              "count": 5,
+              "highlighted": "Incipio",
+              "value": "Incipio"
+            },
+            {
+              "count": 1,
+              "highlighted": "ZAGG",
+              "value": "ZAGG"
+            },
+            {
+              "count": 1,
+              "highlighted": "Modal",
+              "value": "Modal"
+            },
+            {
+              "count": 1,
+              "highlighted": "zNitro",
+              "value": "zNitro"
+            },
+            {
+              "count": 1,
+              "highlighted": "Belkin",
+              "value": "Belkin"
+            },
+            {
+              "count": 1,
+              "highlighted": "Insignia™",
+              "value": "Insignia™"
+            }
+          ],
+          "field_name": "brand",
+          "sampled": false,
+          "stats": {
+            "total_values": 6
+          }
+        }
+      ],
+      "found": 10,
+      "hits": [
+        {
+          "document": {
+            "brand": "ZAGG",
+            "categories": [
+              "Cell Phones",
+              "Cell Phone Accessories",
+              "Screen Protectors"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Cell Phone Accessories"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Cell Phone Accessories > Screen Protectors"
+            ],
+            "description": "Zagg invisibleSHIELD HD Clear - Screen protector - for Motorola MOTO G 4G (4th Gen.)",
+            "free_shipping": true,
+            "id": "1280",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/5396301_rb.jpg",
+            "name": "ZAGG - invisibleSHIELD Screen Protector for Motorola MOTO G 4G (4th Gen.)",
+            "popularity": 6678,
+            "price": 24.99,
+            "rating": 5
+          },
+          "highlight": {},
+          "highlights": []
+        },
+        {
+          "document": {
+            "brand": "Belkin",
+            "categories": [
+              "Cell Phones",
+              "Cell Phone Accessories",
+              "Car & Travel Accessories"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Cell Phone Accessories"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Cell Phone Accessories > Car & Travel Accessories"
+            ],
+            "description": "Travel doesn't have to impede charging thanks to this MIXIT car charger in a textured metallic black finish. This pocket-sized charger plugs into a car's DC outlet and delivers 2.4 amps of power to any USB-enabled device to charge it 40 percent faster. This MIXIT car charger's smart circuitry also shields against power spike damage.",
+            "free_shipping": true,
+            "id": "1328",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/4859650_sb.jpg",
+            "name": "Belkin - MIXIT Metallic Car Charger - Black",
+            "popularity": 6530,
+            "price": 24.99,
+            "rating": 5
+          },
+          "highlight": {},
+          "highlights": []
+        },
+        {
+          "document": {
+            "brand": "Modal",
+            "categories": [
+              "Cell Phones",
+              "Cell Phone Accessories",
+              "Cell Phone Cases & Clips"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Cell Phone Accessories"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Cell Phone Accessories > Cell Phone Cases & Clips"
+            ],
+            "description": "Only at Best Buy Surround your smartphone with bright tones with this Modal case. Its dual layers protect your iPhone 7 against damage common in minor drops and daily bumps, and it includes cutouts so you can access ports and buttons. Flexible silicone construction ensures this Modal case is easy to install or remove.",
+            "free_shipping": true,
+            "id": "1427",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/5450710_sb.jpg",
+            "name": "Modal - Dual Layer Case for Apple® iPhone® 7 - Rorschach floral",
+            "popularity": 6258,
+            "price": 24.99,
+            "rating": 5
+          },
+          "highlight": {},
+          "highlights": []
+        },
+        {
+          "document": {
+            "brand": "Insignia™",
+            "categories": [
+              "Cell Phones",
+              "Cell Phone Accessories",
+              "Cell Phone Cases & Clips"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Cell Phone Accessories"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Cell Phone Accessories > Cell Phone Cases & Clips"
+            ],
+            "description": "Only at Best Buy  Safeguard your cell phone with this Insignia&#8482; NS-MUNCC2P clutch case that features a built-in ID slot and 2 additional slots for cards. The case features leather material for stylish protection and a zippered back pocket for receipts and change.",
+            "free_shipping": true,
+            "id": "1730",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/4219900_sb.jpg",
+            "name": "Insignia™ - Clutch Case for Most Cell Phones - Pink",
+            "popularity": 5352,
+            "price": 24.99,
+            "rating": 5
+          },
+          "highlight": {},
+          "highlights": []
+        },
+        {
+          "document": {
+            "brand": "Incipio",
+            "categories": [
+              "Cell Phones",
+              "Cell Phone Accessories",
+              "Cell Phone Cases & Clips"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Cell Phone Accessories"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Cell Phone Accessories > Cell Phone Cases & Clips"
+            ],
+            "description": "Keep a safe hold on your iPhone 7 with this Incipio Octane phone case with an added grip support. Your device fits snugly in the rigid polycarbonate shell made with Plextonium. If you drop your phone, this Incipio Octane phone case has a Flex2O TPU bumper to absorb shocks and provide optimal protection.",
+            "free_shipping": true,
+            "id": "2226",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/5588044_sb.jpg",
+            "name": "Incipio - Octane Case for Apple® iPhone® 7 - Lavender/Frost",
+            "popularity": 3701,
+            "price": 24.99,
+            "rating": 5
+          },
+          "highlight": {},
+          "highlights": []
+        },
+        {
+          "document": {
+            "brand": "Incipio",
+            "categories": [
+              "Cell Phones",
+              "Cell Phone Accessories",
+              "Cell Phone Cases & Clips"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Cell Phone Accessories"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Cell Phone Accessories > Cell Phone Cases & Clips"
+            ],
+            "description": "Enjoy durable protection for your Samsung Galaxy S7 Edge with this Incipio Performance Series Level 1 case. It's made from durable TPU material and has an impact-ridge bumper to protect the phone during accidental drops. This Incipio Performance Series Level 1 case's rubberized components are stretch- and tear-resistant to keep your device snugly protected.",
+            "free_shipping": true,
+            "id": "2375",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/5041519_sb.jpg",
+            "name": "Incipio - PERFORMANCE Back Cover for Samsung Galaxy S7 edge - Black",
+            "popularity": 3104,
+            "price": 24.99,
+            "rating": 5
+          },
+          "highlight": {},
+          "highlights": []
+        },
+        {
+          "document": {
+            "brand": "Incipio",
+            "categories": [
+              "Cell Phones",
+              "Cell Phone Accessories",
+              "Cell Phone Cases & Clips"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Cell Phone Accessories"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Cell Phone Accessories > Cell Phone Cases & Clips"
+            ],
+            "description": "Pep up the protection of your Samsung Galaxy S7 with this pretty-in-pink Incipio [Performance] level 1 case. Constructed of durable polymer, this flexible case fits your phone like a glove to provide a level of defense against the elements. Easy to handle and easier to spot, this Incipio [Performance] level 1 case features cutouts for your ports and camera lens.",
+            "free_shipping": true,
+            "id": "2391",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/5041336_sb.jpg",
+            "name": "Incipio - PERFORMANCE Back Cover for Samsung Galaxy S7 - Pink",
+            "popularity": 3061,
+            "price": 24.99,
+            "rating": 5
+          },
+          "highlight": {},
+          "highlights": []
+        },
+        {
+          "document": {
+            "brand": "zNitro",
+            "categories": [
+              "Cell Phones",
+              "Cell Phone Accessories",
+              "Screen Protectors"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Cell Phone Accessories"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Cell Phone Accessories > Screen Protectors"
+            ],
+            "description": "Enjoy privacy while writing texts with this zNitro screen protector for the iPhone 7 Plus. It's made of impact-tested tempered glass to prevent breakage and is easily installed with peel-and-stick technology. This zNitro screen protector makes the screen's contents invisible from the side view so you can keep them confidential.",
+            "free_shipping": true,
+            "id": "2550",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/5632810_rb.jpg",
+            "name": "zNitro - Screen Protector for Apple iPhone 7 Plus - Transparent",
+            "popularity": 2395,
+            "price": 24.99,
+            "rating": 5
+          },
+          "highlight": {},
+          "highlights": []
+        },
+        {
+          "document": {
+            "brand": "Incipio",
+            "categories": [
+              "Cell Phones",
+              "Cell Phone Accessories",
+              "Cell Phone Cases & Clips"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Cell Phone Accessories"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Cell Phone Accessories > Cell Phone Cases & Clips"
+            ],
+            "description": "Snap this Incipio Feather phone case onto your iPhone 7 to protect it from drops and bumps. The Plextonium polycarbonate frame and interior shock absorbing liner prevent damage. This Incipio Feather phone case has a scratch resistant finish that heals itself so you don't have to worry about damaging it.",
+            "free_shipping": true,
+            "id": "2626",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/5588091_sb.jpg",
+            "name": "Incipio - Feather Case for Apple® iPhone® 7 - Turquoise",
+            "popularity": 2171,
+            "price": 24.99,
+            "rating": 5
+          },
+          "highlight": {},
+          "highlights": []
+        },
+        {
+          "document": {
+            "brand": "Incipio",
+            "categories": [
+              "Cell Phones",
+              "Cell Phone Accessories",
+              "Cell Phone Cases & Clips"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Cell Phone Accessories"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Cell Phone Accessories > Cell Phone Cases & Clips"
+            ],
+            "description": "With a detachable Plextonium shell, vegan leather cover and microsuede lining, this Incipio Watson SA-532-NVY wallet folio case protects your Samsung Galaxy S 5 cell phone and adds a stylish look. Three slots offer room for credit and ID cards.",
+            "free_shipping": true,
+            "id": "2888",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/5379656_sb.jpg",
+            "name": "Incipio - Watson Wallet Folio Case for Samsung Galaxy S 5 Cell Phones - Navy/Gray",
+            "popularity": 1194,
+            "price": 23.99,
+            "rating": 5
+          },
+          "highlight": {},
+          "highlights": []
+        }
+      ],
+      "out_of": 3291,
+      "page": 1,
+      "request_params": {
+        "collection_name": "products",
+        "per_page": 10,
+        "q": "*"
+      },
+      "search_cutoff": false,
+      "search_time_ms": 4
+    },
+    {
+      "facet_counts": [
+        {
+          "counts": [
+            {
+              "count": 2,
+              "highlighted": "29.99",
+              "value": "29.99"
+            },
+            {
+              "count": 2,
+              "highlighted": "18.99",
+              "value": "18.99"
+            },
+            {
+              "count": 2,
+              "highlighted": "13.99",
+              "value": "13.99"
+            },
+            {
+              "count": 1,
+              "highlighted": "22.99",
+              "value": "22.99"
+            },
+            {
+              "count": 1,
+              "highlighted": "19.99",
+              "value": "19.99"
+            },
+            {
+              "count": 1,
+              "highlighted": "14.99",
+              "value": "14.99"
+            }
+          ],
+          "field_name": "price",
+          "sampled": false,
+          "stats": {
+            "avg": 20.434444215562607,
+            "max": 29.989999771118164,
+            "min": 13.989999771118164,
+            "sum": 183.90999794006348,
+            "total_values": 6
+          }
+        }
+      ],
+      "found": 9,
+      "hits": [
+        {
+          "document": {
+            "brand": "Spigen",
+            "categories": [
+              "Cell Phones",
+              "Cell Phone Accessories",
+              "Cell Phone Cases & Clips"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Cell Phone Accessories"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Cell Phone Accessories > Cell Phone Cases & Clips"
+            ],
+            "description": "Protect your phone with clear quality with this Spigen Liquid Crystal case. The one-piece design is made with flexible TPU to keep your phone safe in the event of a drop. This Spigen Liquid Crystal case slides easily onto your Google Pixel and features a beveled opening for easy fingerprint access.",
+            "free_shipping": true,
+            "id": "2055",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/5691605_sb.jpg",
+            "name": "Spigen - Liquid Crystal Case for Google Pixel",
+            "popularity": 4343,
+            "price": 14.99,
+            "rating": 5
+          },
+          "highlight": {},
+          "highlights": []
+        },
+        {
+          "document": {
+            "brand": "Spigen",
+            "categories": [
+              "Cell Phones",
+              "Cell Phone Accessories",
+              "Cell Phone Cases & Clips"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Cell Phone Accessories"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Cell Phone Accessories > Cell Phone Cases & Clips"
+            ],
+            "description": "Protect your Samsung Galaxy S7 edge against drops with this Tough Armor phone case. The integrated kickstand lets you watch videos at a convenient angle, and the Air Cushion technology absorbs shocks to keep your device safe from damage. Featuring a gunmetal gray color with black accents, this Tough Armor phone case offers a modern look.",
+            "free_shipping": true,
+            "id": "2160",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/4935933_sb.jpg",
+            "name": "Spigen - Tough Armor Case for Samsung Galaxy S7 Edge Cell Phones - Gunmetal",
+            "popularity": 3958,
+            "price": 18.99,
+            "rating": 5
+          },
+          "highlight": {},
+          "highlights": []
+        },
+        {
+          "document": {
+            "brand": "Spigen",
+            "categories": [
+              "Cell Phones",
+              "Cell Phone Accessories",
+              "Cell Phone Cases & Clips"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Cell Phone Accessories"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Cell Phone Accessories > Cell Phone Cases & Clips"
+            ],
+            "description": "Unlock the full potential of your phone and take it anywhere with this Spigen iPhone 5/5s protective case. The tough armored case delivers military-grade protections so that your phone remains completely secure when it's in your grip. Cushioned corners on this Spigen iPhone 5/5s protective case protect the edges of your iPhone.",
+            "free_shipping": true,
+            "id": "2220",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/5101217_sb.jpg",
+            "name": "Spigen - Tough Armor Case for Apple® iPhone® 5, 5s and SE - Rose gold",
+            "popularity": 3720,
+            "price": 29.99,
+            "rating": 5
+          },
+          "highlight": {},
+          "highlights": []
+        },
+        {
+          "document": {
+            "brand": "Spigen",
+            "categories": [
+              "Cell Phones",
+              "Cell Phone Accessories",
+              "iPhone Accessories",
+              "iPhone Cases & Clips",
+              "iPhone 6s Cases"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Cell Phone Accessories"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Cell Phone Accessories > iPhone Accessories"
+            ],
+            "categories.lvl3": [
+              "Cell Phones > Cell Phone Accessories > iPhone Accessories > iPhone Cases & Clips"
+            ],
+            "categories.lvl4": [
+              "Cell Phones > Cell Phone Accessories > iPhone Accessories > iPhone Cases & Clips > iPhone 6s Cases"
+            ],
+            "description": "Keep your Apple iPhone 6 or 6s safe with this Spigen Slim Armor SGP11607 case, which features a camera cutout, so you can quickly take pictures and videos on the go. The built-in kickstand makes it easy to view videos hands-free.",
+            "free_shipping": true,
+            "id": "2510",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/4766801_sb.jpg",
+            "name": "Spigen - Slim Armor Case for Apple® iPhone® 6 and 6s - Champagne Gold",
+            "popularity": 2594,
+            "price": 29.99,
+            "rating": 5
+          },
+          "highlight": {},
+          "highlights": []
+        },
+        {
+          "document": {
+            "brand": "Spigen",
+            "categories": [
+              "Cell Phones",
+              "Cell Phone Accessories",
+              "iPhone Accessories",
+              "iPhone Cases & Clips",
+              "iPhone 6s Cases"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Cell Phone Accessories"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Cell Phone Accessories > iPhone Accessories"
+            ],
+            "categories.lvl3": [
+              "Cell Phones > Cell Phone Accessories > iPhone Accessories > iPhone Cases & Clips"
+            ],
+            "categories.lvl4": [
+              "Cell Phones > Cell Phone Accessories > iPhone Accessories > iPhone Cases & Clips > iPhone 6s Cases"
+            ],
+            "description": "Safeguard your Apple iPhone 6 or 6s against wear and tear with this Spigen Ultra Hybrid SGP11722 case, which provides a slim profile for sleek protection. The camera cutout ensures you can take clear pictures.",
+            "free_shipping": true,
+            "id": "2693",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/4766852_sb.jpg",
+            "name": "Spigen - Ultra Hybrid Case for Apple® iPhone® 6 and 6s - Rose Crystal",
+            "popularity": 1977,
+            "price": 13.99,
+            "rating": 5
+          },
+          "highlight": {},
+          "highlights": []
+        },
+        {
+          "document": {
+            "brand": "Spigen",
+            "categories": [
+              "Cell Phones",
+              "Cell Phone Accessories",
+              "Cell Phone Cases & Clips"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Cell Phone Accessories"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Cell Phone Accessories > Cell Phone Cases & Clips"
+            ],
+            "description": "Give your Samsung Galaxy S7 a rugged look with this black Tough Armor phone case. A hard polycarbonate exterior casing defends against accidental drops, and the Air Cushion technology absorbs shocks to protect your phone&#8217;s screen. With its defined buttons, this black Tough Armor phone case allows for effortless operation of your device.",
+            "free_shipping": true,
+            "id": "2700",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/4935931_sb.jpg",
+            "name": "Spigen - Tough Armor Case for Samsung Galaxy S7 Cell Phones - Black",
+            "popularity": 1957,
+            "price": 22.99,
+            "rating": 5
+          },
+          "highlight": {},
+          "highlights": []
+        },
+        {
+          "document": {
+            "brand": "Spigen",
+            "categories": [
+              "Cell Phones",
+              "Cell Phone Accessories",
+              "Cell Phone Cases & Clips"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Cell Phone Accessories"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Cell Phone Accessories > Cell Phone Cases & Clips"
+            ],
+            "description": "Wrap your phone in this Spigen Neo Hybrid case, and take it with you wherever you roam. Drop-tested military-grade construction features shock-absorbing TPU and Air Cushion technology to defend against drops and bumps. The tactile texture of this Spigen Neo Hybrid case keeps it firmly in hand throughout your day.",
+            "free_shipping": true,
+            "id": "3035",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/4947100_sb.jpg",
+            "name": "Spigen - Neo Hybrid Case for Samsung Galaxy S7 Cell Phones - Satin Silver",
+            "popularity": 670,
+            "price": 18.99,
+            "rating": 5
+          },
+          "highlight": {},
+          "highlights": []
+        },
+        {
+          "document": {
+            "brand": "Spigen",
+            "categories": [
+              "Cell Phones",
+              "Cell Phone Accessories",
+              "Cell Phone Cases & Clips"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Cell Phone Accessories"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Cell Phone Accessories > Cell Phone Cases & Clips"
+            ],
+            "description": "Defend your Samsung Galaxy S6 cell phone from harm with this Spigen Ultra Hybrid SGP11314 case, which features a clear polycarbonate back and TPU bumper for stylish protection. The raised lip protects your device's screen when placed face-down.",
+            "free_shipping": true,
+            "id": "3073",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/4582915_sb.jpg",
+            "name": "Spigen - Ultra Hybrid Case for Samsung Galaxy S6 Cell Phones - Mint",
+            "popularity": 566,
+            "price": 13.99,
+            "rating": 5
+          },
+          "highlight": {},
+          "highlights": []
+        },
+        {
+          "document": {
+            "brand": "Spigen",
+            "categories": [
+              "Cell Phones",
+              "Cell Phone Accessories",
+              "Cell Phone Cases & Clips"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Cell Phone Accessories"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Cell Phone Accessories > Cell Phone Cases & Clips"
+            ],
+            "description": "Protect your iPhone 7 with this Spigen Rugged Armor case. It has a flexible but strong TPU shell, carbon fiber accents and cushioning technology inside to ensure shock absorption and protection from impacts. Show off the Apple logo with the opening in the back of this Spigen Rugged Armor case.",
+            "free_shipping": true,
+            "id": "3188",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/5657527_sb.jpg",
+            "name": "Spigen - Rugged Armor Case for Apple® iPhone® 7 - Black",
+            "popularity": 249,
+            "price": 19.99,
+            "rating": 5
+          },
+          "highlight": {},
+          "highlights": []
+        }
+      ],
+      "out_of": 3291,
+      "page": 1,
+      "request_params": {
+        "collection_name": "products",
+        "per_page": 10,
+        "q": "*"
+      },
+      "search_cutoff": false,
+      "search_time_ms": 3
+    },
+    {
+      "facet_counts": [
+        {
+          "counts": [
+            {
+              "count": 5,
+              "highlighted": "1",
+              "value": "1"
+            },
+            {
+              "count": 2,
+              "highlighted": "2",
+              "value": "2"
+            },
+            {
+              "count": 1,
+              "highlighted": "4",
+              "value": "4"
+            }
+          ],
+          "field_name": "rating",
+          "sampled": false,
+          "stats": {
+            "avg": 1.625,
+            "max": 4.0,
+            "min": 1.0,
+            "sum": 13.0,
+            "total_values": 3
+          }
+        }
+      ],
+      "found": 8,
+      "hits": [
+        {
+          "document": {
+            "brand": "Spigen",
+            "categories": [
+              "Cell Phones",
+              "Cell Phone Accessories",
+              "iPhone Accessories",
+              "iPhone Cases & Clips",
+              "iPhone 6s Cases"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Cell Phone Accessories"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Cell Phone Accessories > iPhone Accessories"
+            ],
+            "categories.lvl3": [
+              "Cell Phones > Cell Phone Accessories > iPhone Accessories > iPhone Cases & Clips"
+            ],
+            "categories.lvl4": [
+              "Cell Phones > Cell Phone Accessories > iPhone Accessories > iPhone Cases & Clips > iPhone 6s Cases"
+            ],
+            "description": "Protect your Apple iPhone 6 or 6s with this Spigen Tough Armor SGP11614 case, which features a hard shell design to safeguard your device. The camera cutout lets you easily take pictures with the case attached.",
+            "free_shipping": true,
+            "id": "2295",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/4769219_sb.jpg",
+            "name": "Spigen - Tough Armor Case for Apple® iPhone® 6 and 6s - Black",
+            "popularity": 3402,
+            "price": 24.99,
+            "rating": 1
+          },
+          "highlight": {},
+          "highlights": []
+        },
+        {
+          "document": {
+            "brand": "Spigen",
+            "categories": [
+              "Cell Phones",
+              "Cell Phone Accessories",
+              "Cell Phone Cases & Clips"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Cell Phone Accessories"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Cell Phone Accessories > Cell Phone Cases & Clips"
+            ],
+            "description": "Shield your Nexus 5X phone with this Spigen Ultra Hybrid case. A hard polycarbonate back and flexible TPU bumper protect your phone from bumps and small drops without concealing its original features. The case's Air Cushion Technology utilizes corner air gaps to absorb shocks. This Ultra Hybrid case also features pronounced buttons for ease of use.",
+            "free_shipping": true,
+            "id": "2445",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/4901828_sb.jpg",
+            "name": "Spigen - Ultra Hybrid Case for Nexus 5X Cell Phones - Crystal Clear",
+            "popularity": 2874,
+            "price": 24.99,
+            "rating": 1
+          },
+          "highlight": {},
+          "highlights": []
+        },
+        {
+          "document": {
+            "brand": "Spigen",
+            "categories": [
+              "Cell Phones",
+              "Cell Phone Accessories",
+              "Cell Phone Cases & Clips"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Cell Phone Accessories"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Cell Phone Accessories > Cell Phone Cases & Clips"
+            ],
+            "description": "Defend your Apple iPhone 6s Plus from harm with this Spigen Tough Armor SGP11658 case, which features a built-in kickstand, so you can watch your favorite movies and videos hands-free. The camera cutout allows you to snap pictures and capture videos.",
+            "free_shipping": true,
+            "id": "2690",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/4766810_sb.jpg",
+            "name": "Spigen - Tough Armor Case for Apple® iPhone® 6s Plus - Gunmetal",
+            "popularity": 1980,
+            "price": 24.99,
+            "rating": 1
+          },
+          "highlight": {},
+          "highlights": []
+        },
+        {
+          "document": {
+            "brand": "Spigen",
+            "categories": [
+              "Cell Phones",
+              "Cell Phone Accessories",
+              "Cell Phone Cases & Clips"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Cell Phone Accessories"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Cell Phone Accessories > Cell Phone Cases & Clips"
+            ],
+            "description": "Give your Google Pixel a sleek look while providing reliable protection with this Spigen Tough Armor case, featuring a built-in kickstand for hands-free viewing. The dual-layered case is made of TPU with a tough PC back, keeping your phone safe from both drops and dings. This Spigen Tough Armor case is clear so you can show off your phone.",
+            "free_shipping": true,
+            "id": "2965",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/5691604_sb.jpg",
+            "name": "Spigen - Tough Armor Case for Google Pixel - Satin Silver",
+            "popularity": 870,
+            "price": 24.99,
+            "rating": 2
+          },
+          "highlight": {},
+          "highlights": []
+        },
+        {
+          "document": {
+            "brand": "Spigen",
+            "categories": [
+              "Cell Phones",
+              "Cell Phone Accessories",
+              "Cell Phone Cases & Clips"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Cell Phone Accessories"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Cell Phone Accessories > Cell Phone Cases & Clips"
+            ],
+            "description": "Infuse your Google Pixel XL with sophisticated style and reliable protection with this Spigen Tough Armor case. The gunmetal gray PC back offers scratch resistance and good looks, while the clear TPU is flexible to give your phone shock absorbency in the event of the drop. A kickstand on this Spigen Tough Armor case offers hands-free viewing of video.",
+            "free_shipping": true,
+            "id": "2976",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/5691611_sb.jpg",
+            "name": "Spigen - Tough Armor Case for Google Pixel XL - Black",
+            "popularity": 836,
+            "price": 24.99,
+            "rating": 4
+          },
+          "highlight": {},
+          "highlights": []
+        },
+        {
+          "document": {
+            "brand": "Spigen",
+            "categories": [
+              "Cell Phones",
+              "Cell Phone Accessories",
+              "iPhone Accessories",
+              "iPhone Cases & Clips"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Cell Phone Accessories"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Cell Phone Accessories > iPhone Accessories"
+            ],
+            "categories.lvl3": [
+              "Cell Phones > Cell Phone Accessories > iPhone Accessories > iPhone Cases & Clips"
+            ],
+            "description": "Designed with a lock-in screen shield, this Spigen Tough Armor FX SGP11281 case provides all-around protection for your Apple iPhone 6. The shock-absorbing hard shell guards against drops, and the slim design makes it easy to pocket your device.",
+            "free_shipping": true,
+            "id": "2979",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/4582944_sb.jpg",
+            "name": "Spigen - Tough Armor FX for Apple® iPhone® 6 - Gunmetal",
+            "popularity": 831,
+            "price": 26.99,
+            "rating": 1
+          },
+          "highlight": {},
+          "highlights": []
+        },
+        {
+          "document": {
+            "brand": "Spigen",
+            "categories": [
+              "Cell Phones",
+              "Cell Phone Accessories",
+              "Cell Phone Cases & Clips"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Cell Phone Accessories"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Cell Phone Accessories > Cell Phone Cases & Clips"
+            ],
+            "description": "Take on whatever the day brings with your cellphone intact with this Spiegen Tough Armor case for Google Pixel. Clear TPU adds a modern twist to phone protection that lets your phone shine through while keeping it padded in the event of a drop. This Spiegen Tough Armor case offers easy access to all of the Pixel's functions.",
+            "free_shipping": true,
+            "id": "2984",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/5691603_sb.jpg",
+            "name": "Spigen - Tough Armor Case for Google Pixel - Gunmetal",
+            "popularity": 815,
+            "price": 24.99,
+            "rating": 2
+          },
+          "highlight": {},
+          "highlights": []
+        },
+        {
+          "document": {
+            "brand": "Spigen",
+            "categories": [
+              "Cell Phones",
+              "Cell Phone Accessories",
+              "Cell Phone Cases & Clips"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Cell Phone Accessories"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Cell Phone Accessories > Cell Phone Cases & Clips"
+            ],
+            "description": "Give your Google Pixel complete protection with this Spigen Crystal Shell case that snaps on easily. This compatible case features fingerprint access through a beveled opening and raised bumper to keep your screen from meeting the floor. This Spigen Crystal Shell case lets the beauty of your Google Pixel shine through.",
+            "free_shipping": true,
+            "id": "2990",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/5691601_sb.jpg",
+            "name": "Spigen - Crystal Shell Case for Google Pixel XL",
+            "popularity": 800,
+            "price": 24.99,
+            "rating": 1
+          },
+          "highlight": {},
+          "highlights": []
+        }
+      ],
+      "out_of": 3291,
+      "page": 1,
+      "request_params": {
+        "collection_name": "products",
+        "per_page": 10,
+        "q": "*"
+      },
+      "search_cutoff": false,
+      "search_time_ms": 2
+    },
+    {
+      "facet_counts": [
+        {
+          "counts": [
+            {
+              "count": 1,
+              "highlighted": "false",
+              "value": "false"
+            }
+          ],
+          "field_name": "free_shipping",
+          "sampled": false,
+          "stats": {
+            "total_values": 1
+          }
+        }
+      ],
+      "found": 1,
+      "hits": [
+        {
+          "document": {
+            "brand": "Spigen",
+            "categories": [
+              "Cell Phones",
+              "Cell Phone Accessories",
+              "Cell Phone Cases & Clips"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Cell Phone Accessories"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Cell Phone Accessories > Cell Phone Cases & Clips"
+            ],
+            "description": "Snap this Spigen Tough Armor case on your Google Pixel smartphone, and get full-coverage protection while still accessing all your phone's functions. The beveled opening lets you use the fingerprint sensor for security, and raised edges offer extra defense for your screen. This Spigen Tough Armor case features military-grade defense against falls and drops.",
+            "free_shipping": false,
+            "id": "2970",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/5691602_sb.jpg",
+            "name": "Spigen - Tough Armor Case for Google Pixel - Black",
+            "popularity": 853,
+            "price": 24.99,
+            "rating": 5
+          },
+          "highlight": {},
+          "highlights": []
+        }
+      ],
+      "out_of": 3291,
+      "page": 1,
+      "request_params": {
+        "collection_name": "products",
+        "per_page": 10,
+        "q": "*"
+      },
+      "search_cutoff": false,
+      "search_time_ms": 0
+    }
+  ]
+}

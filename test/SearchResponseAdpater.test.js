@@ -1,5 +1,6 @@
 import { SearchResponseAdapter } from "../src/SearchResponseAdapter";
 import { Configuration } from "../src/Configuration";
+import typesenseResponse from "./support/data/typesense-search-response-no-results.json";
 
 describe("SearchResponseAdapter", () => {
   describe("._adaptHighlightResult", () => {
@@ -277,28 +278,54 @@ describe("SearchResponseAdapter", () => {
 
   describe("._adaptRenderingContent", () => {
     describe("when user does not specify any renderingContent", () => {
-      it("generates the facet ordering for the user automatically", () => {
-        const typesenseResponse = require("./support/data/typesense-search-response.json");
-        const subject = new SearchResponseAdapter(
-          typesenseResponse["results"][0],
-          {
-            params: {
-              highlightPreTag: "<mark>",
-              highlightPostTag: "</mark>",
+      describe("when the search has results", () => {
+        it("generates the facet ordering for the user automatically", () => {
+          const typesenseResponse = require("./support/data/typesense-search-response.json");
+          const subject = new SearchResponseAdapter(
+            typesenseResponse["results"][0],
+            {
+              params: {
+                highlightPreTag: "<mark>",
+                highlightPostTag: "</mark>",
+              },
             },
-          },
-          {}
-        );
+            {}
+          );
 
-        const result = subject.adapt();
-        expect(result?.renderingContent?.facetOrdering?.facets?.order).toEqual([
-          "brand",
-          "free_shipping",
-          "price",
-          "rating",
-          "categories",
-          "categories.lvl0",
-        ]);
+          const result = subject.adapt();
+          expect(result?.renderingContent?.facetOrdering?.facets?.order).toEqual([
+            "brand",
+            "free_shipping",
+            "price",
+            "rating",
+            "categories",
+            "categories.lvl0",
+          ]);
+        });
+      });
+      describe("when the primary search has no results", () => {
+        it("generates the facet ordering for the user automatically", () => {
+          const typesenseResponse = require("./support/data/typesense-search-response-no-results.json");
+          const subject = new SearchResponseAdapter(
+            typesenseResponse["results"][0],
+            {
+              params: {
+                highlightPreTag: "<mark>",
+                highlightPostTag: "</mark>",
+              },
+            },
+            {},
+            typesenseResponse["results"]
+          );
+
+          const result = subject.adapt();
+          expect(result?.renderingContent?.facetOrdering?.facets?.order).toEqual([
+            "brand",
+            "price",
+            "rating",
+            "free_shipping",
+          ]);
+        });
       });
     });
     describe("when user specifies partial renderingContent, without facet ordering", () => {

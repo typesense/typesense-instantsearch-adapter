@@ -285,8 +285,8 @@ export class SearchResponseAdapter {
             .concat(
               this.allTypesenseResponses
                 .map((r) => r.facet_counts || [])
-                .map((fc) => fc["field_name"])
                 .flat()
+                .map((fc) => fc["field_name"])
                 .filter((f) => f)
             )
         ),
