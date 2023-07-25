@@ -2970,7 +2970,7 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
         adaptedHit._highlightResult = _this2._adaptHighlightResult(typesenseHit, "value");
         adaptedHit._rawTypesenseHit = typesenseHit; // Add metadata fields to result, if a field with that name doesn't already exist
 
-        ["text_match", "geo_distance_meters", "curated", "text_match_info"].forEach(function (metadataField) {
+        ["text_match", "geo_distance_meters", "curated", "text_match_info", "hybrid_search_info", "vector_distance"].forEach(function (metadataField) {
           if (Object.keys(typesenseHit).includes(metadataField) && !Object.keys(adaptedHit).includes(metadataField)) {
             adaptedHit[metadataField] = typesenseHit[metadataField];
           }

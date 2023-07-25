@@ -472,17 +472,17 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
 const searchClient = typesenseInstantsearchAdapter.searchClient;
 const search = instantsearch({
   searchClient,
-  indexName: 'products',
+  indexName: "products",
   routing: true,
   async searchFunction(helper) {
     const query = helper.getQuery().query;
     const page = helper.getPage(); // Retrieve the current page
     const totalNearestNeighborsToFetch = 1000;
 
-    if (query !== '') {
+    if (query !== "") {
       // Get embedding for the query
       let response = await fetch(
-        'http://localhost:8000/embedding?' + new URLSearchParams({ q: query }) // <=== Embedding API
+        "http://localhost:8000/embedding?" + new URLSearchParams({ q: query }) // <=== Embedding API
       );
 
       let parsedResponse = await response.json();
@@ -492,16 +492,13 @@ const search = instantsearch({
       // Send the embedding to Typesense to do a nearest neighbor search
       helper
         .setQueryParameter(
-          'typesenseVectorQuery', // <=== Special parameter that only works in typesense-instantsearch-adapter@2.7.0-3 and above
-          `vectors:([${parsedResponse['embedding'].join(',')}], k:${totalNearestNeighborsToFetch})`
+          "typesenseVectorQuery", // <=== Special parameter that only works in typesense-instantsearch-adapter@2.7.0-3 and above
+          `vectors:([${parsedResponse["embedding"].join(",")}], k:${totalNearestNeighborsToFetch})`
         )
         .setPage(page)
         .search();
     } else {
-      helper
-        .setQueryParameter('typesenseVectorQuery', null)
-        .setPage(page)
-        .search();
+      helper.setQueryParameter("typesenseVectorQuery", null).setPage(page).search();
     }
   },
 });
