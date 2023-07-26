@@ -88,6 +88,7 @@ interface BaseAdapterOptions {
   geoLocationField?: string;
   facetableFieldsWithSpecialCharacters?: string[];
   renderingContent?: object;
+  flattenGroupedHits?: boolean;
 }
 
 interface CollectionSearchParameters {

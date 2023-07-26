@@ -405,4 +405,52 @@ describe("SearchResponseAdapter", () => {
       });
     });
   });
+
+  describe("._adaptGroupedHits", () => {
+    describe("when flattenGroupedHits is false", () => {
+      it("adapts the given grouped_hits", () => {
+        const typesenseResponse = require("./support/data/typesense-search-response-grouped-hits.json");
+        const subject = new SearchResponseAdapter(
+          typesenseResponse,
+          {
+            params: {
+              highlightPreTag: "<mark>",
+              highlightPostTag: "</mark>",
+            },
+          },
+          { flattenGroupedHits: false }
+        );
+        const typesenseGroupedHits = typesenseResponse.results[0].grouped_hits;
+
+        const result = subject._adaptGroupedHits(typesenseGroupedHits);
+        expect(result.length).toEqual(10);
+        expect(result[0]["_group_found"]).toEqual(7);
+        expect(result[0]["_group_key"]).toEqual(["AT&T GoPhone"]);
+        expect(result[0]["_grouped_hits"].length).toEqual(3);
+      });
+    });
+
+    describe("when flattenGroupedHits is true", () => {
+      it("adapts the given grouped_hits", () => {
+        const typesenseResponse = require("./support/data/typesense-search-response-grouped-hits.json");
+        const subject = new SearchResponseAdapter(
+          typesenseResponse,
+          {
+            params: {
+              highlightPreTag: "<mark>",
+              highlightPostTag: "</mark>",
+            },
+          },
+          { flattenGroupedHits: true }
+        );
+        const typesenseGroupedHits = typesenseResponse.results[0].grouped_hits;
+
+        const result = subject._adaptGroupedHits(typesenseGroupedHits);
+        expect(result.length).toEqual(30);
+        expect(result[0]["_group_found"]).toEqual(7);
+        expect(result[0]["_group_key"]).toEqual(["AT&T GoPhone"]);
+        expect(result[0]["_grouped_hits"]).toBeUndefined();
+      });
+    });
+  });
 });

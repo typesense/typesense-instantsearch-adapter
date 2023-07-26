@@ -26,8 +26,20 @@ export class SearchResponseAdapter {
 
     // adaptedResult is now in the form of [[{}, {}], [{}, {}], ...]
     //  where each element in the outermost array corresponds to a group.
-    // We now flatten it to [{}, {}, {}]
-    adaptedResult = adaptedResult.flat();
+
+    if (this.configuration.flattenGroupedHits) {
+      // We flatten it to [{}, {}, {}]
+      adaptedResult = adaptedResult.flat();
+    } else {
+      // We flatten it to [{ ..., grouped_hits: [{}, {}] }, {}, {}]
+      // We set the first element in the group as the hit, and then add a new key called grouped_hits with the other hits
+      adaptedResult = adaptedResult.map((adaptedGroupedHit) => {
+        return {
+          ...adaptedGroupedHit[0],
+          _grouped_hits: adaptedGroupedHit,
+        };
+      });
+    }
 
     return adaptedResult;
   }

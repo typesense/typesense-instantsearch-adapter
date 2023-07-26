@@ -2216,7 +2216,8 @@ var Configuration = /*#__PURE__*/function () {
         _options$geoLocationF,
         _options$facetableFie,
         _options$collectionSp,
-        _this = this;
+        _this = this,
+        _options$flattenGroup;
 
     var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
@@ -2253,6 +2254,7 @@ var Configuration = /*#__PURE__*/function () {
       });
     });
     this.renderingContent = options.renderingContent;
+    this.flattenGroupedHits = (_options$flattenGroup = options.flattenGroupedHits) !== null && _options$flattenGroup !== void 0 ? _options$flattenGroup : true;
   }
 
   (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(Configuration, [{
@@ -2951,9 +2953,20 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
         return adaptedHits;
       }); // adaptedResult is now in the form of [[{}, {}], [{}, {}], ...]
       //  where each element in the outermost array corresponds to a group.
-      // We now flatten it to [{}, {}, {}]
 
-      adaptedResult = adaptedResult.flat();
+      if (this.configuration.flattenGroupedHits) {
+        // We flatten it to [{}, {}, {}]
+        adaptedResult = adaptedResult.flat();
+      } else {
+        // We flatten it to [{ ..., grouped_hits: [{}, {}] }, {}, {}]
+        // We set the first element in the group as the hit, and then add a new key called grouped_hits with the other hits
+        adaptedResult = adaptedResult.map(function (adaptedGroupedHit) {
+          return _objectSpread(_objectSpread({}, adaptedGroupedHit[0]), {}, {
+            _grouped_hits: adaptedGroupedHit
+          });
+        });
+      }
+
       return adaptedResult;
     }
   }, {

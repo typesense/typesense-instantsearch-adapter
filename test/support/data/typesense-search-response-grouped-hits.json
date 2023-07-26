@@ -1,0 +1,839 @@
+{
+  "results": [
+    {
+      "facet_counts": [],
+      "found": 250,
+      "grouped_hits": [
+        {
+          "found": 7,
+          "group_key": [
+            "AT&T GoPhone"
+          ],
+          "hits": [
+            {
+              "document": {
+                "brand": "AT&T GoPhone",
+                "categories": [
+                  "Cell Phones",
+                  "Prepaid Phones",
+                  "All Prepaid Phones"
+                ],
+                "description": "Grab your data and your minutes as you go with this Samsung Galaxy 3 Express smartphone. The 4.5-inch Super AMOLED screen offers a dazzling display for texting, gaming or scrolling the Internet. A microSD slot lets you add up to 128GB storage, and this Samsung Galaxy 3 Express smartphone has a 5-megapixel camera for taking and sharing pictures.",
+                "free_shipping": true,
+                "hierarchicalCategories": {
+                  "lvl0": "Cell Phones",
+                  "lvl1": "Cell Phones > Prepaid Phones",
+                  "lvl2": "Cell Phones > Prepaid Phones > All Prepaid Phones"
+                },
+                "id": "0",
+                "image": "https://cdn-demo.algolia.com/bestbuy-0118/4984700_sb.jpg",
+                "name": "AT&T GoPhone - Samsung Galaxy Express 3 4G LTE with 8GB Memory Prepaid Cell Phone",
+                "popularity": 21449,
+                "price": 49.99,
+                "rating": 2
+              },
+              "highlight": {},
+              "highlights": []
+            },
+            {
+              "document": {
+                "brand": "AT&T GoPhone",
+                "categories": [
+                  "Cell Phones",
+                  "Prepaid Phones",
+                  "All Prepaid Phones"
+                ],
+                "description": "Enjoy simplicity and speed with Alcatel's Ideal cell phone for AT&T. It fits neatly in almost any pocket and has a 4.5-inch display for easy one-handed use. Alcatel's Ideal phone from AT&T comes with 4G of memory and uses Wi-Fi or Bluetooth connectivity to keep connections active no matter what.",
+                "free_shipping": true,
+                "hierarchicalCategories": {
+                  "lvl0": "Cell Phones",
+                  "lvl1": "Cell Phones > Prepaid Phones",
+                  "lvl2": "Cell Phones > Prepaid Phones > All Prepaid Phones"
+                },
+                "id": "2",
+                "image": "https://cdn-demo.algolia.com/bestbuy-0118/5443800_sb.jpg",
+                "name": "AT&T GoPhone - Alcatel Ideal 4G LTE with 8GB Memory Prepaid Cell Phone - Slate Blue",
+                "popularity": 21413,
+                "price": 29.99,
+                "rating": 2
+              },
+              "highlight": {},
+              "highlights": []
+            },
+            {
+              "document": {
+                "brand": "AT&T GoPhone",
+                "categories": [
+                  "Cell Phones",
+                  "Prepaid Phones",
+                  "All Prepaid Phones"
+                ],
+                "description": "Text and talk with ease on this Samsung Jack smartphone with a full QWERTY keyboard featuring tactile keys. The slim profile sits easily in your hand, and Bluetooth compatibility connects easily with your car stereo and other devices. This Samsung Jack smartphone lets you purchase minutes and date without needing a contract.",
+                "free_shipping": false,
+                "hierarchicalCategories": {
+                  "lvl0": "Cell Phones",
+                  "lvl1": "Cell Phones > Prepaid Phones",
+                  "lvl2": "Cell Phones > Prepaid Phones > All Prepaid Phones"
+                },
+                "id": "4",
+                "image": "https://cdn-demo.algolia.com/bestbuy-0118/4984900_sb.jpg",
+                "name": "AT&T GoPhone - Samsung Galaxy Express Prime 4G LTE with 16GB Memory Prepaid Cell Phone",
+                "popularity": 21309,
+                "price": 79.99,
+                "rating": 2
+              },
+              "highlight": {},
+              "highlights": []
+            }
+          ]
+        },
+        {
+          "found": 15,
+          "group_key": [
+            "Boost Mobile"
+          ],
+          "hits": [
+            {
+              "document": {
+                "brand": "Boost Mobile",
+                "categories": [
+                  "Cell Phones",
+                  "Prepaid Phones",
+                  "All Prepaid Phones"
+                ],
+                "description": "Slide the slim profile of this Boost Mobile LG M3 smartphone in your pocket, and keep in contact no matter where you roam. Cameras on the front and the back make conversations fun, and Android 6.0 Marshmallow offers reliable support for all of your apps. The ample 5-inch HD screen on this Boost Mobile LG M3 phone offers clear images.",
+                "free_shipping": true,
+                "hierarchicalCategories": {
+                  "lvl0": "Cell Phones",
+                  "lvl1": "Cell Phones > Prepaid Phones",
+                  "lvl2": "Cell Phones > Prepaid Phones > All Prepaid Phones"
+                },
+                "id": "1",
+                "image": "https://cdn-demo.algolia.com/bestbuy-0118/5428602_sb.jpg",
+                "name": "Boost Mobile - LG Tribute HD 4G LTE with 16GB Memory Prepaid Cell Phone - White",
+                "popularity": 21429,
+                "price": 79.99,
+                "rating": 1
+              },
+              "highlight": {},
+              "highlights": []
+            },
+            {
+              "document": {
+                "brand": "Boost Mobile",
+                "categories": [
+                  "Cell Phones",
+                  "Prepaid Phones",
+                  "All Prepaid Phones"
+                ],
+                "description": "LG K3 with 8GB Memory Prepaid Cell Phone for Boost Mobile: Call, text and contact your friends and family with the LG E0 smartphone. The 8GB of storage ensures you always have somewhere to put your photos and documents, and Bluetooth connectivity allows easy file sharing. Android 6 gives you access to a wide range of apps so that you can customize your LG E0 smartphone to your specifications.",
+                "free_shipping": true,
+                "hierarchicalCategories": {
+                  "lvl0": "Cell Phones",
+                  "lvl1": "Cell Phones > Prepaid Phones",
+                  "lvl2": "Cell Phones > Prepaid Phones > All Prepaid Phones"
+                },
+                "id": "7",
+                "image": "https://cdn-demo.algolia.com/bestbuy-0118/5020200_sb.jpg",
+                "name": "Boost Mobile - LG K3 with 8GB Memory Prepaid Cell Phone - Black",
+                "popularity": 21224,
+                "price": 49.99,
+                "rating": 1
+              },
+              "highlight": {},
+              "highlights": []
+            },
+            {
+              "document": {
+                "brand": "Boost Mobile",
+                "categories": [
+                  "Cell Phones",
+                  "Prepaid Phones",
+                  "All Prepaid Phones"
+                ],
+                "description": "Crystal-clear graphics with a 5-inch screen deliver outstanding performance with this Samsung Galaxy J3. The smartphone has a 1.2GHz quad-core processor for incredible processing power, and the 5-megapixel rear camera ensures great shots. The smart manager, long battery power and efficient power-saving modes ensure the Samsung Galaxy J3 delivers peak performance exactly when needed.",
+                "free_shipping": false,
+                "hierarchicalCategories": {
+                  "lvl0": "Cell Phones",
+                  "lvl1": "Cell Phones > Prepaid Phones",
+                  "lvl2": "Cell Phones > Prepaid Phones > All Prepaid Phones"
+                },
+                "id": "15",
+                "image": "https://cdn-demo.algolia.com/bestbuy-0118/4684101_sb.jpg",
+                "name": "Boost Mobile - Samsung Galaxy J3 Prepaid Cell Phone - Gold",
+                "popularity": 21185,
+                "price": 149.99,
+                "rating": 1
+              },
+              "highlight": {},
+              "highlights": []
+            }
+          ]
+        },
+        {
+          "found": 13,
+          "group_key": [
+            "Cricket Wireless"
+          ],
+          "hits": [
+            {
+              "document": {
+                "brand": "Cricket Wireless",
+                "categories": [
+                  "Cell Phones",
+                  "Prepaid Phones",
+                  "All Prepaid Phones"
+                ],
+                "description": "Alcatel OneTouch Flint Prepaid Cell Phone for Cricket Wireless:Stay connected to your friends and family with this Cricket Alcatel OneTouch Flint smartphone. It has a hefty 5.5-inch HD screen for easy viewing and navigation, and the color display is crisp and vibrant. The 2500 mAh battery in this Cricket Alcatel OneTouch Flint smartphone lets you talk up to 19 hours on a single charge..",
+                "free_shipping": false,
+                "hierarchicalCategories": {
+                  "lvl0": "Cell Phones",
+                  "lvl1": "Cell Phones > Prepaid Phones",
+                  "lvl2": "Cell Phones > Prepaid Phones > All Prepaid Phones"
+                },
+                "id": "3",
+                "image": "https://cdn-demo.algolia.com/bestbuy-0118/5215801_sb.jpg",
+                "name": "Cricket Wireless - Alcatel OneTouch Flint 4G with 16GB Memory Prepaid Cell Phone",
+                "popularity": 21343,
+                "price": 49.99,
+                "rating": 5
+              },
+              "highlight": {},
+              "highlights": []
+            },
+            {
+              "document": {
+                "brand": "Cricket Wireless",
+                "categories": [
+                  "Cell Phones",
+                  "Prepaid Phones",
+                  "All Prepaid Phones"
+                ],
+                "description": "Stay online with this Cricket Kyocera Hydro VIEW smartphone. Its wet touch screen feature keeps the 5-inch display working when your hands or the device are wet. This IP57-waterproof Cricket Kyocera Hydro VIEW smartphone runs on Android 5.1 Lollipop and has 1GB of RAM and 8GB storage for fast, efficient data connection.",
+                "free_shipping": true,
+                "hierarchicalCategories": {
+                  "lvl0": "Cell Phones",
+                  "lvl1": "Cell Phones > Prepaid Phones",
+                  "lvl2": "Cell Phones > Prepaid Phones > All Prepaid Phones"
+                },
+                "id": "13",
+                "image": "https://cdn-demo.algolia.com/bestbuy-0118/5628600_sb.jpg",
+                "name": "Cricket Wireless - Kyocera Hydro VIEW 4G LTE with 8GB Memory Cell Phone - Black",
+                "popularity": 21196,
+                "price": 39.99,
+                "rating": 2
+              },
+              "highlight": {},
+              "highlights": []
+            },
+            {
+              "document": {
+                "brand": "Cricket Wireless",
+                "categories": [
+                  "Cell Phones",
+                  "Prepaid Phones",
+                  "All Prepaid Phones"
+                ],
+                "description": "Stay connected with this Cricket Alcatel Pixi cell phone. The 16GB internal storage lets you download your favorite apps, and the bright 6-inch display lets you see more favorite television shows or video chats. This Cricket Alcatel Pixi cell phone also comes with a long-lasting battery for up to 8 hours of talk time on a single charge.",
+                "free_shipping": false,
+                "hierarchicalCategories": {
+                  "lvl0": "Cell Phones",
+                  "lvl1": "Cell Phones > Prepaid Phones",
+                  "lvl2": "Cell Phones > Prepaid Phones > All Prepaid Phones"
+                },
+                "id": "44",
+                "image": "https://cdn-demo.algolia.com/bestbuy-0118/5592200_sb.jpg",
+                "name": "Cricket Wireless - Alcatel Pixi Theatre 4G LTE with 16GB Memory Cell Phone - Black",
+                "popularity": 20617,
+                "price": 79.99,
+                "rating": 4
+              },
+              "highlight": {},
+              "highlights": []
+            }
+          ]
+        },
+        {
+          "found": 33,
+          "group_key": [
+            "Motorola"
+          ],
+          "hits": [
+            {
+              "document": {
+                "brand": "Motorola",
+                "categories": [
+                  "Cell Phones",
+                  "Unlocked Cell Phones",
+                  "All Unlocked Cell Phones"
+                ],
+                "description": "Stay in touch with loved ones with this unlocked Motorola Moto G phone. It has a thin, lightweight design for comfort and a micro-texture back and rounded edges for an enhanced grip. TurboPower-enabled charging provides extra battery juice in 15 minutes, and you can talk with others via any carrier with this unlocked Motorola Moto G phone.",
+                "free_shipping": false,
+                "hierarchicalCategories": {
+                  "lvl0": "Cell Phones",
+                  "lvl1": "Cell Phones > Unlocked Cell Phones",
+                  "lvl2": "Cell Phones > Unlocked Cell Phones > All Unlocked Cell Phones"
+                },
+                "id": "5",
+                "image": "https://cdn-demo.algolia.com/bestbuy-0118/5191101_sb.jpg",
+                "name": "Motorola - MOTO G (4th Generation) 4G LTE with 16GB Memory Cell Phone (Unlocked) - Black",
+                "popularity": 21286,
+                "price": 199.99,
+                "rating": 2
+              },
+              "highlight": {},
+              "highlights": []
+            },
+            {
+              "document": {
+                "brand": "Motorola",
+                "categories": [
+                  "Cell Phones",
+                  "Unlocked Cell Phones",
+                  "All Unlocked Cell Phones"
+                ],
+                "description": "Moto X Pure Unlocked Cell Phone: Connect with friends and family wirelessly with help from the vibrant 5.7\" touch-screen display and 32GB of storage space for all your music, photos, contacts and apps. Capture group shots and selfies using the front and rear cameras.",
+                "free_shipping": false,
+                "hierarchicalCategories": {
+                  "lvl0": "Cell Phones",
+                  "lvl1": "Cell Phones > Unlocked Cell Phones",
+                  "lvl2": "Cell Phones > Unlocked Cell Phones > All Unlocked Cell Phones"
+                },
+                "id": "19",
+                "image": "https://cdn-demo.algolia.com/bestbuy-0118/4345700_rb.jpg",
+                "name": "Motorola - Moto X Pure 4G with 32GB Memory Cell Phone (Unlocked) - Black",
+                "popularity": 21070,
+                "price": 349.99,
+                "rating": 3
+              },
+              "highlight": {},
+              "highlights": []
+            },
+            {
+              "document": {
+                "brand": "Motorola",
+                "categories": [
+                  "Cell Phones",
+                  "Unlocked Cell Phones",
+                  "All Unlocked Cell Phones"
+                ],
+                "description": "Simplify your life with this Motorola Moto G4 phone. Its 2800 mAh battery lets you talk, text or surf the web longer, and the Qualcomm Snapdragon 410 processor lets you seamlessly switch between apps without lag. Snap selfies or record videos with either the 8-megapixel rear camera or the 5-megapixel front camera of this Motorola Moto G4 phone.",
+                "free_shipping": true,
+                "hierarchicalCategories": {
+                  "lvl0": "Cell Phones",
+                  "lvl1": "Cell Phones > Unlocked Cell Phones",
+                  "lvl2": "Cell Phones > Unlocked Cell Phones > All Unlocked Cell Phones"
+                },
+                "id": "37",
+                "image": "https://cdn-demo.algolia.com/bestbuy-0118/5583500_sb.jpg",
+                "name": "Motorola - MOTO G4 Play 4G LTE with 16GB Memory Cell Phone (Unlocked) - Black",
+                "popularity": 20748,
+                "price": 149.99,
+                "rating": 2
+              },
+              "highlight": {},
+              "highlights": []
+            }
+          ]
+        },
+        {
+          "found": 47,
+          "group_key": [
+            "BLU"
+          ],
+          "hits": [
+            {
+              "document": {
+                "brand": "BLU",
+                "categories": [
+                  "Cell Phones",
+                  "Unlocked Cell Phones",
+                  "All Unlocked Cell Phones"
+                ],
+                "description": "Find a plan. Choose a phone. Choose life. The BLU LIFE XL has plenty of internal memory and lots of RAM combined with a powerful processor to deliver peak performance throughout the day. A 5.5-inch high-definition display delivers clear images, and a massive 13-megapixel camera ensures the BLU LIFE XL will be a part of your day-to-day life.",
+                "free_shipping": true,
+                "hierarchicalCategories": {
+                  "lvl0": "Cell Phones",
+                  "lvl1": "Cell Phones > Unlocked Cell Phones",
+                  "lvl2": "Cell Phones > Unlocked Cell Phones > All Unlocked Cell Phones"
+                },
+                "id": "8",
+                "image": "https://cdn-demo.algolia.com/bestbuy-0118/4913700_sb.jpg",
+                "name": "BLU - Life XL with 8GB Memory Cell Phone (Unlocked) - Black",
+                "popularity": 21220,
+                "price": 129.99,
+                "rating": 3
+              },
+              "highlight": {},
+              "highlights": []
+            },
+            {
+              "document": {
+                "brand": "BLU",
+                "categories": [
+                  "Cell Phones",
+                  "Unlocked Cell Phones",
+                  "All Unlocked Cell Phones"
+                ],
+                "description": "Blu Studio G Unlocked Cell Phone: This unlocked phone will meet your needs as you work, play and travel. It serves as a mobile hotspot when you're on the go, so you can access the Internet from just about anywhere. Use the dual SIM card slots to answer both local and international calls without needing multiple devices.",
+                "free_shipping": false,
+                "hierarchicalCategories": {
+                  "lvl0": "Cell Phones",
+                  "lvl1": "Cell Phones > Unlocked Cell Phones",
+                  "lvl2": "Cell Phones > Unlocked Cell Phones > All Unlocked Cell Phones"
+                },
+                "id": "11",
+                "image": "https://cdn-demo.algolia.com/bestbuy-0118/3902024_sb.jpg",
+                "name": "BLU - Studio G 4G Cell Phone with 4GB (Unlocked) - Black",
+                "popularity": 21209,
+                "price": 79.99,
+                "rating": 2
+              },
+              "highlight": {},
+              "highlights": []
+            },
+            {
+              "document": {
+                "brand": "BLU",
+                "categories": [
+                  "Cell Phones",
+                  "Unlocked Cell Phones",
+                  "All Unlocked Cell Phones"
+                ],
+                "description": "Keep in contact with friends with this unlocked Blu Dash L2 phone. Dual SIM cards let you route more than phone number to this phone, making it great for international travel with groups. Dual cameras let you capture memories in versatile ways, and this unlocked Blu Dash L2 phone comes with Android Marshmallow and Google Play.",
+                "free_shipping": false,
+                "hierarchicalCategories": {
+                  "lvl0": "Cell Phones",
+                  "lvl1": "Cell Phones > Unlocked Cell Phones",
+                  "lvl2": "Cell Phones > Unlocked Cell Phones > All Unlocked Cell Phones"
+                },
+                "id": "65",
+                "image": "https://cdn-demo.algolia.com/bestbuy-0118/5322500_sb.jpg",
+                "name": "BLU - Dash L2 D250U GSM 4G Cell Phone (Unlocked) - Black",
+                "popularity": 20399,
+                "price": 54.99,
+                "rating": 4
+              },
+              "highlight": {},
+              "highlights": []
+            }
+          ]
+        },
+        {
+          "found": 146,
+          "group_key": [
+            "Samsung"
+          ],
+          "hits": [
+            {
+              "document": {
+                "brand": "Samsung",
+                "categories": [
+                  "Cell Phones",
+                  "All Cell Phones with Plans"
+                ],
+                "description": "Combine incredible water resistance with a great screen and a powerful processor, and you get the Samsung Galaxy S7. It's built to withstand dunks in water for up to 30 minutes, and then you can wipe it off and get playing with a 5.1-inch touchscreen. The Samsung Galaxy S7 enjoys a quad-core processor for ultra-fast responsiveness.",
+                "free_shipping": true,
+                "hierarchicalCategories": {
+                  "lvl0": "Cell Phones",
+                  "lvl1": "Cell Phones > All Cell Phones with Plans"
+                },
+                "id": "9",
+                "image": "https://cdn-demo.algolia.com/bestbuy-0118/4893100_sb.jpg",
+                "name": "Samsung - Galaxy S7 32GB - Black Onyx (Verizon)",
+                "popularity": 21218,
+                "price": 679.99,
+                "rating": 4
+              },
+              "highlight": {},
+              "highlights": []
+            },
+            {
+              "document": {
+                "brand": "Samsung",
+                "categories": [
+                  "Cell Phones",
+                  "Unlocked Cell Phones",
+                  "All Unlocked Cell Phones"
+                ],
+                "description": "Work, rest and play with this Samsung Galaxy J3 smartphone. A 5-inch touchscreen delivers easy responses whether you are browsing online or typing a text, and the AMOLED technology delivers great visuals even when it's bright. A powerful quad-core processor lets you play games, study or use apps on this Samsung Galaxy J3 smartphone.",
+                "free_shipping": false,
+                "hierarchicalCategories": {
+                  "lvl0": "Cell Phones",
+                  "lvl1": "Cell Phones > Unlocked Cell Phones",
+                  "lvl2": "Cell Phones > Unlocked Cell Phones > All Unlocked Cell Phones"
+                },
+                "id": "12",
+                "image": "https://cdn-demo.algolia.com/bestbuy-0118/5320800_sb.jpg",
+                "name": "Samsung - Galaxy J3 (2016) 4G LTE with 16GB Memory Cell Phone (Unlocked) - White",
+                "popularity": 21204,
+                "price": 179.99,
+                "rating": 5
+              },
+              "highlight": {},
+              "highlights": []
+            },
+            {
+              "document": {
+                "brand": "Samsung",
+                "categories": [
+                  "Cell Phones",
+                  "All Cell Phones with Plans"
+                ],
+                "description": "Stay on top of your social media with this Samsung Galaxy S7 edge, which features a bold coral-blue back for fashionable function. The curved 5.1-inch edge-to-edge screen offers ample viewing of contacts or texts. This Samsung Galaxy S7 edge is both water- and dust-resistant for reliable use wherever you go.",
+                "free_shipping": false,
+                "hierarchicalCategories": {
+                  "lvl0": "Cell Phones",
+                  "lvl1": "Cell Phones > All Cell Phones with Plans"
+                },
+                "id": "22",
+                "image": "https://cdn-demo.algolia.com/bestbuy-0118/5705352_sb.jpg",
+                "name": "Samsung - Galaxy S7 edge 32GB - Blue Coral (Verizon)",
+                "popularity": 21019,
+                "price": 779.99,
+                "rating": 5
+              },
+              "highlight": {},
+              "highlights": []
+            }
+          ]
+        },
+        {
+          "found": 14,
+          "group_key": [
+            "Verizon Prepaid"
+          ],
+          "hits": [
+            {
+              "document": {
+                "brand": "Verizon Prepaid",
+                "categories": [
+                  "Cell Phones",
+                  "Prepaid Phones",
+                  "All Prepaid Phones"
+                ],
+                "description": "Ditch the contract with this prepaid Samsung Galaxy J3. It has a 5-inch HD Super AMOLED display for clear, crisp images, and its 8GB of internal storage lets you save music, photos and videos. This Samsung Galaxy J3 has an Easy Mode that lets you access favorite apps quickly through larger icons.",
+                "free_shipping": false,
+                "hierarchicalCategories": {
+                  "lvl0": "Cell Phones",
+                  "lvl1": "Cell Phones > Prepaid Phones",
+                  "lvl2": "Cell Phones > Prepaid Phones > All Prepaid Phones"
+                },
+                "id": "16",
+                "image": "https://cdn-demo.algolia.com/bestbuy-0118/5656315_sb.jpg",
+                "name": "Verizon Prepaid - Samsung Galaxy J3 4G LTE with 8GB Memory Prepaid Cell Phone - Black (Verizon Wireless Prepaid)",
+                "popularity": 21154,
+                "price": 109.99,
+                "rating": 3
+              },
+              "highlight": {},
+              "highlights": []
+            },
+            {
+              "document": {
+                "brand": "Verizon Prepaid",
+                "categories": [
+                  "Cell Phones",
+                  "Prepaid Phones",
+                  "All Prepaid Phones"
+                ],
+                "description": "Samsung Galaxy J3 Prepaid Cell Phone for Verizon Wireless Prepaid: Keep in touch with friends and family with this prepaid Samsung Galaxy J3 phone, featuring a brilliant Super AMOLED display. The 5-inch screen is easy to view, letting you scroll through social media or take beautiful vacation shots. An expandable memory on this Samsung Galaxy J3 phone lets you store entire photo albums.",
+                "free_shipping": true,
+                "hierarchicalCategories": {
+                  "lvl0": "Cell Phones",
+                  "lvl1": "Cell Phones > Prepaid Phones",
+                  "lvl2": "Cell Phones > Prepaid Phones > All Prepaid Phones"
+                },
+                "id": "31",
+                "image": "https://cdn-demo.algolia.com/bestbuy-0118/5165400_sb.jpg",
+                "name": "Verizon Prepaid - Samsung Galaxy J3 4G LTE with 8GB Memory Prepaid Cell Phone - Black",
+                "popularity": 20831,
+                "price": 109.99,
+                "rating": 5
+              },
+              "highlight": {},
+              "highlights": []
+            },
+            {
+              "document": {
+                "brand": "Verizon Prepaid",
+                "categories": [
+                  "Cell Phones",
+                  "Prepaid Phones",
+                  "All Prepaid Phones"
+                ],
+                "description": "Experience performance and speed minus the long-term commitment with this prepaid LG Optimus Zone 3 smartphone. It has a quad-core processor for blazing fast speed and 8GB of on-board storage. This LG Optimus Zone 3 smartphone makes taking selfies easy with GestureShot, where a simple hand gesture quickly snaps your picture.",
+                "free_shipping": false,
+                "hierarchicalCategories": {
+                  "lvl0": "Cell Phones",
+                  "lvl1": "Cell Phones > Prepaid Phones",
+                  "lvl2": "Cell Phones > Prepaid Phones > All Prepaid Phones"
+                },
+                "id": "70",
+                "image": "https://cdn-demo.algolia.com/bestbuy-0118/5656242_sb.jpg",
+                "name": "Verizon Prepaid - LG Optimus Zone 3 4G LTE with 8GB Memory Prepaid Cell Phone - Black (Verizon Wireless Prepaid)",
+                "popularity": 20347,
+                "price": 59.99,
+                "rating": 2
+              },
+              "highlight": {},
+              "highlights": []
+            }
+          ]
+        },
+        {
+          "found": 11,
+          "group_key": [
+            "Simple Mobile"
+          ],
+          "hits": [
+            {
+              "document": {
+                "brand": "Simple Mobile",
+                "categories": [
+                  "Cell Phones",
+                  "Prepaid Phones",
+                  "All Prepaid Phones"
+                ],
+                "description": "Stay in touch on the run with this Simple Mobile Samsung Galaxy On5 smartphone. Front- and rear-facing cameras let you connect with friends or share a selfie, and the Android 6.0 Marshmallow operating system keeps your apps running smoothly. A micro SD card slot lets you add up to 128GB of storage on this Simple Mobile Samsung Galaxy On5 smartphone.",
+                "free_shipping": false,
+                "hierarchicalCategories": {
+                  "lvl0": "Cell Phones",
+                  "lvl1": "Cell Phones > Prepaid Phones",
+                  "lvl2": "Cell Phones > Prepaid Phones > All Prepaid Phones"
+                },
+                "id": "18",
+                "image": "https://cdn-demo.algolia.com/bestbuy-0118/5581019_sb.jpg",
+                "name": "Simple Mobile - Samsung GALAXY On5 4G LTE with 8GB Memory Prepaid Cell Phone - Black",
+                "popularity": 21109,
+                "price": 79.99,
+                "rating": 2
+              },
+              "highlight": {},
+              "highlights": []
+            },
+            {
+              "document": {
+                "brand": "Simple Mobile",
+                "categories": [
+                  "Cell Phones",
+                  "Prepaid Phones",
+                  "All Prepaid Phones"
+                ],
+                "description": "Talk and text effortlessly with this ZTE smartphone. The Android operating system gives you access to a full range of Google features, and front- and rear-facing cameras let you capture life's little moments. Featuring a lithium-ion battery, this ZTE smartphone delivers up to 11 hours of talk time and 12 days of standby time.",
+                "free_shipping": false,
+                "hierarchicalCategories": {
+                  "lvl0": "Cell Phones",
+                  "lvl1": "Cell Phones > Prepaid Phones",
+                  "lvl2": "Cell Phones > Prepaid Phones > All Prepaid Phones"
+                },
+                "id": "110",
+                "image": "https://cdn-demo.algolia.com/bestbuy-0118/5581036_sb.jpg",
+                "name": "Simple Mobile - ZTE Midnight Pro 4G LTE with 8GB Memory Prepaid Cell Phone - Black",
+                "popularity": 19680,
+                "price": 39.99,
+                "rating": 3
+              },
+              "highlight": {},
+              "highlights": []
+            },
+            {
+              "document": {
+                "brand": "Simple Mobile",
+                "categories": [
+                  "Cell Phones",
+                  "Prepaid Phones",
+                  "All Prepaid Phones"
+                ],
+                "description": "Dial up a friend on this Simple Mobile LG X Style phone, or connect to the internet to play your favorite games. Android 6.0.1 OS offers support for your apps and contact lists, while the wide 5-inch screen is easy to view. The slim design of this Simple Mobile LG X Style phone sits easily in your hand.",
+                "free_shipping": false,
+                "hierarchicalCategories": {
+                  "lvl0": "Cell Phones",
+                  "lvl1": "Cell Phones > Prepaid Phones",
+                  "lvl2": "Cell Phones > Prepaid Phones > All Prepaid Phones"
+                },
+                "id": "176",
+                "image": "https://cdn-demo.algolia.com/bestbuy-0118/5581018_sb.jpg",
+                "name": "Simple Mobile - LG X Style 4G LTE with 8GB Memory Prepaid Cell Phone - Black",
+                "popularity": 18477,
+                "price": 69.99,
+                "rating": 5
+              },
+              "highlight": {},
+              "highlights": []
+            }
+          ]
+        },
+        {
+          "found": 3,
+          "group_key": [
+            "Verizon Wireless Prepaid"
+          ],
+          "hits": [
+            {
+              "document": {
+                "brand": "Verizon Wireless Prepaid",
+                "categories": [
+                  "Cell Phones",
+                  "Prepaid Phones",
+                  "All Prepaid Phones"
+                ],
+                "description": "Stay in touch with loved ones with this Verizon Wireless Prepaid Samsung Gusto 3 SMB311VZPP cell phone that enables calling and text messaging and features 3G speed for Web access. A Bluetooth 2.1 + EDR interface allows pairing with select devices.",
+                "free_shipping": true,
+                "hierarchicalCategories": {
+                  "lvl0": "Cell Phones",
+                  "lvl1": "Cell Phones > Prepaid Phones",
+                  "lvl2": "Cell Phones > Prepaid Phones > All Prepaid Phones"
+                },
+                "id": "20",
+                "image": "https://cdn-demo.algolia.com/bestbuy-0118/5358001_sb.jpg",
+                "name": "Verizon Wireless Prepaid - Samsung Gusto 3 No-Contract Cell Phone - Dark Blue",
+                "popularity": 21040,
+                "price": 19.99,
+                "rating": 4
+              },
+              "highlight": {},
+              "highlights": []
+            },
+            {
+              "document": {
+                "brand": "Verizon Wireless Prepaid",
+                "categories": [
+                  "Cell Phones",
+                  "Prepaid Phones",
+                  "All Prepaid Phones"
+                ],
+                "description": "Stay connect with this prepaid Verizon Moto G4 smartphone. The quad-core processor lets you browse websites or stream movies right in the palm of your hand, and there's 8GB of memory, so you have room for all your apps. This Verizon Moto G4 smartphone has a Corning Gorilla Glass display and is water-repellent.",
+                "free_shipping": false,
+                "hierarchicalCategories": {
+                  "lvl0": "Cell Phones",
+                  "lvl1": "Cell Phones > Prepaid Phones",
+                  "lvl2": "Cell Phones > Prepaid Phones > All Prepaid Phones"
+                },
+                "id": "62",
+                "image": "https://cdn-demo.algolia.com/bestbuy-0118/5577481_sb.jpg",
+                "name": "Verizon Wireless Prepaid - Moto G4 Play 4G LTE with 16GB Memory Cell Phone - Black",
+                "popularity": 20436,
+                "price": 84.99,
+                "rating": 2
+              },
+              "highlight": {},
+              "highlights": []
+            },
+            {
+              "document": {
+                "brand": "Verizon Wireless Prepaid",
+                "categories": [
+                  "Cell Phones",
+                  "Prepaid Phones",
+                  "All Prepaid Phones"
+                ],
+                "description": "Call friends, text family and get online with the HTC 530. A 5-inch screen makes it easy to check email, Facebook and Snapchat, and an 8-megapixel camera ensures getting the perfect angle is simple. The 16GB of space, powerful processing and Android Marshmallow ensure this HTC 530 can handle the latest apps.",
+                "free_shipping": false,
+                "hierarchicalCategories": {
+                  "lvl0": "Cell Phones",
+                  "lvl1": "Cell Phones > Prepaid Phones",
+                  "lvl2": "Cell Phones > Prepaid Phones > All Prepaid Phones"
+                },
+                "id": "99",
+                "image": "https://cdn-demo.algolia.com/bestbuy-0118/5506778_sb.jpg",
+                "name": "Verizon Wireless Prepaid - HTC Desire 530 4G LTE with 16GB Memory Cell Phone - White",
+                "popularity": 19924,
+                "price": 99.99,
+                "rating": 5
+              },
+              "highlight": {},
+              "highlights": []
+            }
+          ]
+        },
+        {
+          "found": 165,
+          "group_key": [
+            "Apple"
+          ],
+          "hits": [
+            {
+              "document": {
+                "brand": "Apple",
+                "categories": [
+                  "Cell Phones",
+                  "All Cell Phones with Plans"
+                ],
+                "description": "iPhone 7 features an all-new 12MP camera with an &#402;/1.8 aperture for great low-light photos and 4K video. Optical image stabilization. A 4.7-inch Retina HD display with wide color and 3D Touch. An A10 Fusion chip for up to 2x faster performance than iPhone 6. Touch ID. Faster LTE. The longest battery life in an iPhone. Immersive stereo sound, splash and water resistant, and iOS 10.",
+                "free_shipping": true,
+                "hierarchicalCategories": {
+                  "lvl0": "Cell Phones",
+                  "lvl1": "Cell Phones > All Cell Phones with Plans"
+                },
+                "id": "21",
+                "image": "https://cdn-demo.algolia.com/bestbuy-0118/5581586_sb.jpg",
+                "name": "Apple - iPhone 7 32GB - Black (Verizon)",
+                "popularity": 21030,
+                "price": 699.99,
+                "rating": 4
+              },
+              "highlight": {},
+              "highlights": []
+            },
+            {
+              "document": {
+                "brand": "Apple",
+                "categories": [
+                  "Cell Phones",
+                  "All Cell Phones with Plans"
+                ],
+                "description": "iPhone 7 features an all-new 12MP camera with an &#402;/1.8 aperture for great low-light photos and 4K video. Optical image stabilization. A 4.7-inch Retina HD display with wide color and 3D Touch. An A10 Fusion chip for up to 2x faster performance than iPhone 6. Touch ID. Faster LTE. The longest battery life in an iPhone. Immersive stereo sound, splash and water resistant, and iOS 10.",
+                "free_shipping": false,
+                "hierarchicalCategories": {
+                  "lvl0": "Cell Phones",
+                  "lvl1": "Cell Phones > All Cell Phones with Plans"
+                },
+                "id": "27",
+                "image": "https://cdn-demo.algolia.com/bestbuy-0118/5580716_sb.jpg",
+                "name": "Apple - iPhone 7 32GB - Black (Sprint)",
+                "popularity": 20872,
+                "price": 699.99,
+                "rating": 4
+              },
+              "highlight": {},
+              "highlights": []
+            },
+            {
+              "document": {
+                "brand": "Apple",
+                "categories": [
+                  "Cell Phones",
+                  "All Cell Phones with Plans"
+                ],
+                "description": "iPhone 7 features an all-new 12MP camera with an &#402;/1.8 aperture for great low-light photos and 4K video. Optical image stabilization. A 4.7-inch Retina HD display with wide color and 3D Touch. An A10 Fusion chip for up to 2x faster performance than iPhone 6. Touch ID. Faster LTE. The longest battery life in an iPhone. Immersive stereo sound, splash and water resistant, and iOS 10.",
+                "free_shipping": false,
+                "hierarchicalCategories": {
+                  "lvl0": "Cell Phones",
+                  "lvl1": "Cell Phones > All Cell Phones with Plans"
+                },
+                "id": "29",
+                "image": "https://cdn-demo.algolia.com/bestbuy-0118/5580358_sb.jpg",
+                "name": "Apple - iPhone 7 32GB - Black (AT&T)",
+                "popularity": 20845,
+                "price": 699.99,
+                "rating": 4
+              },
+              "highlight": {},
+              "highlights": []
+            }
+          ]
+        }
+      ],
+      "out_of": 3291,
+      "page": 1,
+      "request_params": {
+        "collection_name": "products",
+        "per_page": 10,
+        "q": "*"
+      },
+      "search_cutoff": false,
+      "search_time_ms": 13
+    }
+  ]
+}
