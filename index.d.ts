@@ -2,6 +2,7 @@ type SearchClient = any;
 
 import type { ConfigurationOptions } from "typesense/lib/Typesense/Configuration";
 import type { SearchParamsWithPreset } from "typesense/lib/Typesense/Documents";
+import { default as TypesenseSearchClient } from "typesense/lib/Typesense/SearchClient";
 
 interface BaseSearchParameters extends Partial<Omit<SearchParamsWithPreset, "q" | "filter_by">> {
   /**
@@ -120,6 +121,7 @@ type TypesenseInstantsearchAdapterOptions =
 
 export default class TypesenseInstantsearchAdapter {
   readonly searchClient: SearchClient;
+  readonly typesenseClient: TypesenseSearchClient;
   constructor(options: TypesenseInstantsearchAdapterOptions);
   clearCache(): SearchClient;
   updateConfiguration(options: TypesenseInstantsearchAdapterOptions): boolean;
