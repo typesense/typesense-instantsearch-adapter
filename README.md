@@ -444,6 +444,34 @@ Read more about all available options for `renderingContent` in [Algolia's docum
   });
   ```
 
+### Grouped Hits
+
+> Available as of typesense-instantsearch-adapter `2.7.1-4`
+
+By default, when `group_by` is used as a search parameters, the adapter flattens the results across all groups into a single list of sequential hits.
+
+If you'd like to preserve the groups, you want to set `flattenGroupedHits: false` when instantiating the adapter.
+
+This will place the first hit in a group as the primary hit, and then add all hits in the group inside a `_grouped_hits` key inside each hit.
+
+```js
+const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
+    server: {
+      apiKey: "xyz",
+      nodes: [
+        {
+          host: "localhost",
+          port: "8108",
+          path: "/",
+          protocol: "http",
+        },
+      ],
+    },
+    flattenGroupedHits: false, // <=======
+    additionalSearchParameters,
+  });
+```
+
 ### Vector Search
 
 > Available as of typesense-instantsearch-adapter `2.7.0-3`
