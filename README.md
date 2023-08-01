@@ -456,20 +456,20 @@ This will place the first hit in a group as the primary hit, and then add all hi
 
 ```js
 const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
-    server: {
-      apiKey: "xyz",
-      nodes: [
-        {
-          host: "localhost",
-          port: "8108",
-          path: "/",
-          protocol: "http",
-        },
-      ],
-    },
-    flattenGroupedHits: false, // <=======
-    additionalSearchParameters,
-  });
+  server: {
+    apiKey: "xyz",
+    nodes: [
+      {
+        host: "localhost",
+        port: "8108",
+        path: "/",
+        protocol: "http",
+      },
+    ],
+  },
+  flattenGroupedHits: false, // <=======
+  additionalSearchParameters,
+});
 ```
 
 ### Vector Search

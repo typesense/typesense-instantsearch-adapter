@@ -57,7 +57,7 @@
     "@babel/cli": "^7.17.6",
     "@babel/core": "^7.17.5",
     "@babel/plugin-transform-runtime": "^7.17.0",
-    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-env": "^7.22.9",
     "babel-jest": "^27.5.1",
     "babel-loader": "^8.2.3",
     "eslint": "^8.10.0",
@@ -83,7 +83,7 @@
     "webpack-cli": "^4.9.2"
   },
   "dependencies": {
-    "typesense": "^1.5.4"
+    "typesense": "^1.7.0-4"
   },
   "peerDependencies": {
     "@babel/runtime": "^7.17.2"
