@@ -38,7 +38,7 @@
     "build:dist": "webpack",
     "test:type": "tsd",
     "build": "npm run build:lib && npm run build:dist",
-    "typesenseServer": "docker run -i -p 8108:8108 -v`pwd`/typesense-server-data/:/data typesense/typesense:0.25.0.rc14 --data-dir /data --api-key=xyz --listen-port 8108 --enable-cors",
+    "typesenseServer": "docker run -i -p 8108:8108 -v`pwd`/typesense-server-data/:/data typesense/typesense:0.25.0 --data-dir /data --api-key=xyz --listen-port 8108 --enable-cors",
     "createServerNodesFile": "echo '172.17.0.2:8107:8108,172.17.0.3:7107:7108,172.17.0.4:9107:9108' > `pwd`/typesense-server-nodes",
     "typesenseServer:0": "docker run -i -p 8108:8108 -p 8107:8107 -v/tmp/typesense-server-data-node-1/:/data -v`pwd`/typesense-server-nodes:/typesense-server-nodes typesense/typesense:0.19.0 --data-dir /data --api-key=xyz --listen-port 8108 --peering-port 8107 --enable-cors --nodes=/typesense-server-nodes",
     "typesenseServer:1": "docker run -i -p 7108:7108 -p 7107:7107 -v/tmp/.typesense-server-data-node-2/:/data -v`pwd`/typesense-server-nodes:/typesense-server-nodes typesense/typesense:0.19.0 --data-dir /data --api-key=xyz --listen-port 7108 --peering-port 7107 --enable-cors --nodes=/typesense-server-nodes",
