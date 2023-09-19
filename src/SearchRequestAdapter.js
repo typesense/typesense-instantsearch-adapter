@@ -402,7 +402,6 @@ export class SearchRequestAdapter {
     // If a custom vector query is specified, set q=*
     if (params.typesenseVectorQuery) {
       typesenseSearchParams.vector_query = params.typesenseVectorQuery;
-      typesenseSearchParams.q = "*";
     }
 
     // console.log(params);
