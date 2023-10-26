@@ -72,6 +72,19 @@ describe("SearchRequestAdapter", () => {
     });
   });
 
+  describe(".adaptFacetBy", () => {
+    it("adapts the given facet names, given a configuration called facetByOptions ", () => {
+      const subject = new SearchRequestAdapter([], null, {
+        facetByOptions: {
+          field1: "(sort_by: _alpha:asc)",
+        },
+      });
+
+      const result = subject._adaptFacetBy(["field1", "field2"]);
+      expect(result).toEqual("field1(sort_by: _alpha:asc),field2");
+    });
+  });
+
   describe("._adaptGeoFilter", () => {
     it("adapts the given geo bounding box filter", () => {
       const subject = new SearchRequestAdapter([], null, {

@@ -1,8 +1,9 @@
+const isDebugMode = process.env.NODE_OPTIONS && process.env.NODE_OPTIONS.includes("javascript-debugger");
 module.exports = {
   launch: {
     dumpio: true,
     // headless: process.env.HEADLESS === "true" || process.env.CI === "true",
-    headless: true,
+    headless: isDebugMode ? false : true,
     slowMo: 10,
     defaultViewport: null,
     // devtools: true

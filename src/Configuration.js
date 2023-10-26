@@ -53,6 +53,7 @@ export class Configuration {
 
     this.renderingContent = options.renderingContent;
     this.flattenGroupedHits = options.flattenGroupedHits ?? true;
+    this.facetByOptions = options.facetByOptions ?? {};
   }
 
   validate() {

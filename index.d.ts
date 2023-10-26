@@ -89,6 +89,7 @@ interface BaseAdapterOptions {
   facetableFieldsWithSpecialCharacters?: string[];
   renderingContent?: object;
   flattenGroupedHits?: boolean;
+  facetByOptions?: object;
 }
 
 interface CollectionSearchParameters {

@@ -2206,7 +2206,8 @@ var Configuration = /*#__PURE__*/function () {
         _options$facetableFie,
         _options$collectionSp,
         _this = this,
-        _options$flattenGroup;
+        _options$flattenGroup,
+        _options$facetByOptio;
 
     var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
@@ -2244,6 +2245,7 @@ var Configuration = /*#__PURE__*/function () {
     });
     this.renderingContent = options.renderingContent;
     this.flattenGroupedHits = (_options$flattenGroup = options.flattenGroupedHits) !== null && _options$flattenGroup !== void 0 ? _options$flattenGroup : true;
+    this.facetByOptions = (_options$facetByOptio = options.facetByOptions) !== null && _options$facetByOptio !== void 0 ? _options$facetByOptio : {};
   }
 
   (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(Configuration, [{
@@ -2749,6 +2751,19 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
       return indexName.match(this.constructor.INDEX_NAME_MATCHING_REGEX)[3];
     }
   }, {
+    key: "_adaptFacetBy",
+    value: function _adaptFacetBy(facets) {
+      var _this3 = this;
+
+      return [facets].flat().map(function (facet) {
+        if (_this3.configuration.facetByOptions[facet]) {
+          return "".concat(facet).concat(_this3.configuration.facetByOptions[facet]);
+        } else {
+          return facet;
+        }
+      }).join(",");
+    }
+  }, {
     key: "_buildSearchParameters",
     value: function _buildSearchParameters(instantsearchRequest) {
       var params = instantsearchRequest.params;
@@ -2785,7 +2800,7 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
       Object.assign(typesenseSearchParams, {
         collection: adaptedCollectionName,
         q: params.query === "" || params.query === undefined ? "*" : params.query,
-        facet_by: [params.facets].flat().join(","),
+        facet_by: this._adaptFacetBy(params.facets),
         filter_by: this._adaptFilters(params) || snakeCasedAdditionalSearchParameters.filter_by,
         sort_by: adaptedSortBy || snakeCasedAdditionalSearchParameters.sort_by,
         max_facet_values: params.maxValuesPerFacet,
@@ -2827,7 +2842,7 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
     key: "request",
     value: function () {
       var _request = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().mark(function _callee() {
-        var _this3 = this;
+        var _this4 = this;
 
         var searches;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee$(_context) {
@@ -2835,7 +2850,7 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
             case 0:
               // console.log(this.instantsearchRequests);
               searches = this.instantsearchRequests.map(function (instantsearchRequest) {
-                return _this3._buildSearchParameters(instantsearchRequest);
+                return _this4._buildSearchParameters(instantsearchRequest);
               });
               return _context.abrupt("return", this.typesenseClient.multiSearch.perform({
                 searches: searches
