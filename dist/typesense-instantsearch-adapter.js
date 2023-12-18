@@ -2800,7 +2800,7 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
       Object.assign(typesenseSearchParams, {
         collection: adaptedCollectionName,
         q: params.query === "" || params.query === undefined ? "*" : params.query,
-        facet_by: this._adaptFacetBy(params.facets) || snakeCasedAdditionalSearchParameters.facet_by,
+        facet_by: snakeCasedAdditionalSearchParameters.facet_by || this._adaptFacetBy(params.facets),
         filter_by: this._adaptFilters(params) || snakeCasedAdditionalSearchParameters.filter_by,
         sort_by: adaptedSortBy || snakeCasedAdditionalSearchParameters.sort_by,
         max_facet_values: params.maxValuesPerFacet,
