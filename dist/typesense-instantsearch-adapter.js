@@ -2800,7 +2800,7 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
       Object.assign(typesenseSearchParams, {
         collection: adaptedCollectionName,
         q: params.query === "" || params.query === undefined ? "*" : params.query,
-        facet_by: this._adaptFacetBy(params.facets),
+        facet_by: this._adaptFacetBy(params.facets) || snakeCasedAdditionalSearchParameters.facet_by,
         filter_by: this._adaptFilters(params) || snakeCasedAdditionalSearchParameters.filter_by,
         sort_by: adaptedSortBy || snakeCasedAdditionalSearchParameters.sort_by,
         max_facet_values: params.maxValuesPerFacet,
@@ -5143,7 +5143,13 @@ var Documents = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 if (!document)
                     throw new Error("No document provided");
-                return [2 /*return*/, this.apiCall.post(this.endpointPath(), document, Object.assign({}, options, { action: "update" }))];
+                if (options["filter_by"] != null) {
+                    return [2 /*return*/, this.apiCall.patch(this.endpointPath(), document, Object.assign({}, options))];
+                }
+                else {
+                    return [2 /*return*/, this.apiCall.post(this.endpointPath(), document, Object.assign({}, options, { action: "update" }))];
+                }
+                return [2 /*return*/];
             });
         });
     };
