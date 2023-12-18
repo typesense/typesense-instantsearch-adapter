@@ -1,6 +1,6 @@
 {
   "name": "typesense-instantsearch-adapter",
-  "version": "2.8.0-2",
+  "version": "2.8.0-3",
   "description": "Adapter to use InstantSearch UI widgets with Typesense Search",
   "homepage": "https://github.com/typesense/typesense-instantsearch-adapter",
   "main": "lib/TypesenseInstantsearchAdapter.js",
