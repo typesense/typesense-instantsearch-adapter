@@ -469,11 +469,16 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
     brand: "(sort_by: _alpha:asc)",
     category: "(sort_by: _alpha:desc)",
   }, // <======= Add any facet_by parameter as a key value pair. Don't forget the surrounding parantheses in the value.
+  collectionSpecificFacetByOptions: {
+    collection1: {
+      brand: "(sort_by: _alpha:desc)",
+    },
+  }, // <======= Use this parameter if multiple collections share the same field names, and you want to use different options for each field. This will override facetByOptions for that particular collection.
   additionalSearchParameters,
 });
 ```
 
-Note that for sorting in refinementLists, in addition to sorting on the Typesense Server-side, you'd also need to pass the [`sortBy`](https://www.algolia.com/doc/api-reference/widgets/refinement-list/js/#widget-param-sortby) parameter to the refinementList widget to also sort the results appropriately on the client-side. 
+Note that for sorting in refinementLists, in addition to sorting on the Typesense Server-side, you'd also need to pass the [`sortBy`](https://www.algolia.com/doc/api-reference/widgets/refinement-list/js/#widget-param-sortby) parameter to the refinementList widget to also sort the results appropriately on the client-side.
 
 ### Grouped Hits
 

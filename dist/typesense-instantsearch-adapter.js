@@ -2207,7 +2207,8 @@ var Configuration = /*#__PURE__*/function () {
         _options$collectionSp,
         _this = this,
         _options$flattenGroup,
-        _options$facetByOptio;
+        _options$facetByOptio,
+        _options$collectionSp2;
 
     var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
@@ -2246,6 +2247,7 @@ var Configuration = /*#__PURE__*/function () {
     this.renderingContent = options.renderingContent;
     this.flattenGroupedHits = (_options$flattenGroup = options.flattenGroupedHits) !== null && _options$flattenGroup !== void 0 ? _options$flattenGroup : true;
     this.facetByOptions = (_options$facetByOptio = options.facetByOptions) !== null && _options$facetByOptio !== void 0 ? _options$facetByOptio : {};
+    this.collectionSpecificFacetByOptions = (_options$collectionSp2 = options.collectionSpecificFacetByOptions) !== null && _options$collectionSp2 !== void 0 ? _options$collectionSp2 : {};
   }
 
   (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(Configuration, [{
@@ -2752,11 +2754,15 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
     }
   }, {
     key: "_adaptFacetBy",
-    value: function _adaptFacetBy(facets) {
+    value: function _adaptFacetBy(facets, collectionName) {
       var _this3 = this;
 
       return [facets].flat().map(function (facet) {
-        if (_this3.configuration.facetByOptions[facet]) {
+        var _this3$configuration$;
+
+        if ((_this3$configuration$ = _this3.configuration.collectionSpecificFacetByOptions) !== null && _this3$configuration$ !== void 0 && (_this3$configuration$ = _this3$configuration$[collectionName]) !== null && _this3$configuration$ !== void 0 && _this3$configuration$[facet]) {
+          return "".concat(facet).concat(_this3.configuration.collectionSpecificFacetByOptions[collectionName][facet]);
+        } else if (_this3.configuration.facetByOptions[facet]) {
           return "".concat(facet).concat(_this3.configuration.facetByOptions[facet]);
         } else {
           return facet;
@@ -2800,7 +2806,7 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
       Object.assign(typesenseSearchParams, {
         collection: adaptedCollectionName,
         q: params.query === "" || params.query === undefined ? "*" : params.query,
-        facet_by: snakeCasedAdditionalSearchParameters.facet_by || this._adaptFacetBy(params.facets),
+        facet_by: snakeCasedAdditionalSearchParameters.facet_by || this._adaptFacetBy(params.facets, adaptedCollectionName),
         filter_by: this._adaptFilters(params) || snakeCasedAdditionalSearchParameters.filter_by,
         sort_by: adaptedSortBy || snakeCasedAdditionalSearchParameters.sort_by,
         max_facet_values: params.maxValuesPerFacet,

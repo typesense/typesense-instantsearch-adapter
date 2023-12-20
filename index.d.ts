@@ -90,6 +90,7 @@ interface BaseAdapterOptions {
   renderingContent?: object;
   flattenGroupedHits?: boolean;
   facetByOptions?: object;
+  collectionSpecificFacetByOptions?: object;
 }
 
 interface CollectionSearchParameters {

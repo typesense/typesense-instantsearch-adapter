@@ -358,11 +358,13 @@ export class SearchRequestAdapter {
     return indexName.match(this.constructor.INDEX_NAME_MATCHING_REGEX)[3];
   }
 
-  _adaptFacetBy(facets) {
+  _adaptFacetBy(facets, collectionName) {
     return [facets]
       .flat()
       .map((facet) => {
-        if (this.configuration.facetByOptions[facet]) {
+        if (this.configuration.collectionSpecificFacetByOptions?.[collectionName]?.[facet]) {
+          return `${facet}${this.configuration.collectionSpecificFacetByOptions[collectionName][facet]}`;
+        } else if (this.configuration.facetByOptions[facet]) {
           return `${facet}${this.configuration.facetByOptions[facet]}`;
         } else {
           return facet;
@@ -396,7 +398,8 @@ export class SearchRequestAdapter {
     Object.assign(typesenseSearchParams, {
       collection: adaptedCollectionName,
       q: params.query === "" || params.query === undefined ? "*" : params.query,
-      facet_by: snakeCasedAdditionalSearchParameters.facet_by || this._adaptFacetBy(params.facets),
+      facet_by:
+        snakeCasedAdditionalSearchParameters.facet_by || this._adaptFacetBy(params.facets, adaptedCollectionName),
       filter_by: this._adaptFilters(params) || snakeCasedAdditionalSearchParameters.filter_by,
       sort_by: adaptedSortBy || snakeCasedAdditionalSearchParameters.sort_by,
       max_facet_values: params.maxValuesPerFacet,
