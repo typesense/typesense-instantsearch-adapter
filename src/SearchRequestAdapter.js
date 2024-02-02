@@ -21,7 +21,18 @@ export class SearchRequestAdapter {
     this.collectionSpecificSearchParameters = configuration.collectionSpecificSearchParameters;
   }
 
-  _adaptFacetFilters(facetFilters) {
+  _shouldUseExactMatchForField(fieldName, collectionName) {
+    if (
+      this.configuration.collectionSpecificFilterByOptions?.[collectionName]?.[fieldName]?.exactMatch === false ||
+      this.configuration.filterByOptions?.[fieldName]?.exactMatch === false
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  _adaptFacetFilters(facetFilters, collectionName) {
     let adaptedResult = "";
 
     if (!facetFilters) {
@@ -97,13 +108,15 @@ export class SearchRequestAdapter {
 
         const typesenseFilterStringComponents = [];
         if (includedFieldValues.length > 0) {
+          const operator = this._shouldUseExactMatchForField(fieldName, collectionName) ? ":=" : ":";
           typesenseFilterStringComponents.push(
-            `${fieldName}:=[${includedFieldValues.map((v) => this._escapeFacetValue(v)).join(",")}]`
+            `${fieldName}${operator}[${includedFieldValues.map((v) => this._escapeFacetValue(v)).join(",")}]`
           );
         }
         if (excludedFieldValues.length > 0) {
+          const operator = this._shouldUseExactMatchForField(fieldName, collectionName) ? ":!=" : ":!";
           typesenseFilterStringComponents.push(
-            `${fieldName}:!=[${excludedFieldValues.map((v) => this._escapeFacetValue(v)).join(",")}]`
+            `${fieldName}${operator}[${excludedFieldValues.map((v) => this._escapeFacetValue(v)).join(",")}]`
           );
         }
 
@@ -119,9 +132,11 @@ export class SearchRequestAdapter {
         const { fieldName, fieldValue } = this._parseFacetFilter(item);
         let typesenseFilterString;
         if (fieldValue.startsWith("-") && !this._isNumber(fieldValue)) {
-          typesenseFilterString = `${fieldName}:!=[${this._escapeFacetValue(fieldValue.substring(1))}]`;
+          const operator = this._shouldUseExactMatchForField(fieldName, collectionName) ? ":!=" : ":!";
+          typesenseFilterString = `${fieldName}${operator}[${this._escapeFacetValue(fieldValue.substring(1))}]`;
         } else {
-          typesenseFilterString = `${fieldName}:=[${this._escapeFacetValue(fieldValue)}]`;
+          const operator = this._shouldUseExactMatchForField(fieldName, collectionName) ? ":=" : ":";
+          typesenseFilterString = `${fieldName}${operator}[${this._escapeFacetValue(fieldValue)}]`;
         }
 
         return typesenseFilterString;
@@ -335,7 +350,7 @@ export class SearchRequestAdapter {
     }
   }
 
-  _adaptFilters(instantsearchParams) {
+  _adaptFilters(instantsearchParams, collectionName) {
     const adaptedFilters = [];
 
     // `filters` can be used with the `Configure` widget
@@ -343,7 +358,7 @@ export class SearchRequestAdapter {
     if (instantsearchParams.filters) {
       adaptedFilters.push(instantsearchParams.filters);
     }
-    adaptedFilters.push(this._adaptFacetFilters(instantsearchParams.facetFilters));
+    adaptedFilters.push(this._adaptFacetFilters(instantsearchParams.facetFilters, collectionName));
     adaptedFilters.push(this._adaptNumericFilters(instantsearchParams.numericFilters));
     adaptedFilters.push(this._adaptGeoFilter(instantsearchParams));
 
@@ -400,7 +415,7 @@ export class SearchRequestAdapter {
       q: params.query === "" || params.query === undefined ? "*" : params.query,
       facet_by:
         snakeCasedAdditionalSearchParameters.facet_by || this._adaptFacetBy(params.facets, adaptedCollectionName),
-      filter_by: this._adaptFilters(params) || snakeCasedAdditionalSearchParameters.filter_by,
+      filter_by: this._adaptFilters(params, adaptedCollectionName) || snakeCasedAdditionalSearchParameters.filter_by,
       sort_by: adaptedSortBy || snakeCasedAdditionalSearchParameters.sort_by,
       max_facet_values: params.maxValuesPerFacet,
       page: (params.page || 0) + 1,

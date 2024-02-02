@@ -70,6 +70,50 @@ describe("SearchRequestAdapter", () => {
         );
       });
     });
+    describe("when exactMatch is disabled", () => {
+      it("adapts the given facet filters, given a configuration called filterByOptions ", () => {
+        let subject = new SearchRequestAdapter([], null, {
+          filterByOptions: {
+            field1: { exactMatch: false },
+          },
+          collectionSpecificFilterByOptions: {
+            collection1: {
+              field2: { exactMatch: false },
+              field4: { exactMatch: false },
+            },
+          },
+        });
+
+        let result = subject._adaptFacetFilters(
+          [["field1:value1", "field1:value2"], "field2:value3", "field3:value4", "field4:-value5", "field4:-value6"],
+          "collection1"
+        );
+        expect(result).toEqual(
+          "field1:[`value1`,`value2`] && field2:[`value3`] && field3:=[`value4`] && field4:![`value5`] && field4:![`value6`]"
+        );
+
+        // Check collection specific settings in more detail
+        subject = new SearchRequestAdapter([], null, {
+          filterByOptions: {
+            field1: { exactMatch: false },
+          },
+          collectionSpecificFilterByOptions: {
+            collection1: {
+              field2: { exactMatch: false },
+              field4: { exactMatch: false },
+            },
+          },
+        });
+
+        result = subject._adaptFacetFilters(
+          [["field1:value1", "field1:value2"], "field2:value3", "field3:value4", "field4:-value5", "field4:-value6"],
+          "collection2"
+        );
+        expect(result).toEqual(
+          "field1:[`value1`,`value2`] && field2:=[`value3`] && field3:=[`value4`] && field4:!=[`value5`] && field4:!=[`value6`]"
+        );
+      });
+    });
   });
 
   describe(".adaptFacetBy", () => {

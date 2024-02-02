@@ -2208,7 +2208,9 @@ var Configuration = /*#__PURE__*/function () {
         _this = this,
         _options$flattenGroup,
         _options$facetByOptio,
-        _options$collectionSp2;
+        _options$filterByOpti,
+        _options$collectionSp2,
+        _options$collectionSp3;
 
     var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
@@ -2247,7 +2249,9 @@ var Configuration = /*#__PURE__*/function () {
     this.renderingContent = options.renderingContent;
     this.flattenGroupedHits = (_options$flattenGroup = options.flattenGroupedHits) !== null && _options$flattenGroup !== void 0 ? _options$flattenGroup : true;
     this.facetByOptions = (_options$facetByOptio = options.facetByOptions) !== null && _options$facetByOptio !== void 0 ? _options$facetByOptio : {};
+    this.filterByOptions = (_options$filterByOpti = options.filterByOptions) !== null && _options$filterByOpti !== void 0 ? _options$filterByOpti : {};
     this.collectionSpecificFacetByOptions = (_options$collectionSp2 = options.collectionSpecificFacetByOptions) !== null && _options$collectionSp2 !== void 0 ? _options$collectionSp2 : {};
+    this.collectionSpecificFilterByOptions = (_options$collectionSp3 = options.collectionSpecificFilterByOptions) !== null && _options$collectionSp3 !== void 0 ? _options$collectionSp3 : {};
   }
 
   (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(Configuration, [{
@@ -2378,8 +2382,19 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
   }
 
   (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_3__["default"])(SearchRequestAdapter, [{
+    key: "_shouldUseExactMatchForField",
+    value: function _shouldUseExactMatchForField(fieldName, collectionName) {
+      var _this$configuration$c, _this$configuration$f;
+
+      if (((_this$configuration$c = this.configuration.collectionSpecificFilterByOptions) === null || _this$configuration$c === void 0 || (_this$configuration$c = _this$configuration$c[collectionName]) === null || _this$configuration$c === void 0 || (_this$configuration$c = _this$configuration$c[fieldName]) === null || _this$configuration$c === void 0 ? void 0 : _this$configuration$c.exactMatch) === false || ((_this$configuration$f = this.configuration.filterByOptions) === null || _this$configuration$f === void 0 || (_this$configuration$f = _this$configuration$f[fieldName]) === null || _this$configuration$f === void 0 ? void 0 : _this$configuration$f.exactMatch) === false) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }, {
     key: "_adaptFacetFilters",
-    value: function _adaptFacetFilters(facetFilters) {
+    value: function _adaptFacetFilters(facetFilters, collectionName) {
       var _this = this;
 
       var adaptedResult = "";
@@ -2455,13 +2470,16 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
           var typesenseFilterStringComponents = [];
 
           if (includedFieldValues.length > 0) {
-            typesenseFilterStringComponents.push("".concat(fieldName, ":=[").concat(includedFieldValues.map(function (v) {
+            var operator = _this._shouldUseExactMatchForField(fieldName, collectionName) ? ":=" : ":";
+            typesenseFilterStringComponents.push("".concat(fieldName).concat(operator, "[").concat(includedFieldValues.map(function (v) {
               return _this._escapeFacetValue(v);
             }).join(","), "]"));
           }
 
           if (excludedFieldValues.length > 0) {
-            typesenseFilterStringComponents.push("".concat(fieldName, ":!=[").concat(excludedFieldValues.map(function (v) {
+            var _operator = _this._shouldUseExactMatchForField(fieldName, collectionName) ? ":!=" : ":!";
+
+            typesenseFilterStringComponents.push("".concat(fieldName).concat(_operator, "[").concat(excludedFieldValues.map(function (v) {
               return _this._escapeFacetValue(v);
             }).join(","), "]"));
           }
@@ -2482,9 +2500,13 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
           var _typesenseFilterString;
 
           if (fieldValue.startsWith("-") && !_this._isNumber(fieldValue)) {
-            _typesenseFilterString = "".concat(_fieldName, ":!=[").concat(_this._escapeFacetValue(fieldValue.substring(1)), "]");
+            var _operator2 = _this._shouldUseExactMatchForField(_fieldName, collectionName) ? ":!=" : ":!";
+
+            _typesenseFilterString = "".concat(_fieldName).concat(_operator2, "[").concat(_this._escapeFacetValue(fieldValue.substring(1)), "]");
           } else {
-            _typesenseFilterString = "".concat(_fieldName, ":=[").concat(_this._escapeFacetValue(fieldValue), "]");
+            var _operator3 = _this._shouldUseExactMatchForField(_fieldName, collectionName) ? ":=" : ":";
+
+            _typesenseFilterString = "".concat(_fieldName).concat(_operator3, "[").concat(_this._escapeFacetValue(fieldValue), "]");
           }
 
           return _typesenseFilterString;
@@ -2497,12 +2519,12 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
   }, {
     key: "_parseFacetFilter",
     value: function _parseFacetFilter(facetFilter) {
-      var _this$configuration$f;
+      var _this$configuration$f2;
 
       var filterStringMatchingRegex, facetFilterMatches, fieldName, fieldValue; // This is helpful when the filter looks like `facetName:with:colons:facetValue:with:colons` and the default regex above parses the filter as `facetName:with:colons:facetValue:with` and `colon`.
       // So if a facetValue can contain a colon, we ask users to pass in all possible facetable fields in `facetableFieldsWithSpecialCharacters` when instantiating the adapter, so we can explicitly match against that.
 
-      if (((_this$configuration$f = this.configuration.facetableFieldsWithSpecialCharacters) === null || _this$configuration$f === void 0 ? void 0 : _this$configuration$f.length) > 0) {
+      if (((_this$configuration$f2 = this.configuration.facetableFieldsWithSpecialCharacters) === null || _this$configuration$f2 === void 0 ? void 0 : _this$configuration$f2.length) > 0) {
         // escape any Regex special characters, source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
         var sanitizedFacetableFieldsWithSpecialCharacters = this.configuration.facetableFieldsWithSpecialCharacters.flat().map(function (f) {
           return f.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -2615,13 +2637,13 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
   }, {
     key: "_parseNumericFilter",
     value: function _parseNumericFilter(numericFilter) {
-      var _this$configuration$f2;
+      var _this$configuration$f3;
 
       var filterStringMatchingRegex, numericFilterMatches;
       var fieldName, operator, fieldValue; // The following is helpful when the facetName has special characters like > and the default regex fails to parse it properly.
       // So we ask users to pass in facetable fields in `facetableFieldsWithSpecialCharactersWithSpecialCharacters` when instantiating the adapter, so we can explicitly match against that.
 
-      if (((_this$configuration$f2 = this.configuration.facetableFieldsWithSpecialCharacters) === null || _this$configuration$f2 === void 0 ? void 0 : _this$configuration$f2.length) > 0) {
+      if (((_this$configuration$f3 = this.configuration.facetableFieldsWithSpecialCharacters) === null || _this$configuration$f3 === void 0 ? void 0 : _this$configuration$f3.length) > 0) {
         // escape any Regex special characters, source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
         var sanitizedFacetableFieldsWithSpecialCharacters = this.configuration.facetableFieldsWithSpecialCharacters.map(function (f) {
           return f.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -2727,7 +2749,7 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
     }
   }, {
     key: "_adaptFilters",
-    value: function _adaptFilters(instantsearchParams) {
+    value: function _adaptFilters(instantsearchParams, collectionName) {
       var adaptedFilters = []; // `filters` can be used with the `Configure` widget
       // However the format needs to be in the Typesense filter_by format, instead of Algolia filter format.
 
@@ -2735,7 +2757,7 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
         adaptedFilters.push(instantsearchParams.filters);
       }
 
-      adaptedFilters.push(this._adaptFacetFilters(instantsearchParams.facetFilters));
+      adaptedFilters.push(this._adaptFacetFilters(instantsearchParams.facetFilters, collectionName));
       adaptedFilters.push(this._adaptNumericFilters(instantsearchParams.numericFilters));
       adaptedFilters.push(this._adaptGeoFilter(instantsearchParams));
       return adaptedFilters.filter(function (filter) {
@@ -2807,7 +2829,7 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
         collection: adaptedCollectionName,
         q: params.query === "" || params.query === undefined ? "*" : params.query,
         facet_by: snakeCasedAdditionalSearchParameters.facet_by || this._adaptFacetBy(params.facets, adaptedCollectionName),
-        filter_by: this._adaptFilters(params) || snakeCasedAdditionalSearchParameters.filter_by,
+        filter_by: this._adaptFilters(params, adaptedCollectionName) || snakeCasedAdditionalSearchParameters.filter_by,
         sort_by: adaptedSortBy || snakeCasedAdditionalSearchParameters.sort_by,
         max_facet_values: params.maxValuesPerFacet,
         page: (params.page || 0) + 1

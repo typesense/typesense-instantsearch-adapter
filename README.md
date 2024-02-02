@@ -448,7 +448,7 @@ Read more about all available options for `renderingContent` in [Algolia's docum
 
 > Available as of typesense-instantsearch-adapter `2.8.0-1` and Typesense Server `v0.26.0.rc25`
 
-The `facet_by` parameter is managed by InstantSearch internally when you use the various filter widget.
+The `facet_by` parameter is managed by InstantSearch internally when you use the various filter widgets.
 
 But if you need to pass custom options to the `facet_by` parameter (eg: server-side sort options), then you can use the `facetByOptions` parameter as shown below:
 
@@ -479,6 +479,41 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
 ```
 
 Note that for sorting in refinementLists, in addition to sorting on the Typesense Server-side, you'd also need to pass the [`sortBy`](https://www.algolia.com/doc/api-reference/widgets/refinement-list/js/#widget-param-sortby) parameter to the refinementList widget to also sort the results appropriately on the client-side.
+
+### Setting `filter_by` options
+
+> Available as of typesense-instantsearch-adapter `2.8.0-5`
+
+The `filter_by` parameter is managed by InstantSearch internally when you use the various filter widgets.
+
+By default, the adapter uses exact filtering (`filter_by: field:=value`) when sending the queries to Typesense.
+If you need to configure the adapter to use `:` (non-exact word-level filtering - `filter_by: field:value`), you want to instantiate the adapter using the `filterByOptions` configuration:
+
+```js
+const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
+  server: {
+    apiKey: "xyz",
+    nodes: [
+      {
+        host: "localhost",
+        port: "8108",
+        path: "/",
+        protocol: "http",
+      },
+    ],
+  },
+  filterByOptions: {
+    brand: { exactMatch: false }, // <========== Add this to do non-exact word-level filtering
+    category: { exactMatch: false },
+  },
+  collectionSpecificFacetByOptions: {
+    collection1: {
+      brand: { exactMatch: false },
+    },
+  }, // <======= Use this parameter if multiple collections share the same field names, and you want to use different options for each field. This will override filterByOptions for that particular collection.
+  additionalSearchParameters,
+});
+```
 
 ### Grouped Hits
 

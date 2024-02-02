@@ -54,7 +54,9 @@ export class Configuration {
     this.renderingContent = options.renderingContent;
     this.flattenGroupedHits = options.flattenGroupedHits ?? true;
     this.facetByOptions = options.facetByOptions ?? {};
+    this.filterByOptions = options.filterByOptions ?? {};
     this.collectionSpecificFacetByOptions = options.collectionSpecificFacetByOptions ?? {};
+    this.collectionSpecificFilterByOptions = options.collectionSpecificFilterByOptions ?? {};
   }
 
   validate() {
