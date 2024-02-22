@@ -332,7 +332,6 @@ export class SearchResponseAdapter {
       ...(Object.keys(adaptedRenderingContent).length > 0 ? { renderingContent: adaptedRenderingContent } : null),
     };
 
-    // console.log(adaptedResult);
     return adaptedResult;
   }
 }

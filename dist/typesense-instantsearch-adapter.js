@@ -2749,7 +2749,8 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
     }
   }, {
     key: "_adaptFilters",
-    value: function _adaptFilters(instantsearchParams, collectionName) {
+    value: function _adaptFilters(instantsearchParams, collectionName, filterBy) {
+      console.log("adapt filters", instantsearchParams, collectionName);
       var adaptedFilters = []; // `filters` can be used with the `Configure` widget
       // However the format needs to be in the Typesense filter_by format, instead of Algolia filter format.
 
@@ -2757,12 +2758,15 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
         adaptedFilters.push(instantsearchParams.filters);
       }
 
+      if (filterBy) adaptedFilters.push(filterBy);
       adaptedFilters.push(this._adaptFacetFilters(instantsearchParams.facetFilters, collectionName));
       adaptedFilters.push(this._adaptNumericFilters(instantsearchParams.numericFilters));
       adaptedFilters.push(this._adaptGeoFilter(instantsearchParams));
-      return adaptedFilters.filter(function (filter) {
+      var res = adaptedFilters.filter(function (filter) {
         return filter && filter !== "";
       }).join(" && ");
+      console.log("Res", res);
+      return res;
     }
   }, {
     key: "_adaptIndexName",
@@ -2825,11 +2829,12 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
 
       var adaptedSortBy = this._adaptSortBy(indexName);
 
+      console.log("typesenseSearchPArams", typesenseSearchParams, adaptedCollectionName, params);
       Object.assign(typesenseSearchParams, {
         collection: adaptedCollectionName,
         q: params.query === "" || params.query === undefined ? "*" : params.query,
         facet_by: snakeCasedAdditionalSearchParameters.facet_by || this._adaptFacetBy(params.facets, adaptedCollectionName),
-        filter_by: this._adaptFilters(params, adaptedCollectionName) || snakeCasedAdditionalSearchParameters.filter_by,
+        filter_by: this._adaptFilters(params, adaptedCollectionName, snakeCasedAdditionalSearchParameters.filter_by) || snakeCasedAdditionalSearchParameters.filter_by,
         sort_by: adaptedSortBy || snakeCasedAdditionalSearchParameters.sort_by,
         max_facet_values: params.maxValuesPerFacet,
         page: (params.page || 0) + 1
@@ -7910,10 +7915,11 @@ var TypesenseInstantsearchAdapter = /*#__PURE__*/function () {
           while (1) switch (_context.prev = _context.next) {
             case 0:
               _context.prev = 0;
-              _context.next = 3;
+              console.log("request", instantsearchRequests);
+              _context.next = 4;
               return this._adaptAndPerformTypesenseRequest(instantsearchRequests);
 
-            case 3:
+            case 4:
               typesenseResponse = _context.sent;
               adaptedResponses = typesenseResponse.results.map(function (typesenseResult, index) {
                 _this2._validateTypesenseResult(typesenseResult);
@@ -7925,17 +7931,17 @@ var TypesenseInstantsearchAdapter = /*#__PURE__*/function () {
                 results: adaptedResponses
               });
 
-            case 8:
-              _context.prev = 8;
+            case 9:
+              _context.prev = 9;
               _context.t0 = _context["catch"](0);
               console.error(_context.t0);
               throw _context.t0;
 
-            case 12:
+            case 13:
             case "end":
               return _context.stop();
           }
-        }, _callee, this, [[0, 8]]);
+        }, _callee, this, [[0, 9]]);
       }));
 
       function searchTypesenseAndAdapt(_x) {
