@@ -2512,8 +2512,7 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
           return _typesenseFilterString;
         }
       });
-      adaptedResult = transformedTypesenseFilters.join(" && "); // console.log(`${JSON.stringify(facetFilters)} => ${adaptedResult}`);
-
+      adaptedResult = transformedTypesenseFilters.join(" && ");
       return adaptedResult;
     }
   }, {
@@ -2750,7 +2749,6 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
   }, {
     key: "_adaptFilters",
     value: function _adaptFilters(instantsearchParams, collectionName, filterBy) {
-      console.log("adapt filters", instantsearchParams, collectionName);
       var adaptedFilters = []; // `filters` can be used with the `Configure` widget
       // However the format needs to be in the Typesense filter_by format, instead of Algolia filter format.
 
@@ -2765,7 +2763,6 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
       var res = adaptedFilters.filter(function (filter) {
         return filter && filter !== "";
       }).join(" && ");
-      console.log("Res", res);
       return res;
     }
   }, {
@@ -2829,7 +2826,6 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
 
       var adaptedSortBy = this._adaptSortBy(indexName);
 
-      console.log("typesenseSearchPArams", typesenseSearchParams, adaptedCollectionName, params);
       Object.assign(typesenseSearchParams, {
         collection: adaptedCollectionName,
         q: params.query === "" || params.query === undefined ? "*" : params.query,
@@ -2852,9 +2848,7 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
 
       if (params.typesenseVectorQuery) {
         typesenseSearchParams.vector_query = params.typesenseVectorQuery;
-      } // console.log(params);
-      // console.log(typesenseSearchParams);
-      // Filter out empty or null values, so we don't accidentally override values set in presets
+      } // Filter out empty or null values, so we don't accidentally override values set in presets
       // eslint-disable-next-line no-unused-vars
 
 
@@ -2881,7 +2875,6 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
-              // console.log(this.instantsearchRequests);
               searches = this.instantsearchRequests.map(function (instantsearchRequest) {
                 return _this4._buildSearchParameters(instantsearchRequest);
               });
@@ -3284,8 +3277,7 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
         processingTimeMS: this.typesenseResponse.search_time_ms
       }, Object.keys(adaptedRenderingContent).length > 0 ? {
         renderingContent: adaptedRenderingContent
-      } : null); // console.log(adaptedResult);
-
+      } : null);
 
       return adaptedResult;
     }
@@ -7915,11 +7907,10 @@ var TypesenseInstantsearchAdapter = /*#__PURE__*/function () {
           while (1) switch (_context.prev = _context.next) {
             case 0:
               _context.prev = 0;
-              console.log("request", instantsearchRequests);
-              _context.next = 4;
+              _context.next = 3;
               return this._adaptAndPerformTypesenseRequest(instantsearchRequests);
 
-            case 4:
+            case 3:
               typesenseResponse = _context.sent;
               adaptedResponses = typesenseResponse.results.map(function (typesenseResult, index) {
                 _this2._validateTypesenseResult(typesenseResult);
@@ -7931,17 +7922,17 @@ var TypesenseInstantsearchAdapter = /*#__PURE__*/function () {
                 results: adaptedResponses
               });
 
-            case 9:
-              _context.prev = 9;
+            case 8:
+              _context.prev = 8;
               _context.t0 = _context["catch"](0);
               console.error(_context.t0);
               throw _context.t0;
 
-            case 13:
+            case 12:
             case "end":
               return _context.stop();
           }
-        }, _callee, this, [[0, 9]]);
+        }, _callee, this, [[0, 8]]);
       }));
 
       function searchTypesenseAndAdapt(_x) {
