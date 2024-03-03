@@ -2512,8 +2512,7 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
           return _typesenseFilterString;
         }
       });
-      adaptedResult = transformedTypesenseFilters.join(" && "); // console.log(`${JSON.stringify(facetFilters)} => ${adaptedResult}`);
-
+      adaptedResult = transformedTypesenseFilters.join(" && ");
       return adaptedResult;
     }
   }, {
@@ -2749,7 +2748,7 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
     }
   }, {
     key: "_adaptFilters",
-    value: function _adaptFilters(instantsearchParams, collectionName) {
+    value: function _adaptFilters(instantsearchParams, collectionName, filterBy) {
       var adaptedFilters = []; // `filters` can be used with the `Configure` widget
       // However the format needs to be in the Typesense filter_by format, instead of Algolia filter format.
 
@@ -2757,12 +2756,14 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
         adaptedFilters.push(instantsearchParams.filters);
       }
 
+      if (filterBy) adaptedFilters.push(filterBy);
       adaptedFilters.push(this._adaptFacetFilters(instantsearchParams.facetFilters, collectionName));
       adaptedFilters.push(this._adaptNumericFilters(instantsearchParams.numericFilters));
       adaptedFilters.push(this._adaptGeoFilter(instantsearchParams));
-      return adaptedFilters.filter(function (filter) {
+      var res = adaptedFilters.filter(function (filter) {
         return filter && filter !== "";
       }).join(" && ");
+      return res;
     }
   }, {
     key: "_adaptIndexName",
@@ -2829,7 +2830,7 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
         collection: adaptedCollectionName,
         q: params.query === "" || params.query === undefined ? "*" : params.query,
         facet_by: snakeCasedAdditionalSearchParameters.facet_by || this._adaptFacetBy(params.facets, adaptedCollectionName),
-        filter_by: this._adaptFilters(params, adaptedCollectionName) || snakeCasedAdditionalSearchParameters.filter_by,
+        filter_by: this._adaptFilters(params, adaptedCollectionName, snakeCasedAdditionalSearchParameters.filter_by) || snakeCasedAdditionalSearchParameters.filter_by,
         sort_by: adaptedSortBy || snakeCasedAdditionalSearchParameters.sort_by,
         max_facet_values: params.maxValuesPerFacet,
         page: (params.page || 0) + 1
@@ -2847,9 +2848,7 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
 
       if (params.typesenseVectorQuery) {
         typesenseSearchParams.vector_query = params.typesenseVectorQuery;
-      } // console.log(params);
-      // console.log(typesenseSearchParams);
-      // Filter out empty or null values, so we don't accidentally override values set in presets
+      } // Filter out empty or null values, so we don't accidentally override values set in presets
       // eslint-disable-next-line no-unused-vars
 
 
@@ -2876,7 +2875,6 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_4___default().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
-              // console.log(this.instantsearchRequests);
               searches = this.instantsearchRequests.map(function (instantsearchRequest) {
                 return _this4._buildSearchParameters(instantsearchRequest);
               });
@@ -3279,8 +3277,7 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
         processingTimeMS: this.typesenseResponse.search_time_ms
       }, Object.keys(adaptedRenderingContent).length > 0 ? {
         renderingContent: adaptedRenderingContent
-      } : null); // console.log(adaptedResult);
-
+      } : null);
 
       return adaptedResult;
     }

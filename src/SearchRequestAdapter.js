@@ -144,8 +144,6 @@ export class SearchRequestAdapter {
     });
 
     adaptedResult = transformedTypesenseFilters.join(" && ");
-    // console.log(`${JSON.stringify(facetFilters)} => ${adaptedResult}`);
-
     return adaptedResult;
   }
 
@@ -350,7 +348,7 @@ export class SearchRequestAdapter {
     }
   }
 
-  _adaptFilters(instantsearchParams, collectionName) {
+  _adaptFilters(instantsearchParams, collectionName, filterBy) {
     const adaptedFilters = [];
 
     // `filters` can be used with the `Configure` widget
@@ -358,11 +356,13 @@ export class SearchRequestAdapter {
     if (instantsearchParams.filters) {
       adaptedFilters.push(instantsearchParams.filters);
     }
+    if (filterBy) adaptedFilters.push(filterBy);
     adaptedFilters.push(this._adaptFacetFilters(instantsearchParams.facetFilters, collectionName));
     adaptedFilters.push(this._adaptNumericFilters(instantsearchParams.numericFilters));
     adaptedFilters.push(this._adaptGeoFilter(instantsearchParams));
 
-    return adaptedFilters.filter((filter) => filter && filter !== "").join(" && ");
+    const res = adaptedFilters.filter((filter) => filter && filter !== "").join(" && ");
+    return res;
   }
 
   _adaptIndexName(indexName) {
@@ -415,7 +415,10 @@ export class SearchRequestAdapter {
       q: params.query === "" || params.query === undefined ? "*" : params.query,
       facet_by:
         snakeCasedAdditionalSearchParameters.facet_by || this._adaptFacetBy(params.facets, adaptedCollectionName),
-      filter_by: this._adaptFilters(params, adaptedCollectionName) || snakeCasedAdditionalSearchParameters.filter_by,
+      filter_by:
+        this._adaptFilters(params, adaptedCollectionName, snakeCasedAdditionalSearchParameters.filter_by) ||
+        snakeCasedAdditionalSearchParameters.filter_by,
+
       sort_by: adaptedSortBy || snakeCasedAdditionalSearchParameters.sort_by,
       max_facet_values: params.maxValuesPerFacet,
       page: (params.page || 0) + 1,
@@ -435,9 +438,6 @@ export class SearchRequestAdapter {
       typesenseSearchParams.vector_query = params.typesenseVectorQuery;
     }
 
-    // console.log(params);
-    // console.log(typesenseSearchParams);
-
     // Filter out empty or null values, so we don't accidentally override values set in presets
     // eslint-disable-next-line no-unused-vars
     return Object.fromEntries(Object.entries(typesenseSearchParams).filter(([_, v]) => v != null && v !== ""));
@@ -451,8 +451,6 @@ export class SearchRequestAdapter {
   }
 
   async request() {
-    // console.log(this.instantsearchRequests);
-
     const searches = this.instantsearchRequests.map((instantsearchRequest) =>
       this._buildSearchParameters(instantsearchRequest)
     );
