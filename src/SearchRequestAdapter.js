@@ -435,6 +435,14 @@ export class SearchRequestAdapter {
       typesenseSearchParams.vector_query = params.typesenseVectorQuery;
     }
 
+    // Allow for conditional disabling of overrides, for particular sort orders
+    let sortByOption =
+      this.configuration.collectionSpecificSortByOptions?.[adaptedCollectionName]?.[typesenseSearchParams["sort_by"]] ||
+      this.configuration.sortByOptions?.[typesenseSearchParams["sort_by"]];
+    if (sortByOption?.["enable_overrides"] != null) {
+      typesenseSearchParams["enable_overrides"] = sortByOption["enable_overrides"];
+    }
+
     // console.log(params);
     // console.log(typesenseSearchParams);
 

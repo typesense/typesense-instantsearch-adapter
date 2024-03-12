@@ -55,8 +55,10 @@ export class Configuration {
     this.flattenGroupedHits = options.flattenGroupedHits ?? true;
     this.facetByOptions = options.facetByOptions ?? {};
     this.filterByOptions = options.filterByOptions ?? {};
+    this.sortByOptions = options.sortByOptions ?? {};
     this.collectionSpecificFacetByOptions = options.collectionSpecificFacetByOptions ?? {};
     this.collectionSpecificFilterByOptions = options.collectionSpecificFilterByOptions ?? {};
+    this.collectionSpecificSortByOptions = options.collectionSpecificSortByOptions ?? {};
   }
 
   validate() {

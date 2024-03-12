@@ -2209,8 +2209,10 @@ var Configuration = /*#__PURE__*/function () {
         _options$flattenGroup,
         _options$facetByOptio,
         _options$filterByOpti,
+        _options$sortByOption,
         _options$collectionSp2,
-        _options$collectionSp3;
+        _options$collectionSp3,
+        _options$collectionSp4;
 
     var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
@@ -2250,8 +2252,10 @@ var Configuration = /*#__PURE__*/function () {
     this.flattenGroupedHits = (_options$flattenGroup = options.flattenGroupedHits) !== null && _options$flattenGroup !== void 0 ? _options$flattenGroup : true;
     this.facetByOptions = (_options$facetByOptio = options.facetByOptions) !== null && _options$facetByOptio !== void 0 ? _options$facetByOptio : {};
     this.filterByOptions = (_options$filterByOpti = options.filterByOptions) !== null && _options$filterByOpti !== void 0 ? _options$filterByOpti : {};
+    this.sortByOptions = (_options$sortByOption = options.sortByOptions) !== null && _options$sortByOption !== void 0 ? _options$sortByOption : {};
     this.collectionSpecificFacetByOptions = (_options$collectionSp2 = options.collectionSpecificFacetByOptions) !== null && _options$collectionSp2 !== void 0 ? _options$collectionSp2 : {};
     this.collectionSpecificFilterByOptions = (_options$collectionSp3 = options.collectionSpecificFilterByOptions) !== null && _options$collectionSp3 !== void 0 ? _options$collectionSp3 : {};
+    this.collectionSpecificSortByOptions = (_options$collectionSp4 = options.collectionSpecificSortByOptions) !== null && _options$collectionSp4 !== void 0 ? _options$collectionSp4 : {};
   }
 
   (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(Configuration, [{
@@ -2794,6 +2798,8 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
   }, {
     key: "_buildSearchParameters",
     value: function _buildSearchParameters(instantsearchRequest) {
+      var _this$configuration$c2, _this$configuration$s;
+
       var params = instantsearchRequest.params;
       var indexName = instantsearchRequest.indexName;
 
@@ -2847,6 +2853,13 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
 
       if (params.typesenseVectorQuery) {
         typesenseSearchParams.vector_query = params.typesenseVectorQuery;
+      } // Allow for conditional disabling of overrides, for particular sort orders
+
+
+      var sortByOption = ((_this$configuration$c2 = this.configuration.collectionSpecificSortByOptions) === null || _this$configuration$c2 === void 0 || (_this$configuration$c2 = _this$configuration$c2[adaptedCollectionName]) === null || _this$configuration$c2 === void 0 ? void 0 : _this$configuration$c2[typesenseSearchParams["sort_by"]]) || ((_this$configuration$s = this.configuration.sortByOptions) === null || _this$configuration$s === void 0 ? void 0 : _this$configuration$s[typesenseSearchParams["sort_by"]]);
+
+      if ((sortByOption === null || sortByOption === void 0 ? void 0 : sortByOption["enable_overrides"]) != null) {
+        typesenseSearchParams["enable_overrides"] = sortByOption["enable_overrides"];
       } // console.log(params);
       // console.log(typesenseSearchParams);
       // Filter out empty or null values, so we don't accidentally override values set in presets

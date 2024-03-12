@@ -91,6 +91,10 @@ interface BaseAdapterOptions {
   flattenGroupedHits?: boolean;
   facetByOptions?: object;
   collectionSpecificFacetByOptions?: object;
+  filterByOptions?: object;
+  collectionSpecificFilterByOptions?: object;
+  sortByOptions?: object;
+  collectionSpecificSortByOptions?: object;
 }
 
 interface CollectionSearchParameters {

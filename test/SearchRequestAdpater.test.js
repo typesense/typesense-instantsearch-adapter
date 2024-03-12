@@ -1,6 +1,83 @@
 import { SearchRequestAdapter } from "../src/SearchRequestAdapter";
+import { Configuration } from "../src/Configuration";
 
 describe("SearchRequestAdapter", () => {
+  describe("._buildSearchParameters", () => {
+    describe("when sortByOptions are provided", () => {
+      it("adapts the given search parameters ", () => {
+        // With no sort order
+        let subject = new SearchRequestAdapter(
+          [],
+          null,
+          new Configuration({
+            sortByOptions: {
+              "field1:desc": { enable_overrides: false },
+            },
+            collectionSpecificSortByOptions: {
+              collection2: {
+                "field2:asc": { enable_overrides: false },
+              },
+            },
+          })
+        );
+        let result = subject._buildSearchParameters({ indexName: "collection1", params: {} });
+        expect(result).toEqual({
+          collection: "collection1",
+          page: 1,
+          q: "*",
+        });
+
+        // With a matching sort order
+        subject = new SearchRequestAdapter(
+          [],
+          null,
+          new Configuration({
+            sortByOptions: {
+              "field1:desc": { enable_overrides: false },
+            },
+            collectionSpecificSortByOptions: {
+              collection2: {
+                "field2:asc": { enable_overrides: false },
+              },
+            },
+          })
+        );
+        result = subject._buildSearchParameters({ indexName: "collection1/sort/field1:desc", params: {} });
+        expect(result).toEqual({
+          collection: "collection1",
+          page: 1,
+          q: "*",
+          sort_by: "field1:desc",
+          enable_overrides: false,
+        });
+
+        // With a matching sort order, with federated search
+        subject = new SearchRequestAdapter(
+          [],
+          null,
+          new Configuration({
+            sortByOptions: {
+              "field1:desc": { enable_overrides: false },
+            },
+            collectionSpecificSortByOptions: {
+              collection2: {
+                "field2:asc": { enable_overrides: false },
+              },
+            },
+          })
+        );
+        result = subject._buildSearchParameters({ indexName: "collection2/sort/field2:asc", params: {} });
+        expect(result).toEqual({
+          collection: "collection2",
+          page: 1,
+          q: "*",
+          sort_by: "field2:asc",
+          enable_overrides: false,
+        });
+      });
+    });
+  });
+
   describe("._adaptNumericFilters", () => {
     describe("when the fieldName doesn't have any numeric operator special characters", () => {
       it("adapts the given numeric filters", () => {
