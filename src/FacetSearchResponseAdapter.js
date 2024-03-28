@@ -17,7 +17,7 @@ export class FacetSearchResponseAdapter {
       highlighted: this._adaptHighlightTag(
         facetCount.highlighted,
         this.instantsearchRequest.params.highlightPreTag,
-        this.instantsearchRequest.params.highlightPostTag
+        this.instantsearchRequest.params.highlightPostTag,
       ),
       count: facetCount.count,
     }));

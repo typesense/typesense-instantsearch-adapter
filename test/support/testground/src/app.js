@@ -241,7 +241,7 @@ const renderIndexListItem = ({ hits }) => `
           `<li class="autocomplete-list-item">${instantsearch.highlight({
             attribute: "name",
             hit,
-          })}</li>`
+          })}</li>`,
       )
       .join("")}
   </ol>

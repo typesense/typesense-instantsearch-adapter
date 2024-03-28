@@ -76,8 +76,8 @@ export class SearchRequestAdapter {
         if (Object.keys(intermediateFacetFilters).length > 1) {
           console.error(
             `[Typesense-Instantsearch-Adapter] Typesense does not support cross-field ORs at the moment. The adapter could not OR values between these fields: ${Object.keys(
-              intermediateFacetFilters
-            ).join(",")}`
+              intermediateFacetFilters,
+            ).join(",")}`,
           );
         }
 
@@ -103,20 +103,20 @@ export class SearchRequestAdapter {
             }
             return result;
           },
-          [[], []]
+          [[], []],
         );
 
         const typesenseFilterStringComponents = [];
         if (includedFieldValues.length > 0) {
           const operator = this._shouldUseExactMatchForField(fieldName, collectionName) ? ":=" : ":";
           typesenseFilterStringComponents.push(
-            `${fieldName}${operator}[${includedFieldValues.map((v) => this._escapeFacetValue(v)).join(",")}]`
+            `${fieldName}${operator}[${includedFieldValues.map((v) => this._escapeFacetValue(v)).join(",")}]`,
           );
         }
         if (excludedFieldValues.length > 0) {
           const operator = this._shouldUseExactMatchForField(fieldName, collectionName) ? ":!=" : ":!";
           typesenseFilterStringComponents.push(
-            `${fieldName}${operator}[${excludedFieldValues.map((v) => this._escapeFacetValue(v)).join(",")}]`
+            `${fieldName}${operator}[${excludedFieldValues.map((v) => this._escapeFacetValue(v)).join(",")}]`,
           );
         }
 
@@ -184,7 +184,7 @@ export class SearchRequestAdapter {
 
     if (facetFilterMatches == null) {
       console.error(
-        `[Typesense-Instantsearch-Adapter] Parsing failed for a facet filter \`${facetFilter}\` with the Regex \`${filterStringMatchingRegex}\`. If you have field names with special characters, be sure to add them to a parameter called \`facetableFieldsWithSpecialCharacters\` when instantiating the adapter.`
+        `[Typesense-Instantsearch-Adapter] Parsing failed for a facet filter \`${facetFilter}\` with the Regex \`${filterStringMatchingRegex}\`. If you have field names with special characters, be sure to add them to a parameter called \`facetableFieldsWithSpecialCharacters\` when instantiating the adapter.`,
       );
     } else {
       fieldName = `${facetFilterMatches[1]}${facetFilterMatches[2]}`;
@@ -257,7 +257,7 @@ export class SearchRequestAdapter {
         adaptedFilters.push(`${field}:=${filtersHash[field]["="]}`);
       } else {
         console.warn(
-          `[Typesense-Instantsearch-Adapter] Unsupported operator found ${JSON.stringify(filtersHash[field])}`
+          `[Typesense-Instantsearch-Adapter] Unsupported operator found ${JSON.stringify(filtersHash[field])}`,
         );
       }
     });
@@ -275,10 +275,10 @@ export class SearchRequestAdapter {
     if (this.configuration.facetableFieldsWithSpecialCharacters?.length > 0) {
       // escape any Regex special characters, source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
       const sanitizedFacetableFieldsWithSpecialCharacters = this.configuration.facetableFieldsWithSpecialCharacters.map(
-        (f) => f.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+        (f) => f.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
       );
       filterStringMatchingRegex = new RegExp(
-        `^(${sanitizedFacetableFieldsWithSpecialCharacters.join("|")})(<=|>=|>|<|=)(.*)$`
+        `^(${sanitizedFacetableFieldsWithSpecialCharacters.join("|")})(<=|>=|>|<|=)(.*)$`,
       );
 
       numericFilterMatches = numericFilter.match(filterStringMatchingRegex);
@@ -304,7 +304,7 @@ export class SearchRequestAdapter {
 
     if (numericFilterMatches == null) {
       console.error(
-        `[Typesense-Instantsearch-Adapter] Parsing failed for a numeric filter \`${numericFilter}\` with the Regex \`${filterStringMatchingRegex}\`. If you have field names with special characters, be sure to add them to a parameter called \`facetableFieldsWithSpecialCharacters\` when instantiating the adapter.`
+        `[Typesense-Instantsearch-Adapter] Parsing failed for a numeric filter \`${numericFilter}\` with the Regex \`${filterStringMatchingRegex}\`. If you have field names with special characters, be sure to add them to a parameter called \`facetableFieldsWithSpecialCharacters\` when instantiating the adapter.`,
       );
     } else {
       [, fieldName, operator, fieldValue] = numericFilterMatches;
@@ -334,7 +334,7 @@ export class SearchRequestAdapter {
         throw new Error(
           "[Typesense-Instantsearch-Adapter] In Typesense, geo-filtering around a lat/lng also requires a numerical radius. " +
             "So the `aroundRadius` parameter is required when `aroundLatLng` is used. " +
-            "If you intend to just geo-sort around a lat/long, you want to use the sortBy InstantSearch widget (or a virtual sortBy custom widget)."
+            "If you intend to just geo-sort around a lat/long, you want to use the sortBy InstantSearch widget (or a virtual sortBy custom widget).",
         );
       }
       const adaptedAroundRadius = `${parseFloat(aroundRadius) / 1000} km`; // aroundRadius is in meters
@@ -462,7 +462,7 @@ export class SearchRequestAdapter {
     // console.log(this.instantsearchRequests);
 
     let searches = this.instantsearchRequests.map((instantsearchRequest) =>
-      this._buildSearchParameters(instantsearchRequest)
+      this._buildSearchParameters(instantsearchRequest),
     );
 
     // If this is a conversational search, then move conversation related params to query params

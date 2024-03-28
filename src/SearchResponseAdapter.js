@@ -112,7 +112,7 @@ export class SearchResponseAdapter {
           matchLevel: "none",
           matchedWords: [],
         },
-      }))
+      })),
     );
 
     typesenseHit.highlights.forEach((highlight) => {
@@ -144,7 +144,7 @@ export class SearchResponseAdapter {
               value: this._adaptHighlightTag(
                 `${value[matchedIndices.indexOf(index)]}`,
                 this.instantsearchRequest.params.highlightPreTag,
-                this.instantsearchRequest.params.highlightPostTag
+                this.instantsearchRequest.params.highlightPostTag,
               ),
               matchLevel: matchLevel,
               matchedWords: matchedWords[index],
@@ -172,7 +172,7 @@ export class SearchResponseAdapter {
         result[attribute].value = this._adaptHighlightTag(
           `${value}`,
           this.instantsearchRequest.params.highlightPreTag,
-          this.instantsearchRequest.params.highlightPostTag
+          this.instantsearchRequest.params.highlightPostTag,
         );
       }
     });
@@ -181,7 +181,7 @@ export class SearchResponseAdapter {
   adaptHighlightObject(typesenseHit, result, snippetOrValue) {
     Object.assign(
       result,
-      this._adaptHighlightInObjectValue(typesenseHit.document, typesenseHit.highlight, snippetOrValue)
+      this._adaptHighlightInObjectValue(typesenseHit.document, typesenseHit.highlight, snippetOrValue),
     );
   }
 
@@ -196,13 +196,13 @@ export class SearchResponseAdapter {
           adaptedValue = this._adaptHighlightInArrayValue(
             value,
             highlightObjectValue?.[attribute] ?? [],
-            snippetOrValue
+            snippetOrValue,
           );
         } else if (typeof value === "object") {
           adaptedValue = this._adaptHighlightInObjectValue(
             value,
             highlightObjectValue?.[attribute] ?? {},
-            snippetOrValue
+            snippetOrValue,
           );
         } else {
           adaptedValue = this._adaptHighlightInPrimitiveValue(value, highlightObjectValue?.[attribute], snippetOrValue);
@@ -211,7 +211,7 @@ export class SearchResponseAdapter {
         return {
           [attribute]: adaptedValue,
         };
-      })
+      }),
     );
   }
 
@@ -241,7 +241,7 @@ export class SearchResponseAdapter {
             highlightPrimitiveValue["snippet"]
           }`,
           this.instantsearchRequest.params.highlightPreTag,
-          this.instantsearchRequest.params.highlightPostTag
+          this.instantsearchRequest.params.highlightPostTag,
         ),
         matchLevel: (highlightPrimitiveValue.matched_tokens || []).length > 0 ? "full" : "none",
         matchedWords: highlightPrimitiveValue.matched_tokens || [],
@@ -252,7 +252,7 @@ export class SearchResponseAdapter {
         value: this._adaptHighlightTag(
           `${primitiveValue}`,
           this.instantsearchRequest.params.highlightPreTag,
-          this.instantsearchRequest.params.highlightPostTag
+          this.instantsearchRequest.params.highlightPostTag,
         ),
         matchLevel: "none",
         matchedWords: [],
@@ -306,8 +306,8 @@ export class SearchResponseAdapter {
                 .map((r) => r.facet_counts || [])
                 .flat()
                 .map((fc) => fc["field_name"])
-                .filter((f) => f)
-            )
+                .filter((f) => f),
+            ),
         ),
       ];
     }

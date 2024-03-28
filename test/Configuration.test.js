@@ -125,7 +125,7 @@ describe("Configuration", () => {
 
         expect(consoleWarnMock).toHaveBeenCalledTimes(1);
         expect(consoleWarnMock).toHaveBeenLastCalledWith(
-          expect.stringContaining("Please use snake_cased versions of parameters")
+          expect.stringContaining("Please use snake_cased versions of parameters"),
         );
         consoleWarnMock.mockRestore();
       });
@@ -146,7 +146,7 @@ describe("Configuration", () => {
 
         expect(consoleWarnMock).toHaveBeenCalledTimes(1);
         expect(consoleWarnMock).toHaveBeenLastCalledWith(
-          expect.stringContaining("Please use snake_cased versions of parameters")
+          expect.stringContaining("Please use snake_cased versions of parameters"),
         );
         consoleWarnMock.mockRestore();
       });
@@ -168,7 +168,7 @@ describe("Configuration", () => {
         }).not.toThrow();
         expect(consoleWarnMock).toHaveBeenCalledTimes(1);
         expect(consoleWarnMock).toHaveBeenLastCalledWith(
-          expect.stringContaining("Please use snake_cased versions of parameters")
+          expect.stringContaining("Please use snake_cased versions of parameters"),
         );
         consoleWarnMock.mockRestore();
       });

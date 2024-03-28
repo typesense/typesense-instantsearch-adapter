@@ -614,7 +614,7 @@ const search = instantsearch({
     if (query !== "") {
       // Get embedding for the query
       let response = await fetch(
-        "http://localhost:8000/embedding?" + new URLSearchParams({ q: query }) // <=== Embedding API
+        "http://localhost:8000/embedding?" + new URLSearchParams({ q: query }), // <=== Embedding API
       );
 
       let parsedResponse = await response.json();
@@ -625,7 +625,7 @@ const search = instantsearch({
       helper
         .setQueryParameter(
           "typesenseVectorQuery", // <=== Special parameter that only works in typesense-instantsearch-adapter@2.7.0-3 and above
-          `vectors:([${parsedResponse["embedding"].join(",")}], k:${totalNearestNeighborsToFetch})`
+          `vectors:([${parsedResponse["embedding"].join(",")}], k:${totalNearestNeighborsToFetch})`,
         )
         .setPage(page)
         .search();

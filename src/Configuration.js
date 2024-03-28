@@ -69,7 +69,7 @@ export class Configuration {
     ) {
       console.warn(
         "[typesense-instantsearch-adapter] Please use snake_cased versions of parameters in additionalSearchParameters instead of camelCased parameters. For example: Use query_by instead of queryBy. camelCased parameters will be deprecated in a future version." +
-          " We're making this change so that parameter names are identical to the ones sent to Typesense (which are all snake_cased), and to also keep the types for these parameters in sync with the types defined in typesense-js."
+          " We're making this change so that parameter names are identical to the ones sent to Typesense (which are all snake_cased), and to also keep the types for these parameters in sync with the types defined in typesense-js.",
       );
     }
 
@@ -83,11 +83,11 @@ export class Configuration {
       this.additionalSearchParameters.preset.length === 0 &&
       (Object.keys(this.collectionSpecificSearchParameters).length === 0 ||
         Object.values(this.collectionSpecificSearchParameters).some(
-          (c) => (c.query_by || "").length === 0 && (c.preset || "").length === 0
+          (c) => (c.query_by || "").length === 0 && (c.preset || "").length === 0,
         ))
     ) {
       throw new Error(
-        "[typesense-instantsearch-adapter] Missing parameter: One of additionalSearchParameters.query_by or additionalSearchParameters.preset needs to be set, or all collectionSpecificSearchParameters need to have either .query_by or .preset set."
+        "[typesense-instantsearch-adapter] Missing parameter: One of additionalSearchParameters.query_by or additionalSearchParameters.preset needs to be set, or all collectionSpecificSearchParameters need to have either .query_by or .preset set.",
       );
     }
   }

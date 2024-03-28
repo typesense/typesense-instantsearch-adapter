@@ -28,7 +28,7 @@ export default class TypesenseInstantsearchAdapter {
           typesenseResult,
           instantsearchRequests[index],
           this.configuration,
-          typesenseResponse.results
+          typesenseResponse.results,
         );
         let adaptedResponse = {
           ...responseAdapter.adapt(),
@@ -58,7 +58,7 @@ export default class TypesenseInstantsearchAdapter {
         const responseAdapter = new FacetSearchResponseAdapter(
           typesenseResult,
           instantsearchRequests[index],
-          this.configuration
+          this.configuration,
         );
         return responseAdapter.adapt();
       });

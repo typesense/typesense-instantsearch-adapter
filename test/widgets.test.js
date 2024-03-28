@@ -7,7 +7,8 @@ describe("Instant Search Widgets", () => {
 
   describe("Page", () => {
     it("loads", async () => {
-      await expect(page).toMatch("AT&T");
+      const text = await page.evaluate(() => document.body.innerText);
+      await expect(text).toContain("AT&T");
       return expect(page.title()).resolves.toMatch("testground");
     });
   });

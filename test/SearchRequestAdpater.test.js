@@ -18,7 +18,7 @@ describe("SearchRequestAdapter", () => {
                 "field2:asc": { enable_overrides: false },
               },
             },
-          })
+          }),
         );
         let result = subject._buildSearchParameters({ indexName: "collection1", params: {} });
         expect(result).toEqual({
@@ -40,7 +40,7 @@ describe("SearchRequestAdapter", () => {
                 "field2:asc": { enable_overrides: false },
               },
             },
-          })
+          }),
         );
         result = subject._buildSearchParameters({ indexName: "collection1/sort/field1:desc", params: {} });
         expect(result).toEqual({
@@ -64,7 +64,7 @@ describe("SearchRequestAdapter", () => {
                 "field2:asc": { enable_overrides: false },
               },
             },
-          })
+          }),
         );
         result = subject._buildSearchParameters({ indexName: "collection2/sort/field2:asc", params: {} });
         expect(result).toEqual({
@@ -108,7 +108,7 @@ describe("SearchRequestAdapter", () => {
           "field4>numeric-special=characters:and:colon<=3",
         ]);
         expect(result).toEqual(
-          "field1:=[289..634] && field2:<=5 && field3:>=3 && field4>numeric-special=characters:and:colon:<=3"
+          "field1:=[289..634] && field2:<=5 && field3:>=3 && field4>numeric-special=characters:and:colon:<=3",
         );
       });
     });
@@ -125,7 +125,7 @@ describe("SearchRequestAdapter", () => {
           "field2:with:colons:value4",
         ]);
         expect(result).toEqual(
-          "field1:=[`value1`,`value2`] && field2:with:colons:=[`value3`] && field2:with:colons:=[`value4`]"
+          "field1:=[`value1`,`value2`] && field2:with:colons:=[`value3`] && field2:with:colons:=[`value4`]",
         );
       });
     });
@@ -143,7 +143,7 @@ describe("SearchRequestAdapter", () => {
           "field4:with:colons:value6:with:colon",
         ]);
         expect(result).toEqual(
-          "field1:=[`value1`,`value2`] && field2:with:colons:=[`value3`] && field2:with:colons:=[`value4`] && field3:=[`value5:with:colon`] && field4:with:colons:=[`value6:with:colon`]"
+          "field1:=[`value1`,`value2`] && field2:with:colons:=[`value3`] && field2:with:colons:=[`value4`] && field3:=[`value5:with:colon`] && field4:with:colons:=[`value6:with:colon`]",
         );
       });
     });
@@ -163,10 +163,10 @@ describe("SearchRequestAdapter", () => {
 
         let result = subject._adaptFacetFilters(
           [["field1:value1", "field1:value2"], "field2:value3", "field3:value4", "field4:-value5", "field4:-value6"],
-          "collection1"
+          "collection1",
         );
         expect(result).toEqual(
-          "field1:[`value1`,`value2`] && field2:[`value3`] && field3:=[`value4`] && field4:![`value5`] && field4:![`value6`]"
+          "field1:[`value1`,`value2`] && field2:[`value3`] && field3:=[`value4`] && field4:![`value5`] && field4:![`value6`]",
         );
 
         // Check collection specific settings in more detail
@@ -184,10 +184,10 @@ describe("SearchRequestAdapter", () => {
 
         result = subject._adaptFacetFilters(
           [["field1:value1", "field1:value2"], "field2:value3", "field3:value4", "field4:-value5", "field4:-value6"],
-          "collection2"
+          "collection2",
         );
         expect(result).toEqual(
-          "field1:[`value1`,`value2`] && field2:=[`value3`] && field3:=[`value4`] && field4:!=[`value5`] && field4:!=[`value6`]"
+          "field1:[`value1`,`value2`] && field2:=[`value3`] && field3:=[`value4`] && field4:!=[`value5`] && field4:!=[`value6`]",
         );
       });
     });

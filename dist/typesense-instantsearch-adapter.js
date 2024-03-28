@@ -20,7 +20,7 @@ return /******/ (() => { // webpackBootstrap
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Configuration": () => (/* binding */ Configuration)
+/* harmony export */   Configuration: () => (/* binding */ Configuration)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
 /* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
@@ -92,7 +92,7 @@ var Configuration = /*#__PURE__*/function () {
     this.collectionSpecificFilterByOptions = (_options$collectionSp3 = options.collectionSpecificFilterByOptions) !== null && _options$collectionSp3 !== void 0 ? _options$collectionSp3 : {};
     this.collectionSpecificSortByOptions = (_options$collectionSp4 = options.collectionSpecificSortByOptions) !== null && _options$collectionSp4 !== void 0 ? _options$collectionSp4 : {};
   }
-  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(Configuration, [{
+  return (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(Configuration, [{
     key: "validate",
     value: function validate() {
       // Warn if camelCased parameters are used, suggest using snake_cased parameters instead
@@ -114,7 +114,6 @@ var Configuration = /*#__PURE__*/function () {
       }
     }
   }]);
-  return Configuration;
 }();
 
 /***/ }),
@@ -128,7 +127,7 @@ var Configuration = /*#__PURE__*/function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "FacetSearchResponseAdapter": () => (/* binding */ FacetSearchResponseAdapter)
+/* harmony export */   FacetSearchResponseAdapter: () => (/* binding */ FacetSearchResponseAdapter)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
 /* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
@@ -144,7 +143,7 @@ var FacetSearchResponseAdapter = /*#__PURE__*/function () {
     this.typesenseResponse = typesenseResponse;
     this.instantsearchRequest = instantsearchRequest;
   }
-  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(FacetSearchResponseAdapter, [{
+  return (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(FacetSearchResponseAdapter, [{
     key: "_adaptFacetHits",
     value: function _adaptFacetHits(typesenseFacetCounts) {
       var _this = this;
@@ -172,7 +171,6 @@ var FacetSearchResponseAdapter = /*#__PURE__*/function () {
       return adaptedResult;
     }
   }]);
-  return FacetSearchResponseAdapter;
 }();
 Object.assign(FacetSearchResponseAdapter.prototype, _support_utils__WEBPACK_IMPORTED_MODULE_2__.utils);
 
@@ -187,7 +185,7 @@ Object.assign(FacetSearchResponseAdapter.prototype, _support_utils__WEBPACK_IMPO
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "SearchRequestAdapter": () => (/* binding */ SearchRequestAdapter)
+/* harmony export */   SearchRequestAdapter: () => (/* binding */ SearchRequestAdapter)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
@@ -214,7 +212,7 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
     this.additionalSearchParameters = configuration.additionalSearchParameters;
     this.collectionSpecificSearchParameters = configuration.collectionSpecificSearchParameters;
   }
-  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4__["default"])(SearchRequestAdapter, [{
+  return (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4__["default"])(SearchRequestAdapter, [{
     key: "_shouldUseExactMatchForField",
     value: function _shouldUseExactMatchForField(fieldName, collectionName) {
       var _this$configuration$c, _this$configuration$f;
@@ -728,7 +726,6 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
       return new RegExp("(.*?)(<=|>=|>|<|=)(.*)");
     }
   }]);
-  return SearchRequestAdapter;
 }();
 
 /***/ }),
@@ -742,7 +739,7 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "SearchResponseAdapter": () => (/* binding */ SearchResponseAdapter)
+/* harmony export */   SearchResponseAdapter: () => (/* binding */ SearchResponseAdapter)
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/typeof */ "./node_modules/@babel/runtime/helpers/esm/typeof.js");
 /* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
@@ -759,8 +756,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__["default"])(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__["default"])(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 
 var SearchResponseAdapter = /*#__PURE__*/function () {
   function SearchResponseAdapter(typesenseResponse, instantsearchRequest, configuration) {
@@ -771,7 +768,7 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
     this.configuration = configuration;
     this.allTypesenseResponses = allTypesenseResponses;
   }
-  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_5__["default"])(SearchResponseAdapter, [{
+  return (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_5__["default"])(SearchResponseAdapter, [{
     key: "_adaptGroupedHits",
     value: function _adaptGroupedHits(typesenseGroupedHits) {
       var _this = this;
@@ -1071,7 +1068,6 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
       return adaptedResult;
     }
   }]);
-  return SearchResponseAdapter;
 }();
 Object.assign(SearchResponseAdapter.prototype, _support_utils__WEBPACK_IMPORTED_MODULE_6__.utils);
 
@@ -1086,7 +1082,7 @@ Object.assign(SearchResponseAdapter.prototype, _support_utils__WEBPACK_IMPORTED_
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "utils": () => (/* binding */ utils)
+/* harmony export */   utils: () => (/* binding */ utils)
 /* harmony export */ });
 var utils = {
   _adaptHighlightTag: function _adaptHighlightTag(value, highlightPreTag, highlightPostTag) {
@@ -9535,8 +9531,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var _excluded = ["results"];
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1__["default"])(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1__["default"])(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 
 
 
@@ -9559,7 +9555,7 @@ var TypesenseInstantsearchAdapter = /*#__PURE__*/function () {
       }
     };
   }
-  (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4__["default"])(TypesenseInstantsearchAdapter, [{
+  return (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4__["default"])(TypesenseInstantsearchAdapter, [{
     key: "searchTypesenseAndAdapt",
     value: function () {
       var _searchTypesenseAndAdapt = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5___default().mark(function _callee(instantsearchRequests) {
@@ -9688,7 +9684,6 @@ var TypesenseInstantsearchAdapter = /*#__PURE__*/function () {
       }
     }
   }]);
-  return TypesenseInstantsearchAdapter;
 }();
 
 })();

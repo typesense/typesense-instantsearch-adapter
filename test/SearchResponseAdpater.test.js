@@ -151,7 +151,7 @@ describe("SearchResponseAdapter", () => {
               highlightPostTag: "</mark>",
             },
           },
-          new Configuration()
+          new Configuration(),
         );
         const typesenseHit = typesenseResponse.results[0].hits[0];
 
@@ -218,7 +218,7 @@ describe("SearchResponseAdapter", () => {
               highlightPostTag: "</mark>",
             },
           },
-          new Configuration()
+          new Configuration(),
         );
         const typesenseHit = typesenseResponse.results[0].hits[0];
 
@@ -288,7 +288,7 @@ describe("SearchResponseAdapter", () => {
                 highlightPostTag: "</mark>",
               },
             },
-            {}
+            {},
           );
 
           const result = subject.adapt();
@@ -314,7 +314,7 @@ describe("SearchResponseAdapter", () => {
               },
             },
             {},
-            typesenseResponse["results"]
+            typesenseResponse["results"],
           );
 
           const result = subject.adapt();
@@ -347,7 +347,7 @@ describe("SearchResponseAdapter", () => {
                 },
               },
             },
-          }
+          },
         );
 
         const result = subject.adapt();
@@ -387,7 +387,7 @@ describe("SearchResponseAdapter", () => {
                 },
               },
             },
-          }
+          },
         );
 
         const result = subject.adapt();
@@ -418,7 +418,7 @@ describe("SearchResponseAdapter", () => {
               highlightPostTag: "</mark>",
             },
           },
-          { flattenGroupedHits: false }
+          { flattenGroupedHits: false },
         );
         const typesenseGroupedHits = typesenseResponse.results[0].grouped_hits;
 
@@ -441,7 +441,7 @@ describe("SearchResponseAdapter", () => {
               highlightPostTag: "</mark>",
             },
           },
-          { flattenGroupedHits: true }
+          { flattenGroupedHits: true },
         );
         const typesenseGroupedHits = typesenseResponse.results[0].grouped_hits;
 
