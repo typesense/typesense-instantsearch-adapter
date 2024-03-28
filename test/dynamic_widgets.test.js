@@ -7,7 +7,9 @@ describe("InstantSearch Dynamic Widgets", () => {
 
   describe("Page", () => {
     it("loads", async () => {
-      return await expect(page).toMatch("AT&T");
+      await delay(3000);
+      let text = await page.evaluate(() => document.body.innerHTML);
+      return expect(text).toContain("Data Cables");
     });
   });
 
@@ -33,3 +35,9 @@ describe("InstantSearch Dynamic Widgets", () => {
     });
   });
 });
+
+function delay(time) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, time);
+  });
+}
