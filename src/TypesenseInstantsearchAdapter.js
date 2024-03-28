@@ -30,7 +30,13 @@ export default class TypesenseInstantsearchAdapter {
           this.configuration,
           typesenseResponse.results
         );
-        return responseAdapter.adapt();
+        let adaptedResponse = {
+          ...responseAdapter.adapt(),
+          // eslint-disable-next-line no-unused-vars
+          ...(({ results, ...o }) => o)(typesenseResponse), // All other keys in the response (like `conversation`)
+        };
+
+        return adaptedResponse;
       });
 
       return {

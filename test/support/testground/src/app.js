@@ -41,6 +41,7 @@ const urlParams = new URLSearchParams(window.location.search);
 
 const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   server: {
+    connectionTimeoutSeconds: 10000,
     apiKey: "xyz", // Be sure to use an API key that only has search permissions, since this is exposed in the browser
     nodes: [
       {

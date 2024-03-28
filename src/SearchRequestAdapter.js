@@ -461,10 +461,23 @@ export class SearchRequestAdapter {
   async request() {
     // console.log(this.instantsearchRequests);
 
-    const searches = this.instantsearchRequests.map((instantsearchRequest) =>
+    let searches = this.instantsearchRequests.map((instantsearchRequest) =>
       this._buildSearchParameters(instantsearchRequest)
     );
 
-    return this.typesenseClient.multiSearch.perform({ searches: searches });
+    // If this is a conversational search, then move conversation related params to query params
+    let commonParams = {};
+    if (searches[0]?.conversation === true) {
+      const { q, conversation, conversation_id, conversation_model_id } = searches[0];
+      commonParams = { q, conversation, conversation_id, conversation_model_id };
+
+      searches = searches.map((searchParams) => {
+        // eslint-disable-next-line no-unused-vars
+        const { q, conversation, conversation_id, conversation_model_id, ...modifiedSearchParams } = searchParams;
+        return modifiedSearchParams;
+      });
+    }
+
+    return this.typesenseClient.multiSearch.perform({ searches: searches }, commonParams);
   }
 }
