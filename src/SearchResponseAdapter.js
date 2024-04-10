@@ -3,11 +3,18 @@
 import { utils } from "./support/utils";
 
 export class SearchResponseAdapter {
-  constructor(typesenseResponse, instantsearchRequest, configuration, allTypesenseResponses = []) {
+  constructor(
+    typesenseResponse,
+    instantsearchRequest,
+    configuration,
+    allTypesenseResults = [],
+    fullTypesenseResponse = {},
+  ) {
     this.typesenseResponse = typesenseResponse;
     this.instantsearchRequest = instantsearchRequest;
     this.configuration = configuration;
-    this.allTypesenseResponses = allTypesenseResponses;
+    this.allTypesenseResults = allTypesenseResults;
+    this.fullTypesenseResponse = fullTypesenseResponse;
   }
 
   _adaptGroupedHits(typesenseGroupedHits) {
@@ -54,6 +61,11 @@ export class SearchResponseAdapter {
       adaptedHit._snippetResult = this._adaptHighlightResult(typesenseHit, "snippet");
       adaptedHit._highlightResult = this._adaptHighlightResult(typesenseHit, "value");
       adaptedHit._rawTypesenseHit = typesenseHit;
+
+      // We're adding `conversation` into each hit, since there doesn't seem to be any other way to pass this up to Instantsearch outside of hits
+      if (this.fullTypesenseResponse.conversation) {
+        adaptedHit._rawTypesenseConversation = this.fullTypesenseResponse.conversation;
+      }
 
       // Add metadata fields to result, if a field with that name doesn't already exist
       [
@@ -302,7 +314,7 @@ export class SearchResponseAdapter {
           typesenseFacetCounts
             .map((fc) => fc["field_name"])
             .concat(
-              this.allTypesenseResponses
+              this.allTypesenseResults
                 .map((r) => r.facet_counts || [])
                 .flat()
                 .map((fc) => fc["field_name"])

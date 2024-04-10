@@ -761,12 +761,14 @@ function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t =
 
 var SearchResponseAdapter = /*#__PURE__*/function () {
   function SearchResponseAdapter(typesenseResponse, instantsearchRequest, configuration) {
-    var allTypesenseResponses = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
+    var allTypesenseResults = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
+    var fullTypesenseResponse = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : {};
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_4__["default"])(this, SearchResponseAdapter);
     this.typesenseResponse = typesenseResponse;
     this.instantsearchRequest = instantsearchRequest;
     this.configuration = configuration;
-    this.allTypesenseResponses = allTypesenseResponses;
+    this.allTypesenseResults = allTypesenseResults;
+    this.fullTypesenseResponse = fullTypesenseResponse;
   }
   return (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_5__["default"])(SearchResponseAdapter, [{
     key: "_adaptGroupedHits",
@@ -812,6 +814,11 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
         adaptedHit._snippetResult = _this2._adaptHighlightResult(typesenseHit, "snippet");
         adaptedHit._highlightResult = _this2._adaptHighlightResult(typesenseHit, "value");
         adaptedHit._rawTypesenseHit = typesenseHit;
+
+        // We're adding `conversation` into each hit, since there doesn't seem to be any other way to pass this up to Instantsearch outside of hits
+        if (_this2.fullTypesenseResponse.conversation) {
+          adaptedHit._rawTypesenseConversation = _this2.fullTypesenseResponse.conversation;
+        }
 
         // Add metadata fields to result, if a field with that name doesn't already exist
         ["text_match", "geo_distance_meters", "curated", "text_match_info", "hybrid_search_info", "vector_distance"].forEach(function (metadataField) {
@@ -1036,7 +1043,7 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
         adaptedResult.facetOrdering.facets = adaptedResult.facetOrdering.facets || {};
         adaptedResult.facetOrdering.facets.order = (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2__["default"])(new Set(typesenseFacetCounts.map(function (fc) {
           return fc["field_name"];
-        }).concat(this.allTypesenseResponses.map(function (r) {
+        }).concat(this.allTypesenseResults.map(function (r) {
           return r.facet_counts || [];
         }).flat().map(function (fc) {
           return fc["field_name"];
@@ -9509,30 +9516,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ TypesenseInstantsearchAdapter)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _Configuration__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Configuration */ "./src/Configuration.js");
-/* harmony import */ var typesense__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! typesense */ "./node_modules/typesense/lib/Typesense.js");
-/* harmony import */ var typesense__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(typesense__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _SearchRequestAdapter__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./SearchRequestAdapter */ "./src/SearchRequestAdapter.js");
-/* harmony import */ var _SearchResponseAdapter__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./SearchResponseAdapter */ "./src/SearchResponseAdapter.js");
-/* harmony import */ var _FacetSearchResponseAdapter__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./FacetSearchResponseAdapter */ "./src/FacetSearchResponseAdapter.js");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _Configuration__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Configuration */ "./src/Configuration.js");
+/* harmony import */ var typesense__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! typesense */ "./node_modules/typesense/lib/Typesense.js");
+/* harmony import */ var typesense__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(typesense__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _SearchRequestAdapter__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SearchRequestAdapter */ "./src/SearchRequestAdapter.js");
+/* harmony import */ var _SearchResponseAdapter__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./SearchResponseAdapter */ "./src/SearchResponseAdapter.js");
+/* harmony import */ var _FacetSearchResponseAdapter__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./FacetSearchResponseAdapter */ "./src/FacetSearchResponseAdapter.js");
 
 
 
 
 
 
-
-var _excluded = ["results"];
-
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_1__["default"])(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 
 
 
@@ -9541,7 +9541,7 @@ function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t =
 var TypesenseInstantsearchAdapter = /*#__PURE__*/function () {
   function TypesenseInstantsearchAdapter(options) {
     var _this = this;
-    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_3__["default"])(this, TypesenseInstantsearchAdapter);
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__["default"])(this, TypesenseInstantsearchAdapter);
     this.updateConfiguration(options);
     this.searchClient = {
       clearCache: function clearCache() {
@@ -9555,13 +9555,13 @@ var TypesenseInstantsearchAdapter = /*#__PURE__*/function () {
       }
     };
   }
-  return (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4__["default"])(TypesenseInstantsearchAdapter, [{
+  return (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__["default"])(TypesenseInstantsearchAdapter, [{
     key: "searchTypesenseAndAdapt",
     value: function () {
-      var _searchTypesenseAndAdapt = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5___default().mark(function _callee(instantsearchRequests) {
+      var _searchTypesenseAndAdapt = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee(instantsearchRequests) {
         var _this2 = this;
         var typesenseResponse, adaptedResponses;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5___default().wrap(function _callee$(_context) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
               _context.prev = 0;
@@ -9571,12 +9571,8 @@ var TypesenseInstantsearchAdapter = /*#__PURE__*/function () {
               typesenseResponse = _context.sent;
               adaptedResponses = typesenseResponse.results.map(function (typesenseResult, index) {
                 _this2._validateTypesenseResult(typesenseResult);
-                var responseAdapter = new _SearchResponseAdapter__WEBPACK_IMPORTED_MODULE_9__.SearchResponseAdapter(typesenseResult, instantsearchRequests[index], _this2.configuration, typesenseResponse.results);
-                var adaptedResponse = _objectSpread(_objectSpread({}, responseAdapter.adapt()), function (_ref) {
-                  var results = _ref.results,
-                    o = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__["default"])(_ref, _excluded);
-                  return o;
-                }(typesenseResponse));
+                var responseAdapter = new _SearchResponseAdapter__WEBPACK_IMPORTED_MODULE_7__.SearchResponseAdapter(typesenseResult, instantsearchRequests[index], _this2.configuration, typesenseResponse.results, typesenseResponse);
+                var adaptedResponse = responseAdapter.adapt();
                 return adaptedResponse;
               });
               return _context.abrupt("return", {
@@ -9601,10 +9597,10 @@ var TypesenseInstantsearchAdapter = /*#__PURE__*/function () {
   }, {
     key: "searchTypesenseForFacetValuesAndAdapt",
     value: function () {
-      var _searchTypesenseForFacetValuesAndAdapt = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5___default().mark(function _callee2(instantsearchRequests) {
+      var _searchTypesenseForFacetValuesAndAdapt = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee2(instantsearchRequests) {
         var _this3 = this;
         var typesenseResponse, adaptedResponses;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5___default().wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
               _context2.prev = 0;
@@ -9614,7 +9610,7 @@ var TypesenseInstantsearchAdapter = /*#__PURE__*/function () {
               typesenseResponse = _context2.sent;
               adaptedResponses = typesenseResponse.results.map(function (typesenseResult, index) {
                 _this3._validateTypesenseResult(typesenseResult);
-                var responseAdapter = new _FacetSearchResponseAdapter__WEBPACK_IMPORTED_MODULE_10__.FacetSearchResponseAdapter(typesenseResult, instantsearchRequests[index], _this3.configuration);
+                var responseAdapter = new _FacetSearchResponseAdapter__WEBPACK_IMPORTED_MODULE_8__.FacetSearchResponseAdapter(typesenseResult, instantsearchRequests[index], _this3.configuration);
                 return responseAdapter.adapt();
               });
               return _context2.abrupt("return", adaptedResponses);
@@ -9637,12 +9633,12 @@ var TypesenseInstantsearchAdapter = /*#__PURE__*/function () {
   }, {
     key: "_adaptAndPerformTypesenseRequest",
     value: function () {
-      var _adaptAndPerformTypesenseRequest2 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_2__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5___default().mark(function _callee3(instantsearchRequests) {
+      var _adaptAndPerformTypesenseRequest2 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee3(instantsearchRequests) {
         var requestAdapter, typesenseResponse;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5___default().wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee3$(_context3) {
           while (1) switch (_context3.prev = _context3.next) {
             case 0:
-              requestAdapter = new _SearchRequestAdapter__WEBPACK_IMPORTED_MODULE_8__.SearchRequestAdapter(instantsearchRequests, this.typesenseClient, this.configuration);
+              requestAdapter = new _SearchRequestAdapter__WEBPACK_IMPORTED_MODULE_6__.SearchRequestAdapter(instantsearchRequests, this.typesenseClient, this.configuration);
               _context3.next = 3;
               return requestAdapter.request();
             case 3:
@@ -9662,15 +9658,15 @@ var TypesenseInstantsearchAdapter = /*#__PURE__*/function () {
   }, {
     key: "clearCache",
     value: function clearCache() {
-      this.typesenseClient = new typesense__WEBPACK_IMPORTED_MODULE_7__.SearchClient(this.configuration.server);
+      this.typesenseClient = new typesense__WEBPACK_IMPORTED_MODULE_5__.SearchClient(this.configuration.server);
       return this.searchClient;
     }
   }, {
     key: "updateConfiguration",
     value: function updateConfiguration(options) {
-      this.configuration = new _Configuration__WEBPACK_IMPORTED_MODULE_6__.Configuration(options);
+      this.configuration = new _Configuration__WEBPACK_IMPORTED_MODULE_4__.Configuration(options);
       this.configuration.validate();
-      this.typesenseClient = new typesense__WEBPACK_IMPORTED_MODULE_7__.SearchClient(this.configuration.server);
+      this.typesenseClient = new typesense__WEBPACK_IMPORTED_MODULE_5__.SearchClient(this.configuration.server);
       return true;
     }
   }, {
