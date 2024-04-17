@@ -467,7 +467,7 @@ export class SearchRequestAdapter {
 
     // If this is a conversational search, then move conversation related params to query params
     let commonParams = {};
-    if (searches[0]?.conversation === true) {
+    if (searches[0]?.conversation === true || searches[0]?.conversation === "true") {
       const { q, conversation, conversation_id, conversation_model_id } = searches[0];
       commonParams = { q, conversation, conversation_id, conversation_model_id };
 
