@@ -344,6 +344,16 @@ export class SearchResponseAdapter {
       ...(Object.keys(adaptedRenderingContent).length > 0 ? { renderingContent: adaptedRenderingContent } : null),
     };
 
+    // If no results were found for the search, but there is still a conversation response,
+    // still send that as a hit so the conversation is accessible via Instantsearch
+    if (this.fullTypesenseResponse.conversation && adaptedResult.hits.length === 0) {
+      adaptedResult.hits = [
+        {
+          _rawTypesenseConversation: this.fullTypesenseResponse.conversation,
+        },
+      ];
+    }
+
     // console.log(adaptedResult);
     return adaptedResult;
   }
