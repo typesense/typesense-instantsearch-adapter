@@ -436,12 +436,12 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
       });
 
       // Transform that to:
-      //  "field1:=[634..289] && field2:<=5 && field3:>=3"   
+      //  "field1:=[634..289] && field2:<=5 && field3:>=3"  
+      // option to exclude unbound ranges 
       var adaptedFilters = [];
       Object.keys(filtersHash).forEach(function (field) {
         if (filtersHash[field]["<="] != null && filtersHash[field][">="] != null) {
-          if (_this2.configuration.useExcludeForUnboundNumericRange && filtersHash[field][">="] > filtersHash[field]["<="]) {
-            //exclude unbound range:
+          if (_this2.configuration.useExcludeForUnboundNumericRange && parseInt(filtersHash[field][">="]) > parseInt(filtersHash[field]["<="])) {
             adaptedFilters.push("".concat(field, ":!=[").concat(filtersHash[field]["<="], "..").concat(filtersHash[field][">="], "]"));
           } else {
             adaptedFilters.push("".concat(field, ":=[").concat(filtersHash[field][">="], "..").concat(filtersHash[field]["<="], "]"));
