@@ -95,6 +95,7 @@ interface BaseAdapterOptions {
   collectionSpecificFilterByOptions?: object;
   sortByOptions?: object;
   collectionSpecificSortByOptions?: object;
+  useExcludeForUnboundNumericRange?: boolean;
 }
 
 interface CollectionSearchParameters {

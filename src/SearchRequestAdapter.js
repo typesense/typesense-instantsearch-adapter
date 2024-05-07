@@ -244,11 +244,16 @@ export class SearchRequestAdapter {
     });
 
     // Transform that to:
-    //  "field1:=[634..289] && field2:<=5 && field3:>=3"
+    //  "field1:=[634..289] && field2:<=5 && field3:>=3"  
+    // option to exclude unbound ranges 
     const adaptedFilters = [];
     Object.keys(filtersHash).forEach((field) => {
       if (filtersHash[field]["<="] != null && filtersHash[field][">="] != null) {
-        adaptedFilters.push(`${field}:=[${filtersHash[field][">="]}..${filtersHash[field]["<="]}]`);
+        if (this.configuration.useExcludeForUnboundNumericRange && parseInt(filtersHash[field][">="]) > parseInt(filtersHash[field]["<="])) {
+          adaptedFilters.push(`${field}:!=[${filtersHash[field]["<="]}..${filtersHash[field][">="]}]`);
+        } else {
+          adaptedFilters.push(`${field}:=[${filtersHash[field][">="]}..${filtersHash[field]["<="]}]`);
+        }
       } else if (filtersHash[field]["<="] != null) {
         adaptedFilters.push(`${field}:<=${filtersHash[field]["<="]}`);
       } else if (filtersHash[field][">="] != null) {
