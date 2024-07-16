@@ -70,7 +70,15 @@ export default class TypesenseInstantsearchAdapter {
   async _adaptAndPerformTypesenseRequest(instantsearchRequests) {
     const requestAdapter = new SearchRequestAdapter(instantsearchRequests, this.typesenseClient, this.configuration);
     const typesenseResponse = await requestAdapter.request();
-    return typesenseResponse;
+    if (typeof typesenseResponse === "string") {
+      try {
+        return JSON.parse(typesenseResponse);
+      } catch (error) {
+        return typesenseResponse;
+      }
+    } else {
+      return typesenseResponse;
+    }
   }
 
   clearCache() {
