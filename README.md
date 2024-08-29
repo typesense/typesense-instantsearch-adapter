@@ -582,7 +582,7 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
 
 The general idea is to first hook into the query life-cycle of Instantsearch, intercept the typed query and send it to an embedding API, fetch the embeddings and then send the vectors to Typesense to do a nearest neighbor vector search.
 
-Here's a demo that you can run locally to see this in action: [https://github.com/typesense/typesense-instantsearch-semantic-search-demo](https://github.com/typesense/typesense-instantsearch-semantic-search-demo).
+Here's a demo that you can run locally to see this in action: [https://github.com/typesense/showcase-hn-comments-semantic-search](https://github.com/typesense/showcase-hn-comments-semantic-search).
 
 Here's how to do this in Instantsearch.js:
 
@@ -601,39 +601,39 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   },
   additionalSearchParameters,
 });
+// from https://github.com/typesense/showcase-hn-comments-semantic-search/blob/8a33006cae58b425c53f56a64e1273e808cd9375/src/js/index.js#L101
 const searchClient = typesenseInstantsearchAdapter.searchClient;
-const search = instantsearch({
-  searchClient,
-  indexName: "products",
-  routing: true,
-  async searchFunction(helper) {
-    const query = helper.getQuery().query;
-    const page = helper.getPage(); // Retrieve the current page
-    const totalNearestNeighborsToFetch = 1000;
+search = instantsearch({
+    searchClient,
+    indexName: INDEX_NAME,
+    routing: true,
+    async searchFunction(helper) {
+      // This fetches 200 (nearest neighbor) results for semantic / hybrid search
 
-    if (query !== "") {
-      // Get embedding for the query
-      let response = await fetch(
-        "http://localhost:8000/embedding?" + new URLSearchParams({ q: query }), // <=== Embedding API
-      );
+      let query = helper.getQuery().query;
+      const page = helper.getPage(); // Retrieve the current page
 
-      let parsedResponse = await response.json();
-
-      console.log(parsedResponse);
-
-      // Send the embedding to Typesense to do a nearest neighbor search
-      helper
-        .setQueryParameter(
-          "typesenseVectorQuery", // <=== Special parameter that only works in typesense-instantsearch-adapter@2.7.0-3 and above
-          `vectors:([${parsedResponse["embedding"].join(",")}], k:${totalNearestNeighborsToFetch})`,
-        )
-        .setPage(page)
-        .search();
-    } else {
-      helper.setQueryParameter("typesenseVectorQuery", null).setPage(page).search();
-    }
-  },
-});
+      if (
+        query !== "" &&
+        ["semantic", "hybrid"].includes($("#search-type-select").val())
+      ) {
+        console.log(helper.getQuery().query);
+        helper
+          .setQueryParameter(
+            "typesenseVectorQuery", // <=== Special parameter that only works in typesense-instantsearch-adapter@2.7.0-3 and above
+            `embedding:([], k:200)`,
+          )
+          .setPage(page)
+          .search();
+        console.log(helper.getQuery().query);
+      } else {
+        helper
+          .setQueryParameter("typesenseVectorQuery", null)
+          .setPage(page)
+          .search();
+      }
+    },
+  });
 ```
 
 ## Compatibility
