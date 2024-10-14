@@ -275,6 +275,49 @@ describe("SearchResponseAdapter", () => {
     });
   });
 
+  describe("._adaptUserData", () => {
+    describe("When there's a metadata object in the response based on curation rules", () => {
+      it("formats Typesense's metadata object into userData", () => {
+        const typesenseResponse = require("./support/data/typesense-search-response-with-metadata.json");
+        const subject = new SearchResponseAdapter(
+          typesenseResponse["results"][0],
+          {
+            params: {
+              highlightPreTag: "<mark>",
+              highlightPostTag: "</mark>",
+            },
+          },
+          {},
+        );
+        const result = subject.adapt();
+        expect(result?.userData).toEqual([
+          {
+            promotion: "new_phones",
+            title: "Check out the latest holiday season phones",
+          },
+        ]);
+        expect(result.appliedRules).toEqual(["typesense-override"]);
+      });
+    });
+    describe("When there's not a metadata object in the response based on curation rules", () => {
+      it("leaves the userData object empty", () => {
+        const typesenseResponse = require("./support/data/typesense-search-response.json");
+        const subject = new SearchResponseAdapter(
+          typesenseResponse["results"][0],
+          {
+            params: {
+              highlightPreTag: "<mark>",
+              highlightPostTag: "</mark>",
+            },
+          },
+          {},
+        );
+        const result = subject.adapt();
+        expect(result?.userData).toBeUndefined();
+        expect(result.appliedRules).toBeUndefined();
+      });
+    });
+  });
   describe("._adaptRenderingContent", () => {
     describe("when user does not specify any renderingContent", () => {
       describe("when the search has results", () => {
