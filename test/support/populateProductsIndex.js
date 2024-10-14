@@ -14,6 +14,17 @@ module.exports = (async () => {
     retryIntervalSeconds: 5,
   });
 
+  const override = {
+    rule: {
+      query: "Samsung",
+      match: "contains",
+    },
+    remove_matched_tokens: false,
+    metadata: {
+      promo_content: "20% on all Samsung Phones!",
+    },
+  };
+
   const schema = {
     name: "products",
     enable_nested_fields: true,
@@ -117,6 +128,7 @@ module.exports = (async () => {
   });
 
   try {
+    await typesense.collections("products").overrides().upsert("samsung-override", override);
     const returnData = await typesense.collections("products").documents().import(products);
     console.log(returnData);
     console.log("Done indexing.");
