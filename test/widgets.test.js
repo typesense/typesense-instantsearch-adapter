@@ -152,4 +152,25 @@ describe("Instant Search Widgets", () => {
       });
     });
   });
+
+  describe("queryRuleCustomData", () => {
+    beforeAll(require("./support/beforeAll"));
+    beforeEach(async () => {
+      return page.goto("http://localhost:3000/index.html");
+    });
+
+    it("is initially empty", async () => {
+      await expect(page).toMatchElement("#banner", { text: "" });
+    });
+
+    it("renders when a query rule with metadata is matched", async () => {
+      // Fill the search input with "Samsung"
+      await expect(page).toFill("#searchbox input[type=search]", "Samsung");
+
+      // Check that the queryRuleCustomData contains the expected content
+      await expect(page).toMatchElement(".ais-QueryRuleCustomData", {
+        text: "20% on all Samsung Phones!",
+      });
+    });
+  }, 10000);
 });
