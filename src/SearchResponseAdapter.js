@@ -327,6 +327,12 @@ export class SearchResponseAdapter {
     return adaptedResult;
   }
 
+  _adaptUserData(metadata) {
+    if (!metadata) return [];
+
+    return Array.isArray(metadata) ? metadata : [metadata];
+  }
+
   adapt() {
     const adaptedRenderingContent = this._adaptRenderingContent(this.typesenseResponse.facet_counts || []);
     const adaptedResult = {
@@ -343,6 +349,12 @@ export class SearchResponseAdapter {
       processingTimeMS: this.typesenseResponse.search_time_ms,
       ...(Object.keys(adaptedRenderingContent).length > 0 ? { renderingContent: adaptedRenderingContent } : null),
     };
+
+    // Add appliedRules if metadata is present
+    if (this.typesenseResponse.metadata) {
+      adaptedResult.appliedRules = ["typesense-override"];
+      adaptedResult.userData = this._adaptUserData(this.typesenseResponse.metadata);
+    }
 
     // If no results were found for the search, but there is still a conversation response,
     // still send that as a hit so the conversation is accessible via Instantsearch
