@@ -657,7 +657,6 @@ If a particular version of the above libraries don't work with the adapter, plea
 
 This adapter works with all widgets in [this list](https://www.algolia.com/doc/api-reference/widgets/js/), _except_ for the following:
 
-- `queryRuleCustomData`
 - `queryRuleContext`
 
 ## Development
