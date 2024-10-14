@@ -18,6 +18,7 @@ import {
   hitsPerPage,
   clearRefinements,
   breadcrumb,
+  queryRuleCustomData,
 } from "instantsearch.js/es/widgets";
 import { connectAutocomplete } from "instantsearch.js/es/connectors";
 
@@ -159,6 +160,28 @@ search.addWidgets([
       { label: "Price (desc)", value: "products/sort/price:desc" },
     ],
   }),
+  queryRuleCustomData({
+    container: "#banner",
+    templates: {
+      default({ items }, { html }) {
+        console.log(items);
+        return html`
+          ${items
+            .map((item) => {
+              const { promo_content } = item;
+
+              return `
+            <div>
+              <h2>${promo_content}</h2>
+            </div>
+          `;
+            })
+            .join("")}
+        `;
+      },
+    },
+  }),
+
   hits({
     container: "#hits",
     templates: {
