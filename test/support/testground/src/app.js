@@ -19,6 +19,7 @@ import {
   clearRefinements,
   breadcrumb,
   queryRuleCustomData,
+  queryRuleContext,
 } from "instantsearch.js/es/widgets";
 import { connectAutocomplete } from "instantsearch.js/es/connectors";
 
@@ -225,6 +226,12 @@ search.addWidgets([
       { label: "8 hits per page", value: 8, default: true },
       { label: "16 hits per page", value: 16 },
     ],
+  }),
+  queryRuleContext({
+    trackedFilters: {
+      brand: (selectedBrands) => selectedBrands,
+    },
+    transformRuleContexts: (contexts) => contexts.map((context) => context.replace("ais-brand-", "")), // Clean up the context names
   }),
   stats({
     container: "#stats",
