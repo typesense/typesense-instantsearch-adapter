@@ -172,5 +172,5 @@ describe("Instant Search Widgets", () => {
         text: "20% on all Samsung Phones!",
       });
     });
-  }, 10000);
+  });
 });
