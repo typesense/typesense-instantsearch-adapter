@@ -25,6 +25,18 @@ module.exports = (async () => {
     },
   };
 
+  const overrideWithTag = {
+    rule: {
+      query: "Google",
+      match: "contains",
+      tags: ["Google"],
+    },
+    remove_matched_tokens: false,
+    metadata: {
+      promo_content: "New Google Pixel!",
+    },
+  };
+
   const schema = {
     name: "products",
     enable_nested_fields: true,
@@ -92,6 +104,7 @@ module.exports = (async () => {
     const collection = await typesense.collections("products").retrieve();
     console.log("Found existing schema");
     await typesense.collections("products").overrides().upsert("samsung-override", overrideWithoutTag);
+    await typesense.collections("products").overrides().upsert("google-override", overrideWithTag);
 
     // console.log(JSON.stringify(collection, null, 2));
     if (collection.num_documents !== products.length || process.env.FORCE_REINDEX === "true") {
@@ -130,6 +143,7 @@ module.exports = (async () => {
   });
 
   await typesense.collections("products").overrides().upsert("samsung-override", overrideWithoutTag);
+  await typesense.collections("products").overrides().upsert("google-override", overrideWithTag);
 
   try {
     const returnData = await typesense.collections("products").documents().import(products);
