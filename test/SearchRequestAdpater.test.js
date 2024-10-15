@@ -74,6 +74,18 @@ describe("SearchRequestAdapter", () => {
           sort_by: "field2:asc",
           enable_overrides: false,
         });
+
+        //with an override tag
+        result = subject._buildSearchParameters({
+          indexName: "collection2",
+          params: { ruleContexts: ["context1", "context2"] },
+        });
+        expect(result).toEqual({
+          collection: "collection2",
+          page: 1,
+          q: "*",
+          override_tags: "context1,context2",
+        });
       });
     });
   });
@@ -259,6 +271,14 @@ describe("SearchRequestAdapter", () => {
 
       const result = subject._adaptGeoFilter({ insidePolygon: ["x1", "y1", "x2", "y2", "x3", "y3"] });
       expect(result).toEqual(`geoField:(x1,y1,x2,y2,x3,y3)`);
+    });
+  });
+  describe(". _adaptRulesContextsToOverrideTags", () => {
+    it("concatenates the rule contexts to a comma separated string", () => {
+      const subject = new SearchRequestAdapter([], null, {});
+
+      const result = subject._adaptRulesContextsToOverrideTags(["context1", "context2"]);
+      expect(result).toEqual("context1,context2");
     });
   });
 });
