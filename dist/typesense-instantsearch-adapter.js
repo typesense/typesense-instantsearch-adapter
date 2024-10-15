@@ -591,6 +591,11 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
       }).join(",");
     }
   }, {
+    key: "_adaptRulesContextsToOverrideTags",
+    value: function _adaptRulesContextsToOverrideTags(ruleContexts) {
+      return ruleContexts.join(",");
+    }
+  }, {
     key: "_buildSearchParameters",
     value: function _buildSearchParameters(instantsearchRequest) {
       var _this$configuration$c2, _this$configuration$s;
@@ -633,6 +638,9 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
       if (params.facetQuery) {
         typesenseSearchParams.facet_query = "".concat(params.facetName, ":").concat(params.facetQuery);
         typesenseSearchParams.per_page = 0;
+      }
+      if (params.ruleContexts && params.ruleContexts.length > 0) {
+        typesenseSearchParams.override_tags = this._adaptRulesContextsToOverrideTags(params.ruleContexts);
       }
 
       // If a custom vector query is specified, set q=*
