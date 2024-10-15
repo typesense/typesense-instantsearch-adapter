@@ -388,6 +388,10 @@ export class SearchRequestAdapter {
       .join(",");
   }
 
+  _adaptRulesContextsToOverrideTags(ruleContexts) {
+    return ruleContexts.join(",");
+  }
+
   _buildSearchParameters(instantsearchRequest) {
     const params = instantsearchRequest.params;
     const indexName = instantsearchRequest.indexName;
@@ -428,6 +432,10 @@ export class SearchRequestAdapter {
     if (params.facetQuery) {
       typesenseSearchParams.facet_query = `${params.facetName}:${params.facetQuery}`;
       typesenseSearchParams.per_page = 0;
+    }
+
+    if (params.ruleContexts && params.ruleContexts.length > 0) {
+      typesenseSearchParams.override_tags = this._adaptRulesContextsToOverrideTags(params.ruleContexts);
     }
 
     // If a custom vector query is specified, set q=*
