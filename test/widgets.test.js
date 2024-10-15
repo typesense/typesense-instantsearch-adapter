@@ -173,4 +173,32 @@ describe("Instant Search Widgets", () => {
       });
     });
   });
+
+  describe("queryRuleContext", () => {
+    beforeAll(require("./support/beforeAll"));
+    beforeEach(async () => {
+      return page.goto("http://localhost:3000/index.html");
+    });
+
+    it("is initially empty", async () => {
+      await expect(page).toMatchElement("#banner", { text: "" });
+    });
+
+    it("it doesn't render if the tag isn't met", async () => {
+      // Fill the search input with "Google"
+      await expect(page).toFill("#searchbox input[type=search]", "Google");
+
+      // Check that the queryRuleCustomData contains the expected content
+      await expect(page).toMatchElement("#banner", { text: "" });
+    });
+
+    it("renders if the tag is met", async () => {
+      await expect(page).toClick('.ais-RefinementList-item input[value="Google"]');
+      // Fill the search input with "Google"
+      await expect(page).toFill("#searchbox input[type=search]", "Google");
+
+      // Check that the queryRuleCustomData contains the expected content
+      await expect(page).toMatchElement("#banner", { text: "New Google Pixel!" });
+    });
+  });
 });
