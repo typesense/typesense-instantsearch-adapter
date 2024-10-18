@@ -291,10 +291,10 @@ describe("Search Experience", () => {
 
     it("renders the grouped results", async () => {
       await expect(page).toMatchElement("#brand-list", {
-        text: "AT&T",
+        text: "360fly",
       });
       await expect(page).toMatchElement("#stats", {
-        text: "250 results found",
+        text: "263 results found",
       });
       await expect(page).toMatchElement("#hits .ais-Hits-item:nth-of-type(1) .hit-name", {
         text: "AT&T",

@@ -1,0 +1,993 @@
+{
+  "results": [
+    {
+      "facet_counts": [
+        {
+          "counts": [
+            {
+              "count": 14,
+              "highlighted": "Boost Mobile",
+              "value": "Boost Mobile"
+            },
+            {
+              "count": 14,
+              "highlighted": "Verizon Prepaid",
+              "value": "Verizon Prepaid"
+            },
+            {
+              "count": 13,
+              "highlighted": "Virgin Mobile",
+              "value": "Virgin Mobile"
+            },
+            {
+              "count": 12,
+              "highlighted": "Cricket Wireless",
+              "value": "Cricket Wireless"
+            },
+            {
+              "count": 10,
+              "highlighted": "TRACFONE",
+              "value": "TRACFONE"
+            },
+            {
+              "count": 8,
+              "highlighted": "SIMPLE Mobile",
+              "value": "SIMPLE Mobile"
+            },
+            {
+              "count": 7,
+              "highlighted": "AT&T GoPhone",
+              "value": "AT&T GoPhone"
+            },
+            {
+              "count": 6,
+              "highlighted": "AT&T",
+              "value": "AT&T"
+            },
+            {
+              "count": 3,
+              "highlighted": "Verizon",
+              "value": "Verizon"
+            },
+            {
+              "count": 3,
+              "highlighted": "Verizon Wireless Prepaid",
+              "value": "Verizon Wireless Prepaid"
+            },
+            {
+              "count": 2,
+              "highlighted": "NET10",
+              "value": "NET10"
+            },
+            {
+              "count": 2,
+              "highlighted": "H2O Wireless",
+              "value": "H2O Wireless"
+            },
+            {
+              "count": 1,
+              "highlighted": "Jitterbug",
+              "value": "Jitterbug"
+            },
+            {
+              "count": 1,
+              "highlighted": "Sprint Prepaid",
+              "value": "Sprint Prepaid"
+            }
+          ],
+          "field_name": "brand",
+          "stats": {}
+        },
+        {
+          "counts": [
+            {
+              "count": 54,
+              "highlighted": "false",
+              "value": "false"
+            },
+            {
+              "count": 42,
+              "highlighted": "true",
+              "value": "true"
+            }
+          ],
+          "field_name": "free_shipping",
+          "stats": {}
+        },
+        {
+          "counts": [
+            {
+              "count": 10,
+              "highlighted": "79.989998",
+              "value": "79.989998"
+            },
+            {
+              "count": 6,
+              "highlighted": "99.989998",
+              "value": "99.989998"
+            },
+            {
+              "count": 5,
+              "highlighted": "69.989998",
+              "value": "69.989998"
+            },
+            {
+              "count": 4,
+              "highlighted": "25.",
+              "value": "25."
+            },
+            {
+              "count": 4,
+              "highlighted": "30.",
+              "value": "30."
+            },
+            {
+              "count": 4,
+              "highlighted": "60.",
+              "value": "60."
+            },
+            {
+              "count": 4,
+              "highlighted": "50.",
+              "value": "50."
+            },
+            {
+              "count": 4,
+              "highlighted": "45.",
+              "value": "45."
+            },
+            {
+              "count": 4,
+              "highlighted": "40.",
+              "value": "40."
+            },
+            {
+              "count": 4,
+              "highlighted": "19.99",
+              "value": "19.99"
+            },
+            {
+              "count": 4,
+              "highlighted": "29.99",
+              "value": "29.99"
+            },
+            {
+              "count": 4,
+              "highlighted": "49.990002",
+              "value": "49.990002"
+            },
+            {
+              "count": 3,
+              "highlighted": "35.",
+              "value": "35."
+            },
+            {
+              "count": 3,
+              "highlighted": "39.990002",
+              "value": "39.990002"
+            },
+            {
+              "count": 3,
+              "highlighted": "59.990002",
+              "value": "59.990002"
+            },
+            {
+              "count": 3,
+              "highlighted": "129.990005",
+              "value": "129.990005"
+            },
+            {
+              "count": 3,
+              "highlighted": "109.989998",
+              "value": "109.989998"
+            },
+            {
+              "count": 2,
+              "highlighted": "70.",
+              "value": "70."
+            },
+            {
+              "count": 2,
+              "highlighted": "10.",
+              "value": "10."
+            },
+            {
+              "count": 2,
+              "highlighted": "149.990005",
+              "value": "149.990005"
+            },
+            {
+              "count": 2,
+              "highlighted": "179.990005",
+              "value": "179.990005"
+            },
+            {
+              "count": 2,
+              "highlighted": "199.990005",
+              "value": "199.990005"
+            },
+            {
+              "count": 1,
+              "highlighted": "1.",
+              "value": "1."
+            },
+            {
+              "count": 1,
+              "highlighted": "15.",
+              "value": "15."
+            },
+            {
+              "count": 1,
+              "highlighted": "55.",
+              "value": "55."
+            },
+            {
+              "count": 1,
+              "highlighted": "9.99",
+              "value": "9.99"
+            },
+            {
+              "count": 1,
+              "highlighted": "24.99",
+              "value": "24.99"
+            },
+            {
+              "count": 1,
+              "highlighted": "14.99",
+              "value": "14.99"
+            },
+            {
+              "count": 1,
+              "highlighted": "599.98999",
+              "value": "599.98999"
+            },
+            {
+              "count": 1,
+              "highlighted": "349.98999",
+              "value": "349.98999"
+            },
+            {
+              "count": 1,
+              "highlighted": "84.989998",
+              "value": "84.989998"
+            },
+            {
+              "count": 1,
+              "highlighted": "49.950001",
+              "value": "49.950001"
+            },
+            {
+              "count": 1,
+              "highlighted": "89.989998",
+              "value": "89.989998"
+            },
+            {
+              "count": 1,
+              "highlighted": "649.98999",
+              "value": "649.98999"
+            },
+            {
+              "count": 1,
+              "highlighted": "229.990005",
+              "value": "229.990005"
+            },
+            {
+              "count": 1,
+              "highlighted": "194.990005",
+              "value": "194.990005"
+            }
+          ],
+          "field_name": "price",
+          "stats": {
+            "avg": 81.93062490224838,
+            "max": 649.989990234375,
+            "min": 1.0,
+            "sum": 7865.339990615845
+          }
+        },
+        {
+          "counts": [
+            {
+              "count": 25,
+              "highlighted": "2",
+              "value": "2"
+            },
+            {
+              "count": 25,
+              "highlighted": "1",
+              "value": "1"
+            },
+            {
+              "count": 16,
+              "highlighted": "3",
+              "value": "3"
+            },
+            {
+              "count": 16,
+              "highlighted": "4",
+              "value": "4"
+            },
+            {
+              "count": 14,
+              "highlighted": "5",
+              "value": "5"
+            }
+          ],
+          "field_name": "rating",
+          "stats": {
+            "avg": 2.6770833333333335,
+            "max": 5.0,
+            "min": 1.0,
+            "sum": 257.0
+          }
+        },
+        {
+          "counts": [
+            {
+              "count": 96,
+              "highlighted": "Cell Phones",
+              "value": "Cell Phones"
+            },
+            {
+              "count": 55,
+              "highlighted": "Prepaid Phones",
+              "value": "Prepaid Phones"
+            },
+            {
+              "count": 55,
+              "highlighted": "All Prepaid Phones",
+              "value": "All Prepaid Phones"
+            },
+            {
+              "count": 39,
+              "highlighted": "Cell Phone Accessories",
+              "value": "Cell Phone Accessories"
+            },
+            {
+              "count": 37,
+              "highlighted": "Prepaid Minutes",
+              "value": "Prepaid Minutes"
+            },
+            {
+              "count": 2,
+              "highlighted": "SIM Cards",
+              "value": "SIM Cards"
+            },
+            {
+              "count": 1,
+              "highlighted": "Refurbished Phones",
+              "value": "Refurbished Phones"
+            }
+          ],
+          "field_name": "categories",
+          "stats": {}
+        },
+        {
+          "counts": [
+            {
+              "count": 96,
+              "highlighted": "Cell Phones",
+              "value": "Cell Phones"
+            }
+          ],
+          "field_name": "categories.lvl0",
+          "stats": {}
+        }
+      ],
+      "found": 96,
+      "hits": [
+        {
+          "document": {
+            "brand": "Verizon Prepaid",
+            "categories": [
+              "Cell Phones",
+              "Cell Phone Accessories",
+              "SIM Cards"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Cell Phone Accessories"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Cell Phone Accessories > SIM Cards"
+            ],
+            "description": "Set up your existing Verizon Prepaid 4G cell phone with this Verizon Wireless Prepaid kit, which contains a PIN for a 1-month airtime plan with 30 days of unlimited talk and text and 1GB of data, plus a nano SIM card and SIM card adapter tray.",
+            "free_shipping": false,
+            "id": "1172",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/4331711_sb.jpg",
+            "name": "Verizon Prepaid - Bring Your Own Phone SIM Kit + Airtime",
+            "popularity": 6955,
+            "price": 49.95,
+            "rating": 4
+          },
+          "highlights": [
+            {
+              "field": "description",
+              "matched_tokens": [
+                "Prepaid",
+                "phone"
+              ],
+              "snippet": "up your existing Verizon <mark>Prepaid</mark> 4G cell <mark>phone</mark> with this Verizon Wireless",
+              "value": "Set up your existing Verizon <mark>Prepaid</mark> 4G cell <mark>phone</mark> with this Verizon Wireless <mark>Prepaid</mark> kit, which contains a PIN for a 1-month airtime plan with 30 days of unlimited talk and text and 1GB of data, plus a nano SIM card and SIM card adapter tray."
+            },
+            {
+              "field": "name",
+              "matched_tokens": [
+                "Prepaid",
+                "Phone"
+              ],
+              "snippet": "Verizon <mark>Prepaid</mark> - Bring Your Own <mark>Phone</mark> SIM Kit + Airtime",
+              "value": "Verizon <mark>Prepaid</mark> - Bring Your Own <mark>Phone</mark> SIM Kit + Airtime"
+            },
+            {
+              "field": "categories",
+              "indices": [
+                1
+              ],
+              "matched_tokens": [
+                [
+                  "Phone"
+                ]
+              ],
+              "snippets": [
+                "Cell <mark>Phone</mark> Accessories"
+              ],
+              "values": [
+                "Cell <mark>Phone</mark> Accessories"
+              ]
+            }
+          ],
+          "text_match": 33749332
+        },
+        {
+          "document": {
+            "brand": "Verizon Prepaid",
+            "categories": [
+              "Cell Phones",
+              "Cell Phone Accessories",
+              "Prepaid Minutes"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Cell Phone Accessories"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Cell Phone Accessories > Prepaid Minutes"
+            ],
+            "description": "This Verizon Wireless Prepaid phone card provides unlimited talk and text, including unlimited text to Mexico and Canada. The data allowance enables use of your phone as a mobile hotspot.",
+            "free_shipping": false,
+            "id": "569",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/5538014_sb.jpg",
+            "name": "Verizon Prepaid - $45 Prepaid Phone Card",
+            "popularity": 8672,
+            "price": 45,
+            "rating": 3
+          },
+          "highlights": [
+            {
+              "field": "name",
+              "matched_tokens": [
+                "Prepaid",
+                "Phone"
+              ],
+              "snippet": "Verizon Prepaid - $45 <mark>Prepaid</mark> <mark>Phone</mark> Card",
+              "value": "Verizon Prepaid - $45 <mark>Prepaid</mark> <mark>Phone</mark> Card"
+            },
+            {
+              "field": "description",
+              "matched_tokens": [
+                "Prepaid",
+                "phone"
+              ],
+              "snippet": "This Verizon Wireless <mark>Prepaid</mark> <mark>phone</mark> card provides unlimited talk",
+              "value": "This Verizon Wireless <mark>Prepaid</mark> <mark>phone</mark> card provides unlimited talk and text, including unlimited text to Mexico and Canada. The data allowance enables use of your <mark>phone</mark> as a mobile hotspot."
+            },
+            {
+              "field": "categories",
+              "indices": [
+                1,
+                2
+              ],
+              "matched_tokens": [
+                [
+                  "Phone"
+                ],
+                [
+                  "Prepaid"
+                ]
+              ],
+              "snippets": [
+                "Cell <mark>Phone</mark> Accessories",
+                "<mark>Prepaid</mark> Minutes"
+              ],
+              "values": [
+                "Cell <mark>Phone</mark> Accessories",
+                "<mark>Prepaid</mark> Minutes"
+              ]
+            }
+          ],
+          "text_match": 33748480
+        },
+        {
+          "document": {
+            "brand": "Cricket Wireless",
+            "categories": [
+              "Cell Phones",
+              "Prepaid Phones",
+              "All Prepaid Phones"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Prepaid Phones"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Prepaid Phones > All Prepaid Phones"
+            ],
+            "description": "Alcatel OneTouch Flint Prepaid Cell Phone for Cricket Wireless:Stay connected to your friends and family with this Cricket Alcatel OneTouch Flint smartphone. It has a hefty 5.5-inch HD screen for easy viewing and navigation, and the color display is crisp and vibrant. The 2500 mAh battery in this Cricket Alcatel OneTouch Flint smartphone lets you talk up to 19 hours on a single charge..",
+            "free_shipping": false,
+            "id": "3",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/5215801_sb.jpg",
+            "name": "Cricket Wireless - Alcatel OneTouch Flint 4G with 16GB Memory Prepaid Cell Phone",
+            "popularity": 21343,
+            "price": 49.99,
+            "rating": 5
+          },
+          "highlights": [
+            {
+              "field": "categories",
+              "indices": [
+                1,
+                2,
+                0
+              ],
+              "matched_tokens": [
+                [
+                  "Prepaid",
+                  "Phones"
+                ],
+                [
+                  "Prepaid",
+                  "Phones"
+                ],
+                [
+                  "Phones"
+                ]
+              ],
+              "snippets": [
+                "<mark>Prepaid</mark> <mark>Phones</mark>",
+                "All <mark>Prepaid</mark> <mark>Phones</mark>",
+                "Cell <mark>Phones</mark>"
+              ],
+              "values": [
+                "<mark>Prepaid</mark> <mark>Phones</mark>",
+                "All <mark>Prepaid</mark> <mark>Phones</mark>",
+                "Cell <mark>Phones</mark>"
+              ]
+            },
+            {
+              "field": "name",
+              "matched_tokens": [
+                "Prepaid"
+              ],
+              "snippet": "Cricket Wireless - Alcatel OneTouch Flint 4G with 16GB Memory <mark>Prepaid</mark> Cell Phone",
+              "value": "Cricket Wireless - Alcatel OneTouch Flint 4G with 16GB Memory <mark>Prepaid</mark> Cell Phone"
+            },
+            {
+              "field": "description",
+              "matched_tokens": [
+                "Prepaid"
+              ],
+              "snippet": "Alcatel OneTouch Flint <mark>Prepaid</mark> Cell Phone for Cricket",
+              "value": "Alcatel OneTouch Flint <mark>Prepaid</mark> Cell Phone for Cricket Wireless:Stay connected to your friends and family with this Cricket Alcatel OneTouch Flint smartphone. It has a hefty 5.5-inch HD screen for easy viewing and navigation, and the color display is crisp and vibrant. The 2500 mAh battery in this Cricket Alcatel OneTouch Flint smartphone lets you talk up to 19 hours on a single charge.."
+            }
+          ],
+          "text_match": 33746176
+        },
+        {
+          "document": {
+            "brand": "Boost Mobile",
+            "categories": [
+              "Cell Phones",
+              "Prepaid Phones",
+              "All Prepaid Phones"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Prepaid Phones"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Prepaid Phones > All Prepaid Phones"
+            ],
+            "description": "LG K3 with 8GB Memory Prepaid Cell Phone for Boost Mobile: Call, text and contact your friends and family with the LG E0 smartphone. The 8GB of storage ensures you always have somewhere to put your photos and documents, and Bluetooth connectivity allows easy file sharing. Android 6 gives you access to a wide range of apps so that you can customize your LG E0 smartphone to your specifications.",
+            "free_shipping": true,
+            "id": "7",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/5020200_sb.jpg",
+            "name": "Boost Mobile - LG K3 with 8GB Memory Prepaid Cell Phone - Black",
+            "popularity": 21224,
+            "price": 49.99,
+            "rating": 1
+          },
+          "highlights": [
+            {
+              "field": "categories",
+              "indices": [
+                1,
+                2,
+                0
+              ],
+              "matched_tokens": [
+                [
+                  "Prepaid",
+                  "Phones"
+                ],
+                [
+                  "Prepaid",
+                  "Phones"
+                ],
+                [
+                  "Phones"
+                ]
+              ],
+              "snippets": [
+                "<mark>Prepaid</mark> <mark>Phones</mark>",
+                "All <mark>Prepaid</mark> <mark>Phones</mark>",
+                "Cell <mark>Phones</mark>"
+              ],
+              "values": [
+                "<mark>Prepaid</mark> <mark>Phones</mark>",
+                "All <mark>Prepaid</mark> <mark>Phones</mark>",
+                "Cell <mark>Phones</mark>"
+              ]
+            },
+            {
+              "field": "name",
+              "matched_tokens": [
+                "Prepaid"
+              ],
+              "snippet": "Boost Mobile - LG K3 with 8GB Memory <mark>Prepaid</mark> Cell Phone - Black",
+              "value": "Boost Mobile - LG K3 with 8GB Memory <mark>Prepaid</mark> Cell Phone - Black"
+            },
+            {
+              "field": "description",
+              "matched_tokens": [
+                "Prepaid"
+              ],
+              "snippet": "K3 with 8GB Memory <mark>Prepaid</mark> Cell Phone for Boost",
+              "value": "LG K3 with 8GB Memory <mark>Prepaid</mark> Cell Phone for Boost Mobile: Call, text and contact your friends and family with the LG E0 smartphone. The 8GB of storage ensures you always have somewhere to put your photos and documents, and Bluetooth connectivity allows easy file sharing. Android 6 gives you access to a wide range of apps so that you can customize your LG E0 smartphone to your specifications."
+            }
+          ],
+          "text_match": 33746176
+        },
+        {
+          "document": {
+            "brand": "Boost Mobile",
+            "categories": [
+              "Cell Phones",
+              "Prepaid Phones",
+              "All Prepaid Phones"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Prepaid Phones"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Prepaid Phones > All Prepaid Phones"
+            ],
+            "description": "LG Stylo 2 Prepaid Cell Phone for Boost Mobile:  Capture beautiful pictures with the 8-megapixel BSI laser autofocus camera on the LG G Stylo for Boost Mobile. The 5.7-inch HD IPS display lets you view vibrant colors. Use the live shot and video trim features to create unique movies, and use the optimized stylus pen to create art or easily navigate this LG G Stylo.",
+            "free_shipping": true,
+            "id": "17",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/5020700_sb.jpg",
+            "name": "Boost Mobile - LG Stylo 2 4G with 16GB Memory Prepaid Cell Phone - Titan Silver",
+            "popularity": 21146,
+            "price": 129.99,
+            "rating": 3
+          },
+          "highlights": [
+            {
+              "field": "categories",
+              "indices": [
+                1,
+                2,
+                0
+              ],
+              "matched_tokens": [
+                [
+                  "Prepaid",
+                  "Phones"
+                ],
+                [
+                  "Prepaid",
+                  "Phones"
+                ],
+                [
+                  "Phones"
+                ]
+              ],
+              "snippets": [
+                "<mark>Prepaid</mark> <mark>Phones</mark>",
+                "All <mark>Prepaid</mark> <mark>Phones</mark>",
+                "Cell <mark>Phones</mark>"
+              ],
+              "values": [
+                "<mark>Prepaid</mark> <mark>Phones</mark>",
+                "All <mark>Prepaid</mark> <mark>Phones</mark>",
+                "Cell <mark>Phones</mark>"
+              ]
+            },
+            {
+              "field": "name",
+              "matched_tokens": [
+                "Prepaid"
+              ],
+              "snippet": "Boost Mobile - LG Stylo 2 4G with 16GB Memory <mark>Prepaid</mark> Cell Phone - Titan Silver",
+              "value": "Boost Mobile - LG Stylo 2 4G with 16GB Memory <mark>Prepaid</mark> Cell Phone - Titan Silver"
+            },
+            {
+              "field": "description",
+              "matched_tokens": [
+                "Prepaid"
+              ],
+              "snippet": "LG Stylo 2 <mark>Prepaid</mark> Cell Phone for Boost",
+              "value": "LG Stylo 2 <mark>Prepaid</mark> Cell Phone for Boost Mobile:  Capture beautiful pictures with the 8-megapixel BSI laser autofocus camera on the LG G Stylo for Boost Mobile. The 5.7-inch HD IPS display lets you view vibrant colors. Use the live shot and video trim features to create unique movies, and use the optimized stylus pen to create art or easily navigate this LG G Stylo."
+            }
+          ],
+          "text_match": 33746176
+        },
+        {
+          "document": {
+            "brand": "Verizon Wireless Prepaid",
+            "categories": [
+              "Cell Phones",
+              "Prepaid Phones",
+              "All Prepaid Phones"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Prepaid Phones"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Prepaid Phones > All Prepaid Phones"
+            ],
+            "description": "Stay in touch with loved ones with this Verizon Wireless Prepaid Samsung Gusto 3 SMB311VZPP cell phone that enables calling and text messaging and features 3G speed for Web access. A Bluetooth 2.1 + EDR interface allows pairing with select devices.",
+            "free_shipping": true,
+            "id": "20",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/5358001_sb.jpg",
+            "name": "Verizon Wireless Prepaid - Samsung Gusto 3 No-Contract Cell Phone - Dark Blue",
+            "popularity": 21040,
+            "price": 19.99,
+            "rating": 4
+          },
+          "highlights": [
+            {
+              "field": "categories",
+              "indices": [
+                1,
+                2,
+                0
+              ],
+              "matched_tokens": [
+                [
+                  "Prepaid",
+                  "Phones"
+                ],
+                [
+                  "Prepaid",
+                  "Phones"
+                ],
+                [
+                  "Phones"
+                ]
+              ],
+              "snippets": [
+                "<mark>Prepaid</mark> <mark>Phones</mark>",
+                "All <mark>Prepaid</mark> <mark>Phones</mark>",
+                "Cell <mark>Phones</mark>"
+              ],
+              "values": [
+                "<mark>Prepaid</mark> <mark>Phones</mark>",
+                "All <mark>Prepaid</mark> <mark>Phones</mark>",
+                "Cell <mark>Phones</mark>"
+              ]
+            },
+            {
+              "field": "name",
+              "matched_tokens": [
+                "Prepaid"
+              ],
+              "snippet": "Verizon Wireless <mark>Prepaid</mark> - Samsung Gusto 3 No-Contract Cell Phone - Dark Blue",
+              "value": "Verizon Wireless <mark>Prepaid</mark> - Samsung Gusto 3 No-Contract Cell Phone - Dark Blue"
+            },
+            {
+              "field": "description",
+              "matched_tokens": [
+                "Prepaid"
+              ],
+              "snippet": "with this Verizon Wireless <mark>Prepaid</mark> Samsung Gusto 3 SMB311VZPP",
+              "value": "Stay in touch with loved ones with this Verizon Wireless <mark>Prepaid</mark> Samsung Gusto 3 SMB311VZPP cell phone that enables calling and text messaging and features 3G speed for Web access. A Bluetooth 2.1 + EDR interface allows pairing with select devices."
+            }
+          ],
+          "text_match": 33746176
+        },
+        {
+          "document": {
+            "brand": "Verizon Prepaid",
+            "categories": [
+              "Cell Phones",
+              "Prepaid Phones",
+              "All Prepaid Phones"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Prepaid Phones"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Prepaid Phones > All Prepaid Phones"
+            ],
+            "description": "Samsung Galaxy J3 Prepaid Cell Phone for Verizon Wireless Prepaid: Keep in touch with friends and family with this prepaid Samsung Galaxy J3 phone, featuring a brilliant Super AMOLED display. The 5-inch screen is easy to view, letting you scroll through social media or take beautiful vacation shots. An expandable memory on this Samsung Galaxy J3 phone lets you store entire photo albums.",
+            "free_shipping": true,
+            "id": "31",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/5165400_sb.jpg",
+            "name": "Verizon Prepaid - Samsung Galaxy J3 4G LTE with 8GB Memory Prepaid Cell Phone - Black",
+            "popularity": 20831,
+            "price": 109.99,
+            "rating": 5
+          },
+          "highlights": [
+            {
+              "field": "categories",
+              "indices": [
+                1,
+                2,
+                0
+              ],
+              "matched_tokens": [
+                [
+                  "Prepaid",
+                  "Phones"
+                ],
+                [
+                  "Prepaid",
+                  "Phones"
+                ],
+                [
+                  "Phones"
+                ]
+              ],
+              "snippets": [
+                "<mark>Prepaid</mark> <mark>Phones</mark>",
+                "All <mark>Prepaid</mark> <mark>Phones</mark>",
+                "Cell <mark>Phones</mark>"
+              ],
+              "values": [
+                "<mark>Prepaid</mark> <mark>Phones</mark>",
+                "All <mark>Prepaid</mark> <mark>Phones</mark>",
+                "Cell <mark>Phones</mark>"
+              ]
+            },
+            {
+              "field": "name",
+              "matched_tokens": [
+                "Prepaid",
+                "Prepaid"
+              ],
+              "snippet": "Verizon <mark>Prepaid</mark> - Samsung Galaxy J3 4G LTE with 8GB Memory <mark>Prepaid</mark> Cell Phone - Black",
+              "value": "Verizon <mark>Prepaid</mark> - Samsung Galaxy J3 4G LTE with 8GB Memory <mark>Prepaid</mark> Cell Phone - Black"
+            },
+            {
+              "field": "description",
+              "matched_tokens": [
+                "Prepaid"
+              ],
+              "snippet": "Samsung Galaxy J3 <mark>Prepaid</mark> Cell Phone for Verizon",
+              "value": "Samsung Galaxy J3 <mark>Prepaid</mark> Cell Phone for Verizon Wireless <mark>Prepaid:</mark> Keep in touch with friends and family with this <mark>prepaid</mark> Samsung Galaxy J3 phone, featuring a brilliant Super AMOLED display. The 5-inch screen is easy to view, letting you scroll through social media or take beautiful vacation shots. An expandable memory on this Samsung Galaxy J3 phone lets you store entire photo albums."
+            }
+          ],
+          "text_match": 33746176
+        },
+        {
+          "document": {
+            "brand": "Cricket Wireless",
+            "categories": [
+              "Cell Phones",
+              "Prepaid Phones",
+              "All Prepaid Phones"
+            ],
+            "categories.lvl0": [
+              "Cell Phones"
+            ],
+            "categories.lvl1": [
+              "Cell Phones > Prepaid Phones"
+            ],
+            "categories.lvl2": [
+              "Cell Phones > Prepaid Phones > All Prepaid Phones"
+            ],
+            "description": "Samsung Galaxy Sol Prepaid Cell Phone for Cricket Wireless:Make calls, send texts and browse the Internet with this Samsung Galaxy Sol for Cricket. Front and rear cameras let you take clear photos and videos, and the voice recorder function lets you make nots while on the go. Take out a Cricket plan for this Samsung Galaxy Sol, and enjoy fast speeds over its 4G LTE network.",
+            "free_shipping": true,
+            "id": "55",
+            "image": "https://cdn-demo.algolia.com/bestbuy-0118/5216601_sb.jpg",
+            "name": "Cricket Wireless - Samsung Galaxy Sol 4G with 8GB Memory Prepaid Cell Phone",
+            "popularity": 20496,
+            "price": 99.99,
+            "rating": 2
+          },
+          "highlights": [
+            {
+              "field": "categories",
+              "indices": [
+                1,
+                2,
+                0
+              ],
+              "matched_tokens": [
+                [
+                  "Prepaid",
+                  "Phones"
+                ],
+                [
+                  "Prepaid",
+                  "Phones"
+                ],
+                [
+                  "Phones"
+                ]
+              ],
+              "snippets": [
+                "<mark>Prepaid</mark> <mark>Phones</mark>",
+                "All <mark>Prepaid</mark> <mark>Phones</mark>",
+                "Cell <mark>Phones</mark>"
+              ],
+              "values": [
+                "<mark>Prepaid</mark> <mark>Phones</mark>",
+                "All <mark>Prepaid</mark> <mark>Phones</mark>",
+                "Cell <mark>Phones</mark>"
+              ]
+            },
+            {
+              "field": "name",
+              "matched_tokens": [
+                "Prepaid"
+              ],
+              "snippet": "Cricket Wireless - Samsung Galaxy Sol 4G with 8GB Memory <mark>Prepaid</mark> Cell Phone",
+              "value": "Cricket Wireless - Samsung Galaxy Sol 4G with 8GB Memory <mark>Prepaid</mark> Cell Phone"
+            },
+            {
+              "field": "description",
+              "matched_tokens": [
+                "Prepaid"
+              ],
+              "snippet": "Samsung Galaxy Sol <mark>Prepaid</mark> Cell Phone for Cricket",
+              "value": "Samsung Galaxy Sol <mark>Prepaid</mark> Cell Phone for Cricket Wireless:Make calls, send texts and browse the Internet with this Samsung Galaxy Sol for Cricket. Front and rear cameras let you take clear photos and videos, and the voice recorder function lets you make nots while on the go. Take out a Cricket plan for this Samsung Galaxy Sol, and enjoy fast speeds over its 4G LTE network."
+            }
+          ],
+          "text_match": 33746176
+        }
+      ],
+      "metadata": {
+            "promotion": "new_phones",
+            "title": "Check out the latest holiday season phones"
+      },
+      "out_of": 3291,
+      "page": 1,
+      "request_params": {
+        "collection_name": "products",
+        "per_page": 8,
+        "q": "prepaid phone"
+      },
+      "search_time_ms": 4
+    }
+  ]
+}

@@ -14,6 +14,17 @@ module.exports = (async () => {
     retryIntervalSeconds: 5,
   });
 
+  const overrideWithoutTag = {
+    rule: {
+      query: "Samsung",
+      match: "contains",
+    },
+    remove_matched_tokens: false,
+    metadata: {
+      promo_content: "20% on all Samsung Phones!",
+    },
+  };
+
   const schema = {
     name: "products",
     enable_nested_fields: true,
@@ -80,6 +91,8 @@ module.exports = (async () => {
   try {
     const collection = await typesense.collections("products").retrieve();
     console.log("Found existing schema");
+    await typesense.collections("products").overrides().upsert("samsung-override", overrideWithoutTag);
+
     // console.log(JSON.stringify(collection, null, 2));
     if (collection.num_documents !== products.length || process.env.FORCE_REINDEX === "true") {
       console.log("Deleting existing schema");
@@ -115,6 +128,8 @@ module.exports = (async () => {
       product.hierarchicalCategories[`lvl${index}`] = product.categories.slice(0, index + 1).join(" > ");
     });
   });
+
+  await typesense.collections("products").overrides().upsert("samsung-override", overrideWithoutTag);
 
   try {
     const returnData = await typesense.collections("products").documents().import(products);
