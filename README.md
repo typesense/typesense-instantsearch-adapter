@@ -21,6 +21,7 @@ Here is an example of UI you can build with this adapater: [songs-search.typesen
   - [With vue-instantsearch](#with-vue-instantsearch)
   - [With angular-instantsearch](#with-angular-instantsearch)
 - [Widget Specific Instructions](#widget-specific-instructions)
+- [Caching](#caching)
 - [Compatibility](#compatibility)
 - [Development](#development)
 - [Help](#help)
@@ -635,6 +636,46 @@ search = instantsearch({
     },
   });
 ```
+
+## Caching
+
+There are two modes of caching:
+
+1. **Server-side caching:**
+
+    To enable server-side caching, add a parameter called `useServerSideSearchCache: true` in the `server` configuration block of the typesense-instantsearch-adapter like this:
+
+    ```javascript
+    const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
+      server: {
+        apiKey: "...",
+        nearestNode: {...},
+        nodes: [...],
+        useServerSideSearchCache: true // <<< Add this to send use_cache as a query parameter instead of post body parameter
+      },
+      additionalSearchParameters: {...}
+    });
+    ```
+    
+    This will cause the adapter to add `?use_cache=true` as a URL query parameter to all search requests initiated by the adapter, which will then cause Typesense Server to enable server-side caching for these requests.   
+
+2. **Client-side caching:**
+
+    The adapter also has client-side caching enabled by default, to prevent unnecessary network calls to the server. The TTL for this client-side cache can be configured like this:
+
+     ```javascript
+    const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
+      server: {
+        apiKey: "...",
+        nearestNode: {...},
+        nodes: [...],
+        cacheSearchResultsForSeconds: 2 * 60 // <<< Add this to configure the TTL for client-side cache in the browser
+      },
+      additionalSearchParameters: {...}
+    });
+    ```
+
+
 
 ## Compatibility
 
