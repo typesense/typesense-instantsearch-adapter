@@ -425,7 +425,7 @@ export class SearchRequestAdapter {
       page: (params.page || 0) + 1,
     });
 
-    if (params.hitsPerPage) {
+    if (params.hitsPerPage != null) {
       typesenseSearchParams.per_page = params.hitsPerPage;
     }
 

@@ -605,36 +605,30 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
 // from https://github.com/typesense/showcase-hn-comments-semantic-search/blob/8a33006cae58b425c53f56a64e1273e808cd9375/src/js/index.js#L101
 const searchClient = typesenseInstantsearchAdapter.searchClient;
 search = instantsearch({
-    searchClient,
-    indexName: INDEX_NAME,
-    routing: true,
-    async searchFunction(helper) {
-      // This fetches 200 (nearest neighbor) results for semantic / hybrid search
+  searchClient,
+  indexName: INDEX_NAME,
+  routing: true,
+  async searchFunction(helper) {
+    // This fetches 200 (nearest neighbor) results for semantic / hybrid search
 
-      let query = helper.getQuery().query;
-      const page = helper.getPage(); // Retrieve the current page
+    let query = helper.getQuery().query;
+    const page = helper.getPage(); // Retrieve the current page
 
-      if (
-        query !== "" &&
-        ["semantic", "hybrid"].includes($("#search-type-select").val())
-      ) {
-        console.log(helper.getQuery().query);
-        helper
-          .setQueryParameter(
-            "typesenseVectorQuery", // <=== Special parameter that only works in typesense-instantsearch-adapter@2.7.0-3 and above
-            `embedding:([], k:200)`,
-          )
-          .setPage(page)
-          .search();
-        console.log(helper.getQuery().query);
-      } else {
-        helper
-          .setQueryParameter("typesenseVectorQuery", null)
-          .setPage(page)
-          .search();
-      }
-    },
-  });
+    if (query !== "" && ["semantic", "hybrid"].includes($("#search-type-select").val())) {
+      console.log(helper.getQuery().query);
+      helper
+        .setQueryParameter(
+          "typesenseVectorQuery", // <=== Special parameter that only works in typesense-instantsearch-adapter@2.7.0-3 and above
+          `embedding:([], k:200)`,
+        )
+        .setPage(page)
+        .search();
+      console.log(helper.getQuery().query);
+    } else {
+      helper.setQueryParameter("typesenseVectorQuery", null).setPage(page).search();
+    }
+  },
+});
 ```
 
 ## Caching
@@ -643,39 +637,37 @@ There are two modes of caching:
 
 1. **Server-side caching:**
 
-    To enable server-side caching, add a parameter called `useServerSideSearchCache: true` in the `server` configuration block of the typesense-instantsearch-adapter like this:
+   To enable server-side caching, add a parameter called `useServerSideSearchCache: true` in the `server` configuration block of the typesense-instantsearch-adapter like this:
 
-    ```javascript
-    const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
-      server: {
-        apiKey: "...",
-        nearestNode: {...},
-        nodes: [...],
-        useServerSideSearchCache: true // <<< Add this to send use_cache as a query parameter instead of post body parameter
-      },
-      additionalSearchParameters: {...}
-    });
-    ```
-    
-    This will cause the adapter to add `?use_cache=true` as a URL query parameter to all search requests initiated by the adapter, which will then cause Typesense Server to enable server-side caching for these requests.   
+   ```javascript
+   const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
+     server: {
+       apiKey: "...",
+       nearestNode: {...},
+       nodes: [...],
+       useServerSideSearchCache: true // <<< Add this to send use_cache as a query parameter instead of post body parameter
+     },
+     additionalSearchParameters: {...}
+   });
+   ```
+
+   This will cause the adapter to add `?use_cache=true` as a URL query parameter to all search requests initiated by the adapter, which will then cause Typesense Server to enable server-side caching for these requests.
 
 2. **Client-side caching:**
 
-    The adapter also has client-side caching enabled by default, to prevent unnecessary network calls to the server. The TTL for this client-side cache can be configured like this:
+   The adapter also has client-side caching enabled by default, to prevent unnecessary network calls to the server. The TTL for this client-side cache can be configured like this:
 
-     ```javascript
-    const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
-      server: {
-        apiKey: "...",
-        nearestNode: {...},
-        nodes: [...],
-        cacheSearchResultsForSeconds: 2 * 60 // <<< Add this to configure the TTL for client-side cache in the browser
-      },
-      additionalSearchParameters: {...}
-    });
-    ```
-
-
+   ```javascript
+   const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
+    server: {
+      apiKey: "...",
+      nearestNode: {...},
+      nodes: [...],
+      cacheSearchResultsForSeconds: 2 * 60 // <<< Add this to configure the TTL for client-side cache in the browser
+    },
+    additionalSearchParameters: {...}
+   });
+   ```
 
 ## Compatibility
 

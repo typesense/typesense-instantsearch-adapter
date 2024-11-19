@@ -50,7 +50,7 @@ describe("Search Experience", () => {
             text: "Fast Charge Wireless Charger",
           });
           await expect(page).toMatchElement("#current-refinements", {
-            text: "Brand:Samsung",
+            text: "Brand: Samsung",
           });
 
           // Pagination
@@ -83,7 +83,7 @@ describe("Search Experience", () => {
             text: "Free Shipping: true",
           });
           await expect(page).toMatchElement("#current-refinements", {
-            text: "Free_shipping:true",
+            text: "Free_shipping: true",
           });
 
           // Pagination
@@ -111,7 +111,7 @@ describe("Search Experience", () => {
             text: "Belkin - MIXIT Metallic Car Charger - Black",
           });
           await expect(page).toMatchElement("#current-refinements", {
-            text: "Categories:Car & Travel Accessories",
+            text: "Categories: Car & Travel Accessories",
           });
 
           // Breadcrumb
