@@ -46,7 +46,7 @@ jobs:
         run: npm run build
 
       - name: Run tests
-      - run: npm test -- --ci --color
+        run: npm test -- --ci --color
 
       - uses: actions/upload-artifact@v3
         if: always()
