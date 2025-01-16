@@ -11,9 +11,31 @@ jobs:
         with:
           node-version: 18
           cache: npm
+
+      - name: Install Puppeteer dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libnss3 \
+            libnspr4 \
+            libatk1.0-0 \
+            libatk-bridge2.0-0 \
+            libcups2 \
+            libdrm2 \
+            libxkbcommon0 \
+            libxcomposite1 \
+            libxdamage1 \
+            libxfixes3 \
+            libxrandr2 \
+            libgbm1 \
+            libasound2
+          sudo apt update 
+          sudo apt install -y chromium-browser
+
       - run: npm ci
       - run: npm run build
       - run: npm test -- --ci --color
+
       - uses: actions/upload-artifact@v3
         with:
           name: screenshots
