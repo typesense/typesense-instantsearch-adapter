@@ -28,7 +28,7 @@ jobs:
             libxfixes3 \
             libxrandr2 \
             libgbm1 \
-            libasound2
+            libasound2t64
           sudo apt update 
           sudo apt install -y chromium-browser
 
