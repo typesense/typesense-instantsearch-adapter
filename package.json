@@ -70,6 +70,7 @@
     "eslint-plugin-standard": "^5.0.0",
     "expect-puppeteer": "^10.0.0",
     "fs-extra": "^11.2.0",
+    "instantsearch.js": "^4.78.0",
     "jest": "^29.7.0",
     "jest-dev-server": "^10.0.0",
     "jest-junit": "^16.0.0",

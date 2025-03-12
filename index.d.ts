@@ -1,4 +1,6 @@
-type SearchClient = any;
+import type { SearchClient as AlgoliaSearchClient, CompositionClient } from "instantsearch.js";
+
+type SearchClient = CompositionClient | AlgoliaSearchClient;
 
 import type { ConfigurationOptions } from "typesense/lib/Typesense/Configuration";
 import type { SearchParamsWithPreset } from "typesense/lib/Typesense/Documents";
