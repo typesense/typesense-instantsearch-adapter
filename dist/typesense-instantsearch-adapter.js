@@ -1831,15 +1831,36 @@ var ApiCall = /** @class */ (function () {
             });
         });
     };
+    ApiCall.prototype.getAdapter = function () {
+        if (!this.configuration.axiosAdapter)
+            return undefined;
+        if (typeof this.configuration.axiosAdapter === "function")
+            return this.configuration.axiosAdapter;
+        var isCloudflareWorkers = typeof navigator !== "undefined" &&
+            navigator.userAgent === "Cloudflare-Workers";
+        return isCloudflareWorkers
+            ? axios_1.default.getAdapter(this.configuration.axiosAdapter).bind(globalThis)
+            : axios_1.default.getAdapter(this.configuration.axiosAdapter);
+    };
     ApiCall.prototype.performRequest = function (requestType, endpoint, _a) {
         var _b, _c, _d, _e;
         var _f = _a.queryParameters, queryParameters = _f === void 0 ? null : _f, _g = _a.bodyParameters, bodyParameters = _g === void 0 ? null : _g, _h = _a.additionalHeaders, additionalHeaders = _h === void 0 ? {} : _h, _j = _a.abortSignal, abortSignal = _j === void 0 ? null : _j, _k = _a.responseType, responseType = _k === void 0 ? undefined : _k, _l = _a.skipConnectionTimeout, skipConnectionTimeout = _l === void 0 ? false : _l, _m = _a.enableKeepAlive, enableKeepAlive = _m === void 0 ? undefined : _m;
         return tslib_1.__awaiter(this, void 0, void 0, function () {
-            var requestNumber, lastException, wasAborted, _loop_1, this_1, numTries, state_1;
+            var isStreamingRequest, requestNumber, lastException, wasAborted, _loop_1, this_1, numTries, state_1;
             return tslib_1.__generator(this, function (_o) {
                 switch (_o.label) {
                     case 0:
                         this.configuration.validate();
+                        isStreamingRequest = (queryParameters === null || queryParameters === void 0 ? void 0 : queryParameters.conversation_stream) === true &&
+                            requestType.toLowerCase() === "get";
+                        if (isStreamingRequest) {
+                            this.logger.debug("Request: Performing streaming request to ".concat(endpoint));
+                            // For browser streaming, always use responseType: "stream" and adapter: "fetch"
+                            if (!isNodeJSEnvironment && typeof fetch !== "undefined") {
+                                this.logger.debug("Using fetch adapter for browser streaming");
+                                responseType = "stream";
+                            }
+                        }
                         requestNumber = Date.now();
                         wasAborted = false;
                         this.logger.debug("Request #".concat(requestNumber, ": Performing ").concat(requestType.toUpperCase(), " request: ").concat(endpoint));
@@ -1858,13 +1879,11 @@ var ApiCall = /** @class */ (function () {
                                     case 1:
                                         _p.trys.push([1, 3, 5, 6]);
                                         requestOptions = {
-                                            adapter: this_1.configuration.axiosAdapter,
                                             method: requestType,
                                             url: this_1.uriFor(endpoint, node),
                                             headers: Object.assign({}, this_1.defaultHeaders(), additionalHeaders, this_1.additionalUserHeaders),
                                             maxContentLength: Infinity,
                                             maxBodyLength: Infinity,
-                                            responseType: responseType,
                                             validateStatus: function (status) {
                                                 /* Override default validateStatus, which only considers 2xx a success.
                                                     In our case, if the server returns any HTTP code, we will handle it below.
@@ -1885,6 +1904,11 @@ var ApiCall = /** @class */ (function () {
                                                 },
                                             ],
                                         };
+                                        // Use fetch adapter only for streaming requests in browser environments
+                                        requestOptions.adapter =
+                                            isStreamingRequest && !isNodeJSEnvironment
+                                                ? "fetch"
+                                                : this_1.getAdapter();
                                         if (skipConnectionTimeout !== true) {
                                             requestOptions.timeout = this_1.connectionTimeoutSeconds * 1000;
                                         }
@@ -1943,6 +1967,15 @@ var ApiCall = /** @class */ (function () {
                                             abortSignal.addEventListener("abort", abortListener);
                                             requestOptions.cancelToken = source_1.token;
                                         }
+                                        if (isStreamingRequest) {
+                                            requestOptions.responseType = "stream";
+                                            if (!isNodeJSEnvironment) {
+                                                requestOptions.headers = tslib_1.__assign(tslib_1.__assign({}, requestOptions.headers), { Accept: "text/event-stream" });
+                                            }
+                                        }
+                                        else if (responseType) {
+                                            requestOptions.responseType = responseType;
+                                        }
                                         return [4 /*yield*/, (0, axios_1.default)(requestOptions)];
                                     case 2:
                                         response = _p.sent();
@@ -1953,15 +1986,17 @@ var ApiCall = /** @class */ (function () {
                                         }
                                         this_1.logger.debug("Request #".concat(requestNumber, ": Request to Node ").concat(node.index, " was made. Response Code was ").concat(response.status, "."));
                                         if (response.status >= 200 && response.status < 300) {
+                                            if (isStreamingRequest)
+                                                return [2 /*return*/, { value: this_1.handleStreamingResponse(response) }];
                                             return [2 /*return*/, { value: Promise.resolve(response.data) }];
                                         }
                                         else if (response.status < 500) {
-                                            return [2 /*return*/, { value: Promise.reject(this_1.customErrorForResponse(response, (_b = response.data) === null || _b === void 0 ? void 0 : _b.message)) }];
+                                            return [2 /*return*/, { value: Promise.reject(this_1.customErrorForResponse(response, (_b = response.data) === null || _b === void 0 ? void 0 : _b.message, requestOptions.data)) }];
                                         }
                                         else {
                                             // Retry all other HTTP errors (HTTPStatus > 500)
                                             // This will get caught by the catch block below
-                                            throw this_1.customErrorForResponse(response, (_c = response.data) === null || _c === void 0 ? void 0 : _c.message);
+                                            throw this_1.customErrorForResponse(response, (_c = response.data) === null || _c === void 0 ? void 0 : _c.message, requestOptions.data);
                                         }
                                         return [3 /*break*/, 6];
                                     case 3:
@@ -1974,12 +2009,18 @@ var ApiCall = /** @class */ (function () {
                                         this_1.logger.warn("Request #".concat(requestNumber, ": Request to Node ").concat(node.index, " failed due to \"").concat((_d = error_1 === null || error_1 === void 0 ? void 0 : error_1.code) !== null && _d !== void 0 ? _d : "", " ").concat(error_1.message).concat(error_1.response == null
                                             ? ""
                                             : " - " + JSON.stringify((_e = error_1.response) === null || _e === void 0 ? void 0 : _e.data), "\""));
-                                        // this.logger.debug(error.stack)
                                         if (wasAborted) {
                                             return [2 /*return*/, { value: Promise.reject(new Error("Request aborted by caller.")) }];
                                         }
+                                        if (isStreamingRequest) {
+                                            this_1.invokeOnErrorCallback(error_1);
+                                        }
                                         if (numTries < this_1.numRetriesPerRequest + 1) {
                                             this_1.logger.warn("Request #".concat(requestNumber, ": Sleeping for ").concat(this_1.retryIntervalSeconds, "s and then retrying request..."));
+                                        }
+                                        else {
+                                            this_1.logger.debug("Request #".concat(requestNumber, ": No retries left. Raising last error"));
+                                            return [2 /*return*/, { value: Promise.reject(lastException) }];
                                         }
                                         return [4 /*yield*/, this_1.timer(this_1.retryIntervalSeconds)];
                                     case 4:
@@ -2014,6 +2055,333 @@ var ApiCall = /** @class */ (function () {
                 }
             });
         });
+    };
+    ApiCall.prototype.processStreamingLine = function (line) {
+        if (!line.trim() || line === "data: [DONE]") {
+            return null;
+        }
+        // Handle SSE format (data: {...})
+        if (line.startsWith("data: ")) {
+            return this.processDataLine(line.slice(6).trim());
+        }
+        // Try parsing as JSON if it starts with a brace
+        if (line.trim().startsWith("{")) {
+            try {
+                var jsonData = JSON.parse(line.trim());
+                if (jsonData && typeof jsonData === "object") {
+                    if (!jsonData.conversation_id) {
+                        jsonData.conversation_id = "unknown";
+                    }
+                    if (!jsonData.message && jsonData.message !== "") {
+                        jsonData.message = "";
+                    }
+                    return jsonData;
+                }
+                return {
+                    conversation_id: "unknown",
+                    message: JSON.stringify(jsonData),
+                };
+            }
+            catch (e) {
+                return {
+                    conversation_id: "unknown",
+                    message: line.trim(),
+                };
+            }
+        }
+        return {
+            conversation_id: "unknown",
+            message: line.trim(),
+        };
+    };
+    ApiCall.prototype.processDataLine = function (dataContent) {
+        if (!dataContent) {
+            return null;
+        }
+        if (dataContent.startsWith("{")) {
+            try {
+                var jsonData = JSON.parse(dataContent);
+                // Ensure the required fields exist
+                if (jsonData && typeof jsonData === "object") {
+                    if (!jsonData.conversation_id) {
+                        jsonData.conversation_id = "unknown";
+                    }
+                    if (!jsonData.message && jsonData.message !== "") {
+                        jsonData.message = "";
+                    }
+                    return jsonData;
+                }
+                return {
+                    conversation_id: "unknown",
+                    message: JSON.stringify(jsonData),
+                };
+            }
+            catch (e) {
+                // Not valid JSON, use as plain text
+                return {
+                    conversation_id: "unknown",
+                    message: dataContent,
+                };
+            }
+        }
+        // For plain text
+        return {
+            conversation_id: "unknown",
+            message: dataContent,
+        };
+    };
+    ApiCall.prototype.handleStreamingResponse = function (response) {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                this.logger.debug("Handling streaming response. Environment: ".concat(isNodeJSEnvironment ? "Node.js" : "Browser"));
+                if (isNodeJSEnvironment && response.data) {
+                    return [2 /*return*/, this.handleNodeStreaming(response)];
+                }
+                if (!isNodeJSEnvironment) {
+                    return [2 /*return*/, this.handleBrowserStreaming(response)];
+                }
+                this.logger.debug("Processing non-streaming response");
+                this.invokeOnCompleteCallback(response.data);
+                return [2 /*return*/, Promise.resolve(response.data)];
+            });
+        });
+    };
+    ApiCall.prototype.handleNodeStreaming = function (response) {
+        var _this = this;
+        this.logger.debug("Processing Node.js stream");
+        return new Promise(function (resolve, reject) {
+            var stream = response.data;
+            var allChunks = [];
+            var buffer = "";
+            stream.on("data", function (chunk) {
+                var _a;
+                try {
+                    var data = chunk.toString();
+                    buffer += data;
+                    var lines = buffer.split("\n");
+                    buffer = (_a = lines.pop()) !== null && _a !== void 0 ? _a : "";
+                    _this.processStreamLines(lines, allChunks);
+                }
+                catch (error) {
+                    reject(error);
+                }
+            });
+            stream.on("end", function () {
+                if (buffer.trim().length > 0) {
+                    var lines = buffer.split("\n");
+                    _this.processStreamLines(lines, allChunks);
+                }
+                _this.finalizeStreamResult(allChunks, resolve, response);
+            });
+            stream.on("error", function (error) {
+                _this.logger.error("Stream error: ".concat(error));
+                _this.invokeOnErrorCallback(error);
+                reject(error);
+            });
+        });
+    };
+    ApiCall.prototype.handleBrowserStreaming = function (response) {
+        var _this = this;
+        this.logger.debug("Processing browser stream");
+        return new Promise(function (resolve, reject) { return tslib_1.__awaiter(_this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                try {
+                    if (response.data && typeof response.data.getReader === "function") {
+                        return [2 /*return*/, this.handleBrowserReadableStream(response.data, resolve, reject, response)];
+                    }
+                    if (typeof response.data === "string") {
+                        return [2 /*return*/, this.handleBrowserStringResponse(response.data, resolve, response)];
+                    }
+                    if (typeof response.data === "object" && response.data !== null) {
+                        this.logger.debug("No stream found, but data object is available");
+                        this.invokeOnCompleteCallback(response.data);
+                        return [2 /*return*/, resolve(response.data)];
+                    }
+                    this.logger.error("No usable data found in response");
+                    return [2 /*return*/, reject(new Error("No usable data found in response"))];
+                }
+                catch (error) {
+                    this.logger.error("Error processing streaming response: ".concat(error));
+                    this.invokeOnErrorCallback(error);
+                    reject(error);
+                }
+                return [2 /*return*/];
+            });
+        }); });
+    };
+    ApiCall.prototype.handleBrowserReadableStream = function (stream, resolve, reject, response) {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            var reader, allChunks, buffer, _a, done, value, lines_1, chunk, lines, error_2;
+            return tslib_1.__generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        this.logger.debug("Found ReadableStream in response.data");
+                        reader = stream.getReader();
+                        allChunks = [];
+                        buffer = "";
+                        _b.label = 1;
+                    case 1:
+                        _b.trys.push([1, 5, , 6]);
+                        _b.label = 2;
+                    case 2:
+                        if (false) {}
+                        return [4 /*yield*/, reader.read()];
+                    case 3:
+                        _a = _b.sent(), done = _a.done, value = _a.value;
+                        if (done) {
+                            this.logger.debug("Stream reading complete");
+                            if (buffer.trim()) {
+                                lines_1 = buffer.split("\n");
+                                this.processStreamLines(lines_1, allChunks);
+                            }
+                            return [3 /*break*/, 4];
+                        }
+                        chunk = new TextDecoder().decode(value);
+                        this.logger.debug("Received chunk: ".concat(chunk.length, " bytes"));
+                        buffer += chunk;
+                        lines = buffer.split("\n");
+                        buffer = lines.pop() || "";
+                        this.processStreamLines(lines, allChunks);
+                        return [3 /*break*/, 2];
+                    case 4:
+                        this.finalizeStreamResult(allChunks, resolve, response);
+                        return [3 /*break*/, 6];
+                    case 5:
+                        error_2 = _b.sent();
+                        reject(error_2);
+                        return [3 /*break*/, 6];
+                    case 6: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ApiCall.prototype.handleBrowserStringResponse = function (data, resolve, response) {
+        this.logger.debug("Processing text response as stream data");
+        var allChunks = [];
+        var lines = data.split("\n");
+        this.processStreamLines(lines, allChunks);
+        if (allChunks.length > 0) {
+            var finalResult = this.combineStreamingChunks(allChunks);
+            this.invokeOnCompleteCallback(finalResult);
+            resolve(finalResult);
+        }
+        else {
+            // If no chunks were processed, use the original response
+            this.logger.debug("No chunks processed, returning original API response");
+            this.invokeOnCompleteCallback(response.data);
+            resolve(response.data);
+        }
+    };
+    ApiCall.prototype.processStreamLines = function (lines, allChunks) {
+        for (var _i = 0, lines_2 = lines; _i < lines_2.length; _i++) {
+            var line = lines_2[_i];
+            if (line.trim() && line !== "data: [DONE]") {
+                var processed = this.processStreamingLine(line);
+                if (processed !== null) {
+                    this.invokeOnChunkCallback(processed);
+                    allChunks.push(processed);
+                }
+            }
+        }
+    };
+    ApiCall.prototype.finalizeStreamResult = function (allChunks, resolve, response) {
+        if (allChunks.length > 0) {
+            var finalResult = this.combineStreamingChunks(allChunks);
+            this.logger.debug("Stream processing complete");
+            this.invokeOnCompleteCallback(finalResult);
+            resolve(finalResult);
+        }
+        else {
+            this.logger.debug("No chunks processed, returning original API response");
+            this.invokeOnCompleteCallback(response.data);
+            resolve(response.data);
+        }
+    };
+    /**
+     * Combines multiple streaming chunks into a single coherent result
+     * This is critical for ensuring we return the complete data rather than just the last chunk
+     */
+    ApiCall.prototype.combineStreamingChunks = function (chunks) {
+        if (chunks.length === 0)
+            return {};
+        if (chunks.length === 1)
+            return chunks[0];
+        // For conversation streams with message chunks
+        var messagesChunks = this.getMessageChunks(chunks);
+        if (messagesChunks.length > 0) {
+            return this.combineMessageChunks(chunks, messagesChunks);
+        }
+        // For regular search responses
+        var lastChunk = chunks[chunks.length - 1];
+        if (this.isCompleteSearchResponse(lastChunk)) {
+            return lastChunk;
+        }
+        // Try to merge chunks if last chunk isn't a complete response
+        return this.attemptChunksMerge(chunks, lastChunk);
+    };
+    ApiCall.prototype.getMessageChunks = function (chunks) {
+        return chunks.filter(function (chunk) {
+            return typeof chunk === "object" && chunk !== null && "message" in chunk;
+        });
+    };
+    ApiCall.prototype.combineMessageChunks = function (chunks, messagesChunks) {
+        this.logger.debug("Found ".concat(messagesChunks.length, " message chunks to combine"));
+        // Check if the last chunk contains the complete response
+        var lastChunk = chunks[chunks.length - 1];
+        if (typeof lastChunk === "object" &&
+            lastChunk !== null &&
+            ("hits" in lastChunk || "found" in lastChunk)) {
+            this.logger.debug("Last chunk appears to be a complete search response");
+            return lastChunk;
+        }
+        // Combine all message chunks
+        var combinedMessage = messagesChunks
+            .map(function (chunk) { return chunk.message; })
+            .join("");
+        // Look for a chunk with search metadata
+        var metadataChunk = chunks.find(function (chunk) {
+            return typeof chunk === "object" &&
+                chunk !== null &&
+                ("hits" in chunk || "found" in chunk || "request_params" in chunk);
+        });
+        if (metadataChunk) {
+            // If we found metadata, merge it with the combined message
+            return tslib_1.__assign(tslib_1.__assign({}, metadataChunk), { message: combinedMessage });
+        }
+        // Otherwise just return the combined message
+        return { message: combinedMessage };
+    };
+    ApiCall.prototype.isCompleteSearchResponse = function (chunk) {
+        if (typeof chunk === "object" &&
+            chunk !== null &&
+            Object.keys(chunk).length > 0) {
+            // Check if it has search response properties
+            return ("found" in chunk ||
+                "hits" in chunk ||
+                "page" in chunk ||
+                "search_time_ms" in chunk);
+        }
+        return false;
+    };
+    ApiCall.prototype.attemptChunksMerge = function (chunks, lastChunk) {
+        try {
+            // Attempt to merge chunks that might be parts of the same structure
+            var mergedResult = {};
+            for (var _i = 0, chunks_1 = chunks; _i < chunks_1.length; _i++) {
+                var chunk = chunks_1[_i];
+                if (typeof chunk === "object" && chunk !== null) {
+                    mergedResult = tslib_1.__assign(tslib_1.__assign({}, mergedResult), chunk);
+                }
+            }
+            if (Object.keys(mergedResult).length > 0) {
+                return mergedResult;
+            }
+        }
+        catch (e) {
+            this.logger.warn("Failed to merge chunks: ".concat(e));
+        }
+        // Fallback to the last chunk if merging fails
+        return lastChunk;
     };
     // Attempts to find the next healthy node, looping through the list of nodes once.
     //   But if no healthy nodes are found, it will just return the next node, even if it's unhealthy
@@ -2096,13 +2464,13 @@ var ApiCall = /** @class */ (function () {
             });
         });
     };
-    ApiCall.prototype.customErrorForResponse = function (response, messageFromServer) {
+    ApiCall.prototype.customErrorForResponse = function (response, messageFromServer, httpBody) {
         var errorMessage = "Request failed with HTTP code ".concat(response.status);
         if (typeof messageFromServer === "string" &&
             messageFromServer.trim() !== "") {
             errorMessage += " | Server said: ".concat(messageFromServer);
         }
-        var error = new TypesenseError_1.default(errorMessage);
+        var error = new TypesenseError_1.default(errorMessage, httpBody, response.status);
         if (response.status === 400) {
             error = new Errors_1.RequestMalformed(errorMessage);
         }
@@ -2124,8 +2492,41 @@ var ApiCall = /** @class */ (function () {
         else {
             error = new Errors_1.HTTPError(errorMessage);
         }
-        error.httpStatus = response.status;
         return error;
+    };
+    ApiCall.prototype.invokeOnChunkCallback = function (data) {
+        var _a;
+        if ((_a = this.configuration.streamConfig) === null || _a === void 0 ? void 0 : _a.onChunk) {
+            try {
+                this.configuration.streamConfig.onChunk(data);
+            }
+            catch (error) {
+                this.logger.warn("Error in onChunk callback: ".concat(error));
+            }
+        }
+    };
+    ApiCall.prototype.invokeOnCompleteCallback = function (data) {
+        var _a;
+        if ((_a = this.configuration.streamConfig) === null || _a === void 0 ? void 0 : _a.onComplete) {
+            try {
+                this.configuration.streamConfig.onComplete(data);
+            }
+            catch (error) {
+                this.logger.warn("Error in onComplete callback: ".concat(error));
+            }
+        }
+    };
+    ApiCall.prototype.invokeOnErrorCallback = function (error) {
+        var _a;
+        if ((_a = this.configuration.streamConfig) === null || _a === void 0 ? void 0 : _a.onError) {
+            var errorObj = error instanceof Error ? error : new Error(String(error));
+            try {
+                this.configuration.streamConfig.onError(errorObj);
+            }
+            catch (callbackError) {
+                this.logger.warn("Error in onError callback: ".concat(callbackError));
+            }
+        }
     };
     return ApiCall;
 }());
@@ -2166,6 +2567,7 @@ var Stopwords_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Stopwords */
 var Stopword_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Stopword */ "./node_modules/typesense/lib/Typesense/Stopword.js"));
 var Conversations_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Conversations */ "./node_modules/typesense/lib/Typesense/Conversations.js"));
 var Conversation_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Conversation */ "./node_modules/typesense/lib/Typesense/Conversation.js"));
+var Stemming_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Stemming */ "./node_modules/typesense/lib/Typesense/Stemming.js"));
 var Client = /** @class */ (function () {
     function Client(options) {
         var _a;
@@ -2189,6 +2591,7 @@ var Client = /** @class */ (function () {
         this._stopwords = new Stopwords_1.default(this.apiCall);
         this.individualStopwords = {};
         this.analytics = new Analytics_1.default(this.apiCall);
+        this.stemming = new Stemming_1.default(this.apiCall);
         this._conversations = new Conversations_1.default(this.apiCall);
         this.individualConversations = {};
     }
@@ -2400,7 +2803,6 @@ var Collections = /** @class */ (function () {
         this.apiCall = apiCall;
     }
     Collections.prototype.create = function (schema, options) {
-        if (options === void 0) { options = {}; }
         return tslib_1.__awaiter(this, void 0, void 0, function () {
             return tslib_1.__generator(this, function (_a) {
                 return [2 /*return*/, this.apiCall.post(RESOURCEPATH, schema, options)];
@@ -2479,6 +2881,7 @@ var Configuration = /** @class */ (function () {
         this.httpAgent = options.httpAgent;
         this.httpsAgent = options.httpsAgent;
         this.paramsSerializer = options.paramsSerializer;
+        this.streamConfig = options.streamConfig;
         this.showDeprecationWarnings(options);
         this.validate();
     }
@@ -2834,27 +3237,9 @@ exports.Document = Document;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.arrayableParams = void 0;
 var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var Errors_1 = __webpack_require__(/*! ./Errors */ "./node_modules/typesense/lib/Typesense/Errors/index.js");
 var SearchOnlyDocuments_1 = __webpack_require__(/*! ./SearchOnlyDocuments */ "./node_modules/typesense/lib/Typesense/SearchOnlyDocuments.js");
-exports.arrayableParams = {
-    query_by: "query_by",
-    query_by_weights: "query_by_weights",
-    facet_by: "facet_by",
-    group_by: "group_by",
-    include_fields: "include_fields",
-    exclude_fields: "exclude_fields",
-    highlight_fields: "highlight_fields",
-    highlight_full_fields: "highlight_full_fields",
-    pinned_hits: "pinned_hits",
-    hidden_hits: "hidden_hits",
-    infix: "infix",
-    override_tags: "override_tags",
-    num_typos: "num_typos",
-    prefix: "prefix",
-    sort_by: "sort_by",
-};
 var isNodeJSEnvironment = typeof process !== "undefined" &&
     process.versions != null &&
     process.versions.node != null;
@@ -2924,6 +3309,9 @@ var Documents = /** @class */ (function (_super) {
                 switch (_a.label) {
                     case 0:
                         if (Array.isArray(documents)) {
+                            if (documents.length === 0) {
+                                throw new Errors_1.RequestMalformed("No documents provided");
+                            }
                             try {
                                 documentsInJSONLFormat = documents
                                     .map(function (document) { return JSON.stringify(document); })
@@ -2933,7 +3321,7 @@ var Documents = /** @class */ (function (_super) {
                                 // if rangeerror, throw custom error message
                                 if (error instanceof RangeError &&
                                     error.message.includes("Too many properties to enumerate")) {
-                                    throw new Error("".concat(error, "\n          It looks like you have reached a Node.js limit that restricts the number of keys in an Object: https://stackoverflow.com/questions/9282869/are-there-limits-to-the-number-of-properties-in-a-javascript-object\n\n          Please try reducing the number of keys in your document, or using CURL to import your data.\n          "));
+                                    throw new Error("".concat(error, "\n          It looks like you have reached a Node.js limit that restricts the number of keys in an Object: https://stackoverflow.com/questions/9282869/are-there-limits-to-the-number-of-properties-in-a-javascript-object\n\n         Please try reducing the number of keys in your document, or using CURL to import your data.\n          "));
                                 }
                                 // else, throw the non-range error anyways
                                 throw new Error(error);
@@ -2941,6 +3329,9 @@ var Documents = /** @class */ (function (_super) {
                         }
                         else {
                             documentsInJSONLFormat = documents;
+                            if (isEmptyString(documentsInJSONLFormat)) {
+                                throw new Errors_1.RequestMalformed("No documents provided");
+                            }
                         }
                         return [4 /*yield*/, this.apiCall.performRequest("post", this.endpointPath("import"), {
                                 queryParameters: options,
@@ -2957,7 +3348,12 @@ var Documents = /** @class */ (function (_super) {
                                 .map(function (r) { return JSON.parse(r); });
                             failedItems = resultsInJSONFormat.filter(function (r) { return r.success === false; });
                             if (failedItems.length > 0) {
-                                throw new Errors_1.ImportError("".concat(resultsInJSONFormat.length - failedItems.length, " documents imported successfully, ").concat(failedItems.length, " documents failed during import. Use `error.importResults` from the raised exception to get a detailed error reason for each document."), resultsInJSONFormat);
+                                throw new Errors_1.ImportError("".concat(resultsInJSONFormat.length - failedItems.length, " documents imported successfully, ").concat(failedItems.length, " documents failed during import. Use `error.importResults` from the raised exception to get a detailed error reason for each document."), resultsInJSONFormat, {
+                                    documentsInJSONLFormat: documentsInJSONLFormat,
+                                    options: options,
+                                    failedItems: failedItems,
+                                    successCount: resultsInJSONFormat.length - failedItems.length,
+                                });
                             }
                             else {
                                 return [2 /*return*/, resultsInJSONFormat];
@@ -2994,7 +3390,12 @@ var Documents = /** @class */ (function (_super) {
                             .map(function (r) { return JSON.parse(r); });
                         failedItems = resultsInJSONFormat.filter(function (r) { return r.success === false; });
                         if (failedItems.length > 0) {
-                            throw new Errors_1.ImportError("".concat(resultsInJSONFormat.length - failedItems.length, " documents imported successfully, ").concat(failedItems.length, " documents failed during import. Use `error.importResults` from the raised exception to get a detailed error reason for each document."), resultsInJSONFormat);
+                            throw new Errors_1.ImportError("".concat(resultsInJSONFormat.length - failedItems.length, " documents imported successfully, ").concat(failedItems.length, " documents failed during import. Use `error.importResults` from the raised exception to get a detailed error reason for each document."), resultsInJSONFormat, {
+                                documentsInJSONLFormat: readableStream,
+                                options: options,
+                                failedItems: failedItems,
+                                successCount: resultsInJSONFormat.length - failedItems.length,
+                            });
                         }
                         else {
                             return [2 /*return*/, resultsInJSONFormat];
@@ -3031,6 +3432,9 @@ var Documents = /** @class */ (function (_super) {
     return Documents;
 }(SearchOnlyDocuments_1.SearchOnlyDocuments));
 exports["default"] = Documents;
+function isEmptyString(str) {
+    return str == null || str === "" || str.length === 0;
+}
 //# sourceMappingURL=Documents.js.map
 
 /***/ }),
@@ -3071,9 +3475,10 @@ var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_mo
 var TypesenseError_1 = tslib_1.__importDefault(__webpack_require__(/*! ./TypesenseError */ "./node_modules/typesense/lib/Typesense/Errors/TypesenseError.js"));
 var ImportError = /** @class */ (function (_super) {
     tslib_1.__extends(ImportError, _super);
-    function ImportError(message, importResults) {
+    function ImportError(message, importResults, payload) {
         var _this = _super.call(this, message) || this;
         _this.importResults = importResults;
+        _this.payload = payload;
         return _this;
     }
     return ImportError;
@@ -3257,10 +3662,12 @@ var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_mo
 var TypesenseError = /** @class */ (function (_super) {
     tslib_1.__extends(TypesenseError, _super);
     // Source: https://stackoverflow.com/a/58417721/123545
-    function TypesenseError(message) {
+    function TypesenseError(message, httpBody, httpStatus) {
         var _newTarget = this.constructor;
         var _this = _super.call(this, message) || this;
         _this.name = _newTarget.name;
+        _this.httpBody = httpBody;
+        _this.httpStatus = httpStatus;
         Object.setPrototypeOf(_this, _newTarget.prototype);
         return _this;
     }
@@ -3500,9 +3907,7 @@ var MultiSearch = /** @class */ (function () {
                     additionalQueryParams["use_cache"] = true;
                 }
                 queryParams = tslib_1.__assign(tslib_1.__assign({}, commonParams), additionalQueryParams);
-                normalizedSearchRequests = {
-                    searches: searchRequests.searches.map(Utils_1.normalizeArrayableParams),
-                };
+                normalizedSearchRequests = tslib_1.__assign(tslib_1.__assign({}, searchRequests), { searches: searchRequests.searches.map(Utils_1.normalizeArrayableParams) });
                 normalizedQueryParams = (0, Utils_1.normalizeArrayableParams)(queryParams);
                 return [2 /*return*/, this.requestWithCache.perform(this.apiCall, this.apiCall.post, [
                         RESOURCEPATH,
@@ -4009,6 +4414,152 @@ exports["default"] = Metrics;
 
 /***/ }),
 
+/***/ "./node_modules/typesense/lib/Typesense/Stemming.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/typesense/lib/Typesense/Stemming.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
+var StemmingDictionaries_1 = tslib_1.__importDefault(__webpack_require__(/*! ./StemmingDictionaries */ "./node_modules/typesense/lib/Typesense/StemmingDictionaries.js"));
+var StemmingDictionary_1 = tslib_1.__importDefault(__webpack_require__(/*! ./StemmingDictionary */ "./node_modules/typesense/lib/Typesense/StemmingDictionary.js"));
+var RESOURCEPATH = "/stemming";
+var Stemming = /** @class */ (function () {
+    function Stemming(apiCall) {
+        this.apiCall = apiCall;
+        this.individualStemmingDictionaries = {};
+        this.apiCall = apiCall;
+        this._stemmingDictionaries = new StemmingDictionaries_1.default(this.apiCall);
+    }
+    Stemming.prototype.dictionaries = function (id) {
+        if (id === undefined) {
+            return this._stemmingDictionaries;
+        }
+        else {
+            if (this.individualStemmingDictionaries[id] === undefined) {
+                this.individualStemmingDictionaries[id] = new StemmingDictionary_1.default(id, this.apiCall);
+            }
+            return this.individualStemmingDictionaries[id];
+        }
+    };
+    Object.defineProperty(Stemming, "RESOURCEPATH", {
+        get: function () {
+            return RESOURCEPATH;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    return Stemming;
+}());
+exports["default"] = Stemming;
+//# sourceMappingURL=Stemming.js.map
+
+/***/ }),
+
+/***/ "./node_modules/typesense/lib/Typesense/StemmingDictionaries.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/typesense/lib/Typesense/StemmingDictionaries.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
+var RESOURCEPATH = "/stemming/dictionaries";
+var StemmingDictionaries = /** @class */ (function () {
+    function StemmingDictionaries(apiCall) {
+        this.apiCall = apiCall;
+        this.apiCall = apiCall;
+    }
+    StemmingDictionaries.prototype.upsert = function (id, wordRootCombinations) {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            var wordRootCombinationsInJSONLFormat, resultsInJSONLFormat;
+            return tslib_1.__generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        wordRootCombinationsInJSONLFormat = Array.isArray(wordRootCombinations)
+                            ? wordRootCombinations.map(function (combo) { return JSON.stringify(combo); }).join("\n")
+                            : wordRootCombinations;
+                        return [4 /*yield*/, this.apiCall.performRequest("post", this.endpointPath("import"), {
+                                queryParameters: { id: id },
+                                bodyParameters: wordRootCombinationsInJSONLFormat,
+                                additionalHeaders: { "Content-Type": "text/plain" },
+                                skipConnectionTimeout: true,
+                            })];
+                    case 1:
+                        resultsInJSONLFormat = _a.sent();
+                        return [2 /*return*/, Array.isArray(wordRootCombinations)
+                                ? resultsInJSONLFormat
+                                    .split("\n")
+                                    .map(function (line) { return JSON.parse(line); })
+                                : resultsInJSONLFormat];
+                }
+            });
+        });
+    };
+    StemmingDictionaries.prototype.retrieve = function () {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                return [2 /*return*/, this.apiCall.get(this.endpointPath())];
+            });
+        });
+    };
+    StemmingDictionaries.prototype.endpointPath = function (operation) {
+        return operation === undefined
+            ? "".concat(StemmingDictionaries.RESOURCEPATH)
+            : "".concat(StemmingDictionaries.RESOURCEPATH, "/").concat(encodeURIComponent(operation));
+    };
+    Object.defineProperty(StemmingDictionaries, "RESOURCEPATH", {
+        get: function () {
+            return RESOURCEPATH;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    return StemmingDictionaries;
+}());
+exports["default"] = StemmingDictionaries;
+//# sourceMappingURL=StemmingDictionaries.js.map
+
+/***/ }),
+
+/***/ "./node_modules/typesense/lib/Typesense/StemmingDictionary.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/typesense/lib/Typesense/StemmingDictionary.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
+var StemmingDictionaries_1 = tslib_1.__importDefault(__webpack_require__(/*! ./StemmingDictionaries */ "./node_modules/typesense/lib/Typesense/StemmingDictionaries.js"));
+var StemmingDictionary = /** @class */ (function () {
+    function StemmingDictionary(id, apiCall) {
+        this.id = id;
+        this.apiCall = apiCall;
+    }
+    StemmingDictionary.prototype.retrieve = function () {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                return [2 /*return*/, this.apiCall.get(this.endpointPath())];
+            });
+        });
+    };
+    StemmingDictionary.prototype.endpointPath = function () {
+        return "".concat(StemmingDictionaries_1.default.RESOURCEPATH, "/").concat(encodeURIComponent(this.id));
+    };
+    return StemmingDictionary;
+}());
+exports["default"] = StemmingDictionary;
+//# sourceMappingURL=StemmingDictionary.js.map
+
+/***/ }),
+
 /***/ "./node_modules/typesense/lib/Typesense/Stopword.js":
 /*!**********************************************************!*\
   !*** ./node_modules/typesense/lib/Typesense/Stopword.js ***!
@@ -4185,6 +4736,37 @@ exports["default"] = Synonyms;
 
 /***/ }),
 
+/***/ "./node_modules/typesense/lib/Typesense/Types.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/typesense/lib/Typesense/Types.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.arrayableParams = void 0;
+exports.arrayableParams = {
+    query_by: "query_by",
+    query_by_weights: "query_by_weights",
+    facet_by: "facet_by",
+    group_by: "group_by",
+    include_fields: "include_fields",
+    exclude_fields: "exclude_fields",
+    highlight_fields: "highlight_fields",
+    highlight_full_fields: "highlight_full_fields",
+    pinned_hits: "pinned_hits",
+    hidden_hits: "hidden_hits",
+    infix: "infix",
+    override_tags: "override_tags",
+    num_typos: "num_typos",
+    prefix: "prefix",
+    sort_by: "sort_by",
+};
+//# sourceMappingURL=Types.js.map
+
+/***/ }),
+
 /***/ "./node_modules/typesense/lib/Typesense/Utils.js":
 /*!*******************************************************!*\
   !*** ./node_modules/typesense/lib/Typesense/Utils.js ***!
@@ -4196,15 +4778,15 @@ exports["default"] = Synonyms;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.normalizeArrayableParams = void 0;
 var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
-var Documents_1 = __webpack_require__(/*! ./Documents */ "./node_modules/typesense/lib/Typesense/Documents.js");
+var Types_1 = __webpack_require__(/*! ./Types */ "./node_modules/typesense/lib/Typesense/Types.js");
 function hasNoArrayValues(params) {
-    return Object.keys(Documents_1.arrayableParams)
+    return Object.keys(Types_1.arrayableParams)
         .filter(function (key) { return params[key] !== undefined; })
         .every(function (key) { return isNonArrayValue(params[key]); });
 }
 function normalizeArrayableParams(params) {
     var result = tslib_1.__assign({}, params);
-    var transformedValues = Object.keys(Documents_1.arrayableParams)
+    var transformedValues = Object.keys(Types_1.arrayableParams)
         .filter(function (key) { return Array.isArray(result[key]); })
         .map(function (key) {
         result[key] = result[key].join(",");
@@ -4578,11 +5160,11 @@ module.exports = _regeneratorRuntime, module.exports.__esModule = true, module.e
 function _typeof(o) {
   "@babel/helpers - typeof";
 
-  return (module.exports = _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) {
+  return module.exports = _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) {
     return typeof o;
   } : function (o) {
     return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
-  }, module.exports.__esModule = true, module.exports["default"] = module.exports), _typeof(o);
+  }, module.exports.__esModule = true, module.exports["default"] = module.exports, _typeof(o);
 }
 module.exports = _typeof, module.exports.__esModule = true, module.exports["default"] = module.exports;
 
@@ -4620,7 +5202,7 @@ try {
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
-// Axios v1.7.7 Copyright (c) 2024 Matt Zabriskie and contributors
+/*! Axios v1.8.4 Copyright (c) 2025 Matt Zabriskie and contributors */
 
 
 function bind(fn, thisArg) {
@@ -5229,26 +5811,6 @@ const toFiniteNumber = (value, defaultValue) => {
   return value != null && Number.isFinite(value = +value) ? value : defaultValue;
 };
 
-const ALPHA = 'abcdefghijklmnopqrstuvwxyz';
-
-const DIGIT = '0123456789';
-
-const ALPHABET = {
-  DIGIT,
-  ALPHA,
-  ALPHA_DIGIT: ALPHA + ALPHA.toUpperCase() + DIGIT
-};
-
-const generateString = (size = 16, alphabet = ALPHABET.ALPHA_DIGIT) => {
-  let str = '';
-  const {length} = alphabet;
-  while (size--) {
-    str += alphabet[Math.random() * length|0];
-  }
-
-  return str;
-};
-
 /**
  * If the thing is a FormData object, return true, otherwise return false.
  *
@@ -5376,8 +5938,6 @@ var utils$1 = {
   findKey,
   global: _global,
   isContextDefined,
-  ALPHABET,
-  generateString,
   isSpecCompliantForm,
   toJSONObject,
   isAsyncFn,
@@ -5774,7 +6334,7 @@ function encode(val) {
  *
  * @param {string} url The base of the url (e.g., http://www.google.com)
  * @param {object} [params] The params to be appended
- * @param {?object} options
+ * @param {?(object|Function)} options
  *
  * @returns {string} The formatted url
  */
@@ -5785,6 +6345,12 @@ function buildURL(url, params, options) {
   }
   
   const _encode = options && options.encode || encode;
+
+  if (utils$1.isFunction(options)) {
+    options = {
+      serialize: options
+    };
+  } 
 
   const serializeFn = options && options.serialize;
 
@@ -6774,68 +7340,18 @@ const progressEventDecorator = (total, throttled) => {
 
 const asyncDecorator = (fn) => (...args) => utils$1.asap(() => fn(...args));
 
-var isURLSameOrigin = platform.hasStandardBrowserEnv ?
+var isURLSameOrigin = platform.hasStandardBrowserEnv ? ((origin, isMSIE) => (url) => {
+  url = new URL(url, platform.origin);
 
-// Standard browser envs have full support of the APIs needed to test
-// whether the request URL is of the same origin as current location.
-  (function standardBrowserEnv() {
-    const msie = platform.navigator && /(msie|trident)/i.test(platform.navigator.userAgent);
-    const urlParsingNode = document.createElement('a');
-    let originURL;
-
-    /**
-    * Parse a URL to discover its components
-    *
-    * @param {String} url The URL to be parsed
-    * @returns {Object}
-    */
-    function resolveURL(url) {
-      let href = url;
-
-      if (msie) {
-        // IE needs attribute set twice to normalize properties
-        urlParsingNode.setAttribute('href', href);
-        href = urlParsingNode.href;
-      }
-
-      urlParsingNode.setAttribute('href', href);
-
-      // urlParsingNode provides the UrlUtils interface - http://url.spec.whatwg.org/#urlutils
-      return {
-        href: urlParsingNode.href,
-        protocol: urlParsingNode.protocol ? urlParsingNode.protocol.replace(/:$/, '') : '',
-        host: urlParsingNode.host,
-        search: urlParsingNode.search ? urlParsingNode.search.replace(/^\?/, '') : '',
-        hash: urlParsingNode.hash ? urlParsingNode.hash.replace(/^#/, '') : '',
-        hostname: urlParsingNode.hostname,
-        port: urlParsingNode.port,
-        pathname: (urlParsingNode.pathname.charAt(0) === '/') ?
-          urlParsingNode.pathname :
-          '/' + urlParsingNode.pathname
-      };
-    }
-
-    originURL = resolveURL(window.location.href);
-
-    /**
-    * Determine if a URL shares the same origin as the current location
-    *
-    * @param {String} requestURL The URL to test
-    * @returns {boolean} True if URL shares the same origin, otherwise false
-    */
-    return function isURLSameOrigin(requestURL) {
-      const parsed = (utils$1.isString(requestURL)) ? resolveURL(requestURL) : requestURL;
-      return (parsed.protocol === originURL.protocol &&
-          parsed.host === originURL.host);
-    };
-  })() :
-
-  // Non standard browser envs (web workers, react-native) lack needed support.
-  (function nonStandardBrowserEnv() {
-    return function isURLSameOrigin() {
-      return true;
-    };
-  })();
+  return (
+    origin.protocol === url.protocol &&
+    origin.host === url.host &&
+    (isMSIE || origin.port === url.port)
+  );
+})(
+  new URL(platform.origin),
+  platform.navigator && /(msie|trident)/i.test(platform.navigator.userAgent)
+) : () => true;
 
 var cookies = platform.hasStandardBrowserEnv ?
 
@@ -6914,8 +7430,9 @@ function combineURLs(baseURL, relativeURL) {
  *
  * @returns {string} The combined full path
  */
-function buildFullPath(baseURL, requestedURL) {
-  if (baseURL && !isAbsoluteURL(requestedURL)) {
+function buildFullPath(baseURL, requestedURL, allowAbsoluteUrls) {
+  let isRelativeUrl = !isAbsoluteURL(requestedURL);
+  if (baseURL && (isRelativeUrl || allowAbsoluteUrls == false)) {
     return combineURLs(baseURL, requestedURL);
   }
   return requestedURL;
@@ -6937,7 +7454,7 @@ function mergeConfig(config1, config2) {
   config2 = config2 || {};
   const config = {};
 
-  function getMergedValue(target, source, caseless) {
+  function getMergedValue(target, source, prop, caseless) {
     if (utils$1.isPlainObject(target) && utils$1.isPlainObject(source)) {
       return utils$1.merge.call({caseless}, target, source);
     } else if (utils$1.isPlainObject(source)) {
@@ -6949,11 +7466,11 @@ function mergeConfig(config1, config2) {
   }
 
   // eslint-disable-next-line consistent-return
-  function mergeDeepProperties(a, b, caseless) {
+  function mergeDeepProperties(a, b, prop , caseless) {
     if (!utils$1.isUndefined(b)) {
-      return getMergedValue(a, b, caseless);
+      return getMergedValue(a, b, prop , caseless);
     } else if (!utils$1.isUndefined(a)) {
-      return getMergedValue(undefined, a, caseless);
+      return getMergedValue(undefined, a, prop , caseless);
     }
   }
 
@@ -7011,7 +7528,7 @@ function mergeConfig(config1, config2) {
     socketPath: defaultToConfig2,
     responseEncoding: defaultToConfig2,
     validateStatus: mergeDirectKeys,
-    headers: (a, b) => mergeDeepProperties(headersToObject(a), headersToObject(b), true)
+    headers: (a, b , prop) => mergeDeepProperties(headersToObject(a), headersToObject(b),prop, true)
   };
 
   utils$1.forEach(Object.keys(Object.assign({}, config1, config2)), function computeConfigValue(prop) {
@@ -7030,7 +7547,7 @@ var resolveConfig = (config) => {
 
   newConfig.headers = headers = AxiosHeaders$1.from(headers);
 
-  newConfig.url = buildURL(buildFullPath(newConfig.baseURL, newConfig.url), config.params, config.paramsSerializer);
+  newConfig.url = buildURL(buildFullPath(newConfig.baseURL, newConfig.url, newConfig.allowAbsoluteUrls), config.params, config.paramsSerializer);
 
   // HTTP basic authentication
   if (auth) {
@@ -7755,7 +8272,7 @@ function dispatchRequest(config) {
   });
 }
 
-const VERSION = "1.7.7";
+const VERSION = "1.8.4";
 
 const validators$1 = {};
 
@@ -7804,6 +8321,14 @@ validators$1.transitional = function transitional(validator, version, message) {
 
     return validator ? validator(value, opt, opts) : true;
   };
+};
+
+validators$1.spelling = function spelling(correctSpelling) {
+  return (value, opt) => {
+    // eslint-disable-next-line no-console
+    console.warn(`${opt} is likely a misspelling of ${correctSpelling}`);
+    return true;
+  }
 };
 
 /**
@@ -7875,9 +8400,9 @@ class Axios {
       return await this._request(configOrUrl, config);
     } catch (err) {
       if (err instanceof Error) {
-        let dummy;
+        let dummy = {};
 
-        Error.captureStackTrace ? Error.captureStackTrace(dummy = {}) : (dummy = new Error());
+        Error.captureStackTrace ? Error.captureStackTrace(dummy) : (dummy = new Error());
 
         // slice off the Error: ... line
         const stack = dummy.stack ? dummy.stack.replace(/^.+\n/, '') : '';
@@ -7931,6 +8456,18 @@ class Axios {
         }, true);
       }
     }
+
+    // Set config.allowAbsoluteUrls
+    if (config.allowAbsoluteUrls !== undefined) ; else if (this.defaults.allowAbsoluteUrls !== undefined) {
+      config.allowAbsoluteUrls = this.defaults.allowAbsoluteUrls;
+    } else {
+      config.allowAbsoluteUrls = true;
+    }
+
+    validator.assertOptions(config, {
+      baseUrl: validators.spelling('baseURL'),
+      withXsrfToken: validators.spelling('withXSRFToken')
+    }, true);
 
     // Set config.method
     config.method = (config.method || this.defaults.method || 'get').toLowerCase();
@@ -8022,7 +8559,7 @@ class Axios {
 
   getUri(config) {
     config = mergeConfig(this.defaults, config);
-    const fullPath = buildFullPath(config.baseURL, config.url);
+    const fullPath = buildFullPath(config.baseURL, config.url, config.allowAbsoluteUrls);
     return buildURL(fullPath, config.params, config.paramsSerializer);
   }
 }
@@ -8388,11 +8925,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ _arrayLikeToArray)
 /* harmony export */ });
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
-  return arr2;
+function _arrayLikeToArray(r, a) {
+  (null == a || a > r.length) && (a = r.length);
+  for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
+  return n;
 }
+
 
 /***/ }),
 
@@ -8407,9 +8945,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ _arrayWithHoles)
 /* harmony export */ });
-function _arrayWithHoles(arr) {
-  if (Array.isArray(arr)) return arr;
+function _arrayWithHoles(r) {
+  if (Array.isArray(r)) return r;
 }
+
 
 /***/ }),
 
@@ -8426,9 +8965,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _arrayLikeToArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./arrayLikeToArray.js */ "./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js");
 
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) return (0,_arrayLikeToArray_js__WEBPACK_IMPORTED_MODULE_0__["default"])(arr);
+function _arrayWithoutHoles(r) {
+  if (Array.isArray(r)) return (0,_arrayLikeToArray_js__WEBPACK_IMPORTED_MODULE_0__["default"])(r);
 }
+
 
 /***/ }),
 
@@ -8443,36 +8983,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ _asyncToGenerator)
 /* harmony export */ });
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
+function asyncGeneratorStep(n, t, e, r, o, a, c) {
   try {
-    var info = gen[key](arg);
-    var value = info.value;
-  } catch (error) {
-    reject(error);
-    return;
+    var i = n[a](c),
+      u = i.value;
+  } catch (n) {
+    return void e(n);
   }
-  if (info.done) {
-    resolve(value);
-  } else {
-    Promise.resolve(value).then(_next, _throw);
-  }
+  i.done ? t(u) : Promise.resolve(u).then(r, o);
 }
-function _asyncToGenerator(fn) {
+function _asyncToGenerator(n) {
   return function () {
-    var self = this,
-      args = arguments;
-    return new Promise(function (resolve, reject) {
-      var gen = fn.apply(self, args);
-      function _next(value) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
+    var t = this,
+      e = arguments;
+    return new Promise(function (r, o) {
+      var a = n.apply(t, e);
+      function _next(n) {
+        asyncGeneratorStep(a, r, o, _next, _throw, "next", n);
       }
-      function _throw(err) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
+      function _throw(n) {
+        asyncGeneratorStep(a, r, o, _next, _throw, "throw", n);
       }
-      _next(undefined);
+      _next(void 0);
     });
   };
 }
+
 
 /***/ }),
 
@@ -8487,11 +9023,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ _classCallCheck)
 /* harmony export */ });
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
+function _classCallCheck(a, n) {
+  if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function");
 }
+
 
 /***/ }),
 
@@ -8508,23 +9043,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _toPropertyKey_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./toPropertyKey.js */ "./node_modules/@babel/runtime/helpers/esm/toPropertyKey.js");
 
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, (0,_toPropertyKey_js__WEBPACK_IMPORTED_MODULE_0__["default"])(descriptor.key), descriptor);
+function _defineProperties(e, r) {
+  for (var t = 0; t < r.length; t++) {
+    var o = r[t];
+    o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, (0,_toPropertyKey_js__WEBPACK_IMPORTED_MODULE_0__["default"])(o.key), o);
   }
 }
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) _defineProperties(Constructor, staticProps);
-  Object.defineProperty(Constructor, "prototype", {
-    writable: false
-  });
-  return Constructor;
+function _createClass(e, r, t) {
+  return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", {
+    writable: !1
+  }), e;
 }
+
 
 /***/ }),
 
@@ -8541,20 +9071,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _toPropertyKey_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./toPropertyKey.js */ "./node_modules/@babel/runtime/helpers/esm/toPropertyKey.js");
 
-function _defineProperty(obj, key, value) {
-  key = (0,_toPropertyKey_js__WEBPACK_IMPORTED_MODULE_0__["default"])(key);
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-  return obj;
+function _defineProperty(e, r, t) {
+  return (r = (0,_toPropertyKey_js__WEBPACK_IMPORTED_MODULE_0__["default"])(r)) in e ? Object.defineProperty(e, r, {
+    value: t,
+    enumerable: !0,
+    configurable: !0,
+    writable: !0
+  }) : e[r] = t, e;
 }
+
 
 /***/ }),
 
@@ -8569,9 +9094,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ _iterableToArray)
 /* harmony export */ });
-function _iterableToArray(iter) {
-  if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+function _iterableToArray(r) {
+  if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r);
 }
+
 
 /***/ }),
 
@@ -8614,6 +9140,7 @@ function _iterableToArrayLimit(r, l) {
   }
 }
 
+
 /***/ }),
 
 /***/ "./node_modules/@babel/runtime/helpers/esm/nonIterableRest.js":
@@ -8630,6 +9157,7 @@ __webpack_require__.r(__webpack_exports__);
 function _nonIterableRest() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
+
 
 /***/ }),
 
@@ -8648,6 +9176,7 @@ function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
+
 /***/ }),
 
 /***/ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js":
@@ -8663,21 +9192,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _objectWithoutPropertiesLoose_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./objectWithoutPropertiesLoose.js */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js");
 
-function _objectWithoutProperties(source, excluded) {
-  if (source == null) return {};
-  var target = (0,_objectWithoutPropertiesLoose_js__WEBPACK_IMPORTED_MODULE_0__["default"])(source, excluded);
-  var key, i;
+function _objectWithoutProperties(e, t) {
+  if (null == e) return {};
+  var o,
+    r,
+    i = (0,_objectWithoutPropertiesLoose_js__WEBPACK_IMPORTED_MODULE_0__["default"])(e, t);
   if (Object.getOwnPropertySymbols) {
-    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-    for (i = 0; i < sourceSymbolKeys.length; i++) {
-      key = sourceSymbolKeys[i];
-      if (excluded.indexOf(key) >= 0) continue;
-      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
-      target[key] = source[key];
-    }
+    var n = Object.getOwnPropertySymbols(e);
+    for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]);
   }
-  return target;
+  return i;
 }
+
 
 /***/ }),
 
@@ -8692,18 +9218,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ _objectWithoutPropertiesLoose)
 /* harmony export */ });
-function _objectWithoutPropertiesLoose(source, excluded) {
-  if (source == null) return {};
-  var target = {};
-  var sourceKeys = Object.keys(source);
-  var key, i;
-  for (i = 0; i < sourceKeys.length; i++) {
-    key = sourceKeys[i];
-    if (excluded.indexOf(key) >= 0) continue;
-    target[key] = source[key];
+function _objectWithoutPropertiesLoose(r, e) {
+  if (null == r) return {};
+  var t = {};
+  for (var n in r) if ({}.hasOwnProperty.call(r, n)) {
+    if (-1 !== e.indexOf(n)) continue;
+    t[n] = r[n];
   }
-  return target;
+  return t;
 }
+
 
 /***/ }),
 
@@ -8726,9 +9250,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function _slicedToArray(arr, i) {
-  return (0,_arrayWithHoles_js__WEBPACK_IMPORTED_MODULE_0__["default"])(arr) || (0,_iterableToArrayLimit_js__WEBPACK_IMPORTED_MODULE_1__["default"])(arr, i) || (0,_unsupportedIterableToArray_js__WEBPACK_IMPORTED_MODULE_2__["default"])(arr, i) || (0,_nonIterableRest_js__WEBPACK_IMPORTED_MODULE_3__["default"])();
+function _slicedToArray(r, e) {
+  return (0,_arrayWithHoles_js__WEBPACK_IMPORTED_MODULE_0__["default"])(r) || (0,_iterableToArrayLimit_js__WEBPACK_IMPORTED_MODULE_1__["default"])(r, e) || (0,_unsupportedIterableToArray_js__WEBPACK_IMPORTED_MODULE_2__["default"])(r, e) || (0,_nonIterableRest_js__WEBPACK_IMPORTED_MODULE_3__["default"])();
 }
+
 
 /***/ }),
 
@@ -8751,9 +9276,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function _toConsumableArray(arr) {
-  return (0,_arrayWithoutHoles_js__WEBPACK_IMPORTED_MODULE_0__["default"])(arr) || (0,_iterableToArray_js__WEBPACK_IMPORTED_MODULE_1__["default"])(arr) || (0,_unsupportedIterableToArray_js__WEBPACK_IMPORTED_MODULE_2__["default"])(arr) || (0,_nonIterableSpread_js__WEBPACK_IMPORTED_MODULE_3__["default"])();
+function _toConsumableArray(r) {
+  return (0,_arrayWithoutHoles_js__WEBPACK_IMPORTED_MODULE_0__["default"])(r) || (0,_iterableToArray_js__WEBPACK_IMPORTED_MODULE_1__["default"])(r) || (0,_unsupportedIterableToArray_js__WEBPACK_IMPORTED_MODULE_2__["default"])(r) || (0,_nonIterableSpread_js__WEBPACK_IMPORTED_MODULE_3__["default"])();
 }
+
 
 /***/ }),
 
@@ -8781,6 +9307,7 @@ function toPrimitive(t, r) {
   return ("string" === r ? String : Number)(t);
 }
 
+
 /***/ }),
 
 /***/ "./node_modules/@babel/runtime/helpers/esm/toPropertyKey.js":
@@ -8802,6 +9329,7 @@ function toPropertyKey(t) {
   var i = (0,_toPrimitive_js__WEBPACK_IMPORTED_MODULE_1__["default"])(t, "string");
   return "symbol" == (0,_typeof_js__WEBPACK_IMPORTED_MODULE_0__["default"])(i) ? i : i + "";
 }
+
 
 /***/ }),
 
@@ -8826,6 +9354,7 @@ function _typeof(o) {
   }, _typeof(o);
 }
 
+
 /***/ }),
 
 /***/ "./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js":
@@ -8841,14 +9370,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _arrayLikeToArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./arrayLikeToArray.js */ "./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js");
 
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return (0,_arrayLikeToArray_js__WEBPACK_IMPORTED_MODULE_0__["default"])(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(o);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return (0,_arrayLikeToArray_js__WEBPACK_IMPORTED_MODULE_0__["default"])(o, minLen);
+function _unsupportedIterableToArray(r, a) {
+  if (r) {
+    if ("string" == typeof r) return (0,_arrayLikeToArray_js__WEBPACK_IMPORTED_MODULE_0__["default"])(r, a);
+    var t = {}.toString.call(r).slice(8, -1);
+    return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? (0,_arrayLikeToArray_js__WEBPACK_IMPORTED_MODULE_0__["default"])(r, a) : void 0;
+  }
 }
+
 
 /***/ }),
 
