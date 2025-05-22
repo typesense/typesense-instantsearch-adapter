@@ -3,10 +3,11 @@ import type { SearchClient as AlgoliaSearchClient, CompositionClient } from "ins
 type SearchClient = CompositionClient | AlgoliaSearchClient;
 
 import type { ConfigurationOptions } from "typesense/lib/Typesense/Configuration";
-import type { SearchParamsWithPreset } from "typesense/lib/Typesense/Documents";
+import type { DocumentSchema, SearchParamsWithPreset } from "typesense/lib/Typesense/Documents";
 import { default as TypesenseSearchClient } from "typesense/lib/Typesense/SearchClient";
 
-interface BaseSearchParameters extends Partial<Omit<SearchParamsWithPreset, "q" | "filter_by">> {
+interface BaseSearchParameters<T extends DocumentSchema>
+  extends Partial<Omit<SearchParamsWithPreset<T>, "q" | "filter_by">> {
   /**
    * @deprecated Please use the snake_cased version of this parameter
    */
@@ -99,16 +100,14 @@ interface BaseAdapterOptions {
   collectionSpecificSortByOptions?: object;
 }
 
-interface CollectionSearchParameters {
-  [key: string]: BaseSearchParameters;
+type CollectionSearchParameters = Record<string, BaseSearchParameters<DocumentSchema>>;
+
+interface AdditionalSearchParametersWithQueryBy<T extends DocumentSchema> extends BaseAdapterOptions {
+  additionalSearchParameters: BaseSearchParameters<T>;
 }
 
-interface AdditionalSearchParametersWithQueryBy extends BaseAdapterOptions {
-  additionalSearchParameters: BaseSearchParameters;
-}
-
-interface AdditionalSearchParametersOptionalQueryBy extends BaseAdapterOptions {
-  additionalSearchParameters?: BaseSearchParameters;
+interface AdditionalSearchParametersOptionalQueryBy<T extends DocumentSchema> extends BaseAdapterOptions {
+  additionalSearchParameters?: BaseSearchParameters<T>;
 }
 
 interface CollectionSpecificSearchParametersWithQueryBy extends BaseAdapterOptions {
@@ -119,19 +118,19 @@ interface CollectionSpecificSearchParametersOptionalQueryBy extends BaseAdapterO
   collectionSpecificSearchParameters?: CollectionSearchParameters;
 }
 
-type AdapterOptionsWithQueryByInAdditionalSearchParameters = AdditionalSearchParametersWithQueryBy &
-  CollectionSpecificSearchParametersOptionalQueryBy;
-type AdapterOptionWithQueryByInCollectionSpecificSearchParameters = AdditionalSearchParametersOptionalQueryBy &
-  CollectionSpecificSearchParametersWithQueryBy;
+type AdapterOptionsWithQueryByInAdditionalSearchParameters<T extends DocumentSchema> =
+  AdditionalSearchParametersWithQueryBy<T> & CollectionSpecificSearchParametersOptionalQueryBy;
+type AdapterOptionWithQueryByInCollectionSpecificSearchParameters<T extends DocumentSchema> =
+  AdditionalSearchParametersOptionalQueryBy<T> & CollectionSpecificSearchParametersWithQueryBy;
 
-type TypesenseInstantsearchAdapterOptions =
-  | AdapterOptionWithQueryByInCollectionSpecificSearchParameters
-  | AdapterOptionsWithQueryByInAdditionalSearchParameters;
+type TypesenseInstantsearchAdapterOptions<T extends DocumentSchema = DocumentSchema> =
+  | AdapterOptionWithQueryByInCollectionSpecificSearchParameters<T>
+  | AdapterOptionsWithQueryByInAdditionalSearchParameters<T>;
 
-export default class TypesenseInstantsearchAdapter {
+export default class TypesenseInstantsearchAdapter<T extends DocumentSchema = DocumentSchema> {
   readonly searchClient: SearchClient;
   readonly typesenseClient: TypesenseSearchClient;
-  constructor(options: TypesenseInstantsearchAdapterOptions);
+  constructor(options: TypesenseInstantsearchAdapterOptions<T>);
   clearCache(): SearchClient;
-  updateConfiguration(options: TypesenseInstantsearchAdapterOptions): boolean;
+  updateConfiguration(options: TypesenseInstantsearchAdapterOptions<T>): boolean;
 }
