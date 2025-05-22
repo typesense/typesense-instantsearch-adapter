@@ -12,15 +12,17 @@ export class FacetSearchResponseAdapter {
     let adaptedResult = {};
     const facet = typesenseFacetCounts.find((facet) => facet.field_name === this.instantsearchRequest.params.facetName);
 
-    adaptedResult = facet.counts.map((facetCount) => ({
-      value: facetCount.value,
-      highlighted: this._adaptHighlightTag(
-        facetCount.highlighted,
-        this.instantsearchRequest.params.highlightPreTag,
-        this.instantsearchRequest.params.highlightPostTag,
-      ),
-      count: facetCount.count,
-    }));
+    if (typeof facet !== 'undefined') {
+      adaptedResult = facet.counts.map((facetCount) => ({
+        value: facetCount.value,
+        highlighted: this._adaptHighlightTag(
+          facetCount.highlighted,
+          this.instantsearchRequest.params.highlightPreTag,
+          this.instantsearchRequest.params.highlightPostTag,
+        ),
+        count: facetCount.count,
+      }));
+    }
 
     return adaptedResult;
   }
