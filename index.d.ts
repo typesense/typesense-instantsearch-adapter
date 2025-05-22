@@ -123,11 +123,11 @@ type AdapterOptionsWithQueryByInAdditionalSearchParameters<T extends DocumentSch
 type AdapterOptionWithQueryByInCollectionSpecificSearchParameters<T extends DocumentSchema> =
   AdditionalSearchParametersOptionalQueryBy<T> & CollectionSpecificSearchParametersWithQueryBy;
 
-type TypesenseInstantsearchAdapterOptions<T extends DocumentSchema> =
+type TypesenseInstantsearchAdapterOptions<T extends DocumentSchema = DocumentSchema> =
   | AdapterOptionWithQueryByInCollectionSpecificSearchParameters<T>
   | AdapterOptionsWithQueryByInAdditionalSearchParameters<T>;
 
-export default class TypesenseInstantsearchAdapter<T extends DocumentSchema> {
+export default class TypesenseInstantsearchAdapter<T extends DocumentSchema = DocumentSchema> {
   readonly searchClient: SearchClient;
   readonly typesenseClient: TypesenseSearchClient;
   constructor(options: TypesenseInstantsearchAdapterOptions<T>);
