@@ -6,8 +6,8 @@ import type { ConfigurationOptions } from "typesense/lib/Typesense/Configuration
 import type { DocumentSchema, SearchParamsWithPreset } from "typesense/lib/Typesense/Documents";
 import { default as TypesenseSearchClient } from "typesense/lib/Typesense/SearchClient";
 
-interface BaseSearchParameters<T extends DocumentSchema>
-  extends Partial<Omit<SearchParamsWithPreset<T>, "q" | "filter_by">> {
+interface BaseSearchParameters<T extends DocumentSchema, Infix extends string = string>
+  extends Partial<Omit<SearchParamsWithPreset<T, Infix>, "q" | "filter_by">> {
   /**
    * @deprecated Please use the snake_cased version of this parameter
    */
