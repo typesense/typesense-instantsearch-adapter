@@ -147,7 +147,7 @@ var FacetSearchResponseAdapter = /*#__PURE__*/function () {
     key: "_adaptFacetHits",
     value: function _adaptFacetHits(typesenseFacetCounts) {
       var _this = this;
-      var adaptedResult = {};
+      var adaptedResult = [];
       var facet = typesenseFacetCounts.find(function (facet) {
         return facet.field_name === _this.instantsearchRequest.params.facetName;
       });
@@ -1745,12 +1745,14 @@ var http_1 = __webpack_require__(/*! http */ "?92a5");
 var https_1 = __webpack_require__(/*! https */ "?ba77");
 var Errors_1 = __webpack_require__(/*! ./Errors */ "./node_modules/typesense/lib/Typesense/Errors/index.js");
 var TypesenseError_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Errors/TypesenseError */ "./node_modules/typesense/lib/Typesense/Errors/TypesenseError.js"));
+var Utils_1 = __webpack_require__(/*! ./Utils */ "./node_modules/typesense/lib/Typesense/Utils.js");
 var APIKEYHEADERNAME = "X-TYPESENSE-API-KEY";
 var HEALTHY = true;
 var UNHEALTHY = false;
 var isNodeJSEnvironment = typeof process !== "undefined" &&
     process.versions != null &&
-    process.versions.node != null;
+    process.versions.node != null &&
+    typeof window === "undefined";
 var ApiCall = /** @class */ (function () {
     function ApiCall(configuration) {
         this.configuration = configuration;
@@ -1776,13 +1778,15 @@ var ApiCall = /** @class */ (function () {
     }
     ApiCall.prototype.get = function (endpoint, queryParameters, _a) {
         if (queryParameters === void 0) { queryParameters = {}; }
-        var _b = _a === void 0 ? {} : _a, _c = _b.abortSignal, abortSignal = _c === void 0 ? null : _c, _d = _b.responseType, responseType = _d === void 0 ? undefined : _d;
+        var _b = _a === void 0 ? {} : _a, _c = _b.abortSignal, abortSignal = _c === void 0 ? null : _c, _d = _b.responseType, responseType = _d === void 0 ? undefined : _d, _e = _b.streamConfig, streamConfig = _e === void 0 ? undefined : _e, isStreamingRequest = _b.isStreamingRequest;
         return tslib_1.__awaiter(this, void 0, void 0, function () {
-            return tslib_1.__generator(this, function (_e) {
+            return tslib_1.__generator(this, function (_f) {
                 return [2 /*return*/, this.performRequest("get", endpoint, {
                         queryParameters: queryParameters,
                         abortSignal: abortSignal,
                         responseType: responseType,
+                        streamConfig: streamConfig,
+                        isStreamingRequest: isStreamingRequest,
                     })];
             });
         });
@@ -1791,20 +1795,28 @@ var ApiCall = /** @class */ (function () {
         if (queryParameters === void 0) { queryParameters = {}; }
         return tslib_1.__awaiter(this, void 0, void 0, function () {
             return tslib_1.__generator(this, function (_a) {
-                return [2 /*return*/, this.performRequest("delete", endpoint, { queryParameters: queryParameters })];
+                return [2 /*return*/, this.performRequest("delete", endpoint, {
+                        queryParameters: queryParameters,
+                        isStreamingRequest: false,
+                    })];
             });
         });
     };
-    ApiCall.prototype.post = function (endpoint, bodyParameters, queryParameters, additionalHeaders) {
+    ApiCall.prototype.post = function (endpoint, bodyParameters, queryParameters, additionalHeaders, _a) {
         if (bodyParameters === void 0) { bodyParameters = {}; }
         if (queryParameters === void 0) { queryParameters = {}; }
         if (additionalHeaders === void 0) { additionalHeaders = {}; }
+        var _b = _a === void 0 ? {} : _a, _c = _b.abortSignal, abortSignal = _c === void 0 ? null : _c, _d = _b.responseType, responseType = _d === void 0 ? undefined : _d, _e = _b.streamConfig, streamConfig = _e === void 0 ? undefined : _e, isStreamingRequest = _b.isStreamingRequest;
         return tslib_1.__awaiter(this, void 0, void 0, function () {
-            return tslib_1.__generator(this, function (_a) {
+            return tslib_1.__generator(this, function (_f) {
                 return [2 /*return*/, this.performRequest("post", endpoint, {
                         queryParameters: queryParameters,
                         bodyParameters: bodyParameters,
                         additionalHeaders: additionalHeaders,
+                        abortSignal: abortSignal,
+                        responseType: responseType,
+                        streamConfig: streamConfig,
+                        isStreamingRequest: isStreamingRequest,
                     })];
             });
         });
@@ -1817,6 +1829,7 @@ var ApiCall = /** @class */ (function () {
                 return [2 /*return*/, this.performRequest("put", endpoint, {
                         queryParameters: queryParameters,
                         bodyParameters: bodyParameters,
+                        isStreamingRequest: false,
                     })];
             });
         });
@@ -1829,6 +1842,7 @@ var ApiCall = /** @class */ (function () {
                 return [2 /*return*/, this.performRequest("patch", endpoint, {
                         queryParameters: queryParameters,
                         bodyParameters: bodyParameters,
+                        isStreamingRequest: false,
                     })];
             });
         });
@@ -1846,15 +1860,13 @@ var ApiCall = /** @class */ (function () {
     };
     ApiCall.prototype.performRequest = function (requestType, endpoint, _a) {
         var _b, _c, _d, _e;
-        var _f = _a.queryParameters, queryParameters = _f === void 0 ? null : _f, _g = _a.bodyParameters, bodyParameters = _g === void 0 ? null : _g, _h = _a.additionalHeaders, additionalHeaders = _h === void 0 ? {} : _h, _j = _a.abortSignal, abortSignal = _j === void 0 ? null : _j, _k = _a.responseType, responseType = _k === void 0 ? undefined : _k, _l = _a.skipConnectionTimeout, skipConnectionTimeout = _l === void 0 ? false : _l, _m = _a.enableKeepAlive, enableKeepAlive = _m === void 0 ? undefined : _m;
+        var _f = _a.queryParameters, queryParameters = _f === void 0 ? null : _f, _g = _a.bodyParameters, bodyParameters = _g === void 0 ? null : _g, _h = _a.additionalHeaders, additionalHeaders = _h === void 0 ? {} : _h, _j = _a.abortSignal, abortSignal = _j === void 0 ? null : _j, _k = _a.responseType, responseType = _k === void 0 ? undefined : _k, _l = _a.skipConnectionTimeout, skipConnectionTimeout = _l === void 0 ? false : _l, _m = _a.enableKeepAlive, enableKeepAlive = _m === void 0 ? undefined : _m, _o = _a.streamConfig, streamConfig = _o === void 0 ? undefined : _o, isStreamingRequest = _a.isStreamingRequest;
         return tslib_1.__awaiter(this, void 0, void 0, function () {
-            var isStreamingRequest, requestNumber, lastException, wasAborted, _loop_1, this_1, numTries, state_1;
-            return tslib_1.__generator(this, function (_o) {
-                switch (_o.label) {
+            var requestNumber, lastException, wasAborted, _loop_1, this_1, numTries, state_1;
+            return tslib_1.__generator(this, function (_p) {
+                switch (_p.label) {
                     case 0:
                         this.configuration.validate();
-                        isStreamingRequest = (queryParameters === null || queryParameters === void 0 ? void 0 : queryParameters.conversation_stream) === true &&
-                            requestType.toLowerCase() === "get";
                         if (isStreamingRequest) {
                             this.logger.debug("Request: Performing streaming request to ".concat(endpoint));
                             // For browser streaming, always use responseType: "stream" and adapter: "fetch"
@@ -1868,8 +1880,8 @@ var ApiCall = /** @class */ (function () {
                         this.logger.debug("Request #".concat(requestNumber, ": Performing ").concat(requestType.toUpperCase(), " request: ").concat(endpoint));
                         _loop_1 = function (numTries) {
                             var node, abortListener, requestOptions, cancelToken, source_1, response, error_1;
-                            return tslib_1.__generator(this, function (_p) {
-                                switch (_p.label) {
+                            return tslib_1.__generator(this, function (_q) {
+                                switch (_q.label) {
                                     case 0:
                                         node = this_1.getNextNode(requestNumber);
                                         this_1.logger.debug("Request #".concat(requestNumber, ": Attempting ").concat(requestType.toUpperCase(), " request Try #").concat(numTries, " to Node ").concat(node.index));
@@ -1877,9 +1889,9 @@ var ApiCall = /** @class */ (function () {
                                             return [2 /*return*/, { value: Promise.reject(new Error("Request aborted by caller.")) }];
                                         }
                                         abortListener = void 0;
-                                        _p.label = 1;
+                                        _q.label = 1;
                                     case 1:
-                                        _p.trys.push([1, 3, 5, 6]);
+                                        _q.trys.push([1, 3, 5, 6]);
                                         requestOptions = {
                                             method: requestType,
                                             url: this_1.uriFor(endpoint, node),
@@ -1980,7 +1992,7 @@ var ApiCall = /** @class */ (function () {
                                         }
                                         return [4 /*yield*/, (0, axios_1.default)(requestOptions)];
                                     case 2:
-                                        response = _p.sent();
+                                        response = _q.sent();
                                         if (response.status >= 1 && response.status <= 499) {
                                             // Treat any status code > 0 and < 500 to be an indication that node is healthy
                                             // We exclude 0 since some clients return 0 when request fails
@@ -1988,8 +2000,9 @@ var ApiCall = /** @class */ (function () {
                                         }
                                         this_1.logger.debug("Request #".concat(requestNumber, ": Request to Node ").concat(node.index, " was made. Response Code was ").concat(response.status, "."));
                                         if (response.status >= 200 && response.status < 300) {
-                                            if (isStreamingRequest)
-                                                return [2 /*return*/, { value: this_1.handleStreamingResponse(response) }];
+                                            if (isStreamingRequest) {
+                                                return [2 /*return*/, { value: this_1.handleStreamingResponse(response, streamConfig) }];
+                                            }
                                             return [2 /*return*/, { value: Promise.resolve(response.data) }];
                                         }
                                         else if (response.status < 500) {
@@ -2002,7 +2015,7 @@ var ApiCall = /** @class */ (function () {
                                         }
                                         return [3 /*break*/, 6];
                                     case 3:
-                                        error_1 = _p.sent();
+                                        error_1 = _q.sent();
                                         // This block handles retries for HTTPStatus > 500 and network layer issues like connection timeouts
                                         if (!wasAborted) {
                                             this_1.setNodeHealthcheck(node, UNHEALTHY);
@@ -2015,7 +2028,7 @@ var ApiCall = /** @class */ (function () {
                                             return [2 /*return*/, { value: Promise.reject(new Error("Request aborted by caller.")) }];
                                         }
                                         if (isStreamingRequest) {
-                                            this_1.invokeOnErrorCallback(error_1);
+                                            this_1.invokeOnErrorCallback(error_1, streamConfig);
                                         }
                                         if (numTries < this_1.numRetriesPerRequest + 1) {
                                             this_1.logger.warn("Request #".concat(requestNumber, ": Sleeping for ").concat(this_1.retryIntervalSeconds, "s and then retrying request..."));
@@ -2026,7 +2039,7 @@ var ApiCall = /** @class */ (function () {
                                         }
                                         return [4 /*yield*/, this_1.timer(this_1.retryIntervalSeconds)];
                                     case 4:
-                                        _p.sent();
+                                        _q.sent();
                                         return [3 /*break*/, 6];
                                     case 5:
                                         if (abortSignal && abortListener) {
@@ -2039,15 +2052,15 @@ var ApiCall = /** @class */ (function () {
                         };
                         this_1 = this;
                         numTries = 1;
-                        _o.label = 1;
+                        _p.label = 1;
                     case 1:
                         if (!(numTries <= this.numRetriesPerRequest + 1)) return [3 /*break*/, 4];
                         return [5 /*yield**/, _loop_1(numTries)];
                     case 2:
-                        state_1 = _o.sent();
+                        state_1 = _p.sent();
                         if (typeof state_1 === "object")
                             return [2 /*return*/, state_1.value];
-                        _o.label = 3;
+                        _p.label = 3;
                     case 3:
                         numTries++;
                         return [3 /*break*/, 1];
@@ -2132,23 +2145,23 @@ var ApiCall = /** @class */ (function () {
             message: dataContent,
         };
     };
-    ApiCall.prototype.handleStreamingResponse = function (response) {
+    ApiCall.prototype.handleStreamingResponse = function (response, streamConfig) {
         return tslib_1.__awaiter(this, void 0, void 0, function () {
             return tslib_1.__generator(this, function (_a) {
                 this.logger.debug("Handling streaming response. Environment: ".concat(isNodeJSEnvironment ? "Node.js" : "Browser"));
                 if (isNodeJSEnvironment && response.data) {
-                    return [2 /*return*/, this.handleNodeStreaming(response)];
+                    return [2 /*return*/, this.handleNodeStreaming(response, streamConfig)];
                 }
                 if (!isNodeJSEnvironment) {
-                    return [2 /*return*/, this.handleBrowserStreaming(response)];
+                    return [2 /*return*/, this.handleBrowserStreaming(response, streamConfig)];
                 }
                 this.logger.debug("Processing non-streaming response");
-                this.invokeOnCompleteCallback(response.data);
+                this.invokeOnCompleteCallback(response.data, streamConfig);
                 return [2 /*return*/, Promise.resolve(response.data)];
             });
         });
     };
-    ApiCall.prototype.handleNodeStreaming = function (response) {
+    ApiCall.prototype.handleNodeStreaming = function (response, streamConfig) {
         var _this = this;
         this.logger.debug("Processing Node.js stream");
         return new Promise(function (resolve, reject) {
@@ -2162,7 +2175,7 @@ var ApiCall = /** @class */ (function () {
                     buffer += data;
                     var lines = buffer.split("\n");
                     buffer = (_a = lines.pop()) !== null && _a !== void 0 ? _a : "";
-                    _this.processStreamLines(lines, allChunks);
+                    _this.processStreamLines(lines, allChunks, streamConfig);
                 }
                 catch (error) {
                     reject(error);
@@ -2171,32 +2184,32 @@ var ApiCall = /** @class */ (function () {
             stream.on("end", function () {
                 if (buffer.trim().length > 0) {
                     var lines = buffer.split("\n");
-                    _this.processStreamLines(lines, allChunks);
+                    _this.processStreamLines(lines, allChunks, streamConfig);
                 }
-                _this.finalizeStreamResult(allChunks, resolve, response);
+                _this.finalizeStreamResult(allChunks, resolve, response, streamConfig);
             });
             stream.on("error", function (error) {
                 _this.logger.error("Stream error: ".concat(error));
-                _this.invokeOnErrorCallback(error);
+                _this.invokeOnErrorCallback(error, streamConfig);
                 reject(error);
             });
         });
     };
-    ApiCall.prototype.handleBrowserStreaming = function (response) {
+    ApiCall.prototype.handleBrowserStreaming = function (response, streamConfig) {
         var _this = this;
         this.logger.debug("Processing browser stream");
         return new Promise(function (resolve, reject) { return tslib_1.__awaiter(_this, void 0, void 0, function () {
             return tslib_1.__generator(this, function (_a) {
                 try {
                     if (response.data && typeof response.data.getReader === "function") {
-                        return [2 /*return*/, this.handleBrowserReadableStream(response.data, resolve, reject, response)];
+                        return [2 /*return*/, this.handleBrowserReadableStream(response.data, resolve, reject, response, streamConfig)];
                     }
                     if (typeof response.data === "string") {
-                        return [2 /*return*/, this.handleBrowserStringResponse(response.data, resolve, response)];
+                        return [2 /*return*/, this.handleBrowserStringResponse(response.data, resolve, response, streamConfig)];
                     }
                     if (typeof response.data === "object" && response.data !== null) {
                         this.logger.debug("No stream found, but data object is available");
-                        this.invokeOnCompleteCallback(response.data);
+                        this.invokeOnCompleteCallback(response.data, streamConfig);
                         return [2 /*return*/, resolve(response.data)];
                     }
                     this.logger.error("No usable data found in response");
@@ -2204,14 +2217,14 @@ var ApiCall = /** @class */ (function () {
                 }
                 catch (error) {
                     this.logger.error("Error processing streaming response: ".concat(error));
-                    this.invokeOnErrorCallback(error);
+                    this.invokeOnErrorCallback(error, streamConfig);
                     reject(error);
                 }
                 return [2 /*return*/];
             });
         }); });
     };
-    ApiCall.prototype.handleBrowserReadableStream = function (stream, resolve, reject, response) {
+    ApiCall.prototype.handleBrowserReadableStream = function (stream, resolve, reject, response, streamConfig) {
         return tslib_1.__awaiter(this, void 0, void 0, function () {
             var reader, allChunks, buffer, _a, done, value, lines_1, chunk, lines, error_2;
             return tslib_1.__generator(this, function (_b) {
@@ -2234,7 +2247,7 @@ var ApiCall = /** @class */ (function () {
                             this.logger.debug("Stream reading complete");
                             if (buffer.trim()) {
                                 lines_1 = buffer.split("\n");
-                                this.processStreamLines(lines_1, allChunks);
+                                this.processStreamLines(lines_1, allChunks, streamConfig);
                             }
                             return [3 /*break*/, 4];
                         }
@@ -2243,13 +2256,15 @@ var ApiCall = /** @class */ (function () {
                         buffer += chunk;
                         lines = buffer.split("\n");
                         buffer = lines.pop() || "";
-                        this.processStreamLines(lines, allChunks);
+                        this.processStreamLines(lines, allChunks, streamConfig);
                         return [3 /*break*/, 2];
                     case 4:
-                        this.finalizeStreamResult(allChunks, resolve, response);
+                        this.finalizeStreamResult(allChunks, resolve, response, streamConfig);
                         return [3 /*break*/, 6];
                     case 5:
                         error_2 = _b.sent();
+                        this.logger.error("Stream error: ".concat(error_2));
+                        this.invokeOnErrorCallback(error_2, streamConfig);
                         reject(error_2);
                         return [3 /*break*/, 6];
                     case 6: return [2 /*return*/];
@@ -2257,45 +2272,45 @@ var ApiCall = /** @class */ (function () {
             });
         });
     };
-    ApiCall.prototype.handleBrowserStringResponse = function (data, resolve, response) {
+    ApiCall.prototype.handleBrowserStringResponse = function (data, resolve, response, streamConfig) {
         this.logger.debug("Processing text response as stream data");
         var allChunks = [];
         var lines = data.split("\n");
-        this.processStreamLines(lines, allChunks);
+        this.processStreamLines(lines, allChunks, streamConfig);
         if (allChunks.length > 0) {
             var finalResult = this.combineStreamingChunks(allChunks);
-            this.invokeOnCompleteCallback(finalResult);
+            this.invokeOnCompleteCallback(finalResult, streamConfig);
             resolve(finalResult);
         }
         else {
             // If no chunks were processed, use the original response
             this.logger.debug("No chunks processed, returning original API response");
-            this.invokeOnCompleteCallback(response.data);
+            this.invokeOnCompleteCallback(response.data, streamConfig);
             resolve(response.data);
         }
     };
-    ApiCall.prototype.processStreamLines = function (lines, allChunks) {
+    ApiCall.prototype.processStreamLines = function (lines, allChunks, streamConfig) {
         for (var _i = 0, lines_2 = lines; _i < lines_2.length; _i++) {
             var line = lines_2[_i];
             if (line.trim() && line !== "data: [DONE]") {
                 var processed = this.processStreamingLine(line);
                 if (processed !== null) {
-                    this.invokeOnChunkCallback(processed);
+                    this.invokeOnChunkCallback(processed, streamConfig);
                     allChunks.push(processed);
                 }
             }
         }
     };
-    ApiCall.prototype.finalizeStreamResult = function (allChunks, resolve, response) {
+    ApiCall.prototype.finalizeStreamResult = function (allChunks, resolve, response, streamConfig) {
         if (allChunks.length > 0) {
             var finalResult = this.combineStreamingChunks(allChunks);
             this.logger.debug("Stream processing complete");
-            this.invokeOnCompleteCallback(finalResult);
+            this.invokeOnCompleteCallback(finalResult, streamConfig);
             resolve(finalResult);
         }
         else {
             this.logger.debug("No chunks processed, returning original API response");
-            this.invokeOnCompleteCallback(response.data);
+            this.invokeOnCompleteCallback(response.data, streamConfig);
             resolve(response.data);
         }
     };
@@ -2315,75 +2330,43 @@ var ApiCall = /** @class */ (function () {
         }
         // For regular search responses
         var lastChunk = chunks[chunks.length - 1];
-        if (this.isCompleteSearchResponse(lastChunk)) {
-            return lastChunk;
+        if (!this.isCompleteSearchResponse(lastChunk)) {
+            throw new Error("Last chunk is not a complete search response");
         }
-        // Try to merge chunks if last chunk isn't a complete response
-        return this.attemptChunksMerge(chunks, lastChunk);
+        return lastChunk;
     };
     ApiCall.prototype.getMessageChunks = function (chunks) {
-        return chunks.filter(function (chunk) {
-            return typeof chunk === "object" && chunk !== null && "message" in chunk;
-        });
+        return chunks.filter(this.isChunkMessage);
+    };
+    ApiCall.prototype.isChunkMessage = function (chunk) {
+        return (typeof chunk === "object" &&
+            chunk !== null &&
+            "message" in chunk &&
+            "conversation_id" in chunk);
     };
     ApiCall.prototype.combineMessageChunks = function (chunks, messagesChunks) {
         this.logger.debug("Found ".concat(messagesChunks.length, " message chunks to combine"));
-        // Check if the last chunk contains the complete response
         var lastChunk = chunks[chunks.length - 1];
-        if (typeof lastChunk === "object" &&
-            lastChunk !== null &&
-            ("hits" in lastChunk || "found" in lastChunk)) {
-            this.logger.debug("Last chunk appears to be a complete search response");
+        if (this.isCompleteSearchResponse(lastChunk)) {
             return lastChunk;
         }
-        // Combine all message chunks
-        var combinedMessage = messagesChunks
-            .map(function (chunk) { return chunk.message; })
-            .join("");
-        // Look for a chunk with search metadata
-        var metadataChunk = chunks.find(function (chunk) {
-            return typeof chunk === "object" &&
-                chunk !== null &&
-                ("hits" in chunk || "found" in chunk || "request_params" in chunk);
-        });
-        if (metadataChunk) {
-            // If we found metadata, merge it with the combined message
-            return tslib_1.__assign(tslib_1.__assign({}, metadataChunk), { message: combinedMessage });
+        var metadataChunk = chunks.find(this.isCompleteSearchResponse);
+        if (!metadataChunk) {
+            throw new Error("No metadata chunk found");
         }
-        // Otherwise just return the combined message
-        return { message: combinedMessage };
+        return metadataChunk;
     };
     ApiCall.prototype.isCompleteSearchResponse = function (chunk) {
         if (typeof chunk === "object" &&
             chunk !== null &&
             Object.keys(chunk).length > 0) {
-            // Check if it has search response properties
-            return ("found" in chunk ||
+            return ("results" in chunk ||
+                "found" in chunk ||
                 "hits" in chunk ||
                 "page" in chunk ||
                 "search_time_ms" in chunk);
         }
         return false;
-    };
-    ApiCall.prototype.attemptChunksMerge = function (chunks, lastChunk) {
-        try {
-            // Attempt to merge chunks that might be parts of the same structure
-            var mergedResult = {};
-            for (var _i = 0, chunks_1 = chunks; _i < chunks_1.length; _i++) {
-                var chunk = chunks_1[_i];
-                if (typeof chunk === "object" && chunk !== null) {
-                    mergedResult = tslib_1.__assign(tslib_1.__assign({}, mergedResult), chunk);
-                }
-            }
-            if (Object.keys(mergedResult).length > 0) {
-                return mergedResult;
-            }
-        }
-        catch (e) {
-            this.logger.warn("Failed to merge chunks: ".concat(e));
-        }
-        // Fallback to the last chunk if merging fails
-        return lastChunk;
     };
     // Attempts to find the next healthy node, looping through the list of nodes once.
     //   But if no healthy nodes are found, it will just return the next node, even if it's unhealthy
@@ -2474,56 +2457,53 @@ var ApiCall = /** @class */ (function () {
         }
         var error = new TypesenseError_1.default(errorMessage, httpBody, response.status);
         if (response.status === 400) {
-            error = new Errors_1.RequestMalformed(errorMessage);
+            error = new Errors_1.RequestMalformed(errorMessage, httpBody, response.status);
         }
         else if (response.status === 401) {
-            error = new Errors_1.RequestUnauthorized(errorMessage);
+            error = new Errors_1.RequestUnauthorized(errorMessage, httpBody, response.status);
         }
         else if (response.status === 404) {
-            error = new Errors_1.ObjectNotFound(errorMessage);
+            error = new Errors_1.ObjectNotFound(errorMessage, httpBody, response.status);
         }
         else if (response.status === 409) {
-            error = new Errors_1.ObjectAlreadyExists(errorMessage);
+            error = new Errors_1.ObjectAlreadyExists(errorMessage, httpBody, response.status);
         }
         else if (response.status === 422) {
-            error = new Errors_1.ObjectUnprocessable(errorMessage);
+            error = new Errors_1.ObjectUnprocessable(errorMessage, httpBody, response.status);
         }
         else if (response.status >= 500 && response.status <= 599) {
-            error = new Errors_1.ServerError(errorMessage);
+            error = new Errors_1.ServerError(errorMessage, httpBody, response.status);
         }
         else {
-            error = new Errors_1.HTTPError(errorMessage);
+            error = new Errors_1.HTTPError(errorMessage, httpBody, response.status);
         }
         return error;
     };
-    ApiCall.prototype.invokeOnChunkCallback = function (data) {
-        var _a;
-        if ((_a = this.configuration.streamConfig) === null || _a === void 0 ? void 0 : _a.onChunk) {
+    ApiCall.prototype.invokeOnChunkCallback = function (data, streamConfig) {
+        if (streamConfig === null || streamConfig === void 0 ? void 0 : streamConfig.onChunk) {
             try {
-                this.configuration.streamConfig.onChunk(data);
+                streamConfig.onChunk(data);
             }
             catch (error) {
                 this.logger.warn("Error in onChunk callback: ".concat(error));
             }
         }
     };
-    ApiCall.prototype.invokeOnCompleteCallback = function (data) {
-        var _a;
-        if ((_a = this.configuration.streamConfig) === null || _a === void 0 ? void 0 : _a.onComplete) {
+    ApiCall.prototype.invokeOnCompleteCallback = function (data, streamConfig) {
+        if (streamConfig === null || streamConfig === void 0 ? void 0 : streamConfig.onComplete) {
             try {
-                this.configuration.streamConfig.onComplete(data);
+                streamConfig.onComplete(data);
             }
             catch (error) {
                 this.logger.warn("Error in onComplete callback: ".concat(error));
             }
         }
     };
-    ApiCall.prototype.invokeOnErrorCallback = function (error) {
-        var _a;
-        if ((_a = this.configuration.streamConfig) === null || _a === void 0 ? void 0 : _a.onError) {
-            var errorObj = error instanceof Error ? error : new Error(String(error));
+    ApiCall.prototype.invokeOnErrorCallback = function (error, streamConfig) {
+        if (streamConfig === null || streamConfig === void 0 ? void 0 : streamConfig.onError) {
+            var errorObj = (0, Utils_1.toErrorWithMessage)(error);
             try {
-                this.configuration.streamConfig.onError(errorObj);
+                streamConfig.onError(errorObj);
             }
             catch (callbackError) {
                 this.logger.warn("Error in onError callback: ".concat(callbackError));
@@ -2883,7 +2863,6 @@ var Configuration = /** @class */ (function () {
         this.httpAgent = options.httpAgent;
         this.httpsAgent = options.httpsAgent;
         this.paramsSerializer = options.paramsSerializer;
-        this.streamConfig = options.streamConfig;
         this.showDeprecationWarnings(options);
         this.validate();
     }
@@ -3818,7 +3797,7 @@ var Keys = /** @class */ (function () {
     };
     Keys.prototype.generateScopedSearchKey = function (searchKey, parameters) {
         // Note: only a key generated with the `documents:search` action will be
-        // accepted by the server, when usined with the search endpoint.
+        // accepted by the server, when used with the search endpoint.
         var normalizedParams = (0, Utils_1.normalizeArrayableParams)(parameters);
         var paramsJSON = JSON.stringify(normalizedParams);
         var digest = Buffer.from((0, crypto_1.createHmac)("sha256", searchKey).update(paramsJSON).digest("base64"));
@@ -3894,31 +3873,36 @@ var MultiSearch = /** @class */ (function () {
         this.requestWithCache.clearCache();
     };
     MultiSearch.prototype.perform = function (searchRequests, commonParams, _a) {
-        if (commonParams === void 0) { commonParams = {}; }
         var _b = _a === void 0 ? {} : _a, _c = _b.cacheSearchResultsForSeconds, cacheSearchResultsForSeconds = _c === void 0 ? this.configuration
             .cacheSearchResultsForSeconds : _c;
         return tslib_1.__awaiter(this, void 0, void 0, function () {
-            var additionalHeaders, additionalQueryParams, queryParams, normalizedSearchRequests, normalizedQueryParams;
+            var params, normalizedSearchRequests, streamConfig, paramsWithoutStream, normalizedQueryParams;
             return tslib_1.__generator(this, function (_d) {
-                additionalHeaders = {};
-                if (this.useTextContentType) {
-                    additionalHeaders["content-type"] = "text/plain";
-                }
-                additionalQueryParams = {};
+                params = commonParams ? tslib_1.__assign({}, commonParams) : {};
                 if (this.configuration.useServerSideSearchCache === true) {
-                    additionalQueryParams["use_cache"] = true;
+                    params.use_cache = true;
                 }
-                queryParams = tslib_1.__assign(tslib_1.__assign({}, commonParams), additionalQueryParams);
-                normalizedSearchRequests = tslib_1.__assign(tslib_1.__assign({}, searchRequests), { searches: searchRequests.searches.map(Utils_1.normalizeArrayableParams) });
-                normalizedQueryParams = (0, Utils_1.normalizeArrayableParams)(queryParams);
-                return [2 /*return*/, this.requestWithCache.perform(this.apiCall, this.apiCall.post, [
-                        RESOURCEPATH,
-                        normalizedSearchRequests,
-                        normalizedQueryParams,
-                        additionalHeaders,
-                    ], { cacheResponseForSeconds: cacheSearchResultsForSeconds })];
+                normalizedSearchRequests = {
+                    union: searchRequests.union,
+                    searches: searchRequests.searches.map((Utils_1.normalizeArrayableParams)),
+                };
+                streamConfig = params.streamConfig, paramsWithoutStream = tslib_1.__rest(params, ["streamConfig"]);
+                normalizedQueryParams = (0, Utils_1.normalizeArrayableParams)(paramsWithoutStream);
+                return [2 /*return*/, this.requestWithCache.perform(this.apiCall, "post", {
+                        path: RESOURCEPATH,
+                        body: normalizedSearchRequests,
+                        queryParams: normalizedQueryParams,
+                        headers: this.useTextContentType
+                            ? { "content-type": "text/plain" }
+                            : {},
+                        streamConfig: streamConfig,
+                        isStreamingRequest: this.isStreamingRequest(params),
+                    }, { cacheResponseForSeconds: cacheSearchResultsForSeconds })];
             });
         });
+    };
+    MultiSearch.prototype.isStreamingRequest = function (commonParams) {
+        return commonParams.streamConfig !== undefined;
     };
     return MultiSearch;
 }());
@@ -4167,54 +4151,54 @@ var RequestWithCache = /** @class */ (function () {
         this.responseCache = new Map();
         this.responsePromiseCache = new Map();
     };
-    // Todo: should probably be passed a callback instead, or an apiCall instance. Types are messy this way
-    RequestWithCache.prototype.perform = function (requestContext, requestFunction, requestFunctionArguments, cacheOptions) {
+    RequestWithCache.prototype.perform = function (requestContext, methodName, requestParams, cacheOptions) {
         return tslib_1.__awaiter(this, void 0, void 0, function () {
-            var _a, cacheResponseForSeconds, _b, maxSize, isCacheDisabled, requestFunctionArgumentsJSON, cacheEntry, now, isEntryValid, cachePromiseEntry, isEntryValid, responsePromise, response, isCacheOverMaxSize, oldestEntry, isResponsePromiseCacheOverMaxSize, oldestEntry;
+            var _a, cacheResponseForSeconds, _b, maxSize, isCacheDisabled, path, queryParams, body, headers, streamConfig, abortSignal, responseType, isStreamingRequest, requestParamsJSON, cacheEntry, now, isEntryValid, cachePromiseEntry, isEntryValid, responsePromise, response, isCacheOverMaxSize, oldestEntry, isResponsePromiseCacheOverMaxSize, oldestEntry;
             return tslib_1.__generator(this, function (_c) {
                 switch (_c.label) {
                     case 0:
                         _a = cacheOptions.cacheResponseForSeconds, cacheResponseForSeconds = _a === void 0 ? defaultCacheResponseForSeconds : _a, _b = cacheOptions.maxSize, maxSize = _b === void 0 ? defaultMaxSize : _b;
                         isCacheDisabled = cacheResponseForSeconds <= 0 || maxSize <= 0;
+                        path = requestParams.path, queryParams = requestParams.queryParams, body = requestParams.body, headers = requestParams.headers, streamConfig = requestParams.streamConfig, abortSignal = requestParams.abortSignal, responseType = requestParams.responseType, isStreamingRequest = requestParams.isStreamingRequest;
                         if (isCacheDisabled) {
-                            return [2 /*return*/, requestFunction.call.apply(requestFunction, tslib_1.__spreadArray([requestContext], requestFunctionArguments, false))];
+                            return [2 /*return*/, this.executeRequest(requestContext, methodName, path, queryParams, body, headers, { abortSignal: abortSignal, responseType: responseType, streamConfig: streamConfig, isStreamingRequest: isStreamingRequest })];
                         }
-                        requestFunctionArgumentsJSON = JSON.stringify(requestFunctionArguments);
-                        cacheEntry = this.responseCache.get(requestFunctionArgumentsJSON);
+                        requestParamsJSON = JSON.stringify(requestParams);
+                        cacheEntry = this.responseCache.get(requestParamsJSON);
                         now = Date.now();
                         if (cacheEntry) {
                             isEntryValid = now - cacheEntry.requestTimestamp < cacheResponseForSeconds * 1000;
                             if (isEntryValid) {
-                                this.responseCache.delete(requestFunctionArgumentsJSON);
-                                this.responseCache.set(requestFunctionArgumentsJSON, cacheEntry);
-                                return [2 /*return*/, Promise.resolve(cacheEntry.response)];
+                                this.responseCache.delete(requestParamsJSON);
+                                this.responseCache.set(requestParamsJSON, cacheEntry);
+                                return [2 /*return*/, cacheEntry.response];
                             }
                             else {
-                                this.responseCache.delete(requestFunctionArgumentsJSON);
+                                this.responseCache.delete(requestParamsJSON);
                             }
                         }
-                        cachePromiseEntry = this.responsePromiseCache.get(requestFunctionArgumentsJSON);
+                        cachePromiseEntry = this.responsePromiseCache.get(requestParamsJSON);
                         if (cachePromiseEntry) {
                             isEntryValid = now - cachePromiseEntry.requestTimestamp <
                                 cacheResponseForSeconds * 1000;
                             if (isEntryValid) {
-                                this.responsePromiseCache.delete(requestFunctionArgumentsJSON);
-                                this.responsePromiseCache.set(requestFunctionArgumentsJSON, cachePromiseEntry);
+                                this.responsePromiseCache.delete(requestParamsJSON);
+                                this.responsePromiseCache.set(requestParamsJSON, cachePromiseEntry);
                                 return [2 /*return*/, cachePromiseEntry.responsePromise];
                             }
                             else {
-                                this.responsePromiseCache.delete(requestFunctionArgumentsJSON);
+                                this.responsePromiseCache.delete(requestParamsJSON);
                             }
                         }
-                        responsePromise = requestFunction.call.apply(requestFunction, tslib_1.__spreadArray([requestContext], requestFunctionArguments, false));
-                        this.responsePromiseCache.set(requestFunctionArgumentsJSON, {
+                        responsePromise = this.executeRequest(requestContext, methodName, path, queryParams, body, headers, { abortSignal: abortSignal, responseType: responseType, streamConfig: streamConfig, isStreamingRequest: isStreamingRequest });
+                        this.responsePromiseCache.set(requestParamsJSON, {
                             requestTimestamp: now,
                             responsePromise: responsePromise,
                         });
                         return [4 /*yield*/, responsePromise];
                     case 1:
                         response = _c.sent();
-                        this.responseCache.set(requestFunctionArgumentsJSON, {
+                        this.responseCache.set(requestParamsJSON, {
                             requestTimestamp: now,
                             response: response,
                         });
@@ -4236,6 +4220,33 @@ var RequestWithCache = /** @class */ (function () {
                 }
             });
         });
+    };
+    RequestWithCache.prototype.executeRequest = function (context, methodName, path, queryParams, body, headers, options) {
+        if (queryParams === void 0) { queryParams = {}; }
+        var method = context[methodName];
+        switch (methodName) {
+            case "get":
+                return method.call(context, path, queryParams, {
+                    abortSignal: options === null || options === void 0 ? void 0 : options.abortSignal,
+                    responseType: options === null || options === void 0 ? void 0 : options.responseType,
+                    streamConfig: options === null || options === void 0 ? void 0 : options.streamConfig,
+                    isStreamingRequest: options === null || options === void 0 ? void 0 : options.isStreamingRequest,
+                });
+            case "delete":
+                return method.call(context, path, queryParams);
+            case "post":
+                return method.call(context, path, body, queryParams, headers || {}, {
+                    abortSignal: options === null || options === void 0 ? void 0 : options.abortSignal,
+                    responseType: options === null || options === void 0 ? void 0 : options.responseType,
+                    streamConfig: options === null || options === void 0 ? void 0 : options.streamConfig,
+                    isStreamingRequest: options === null || options === void 0 ? void 0 : options.isStreamingRequest,
+                });
+            case "put":
+            case "patch":
+                return method.call(context, path, body, queryParams);
+            default:
+                throw new Error("Unsupported method: ".concat(String(methodName)));
+        }
     };
     return RequestWithCache;
 }());
@@ -4356,22 +4367,29 @@ var SearchOnlyDocuments = /** @class */ (function () {
         var _b = _a === void 0 ? {} : _a, _c = _b.cacheSearchResultsForSeconds, cacheSearchResultsForSeconds = _c === void 0 ? this.configuration
             .cacheSearchResultsForSeconds : _c, _d = _b.abortSignal, abortSignal = _d === void 0 ? null : _d;
         return tslib_1.__awaiter(this, void 0, void 0, function () {
-            var additionalQueryParams, normalizedParams, queryParams;
-            return tslib_1.__generator(this, function (_e) {
+            var additionalQueryParams, _e, streamConfig, rest, queryParams, isStreamingRequest;
+            return tslib_1.__generator(this, function (_f) {
                 additionalQueryParams = {};
                 if (this.configuration.useServerSideSearchCache === true) {
                     additionalQueryParams["use_cache"] = true;
                 }
-                normalizedParams = (0, Utils_1.normalizeArrayableParams)(searchParameters);
-                queryParams = Object.assign({}, additionalQueryParams, normalizedParams);
-                return [2 /*return*/, this.requestWithCache.perform(this.apiCall, this.apiCall.get, [this.endpointPath("search"), queryParams, { abortSignal: abortSignal }], {
+                _e = (0, Utils_1.normalizeArrayableParams)(searchParameters), streamConfig = _e.streamConfig, rest = tslib_1.__rest(_e, ["streamConfig"]);
+                queryParams = tslib_1.__assign(tslib_1.__assign({}, additionalQueryParams), rest);
+                isStreamingRequest = queryParams.conversation_stream === true;
+                return [2 /*return*/, this.requestWithCache.perform(this.apiCall, "get", {
+                        path: this.endpointPath("search"),
+                        queryParams: queryParams,
+                        streamConfig: streamConfig,
+                        abortSignal: abortSignal,
+                        isStreamingRequest: isStreamingRequest,
+                    }, {
                         cacheResponseForSeconds: cacheSearchResultsForSeconds,
                     })];
             });
         });
     };
     SearchOnlyDocuments.prototype.endpointPath = function (operation) {
-        return "".concat(Collections_1.default.RESOURCEPATH, "/").concat(this.collectionName).concat(RESOURCEPATH).concat(operation === undefined ? "" : "/" + operation);
+        return "".concat(Collections_1.default.RESOURCEPATH, "/").concat(encodeURIComponent(this.collectionName)).concat(RESOURCEPATH).concat(operation === undefined ? "" : "/" + operation);
     };
     Object.defineProperty(SearchOnlyDocuments, "RESOURCEPATH", {
         get: function () {
@@ -4778,7 +4796,7 @@ exports.arrayableParams = {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.normalizeArrayableParams = void 0;
+exports.toErrorWithMessage = exports.normalizeArrayableParams = void 0;
 var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var Types_1 = __webpack_require__(/*! ./Types */ "./node_modules/typesense/lib/Typesense/Types.js");
 function hasNoArrayValues(params) {
@@ -4806,6 +4824,26 @@ exports.normalizeArrayableParams = normalizeArrayableParams;
 function isNonArrayValue(value) {
     return !Array.isArray(value);
 }
+function isErrorWithMessage(error) {
+    return (typeof error === "object" &&
+        error !== null &&
+        "message" in error &&
+        typeof error.message === "string");
+}
+function toErrorWithMessage(couldBeError) {
+    if (isErrorWithMessage(couldBeError))
+        return couldBeError;
+    try {
+        if (typeof couldBeError === "string") {
+            return new Error(couldBeError);
+        }
+        return new Error(JSON.stringify(couldBeError));
+    }
+    catch (_a) {
+        return new Error(String(couldBeError));
+    }
+}
+exports.toErrorWithMessage = toErrorWithMessage;
 //# sourceMappingURL=Utils.js.map
 
 /***/ }),
