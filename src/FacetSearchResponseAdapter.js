@@ -9,7 +9,7 @@ export class FacetSearchResponseAdapter {
   }
 
   _adaptFacetHits(typesenseFacetCounts) {
-    let adaptedResult = {};
+    let adaptedResult = [];
     const facet = typesenseFacetCounts.find((facet) => facet.field_name === this.instantsearchRequest.params.facetName);
 
     if (typeof facet !== 'undefined') {
