@@ -259,7 +259,7 @@ describe("Search Experience", () => {
           text: "294 results found",
         });
         await expect(page).toMatchElement("#hits", {
-          text: "mophie - powerstation 8x Portable Charger",
+          text: "Motorola",
         });
         await expect(page).toMatchElement("#infinite-hits", {
           text: "Verizon - Jetpack 4G LTE Mobile Hotspot",
