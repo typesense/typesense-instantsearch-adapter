@@ -22,23 +22,45 @@ export default class TypesenseInstantsearchAdapter {
     try {
       typesenseResponse = await this._adaptAndPerformTypesenseRequest(instantsearchRequests);
 
-      const adaptedResponses = typesenseResponse.results.map((typesenseResult, index) => {
-        this._validateTypesenseResult(typesenseResult);
+      // Check if this is a union search response
+      if (typesenseResponse.union_request_params) {
+        // Handle union search response - single unified response
+        this._validateTypesenseResult(typesenseResponse);
         const responseAdapter = new SearchResponseAdapter(
-          typesenseResult,
-          instantsearchRequests[index],
+          typesenseResponse,
+          instantsearchRequests[0], // Use first request as base
           this.configuration,
-          typesenseResponse.results,
+          [typesenseResponse], // Pass single response as allTypesenseResults
           typesenseResponse,
         );
         let adaptedResponse = responseAdapter.adapt();
 
-        return adaptedResponse;
-      });
+        // InstantSearch expects one result per request, so return the same adapted response for each request
+        const adaptedResponses = instantsearchRequests.map(() => adaptedResponse);
 
-      return {
-        results: adaptedResponses,
-      };
+        return {
+          results: adaptedResponses,
+        };
+      } else {
+        // Handle regular multi-search response - multiple separate responses
+        const adaptedResponses = typesenseResponse.results.map((typesenseResult, index) => {
+          this._validateTypesenseResult(typesenseResult);
+          const responseAdapter = new SearchResponseAdapter(
+            typesenseResult,
+            instantsearchRequests[index],
+            this.configuration,
+            typesenseResponse.results,
+            typesenseResponse,
+          );
+          let adaptedResponse = responseAdapter.adapt();
+
+          return adaptedResponse;
+        });
+
+        return {
+          results: adaptedResponses,
+        };
+      }
     } catch (error) {
       console.error(error);
       throw error;
