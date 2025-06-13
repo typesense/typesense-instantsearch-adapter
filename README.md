@@ -343,6 +343,47 @@ const searchClient = typesenseInstantsearchAdapter.searchClient;
 
 Essentially, any parameters set in `collectionSpecificSearchParameters` will be merged with the values in `additionalSearchParameters` when querying Typesense, effectively overriding values in `additionalSearchParameters` on a per-collection-basis.
 
+#### Union Search
+
+> Available as of typesense-instantsearch-adapter `2.10.0` and Typesense Server `v28.0`
+
+Union search allows you to merge search results from multiple search queries into a single ordered set of hits. This is particularly useful when you want to combine results from different filters or collections.
+
+To enable union search, set the `union` parameter to `true` when instantiating the adapter:
+
+```js
+const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
+  server: {
+    apiKey: "xyz",
+    nodes: [
+      {
+        host: "localhost",
+        port: "8108",
+        path: "/",
+        protocol: "http",
+      },
+    ],
+  },
+  union: true, // <======= Enable union search
+  collectionSpecificSearchParameters: {
+    products: {
+      query_by: "name,description,categories",
+    },
+    brands: {
+      query_by: "name",
+    },
+  },
+});
+```
+
+When union search is enabled, the adapter will merge search results from multiple search requests into a single ordered result set. This differs from regular multi-search in the following ways:
+
+- **Pagination**: Only global pagination parameters are considered, not individual search pagination parameters
+- **Sorting**: All search requests must have the same type, count, and order of sorting fields for the union to work correctly
+- **Result merging**: Results from each search query are combined into one final result set
+
+The union search feature leverages Typesense's `multi_search` endpoint with the `union: true` parameter to provide seamless result merging at the server level. For more information, refer to the [Union Search Documentation](https://typesense.org/docs/28.0/api/federated-multi-search.html#union-search)
+
 ### `geoSearch`
 
 Algolia uses `_geoloc` by default for the name of the field that stores the lat long values for a record.

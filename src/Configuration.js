@@ -59,6 +59,7 @@ export class Configuration {
     this.collectionSpecificFacetByOptions = options.collectionSpecificFacetByOptions ?? {};
     this.collectionSpecificFilterByOptions = options.collectionSpecificFilterByOptions ?? {};
     this.collectionSpecificSortByOptions = options.collectionSpecificSortByOptions ?? {};
+    this.union = options.union ?? false;
   }
 
   validate() {

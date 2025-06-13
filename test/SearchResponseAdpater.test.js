@@ -496,4 +496,334 @@ describe("SearchResponseAdapter", () => {
       });
     });
   });
+
+  describe("Union Search Support", () => {
+    describe("when union_request_params is present", () => {
+      it("uses union_request_params instead of request_params for query and per_page", () => {
+        const typesenseResponse = require("./support/data/typesense-union-search-response.json");
+        const subject = new SearchResponseAdapter(
+          typesenseResponse,
+          {
+            params: {
+              highlightPreTag: "<mark>",
+              highlightPostTag: "</mark>",
+            },
+          },
+          {},
+        );
+
+        const result = subject.adapt();
+        expect(result.query).toEqual("phone");
+        expect(result.hitsPerPage).toEqual(10);
+      });
+
+      it("uses 0-based page numbering for union search", () => {
+        const typesenseResponse = require("./support/data/typesense-union-search-response.json");
+        const subject = new SearchResponseAdapter(
+          typesenseResponse,
+          {
+            params: {
+              highlightPreTag: "<mark>",
+              highlightPostTag: "</mark>",
+            },
+          },
+          {},
+        );
+
+        const result = subject.adapt();
+        expect(result.page).toEqual(0); // Union search page should remain 0-based
+      });
+
+      it("includes collection and search_index metadata in hits", () => {
+        const typesenseResponse = require("./support/data/typesense-union-search-response.json");
+        const subject = new SearchResponseAdapter(
+          typesenseResponse,
+          {
+            params: {
+              highlightPreTag: "<mark>",
+              highlightPostTag: "</mark>",
+            },
+          },
+          {},
+        );
+
+        const result = subject.adapt();
+        expect(result.hits[0].collection).toEqual("products");
+        expect(result.hits[0].search_index).toEqual(0);
+        expect(result.hits[2].collection).toEqual("laptops");
+        expect(result.hits[2].search_index).toEqual(1);
+      });
+    });
+
+    describe("when request_params is present (regular search)", () => {
+      it("uses request_params for query and per_page", () => {
+        const typesenseResponse = require("./support/data/typesense-search-response.json");
+        const subject = new SearchResponseAdapter(
+          typesenseResponse["results"][0],
+          {
+            params: {
+              highlightPreTag: "<mark>",
+              highlightPostTag: "</mark>",
+            },
+          },
+          {},
+        );
+
+        const result = subject.adapt();
+        expect(result.query).toEqual("prepaid phone");
+        expect(result.hitsPerPage).toEqual(8);
+      });
+
+      it("converts 1-based page to 0-based for regular search", () => {
+        const typesenseResponse = require("./support/data/typesense-search-response.json");
+        const subject = new SearchResponseAdapter(
+          typesenseResponse["results"][0],
+          {
+            params: {
+              highlightPreTag: "<mark>",
+              highlightPostTag: "</mark>",
+            },
+          },
+          {},
+        );
+
+        const result = subject.adapt();
+        expect(result.page).toEqual(0); // Page 1 converted to 0-based = 0
+      });
+    });
+  });
+
+  describe("._adaptFacets", () => {
+    describe("when facet_counts is an array", () => {
+      it("adapts facets correctly", () => {
+        const typesenseResponse = require("./support/data/typesense-union-search-response.json");
+        const subject = new SearchResponseAdapter(
+          typesenseResponse,
+          {
+            params: {
+              highlightPreTag: "<mark>",
+              highlightPostTag: "</mark>",
+            },
+          },
+          {},
+        );
+
+        const result = subject._adaptFacets(typesenseResponse.facet_counts);
+        expect(result).toEqual({
+          brand: {
+            Apple: 10,
+            Samsung: 8,
+          },
+          category: {
+            Electronics: 15,
+            Phones: 3,
+          },
+        });
+      });
+    });
+
+    describe("when facet_counts is not an array", () => {
+      it("returns empty object safely", () => {
+        const typesenseResponse = require("./support/data/typesense-search-response-invalid-facets.json");
+        const subject = new SearchResponseAdapter(
+          typesenseResponse,
+          {
+            params: {
+              highlightPreTag: "<mark>",
+              highlightPostTag: "</mark>",
+            },
+          },
+          {},
+        );
+
+        const result = subject._adaptFacets(typesenseResponse.facet_counts);
+        expect(result).toEqual({});
+      });
+    });
+
+    describe("when facet_counts is undefined", () => {
+      it("returns empty object safely", () => {
+        const subject = new SearchResponseAdapter(
+          { hits: [], found: 0 },
+          {
+            params: {
+              highlightPreTag: "<mark>",
+              highlightPostTag: "</mark>",
+            },
+          },
+          {},
+        );
+
+        const result = subject._adaptFacets(undefined);
+        expect(result).toEqual({});
+      });
+    });
+  });
+
+  describe("._adaptFacetStats", () => {
+    describe("when facet_counts is an array with stats", () => {
+      it("adapts facet stats correctly", () => {
+        const typesenseResponse = require("./support/data/typesense-union-search-response.json");
+        const subject = new SearchResponseAdapter(
+          typesenseResponse,
+          {
+            params: {
+              highlightPreTag: "<mark>",
+              highlightPostTag: "</mark>",
+            },
+          },
+          {},
+        );
+
+        const result = subject._adaptFacetStats(typesenseResponse.facet_counts);
+        expect(result).toEqual({
+          brand: {
+            avg: 250.5,
+            max: 999.99,
+            min: 49.99,
+          },
+        });
+      });
+    });
+
+    describe("when facet_counts is not an array", () => {
+      it("returns empty object safely", () => {
+        const typesenseResponse = require("./support/data/typesense-search-response-invalid-facets.json");
+        const subject = new SearchResponseAdapter(
+          typesenseResponse,
+          {
+            params: {
+              highlightPreTag: "<mark>",
+              highlightPostTag: "</mark>",
+            },
+          },
+          {},
+        );
+
+        const result = subject._adaptFacetStats(typesenseResponse.facet_counts);
+        expect(result).toEqual({});
+      });
+    });
+
+    describe("when facet_counts is undefined", () => {
+      it("returns empty object safely", () => {
+        const subject = new SearchResponseAdapter(
+          { hits: [], found: 0 },
+          {
+            params: {
+              highlightPreTag: "<mark>",
+              highlightPostTag: "</mark>",
+            },
+          },
+          {},
+        );
+
+        const result = subject._adaptFacetStats(undefined);
+        expect(result).toEqual({});
+      });
+    });
+
+    describe("when facet has no stats property", () => {
+      it("skips facets without stats", () => {
+        const facetCounts = [
+          {
+            field_name: "brand",
+            counts: [{ value: "Apple", count: 10 }],
+            stats: { avg: 250.5 },
+          },
+          {
+            field_name: "category",
+            counts: [{ value: "Electronics", count: 15 }],
+            // No stats property
+          },
+        ];
+
+        const subject = new SearchResponseAdapter(
+          { hits: [], found: 0 },
+          {
+            params: {
+              highlightPreTag: "<mark>",
+              highlightPostTag: "</mark>",
+            },
+          },
+          {},
+        );
+
+        const result = subject._adaptFacetStats(facetCounts);
+        expect(result).toEqual({
+          brand: { avg: 250.5 },
+        });
+      });
+    });
+  });
+
+  describe("adapt() method integration", () => {
+    describe("with union search response", () => {
+      it("handles all union search features correctly", () => {
+        const typesenseResponse = require("./support/data/typesense-union-search-response.json");
+        const subject = new SearchResponseAdapter(
+          typesenseResponse,
+          {
+            params: {
+              highlightPreTag: "<mark>",
+              highlightPostTag: "</mark>",
+            },
+          },
+          {},
+        );
+
+        const result = subject.adapt();
+
+        // Basic response structure
+        expect(result.nbHits).toEqual(25);
+        expect(result.page).toEqual(0);
+        expect(result.hitsPerPage).toEqual(10);
+        expect(result.query).toEqual("phone");
+        expect(result.processingTimeMS).toEqual(8);
+
+        // Hits with union metadata
+        expect(result.hits).toHaveLength(3);
+        expect(result.hits[0].collection).toEqual("products");
+        expect(result.hits[0].search_index).toEqual(0);
+        expect(result.hits[2].collection).toEqual("laptops");
+        expect(result.hits[2].search_index).toEqual(1);
+
+        // Facets
+        expect(result.facets.brand).toEqual({
+          Apple: 10,
+          Samsung: 8,
+        });
+
+        // Facet stats
+        expect(result.facets_stats.brand).toEqual({
+          avg: 250.5,
+          max: 999.99,
+          min: 49.99,
+        });
+      });
+    });
+
+    describe("with invalid facet_counts", () => {
+      it("handles invalid facet structure gracefully", () => {
+        const typesenseResponse = require("./support/data/typesense-search-response-invalid-facets.json");
+        const subject = new SearchResponseAdapter(
+          typesenseResponse,
+          {
+            params: {
+              highlightPreTag: "<mark>",
+              highlightPostTag: "</mark>",
+            },
+          },
+          {},
+        );
+
+        const result = subject.adapt();
+
+        expect(result.facets).toEqual({});
+        expect(result.facets_stats).toEqual({});
+        expect(result.nbHits).toEqual(0);
+        expect(result.query).toEqual("nonexistent");
+      });
+    });
+  });
 });

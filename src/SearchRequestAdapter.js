@@ -486,6 +486,14 @@ export class SearchRequestAdapter {
       });
     }
 
-    return this.typesenseClient.multiSearch.perform({ searches: searches }, commonParams);
+    const searchRequest = { searches: searches };
+
+    // Add union parameter if configured
+    if (this.configuration.union) {
+      searchRequest.union = this.configuration.union;
+    }
+
+
+    return this.typesenseClient.multiSearch.perform(searchRequest, commonParams);
   }
 }

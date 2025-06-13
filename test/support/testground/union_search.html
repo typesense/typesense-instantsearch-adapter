@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="theme-color" content="#000000" />
+
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="shortcut icon" href="./favicon.png" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css@7/themes/algolia-min.css" />
+    <link rel="stylesheet" href="./src/index.css" />
+    <link rel="stylesheet" href="./src/app.css" />
+
+    <title>testground</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="ais-InstantSearch">
+        <h1>InstantSearch.js + Typesense Union Search Demo</h1>
+
+        <div id="searchbox"></div>
+        <h3>Hits</h3>
+        <div id="stats"></div>
+        <div id="hits"></div>
+
+        <div id="pagination"></div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/algoliasearch/3.32.0/algoliasearchLite.js"></script>
+    <script src="./src/union_search.js"></script>
+  </body>
+</html>

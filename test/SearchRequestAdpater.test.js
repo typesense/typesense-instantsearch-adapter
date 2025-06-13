@@ -281,4 +281,235 @@ describe("SearchRequestAdapter", () => {
       expect(result).toEqual("context1,context2");
     });
   });
+
+  describe("request", () => {
+    describe("union search functionality", () => {
+      it("includes union parameter in multisearch request when union is true", async () => {
+        const mockTypesenseClient = {
+          multiSearch: {
+            perform: jest.fn().mockResolvedValue({ results: [] }),
+          },
+        };
+
+        const configuration = new Configuration({
+          union: true,
+          additionalSearchParameters: {
+            query_by: "name",
+          },
+        });
+
+        const instantsearchRequests = [
+          {
+            indexName: "products",
+            params: { query: "test" },
+          },
+          {
+            indexName: "brands",
+            params: { query: "test" },
+          },
+        ];
+
+        const subject = new SearchRequestAdapter(instantsearchRequests, mockTypesenseClient, configuration);
+        await subject.request();
+
+        expect(mockTypesenseClient.multiSearch.perform).toHaveBeenCalledWith(
+          {
+            union: true,
+            searches: [
+              {
+                collection: "products",
+                q: "test",
+                page: 1,
+                query_by: "name",
+                highlight_full_fields: "name",
+              },
+              {
+                collection: "brands",
+                q: "test",
+                page: 1,
+                query_by: "name",
+                highlight_full_fields: "name",
+              },
+            ],
+          },
+          {},
+        );
+      });
+
+      it("does not include union parameter in multisearch request when union is false", async () => {
+        const mockTypesenseClient = {
+          multiSearch: {
+            perform: jest.fn().mockResolvedValue({ results: [] }),
+          },
+        };
+
+        const configuration = new Configuration({
+          union: false,
+          additionalSearchParameters: {
+            query_by: "name",
+          },
+        });
+
+        const instantsearchRequests = [
+          {
+            indexName: "products",
+            params: { query: "test" },
+          },
+        ];
+
+        const subject = new SearchRequestAdapter(instantsearchRequests, mockTypesenseClient, configuration);
+        await subject.request();
+
+        expect(mockTypesenseClient.multiSearch.perform).toHaveBeenCalledWith(
+          {
+            searches: [
+              {
+                collection: "products",
+                q: "test",
+                page: 1,
+                query_by: "name",
+                highlight_full_fields: "name",
+              },
+            ],
+          },
+          {},
+        );
+      });
+
+      it("does not include union parameter in multisearch request when union is not configured", async () => {
+        const mockTypesenseClient = {
+          multiSearch: {
+            perform: jest.fn().mockResolvedValue({ results: [] }),
+          },
+        };
+
+        const configuration = new Configuration({
+          additionalSearchParameters: {
+            query_by: "name",
+          },
+        });
+
+        const instantsearchRequests = [
+          {
+            indexName: "products",
+            params: { query: "test" },
+          },
+        ];
+
+        const subject = new SearchRequestAdapter(instantsearchRequests, mockTypesenseClient, configuration);
+        await subject.request();
+
+        expect(mockTypesenseClient.multiSearch.perform).toHaveBeenCalledWith(
+          {
+            searches: [
+              {
+                collection: "products",
+                q: "test",
+                page: 1,
+                query_by: "name",
+                highlight_full_fields: "name",
+              },
+            ],
+          },
+          {},
+        );
+      });
+
+      it("includes union parameter with conversational search", async () => {
+        const mockTypesenseClient = {
+          multiSearch: {
+            perform: jest.fn().mockResolvedValue({ results: [] }),
+          },
+        };
+
+        const configuration = new Configuration({
+          union: true,
+          additionalSearchParameters: {
+            query_by: "name",
+          },
+        });
+
+        const instantsearchRequests = [
+          {
+            indexName: "products",
+            params: { query: "test" },
+          },
+        ];
+
+        // Mock a search parameter that includes conversation
+        const subject = new SearchRequestAdapter(instantsearchRequests, mockTypesenseClient, configuration);
+        subject._buildSearchParameters = jest.fn().mockReturnValue({
+          collection: "products",
+          q: "test",
+          page: 1,
+          query_by: "name",
+          conversation: true,
+          conversation_id: "conv_123",
+          conversation_model_id: "model_456",
+        });
+
+        await subject.request();
+
+        expect(mockTypesenseClient.multiSearch.perform).toHaveBeenCalledWith(
+          {
+            union: true,
+            searches: [
+              {
+                collection: "products",
+                page: 1,
+                query_by: "name",
+              },
+            ],
+          },
+          {
+            q: "test",
+            conversation: true,
+            conversation_id: "conv_123",
+            conversation_model_id: "model_456",
+          },
+        );
+      });
+
+      it("handles truthy string values for union parameter", async () => {
+        const mockTypesenseClient = {
+          multiSearch: {
+            perform: jest.fn().mockResolvedValue({ results: [] }),
+          },
+        };
+
+        const configuration = new Configuration({
+          union: "true",
+          additionalSearchParameters: {
+            query_by: "name",
+          },
+        });
+
+        const instantsearchRequests = [
+          {
+            indexName: "products",
+            params: { query: "test" },
+          },
+        ];
+
+        const subject = new SearchRequestAdapter(instantsearchRequests, mockTypesenseClient, configuration);
+        await subject.request();
+
+        expect(mockTypesenseClient.multiSearch.perform).toHaveBeenCalledWith(
+          {
+            union: "true",
+            searches: [
+              {
+                collection: "products",
+                q: "test",
+                page: 1,
+                query_by: "name",
+                highlight_full_fields: "name",
+              },
+            ],
+          },
+          {},
+        );
+      });
+    });
+  });
 });
