@@ -1,0 +1,15 @@
+{
+  "facet_counts": {
+    "error": "Invalid facet structure"
+  },
+  "found": 0,
+  "hits": [],
+  "out_of": 0,
+  "page": 1,
+  "request_params": {
+    "collection_name": "products",
+    "per_page": 10,
+    "q": "nonexistent"
+  },
+  "search_time_ms": 2
+} 

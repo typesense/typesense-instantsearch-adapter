@@ -75,6 +75,8 @@ export class SearchResponseAdapter {
         "text_match_info",
         "hybrid_search_info",
         "vector_distance",
+        "collection", // Union search specific
+        "search_index", // Union search specific
       ].forEach((metadataField) => {
         if (Object.keys(typesenseHit).includes(metadataField) && !Object.keys(adaptedHit).includes(metadataField)) {
           adaptedHit[metadataField] = typesenseHit[metadataField];
@@ -282,23 +284,27 @@ export class SearchResponseAdapter {
 
   _adaptFacets(typesenseFacetCounts) {
     const adaptedResult = {};
-    typesenseFacetCounts.forEach((facet) => {
-      Object.assign(adaptedResult, {
-        [facet.field_name]: Object.assign({}, ...facet.counts.map((count) => ({ [count.value]: count.count }))),
+    if (Array.isArray(typesenseFacetCounts)) {
+      typesenseFacetCounts.forEach((facet) => {
+        Object.assign(adaptedResult, {
+          [facet.field_name]: Object.assign({}, ...facet.counts.map((count) => ({ [count.value]: count.count }))),
+        });
       });
-    });
+    }
     return adaptedResult;
   }
 
   _adaptFacetStats(typesenseFacetCounts) {
     const adaptedResult = {};
-    typesenseFacetCounts.forEach((facet) => {
-      if (Object.keys(facet.stats).length > 0) {
-        Object.assign(adaptedResult, {
-          [facet.field_name]: facet.stats,
-        });
-      }
-    });
+    if (Array.isArray(typesenseFacetCounts)) {
+      typesenseFacetCounts.forEach((facet) => {
+        if (facet.stats && Object.keys(facet.stats).length > 0) {
+          Object.assign(adaptedResult, {
+            [facet.field_name]: facet.stats,
+          });
+        }
+      });
+    }
     return adaptedResult;
   }
 
@@ -311,7 +317,7 @@ export class SearchResponseAdapter {
       adaptedResult.facetOrdering.facets = adaptedResult.facetOrdering.facets || {};
       adaptedResult.facetOrdering.facets.order = [
         ...new Set(
-          typesenseFacetCounts
+          (Array.isArray(typesenseFacetCounts) ? typesenseFacetCounts : [])
             .map((fc) => fc["field_name"])
             .concat(
               this.allTypesenseResults
@@ -335,17 +341,25 @@ export class SearchResponseAdapter {
 
   adapt() {
     const adaptedRenderingContent = this._adaptRenderingContent(this.typesenseResponse.facet_counts || []);
+
+    // For union search, use union_request_params, otherwise use request_params
+    const requestParams = this.typesenseResponse.union_request_params
+      ? this.typesenseResponse.union_request_params[0]
+      : this.typesenseResponse.request_params;
+
     const adaptedResult = {
       hits: this.typesenseResponse.grouped_hits
         ? this._adaptGroupedHits(this.typesenseResponse.grouped_hits)
         : this._adaptHits(this.typesenseResponse.hits),
       nbHits: this.typesenseResponse.found,
-      page: this.typesenseResponse.page - 1,
+      page: this.typesenseResponse.union_request_params
+        ? this.typesenseResponse.page // Union search already uses 0-based page
+        : this.typesenseResponse.page - 1, // Regular search uses 1-based page, convert to 0-based
       nbPages: this._adaptNumberOfPages(),
-      hitsPerPage: this.typesenseResponse.request_params.per_page,
+      hitsPerPage: requestParams?.per_page || 10,
       facets: this._adaptFacets(this.typesenseResponse.facet_counts || []),
-      facets_stats: this._adaptFacetStats(this.typesenseResponse.facet_counts || {}),
-      query: this.typesenseResponse.request_params.q,
+      facets_stats: this._adaptFacetStats(this.typesenseResponse.facet_counts || []),
+      query: requestParams?.q || "",
       processingTimeMS: this.typesenseResponse.search_time_ms,
       ...(Object.keys(adaptedRenderingContent).length > 0 ? { renderingContent: adaptedRenderingContent } : null),
     };

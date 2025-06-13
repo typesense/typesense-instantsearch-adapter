@@ -1,0 +1,118 @@
+{
+  "facet_counts": [
+    {
+      "counts": [
+        {
+          "count": 10,
+          "highlighted": "Apple",
+          "value": "Apple"
+        },
+        {
+          "count": 8,
+          "highlighted": "Samsung",
+          "value": "Samsung"
+        }
+      ],
+      "field_name": "brand",
+      "stats": {
+        "avg": 250.5,
+        "max": 999.99,
+        "min": 49.99
+      }
+    },
+    {
+      "counts": [
+        {
+          "count": 15,
+          "highlighted": "Electronics",
+          "value": "Electronics"
+        },
+        {
+          "count": 3,
+          "highlighted": "Phones",
+          "value": "Phones"
+        }
+      ],
+      "field_name": "category",
+      "stats": {}
+    }
+  ],
+  "found": 25,
+  "hits": [
+    {
+      "document": {
+        "id": "1",
+        "name": "iPhone 14",
+        "brand": "Apple",
+        "price": 799.99,
+        "category": "Electronics"
+      },
+      "highlights": [
+        {
+          "field": "name",
+          "matched_tokens": ["iPhone"],
+          "snippet": "<mark>iPhone</mark> 14",
+          "value": "<mark>iPhone</mark> 14"
+        }
+      ],
+      "text_match": 33746176,
+      "collection": "products",
+      "search_index": 0
+    },
+    {
+      "document": {
+        "id": "2",
+        "name": "Galaxy S23",
+        "brand": "Samsung",
+        "price": 899.99,
+        "category": "Electronics"
+      },
+      "highlights": [
+        {
+          "field": "name",
+          "matched_tokens": ["Galaxy"],
+          "snippet": "<mark>Galaxy</mark> S23",
+          "value": "<mark>Galaxy</mark> S23"
+        }
+      ],
+      "text_match": 33746176,
+      "collection": "products",
+      "search_index": 0
+    },
+    {
+      "document": {
+        "id": "3",
+        "name": "MacBook Pro",
+        "brand": "Apple",
+        "price": 1999.99,
+        "category": "Electronics"
+      },
+      "highlights": [
+        {
+          "field": "name",
+          "matched_tokens": ["MacBook"],
+          "snippet": "<mark>MacBook</mark> Pro",
+          "value": "<mark>MacBook</mark> Pro"
+        }
+      ],
+      "text_match": 33746176,
+      "collection": "laptops",
+      "search_index": 1
+    }
+  ],
+  "out_of": 100,
+  "page": 0,
+  "union_request_params": [
+    {
+      "collection_name": "products",
+      "per_page": 10,
+      "q": "phone"
+    },
+    {
+      "collection_name": "laptops",
+      "per_page": 10,
+      "q": "phone"
+    }
+  ],
+  "search_time_ms": 8
+} 
