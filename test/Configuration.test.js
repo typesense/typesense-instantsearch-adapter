@@ -1,6 +1,45 @@
 import { Configuration } from "../src/Configuration";
 
 describe("Configuration", () => {
+  describe("constructor", () => {
+    describe("union parameter", () => {
+      it("defaults union to false when not provided", () => {
+        const subject = new Configuration({});
+        expect(subject.union).toBe(false);
+      });
+
+      it("sets union to true when explicitly provided", () => {
+        const subject = new Configuration({
+          union: true,
+          additionalSearchParameters: {
+            query_by: "name",
+          },
+        });
+        expect(subject.union).toBe(true);
+      });
+
+      it("sets union to false when explicitly provided as false", () => {
+        const subject = new Configuration({
+          union: false,
+          additionalSearchParameters: {
+            query_by: "name",
+          },
+        });
+        expect(subject.union).toBe(false);
+      });
+
+      it("handles truthy values for union", () => {
+        const subject = new Configuration({
+          union: "true",
+          additionalSearchParameters: {
+            query_by: "name",
+          },
+        });
+        expect(subject.union).toBe("true");
+      });
+    });
+  });
+
   describe(".validate", () => {
     describe("using query_by", () => {
       it("throws an error if query_by or preset is not set anywhere", () => {
