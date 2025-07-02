@@ -98,6 +98,7 @@ interface BaseAdapterOptions {
   collectionSpecificFilterByOptions?: object;
   sortByOptions?: object;
   collectionSpecificSortByOptions?: object;
+  union?: boolean;
 }
 
 type CollectionSearchParameters = Record<string, BaseSearchParameters<DocumentSchema>>;
