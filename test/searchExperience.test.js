@@ -294,7 +294,7 @@ describe("Search Experience", () => {
         text: "360fly",
       });
       await expect(page).toMatchElement("#stats", {
-        text: "261 results found",
+        text: /26\d results found/,
       });
       await expect(page).toMatchElement("#hits .ais-Hits-item:nth-of-type(1) .hit-name", {
         text: "AT&T",

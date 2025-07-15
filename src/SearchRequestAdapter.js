@@ -493,7 +493,6 @@ export class SearchRequestAdapter {
       searchRequest.union = this.configuration.union;
     }
 
-
     return this.typesenseClient.multiSearch.perform(searchRequest, commonParams);
   }
 }

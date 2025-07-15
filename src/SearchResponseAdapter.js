@@ -370,6 +370,11 @@ export class SearchResponseAdapter {
       adaptedResult.userData = this._adaptUserData(this.typesenseResponse.metadata);
     }
 
+    // Add parsed_nl_query if natural language search was used
+    if (this.typesenseResponse.parsed_nl_query) {
+      adaptedResult.parsed_nl_query = this.typesenseResponse.parsed_nl_query;
+    }
+
     // If no results were found for the search, but there is still a conversation response,
     // still send that as a hit so the conversation is accessible via Instantsearch
     if (this.fullTypesenseResponse.conversation && adaptedResult.hits.length === 0) {
