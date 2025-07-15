@@ -332,7 +332,9 @@ describe("SearchRequestAdapter", () => {
               },
             ],
           },
-          {},
+          {
+            page: 1,
+          },
         );
       });
 
@@ -466,6 +468,7 @@ describe("SearchRequestAdapter", () => {
             conversation: true,
             conversation_id: "conv_123",
             conversation_model_id: "model_456",
+            page: 1,
           },
         );
       });
@@ -507,7 +510,9 @@ describe("SearchRequestAdapter", () => {
               },
             ],
           },
-          {},
+          {
+            page: 1,
+          },
         );
       });
     });
