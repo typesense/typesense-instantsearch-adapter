@@ -58,4 +58,37 @@ describe("Union Search", () => {
       });
     });
   });
+
+  describe("pagination with union search", () => {
+    beforeEach(async () => {
+      return expect(page).toFill("#searchbox input[type=search]", "phone");
+    });
+
+    it("renders pagination controls for merged results from multiple indices", async () => {
+      await page.waitForSelector("#pagination a.ais-Pagination-link");
+
+      const paginationLinks = await page.$$("#pagination a.ais-Pagination-link");
+      expect(paginationLinks.length).toBeGreaterThan(0);
+
+      await expect(page).toMatchElement("#hits .ais-Hits-item:nth-of-type(1)");
+    });
+
+    it("shows different merged results when navigating to the second page", async () => {
+      await page.waitForSelector("#pagination a.ais-Pagination-link");
+
+      const firstPageFirstResult = await page.$eval("#hits .ais-Hits-item:nth-of-type(1)", (el) => el.textContent);
+
+      await expect(page).toClick("#pagination a", { text: "2" });
+
+      await page.waitForSelector("#hits .ais-Hits-item:nth-of-type(1)");
+
+      const secondPageFirstResult = await page.$eval("#hits .ais-Hits-item:nth-of-type(1)", (el) => el.textContent);
+
+      expect(firstPageFirstResult).not.toBe(secondPageFirstResult);
+
+      await expect(page).toMatchElement("#hits");
+      await expect(page).not.toMatchElement("#product-hits", { timeout: 1000 });
+      await expect(page).not.toMatchElement("#brand-hits", { timeout: 1000 });
+    });
+  });
 });

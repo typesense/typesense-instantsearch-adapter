@@ -491,6 +491,7 @@ export class SearchRequestAdapter {
     // Add union parameter if configured
     if (this.configuration.union) {
       searchRequest.union = this.configuration.union;
+      commonParams.page = searches[0].page;
     }
 
     return this.typesenseClient.multiSearch.perform(searchRequest, commonParams);
