@@ -714,6 +714,7 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
               }; // Add union parameter if configured
               if (this.configuration.union) {
                 searchRequest.union = this.configuration.union;
+                commonParams.page = searches[0].page;
               }
               return _context.abrupt("return", this.typesenseClient.multiSearch.perform(searchRequest, commonParams));
             case 6:
@@ -1110,6 +1111,11 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
       if (this.typesenseResponse.metadata) {
         adaptedResult.appliedRules = ["typesense-override"];
         adaptedResult.userData = this._adaptUserData(this.typesenseResponse.metadata);
+      }
+
+      // Add parsed_nl_query if natural language search was used
+      if (this.typesenseResponse.parsed_nl_query) {
+        adaptedResult.parsed_nl_query = this.typesenseResponse.parsed_nl_query;
       }
 
       // If no results were found for the search, but there is still a conversation response,
