@@ -500,32 +500,12 @@ export class SearchRequestAdapter {
       });
     }
 
-    // If this is a natural language search, then move NL related params to query params
-    if (searches[0]?.nl_query === true || searches[0]?.nl_query === "true") {
-      const { q, nl_query, nl_model_id, nl_query_debug, nl_query_prompt_cache_ttl } = searches[0];
-      commonParams = { 
-        ...commonParams, 
-        q, 
-        nl_query, 
-        nl_model_id, 
-        nl_query_debug, 
-        nl_query_prompt_cache_ttl 
-      };
-
-      searches = searches.map((searchParams) => {
-        // eslint-disable-next-line no-unused-vars
-        const { q, nl_query, nl_model_id, nl_query_debug, nl_query_prompt_cache_ttl, ...modifiedSearchParams } = searchParams;
-        return modifiedSearchParams;
-      });
-    }
-
     const searchRequest = { searches: searches };
 
     // Add union parameter if configured
     if (this.configuration.union) {
       searchRequest.union = this.configuration.union;
     }
-
 
     return this.typesenseClient.multiSearch.perform(searchRequest, commonParams);
   }
