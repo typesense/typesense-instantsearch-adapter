@@ -443,20 +443,6 @@ export class SearchRequestAdapter {
       typesenseSearchParams.vector_query = params.typesenseVectorQuery;
     }
 
-    // Natural language search parameters
-    if (params.nl_query) {
-      typesenseSearchParams.nl_query = params.nl_query;
-    }
-    if (params.nl_model_id) {
-      typesenseSearchParams.nl_model_id = params.nl_model_id;
-    }
-    if (params.nl_query_debug) {
-      typesenseSearchParams.nl_query_debug = params.nl_query_debug;
-    }
-    if (params.nl_query_prompt_cache_ttl) {
-      typesenseSearchParams.nl_query_prompt_cache_ttl = params.nl_query_prompt_cache_ttl;
-    }
-
     // Allow for conditional disabling of overrides, for particular sort orders
     let sortByOption =
       this.configuration.collectionSpecificSortByOptions?.[adaptedCollectionName]?.[typesenseSearchParams["sort_by"]] ||
