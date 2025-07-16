@@ -384,6 +384,50 @@ When union search is enabled, the adapter will merge search results from multipl
 
 The union search feature leverages Typesense's `multi_search` endpoint with the `union: true` parameter to provide seamless result merging at the server level. For more information, refer to the [Union Search Documentation](https://typesense.org/docs/28.0/api/federated-multi-search.html#union-search)
 
+##### React InstantSearch Setup for Union Search
+
+When using union search with React InstantSearch, the component structure is slightly different from regular multi-index search to avoid duplicate results:
+
+**Regular multi-index search (for comparison):**
+
+```jsx
+<InstantSearch indexName="index1" searchClient={searchClient}>
+  <SearchBox />
+
+  <Index indexName="index1">
+    <Hits />
+  </Index>
+
+  <Index indexName="index2">
+    <Hits />
+  </Index>
+
+  <Index indexName="index3">
+    <Hits />
+  </Index>
+</InstantSearch>
+```
+
+**Union search setup:**
+
+```jsx
+<InstantSearch indexName="index1" searchClient={searchClient}>
+  <SearchBox />
+
+  <Index indexName="index2" />
+
+  <Index indexName="index3" />
+
+  <Hits />
+</InstantSearch>
+```
+
+**Key differences for union search:**
+
+- Include the main index in the `<InstantSearch>` component (required for SearchBox to work)
+- Omit the `<Index>` component for the main index (prevents duplicate results)
+- Use a single `<Hits>` component outside the `<Index>` components to display merged results
+
 ### `geoSearch`
 
 Algolia uses `_geoloc` by default for the name of the field that stores the lat long values for a record.
