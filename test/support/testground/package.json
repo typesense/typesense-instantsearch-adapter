@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "parcel index.html federated_search.html union_search.html refinement_list_operators.html numeric_refinement_list.html geosearch.html geosearch_list_view.html negative_faceting.html dynamic_widgets.html --port 3000",
+    "start": "parcel index.html federated_search.html union_search.html refinement_list_operators.html numeric_refinement_list.html geosearch.html geosearch_list_view.html negative_faceting.html dynamic_widgets.html natural_language_search.html --port 3000",
     "testground": "npm start",
     "build:instantsearch.js": "cd node_modules/instantsearch.js && yarn && yarn run build:es",
-    "build": "parcel build index.html federated_search.html union_search.html refinement_list_operators.html numeric_refinement_list.html geosearch.html geosearch_list_view.html negative_faceting.html dynamic_widgets.html",
+    "build": "parcel build index.html federated_search.html union_search.html refinement_list_operators.html numeric_refinement_list.html geosearch.html geosearch_list_view.html negative_faceting.html dynamic_widgets.html natural_language_search.html",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix"
   },
