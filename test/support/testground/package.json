@@ -12,18 +12,18 @@
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
-    "@parcel/packager-raw-url": "2.0.0-beta.2",
-    "@parcel/transformer-webmanifest": "2.0.0-beta.2",
+    "@parcel/packager-raw-url": "^2.15.4",
+    "@parcel/transformer-webmanifest": "^2.15.4",
     "babel-eslint": "10.0.3",
     "eslint": "5.7.0",
     "eslint-config-algolia": "13.2.3",
     "eslint-config-prettier": "3.6.0",
     "eslint-plugin-import": "2.19.1",
     "eslint-plugin-prettier": "3.1.2",
-    "parcel-bundler": "^1.12.5",
     "prettier": "1.19.1"
   },
   "dependencies": {
-    "instantsearch.js": "^4.51.0"
+    "instantsearch.js": "^4.51.0",
+    "parcel": "^2.15.4"
   }
 }
