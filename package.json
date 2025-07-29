@@ -10,8 +10,23 @@
     "lib/",
     "src/",
     "scripts/",
+    "widgets.js",
+    "widgets.d.ts",
     "index.d.ts"
   ],
+  "exports": {
+    ".": {
+      "import": "./lib/TypesenseInstantsearchAdapter.js",
+      "require": "./lib/TypesenseInstantsearchAdapter.js",
+      "types": "./index.d.ts"
+    },
+    "./widgets": {
+      "import": "./lib/widgets/index.js",
+      "require": "./lib/widgets/index.js",
+      "types": "./widgets.d.ts"
+    },
+    "./dist/*": "./dist/*"
+  },
   "keywords": [
     "typesense",
     "sdk",
