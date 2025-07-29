@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","names":["_naturalLanguageSync","require"],"sources":["../../src/widgets/index.js"],"sourcesContent":["export { naturalLanguageSync, connectNaturalLanguageSync } from \"./naturalLanguageSync\";\n"],"mappings":";;;;;;;;;;;;;;;;;AAAA,IAAAA,oBAAA,GAAAC,OAAA","ignoreList":[]}
