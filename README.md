@@ -5,7 +5,7 @@ An adapter to use the awesome [Instantsearch.js](https://github.com/algolia/inst
 [![NPM version][npm-image]][npm-url]
 ![downloads](https://img.shields.io/npm/dt/typesense-instantsearch-adapter?label=downloads)
 
-Here is an example of UI you can build with this adapater: [songs-search.typesense.org](https://songs-search.typesense.org)
+Here is an example of UI you can build with this adapter: [songs-search.typesense.org](https://songs-search.typesense.org)
 
 **Note:** If your search interface is built on a custom autocomplete component, or is based on [@algolia/autocomplete-js](https://www.algolia.com/doc/ui-libraries/autocomplete/introduction/what-is-autocomplete/), then you don't need this adapter to use it with Typesense, as [typesense-js](https://github.com/typesense/typesense-js) library already supports client-side fetching data from any async data sources. Read more [here](https://github.com/typesense/typesense-instantsearch-adapter/issues/88#issuecomment-1021597634).
 
@@ -510,7 +510,7 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   facetByOptions: {
     brand: "(sort_by: _alpha:asc)",
     category: "(sort_by: _alpha:desc)",
-  }, // <======= Add any facet_by parameter as a key value pair. Don't forget the surrounding parantheses in the value.
+  }, // <======= Add any facet_by parameter as a key value pair. Don't forget the surrounding parentheses in the value.
   collectionSpecificFacetByOptions: {
     collection1: {
       brand: "(sort_by: _alpha:desc)",
