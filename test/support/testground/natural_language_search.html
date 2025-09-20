@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Natural Language Search - Typesense InstantSearch Adapter</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css@7/themes/algolia-min.css" />
+    <link rel="stylesheet" href="./src/index.css" />
+    <link rel="stylesheet" href="./src/app.css" />
+  </head>
+
+  <body>
+    <header class="header">
+      <h1 class="header-title">
+        <a href="/">Natural Language Search</a>
+      </h1>
+      <p class="header-subtitle">
+        using
+        <a href="https://github.com/typesense/typesense-instantsearch-adapter">Typesense InstantSearch Adapter</a>
+      </p>
+    </header>
+
+    <div class="container">
+      <div class="search-panel">
+        <div class="search-panel__filters">
+          <div id="sort-by"></div>
+          <div id="brand-list"></div>
+          <div id="categories-hierarchical-menu"></div>
+          <div id="price-menu"></div>
+          <div id="rating-menu"></div>
+        </div>
+
+        <div class="search-panel__results">
+          <div class="searchbox">
+            <div id="searchbox"></div>
+            <div class="nl-info">
+              <p><strong>Try natural language queries like:</strong></p>
+              <ul>
+                <li>"best rated phones under 500 dollars"</li>
+                <li>"popular Samsung devices with free shipping"</li>
+                <li>"Apple products with rating above 4"</li>
+              </ul>
+              <p>
+                <em
+                  >Note: The library automatically parses natural language filters into InstantSearch UI state. Check
+                  the console for details.</em
+                >
+              </p>
+            </div>
+          </div>
+
+          <div class="search-panel__results-top">
+            <div id="stats"></div>
+            <div id="current-refinements"></div>
+          </div>
+
+          <div id="parsed-nl-query" class="parsed-nl-query" style="display: none">
+            <h3>Generated Search Parameters:</h3>
+            <pre id="parsed-nl-content"></pre>
+          </div>
+
+          <div id="hits"></div>
+
+          <div id="pagination"></div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="https://cdn.jsdelivr.net/algoliasearch/3.32.0/algoliasearchLite.js"></script>
+    <script type="module" src="./src/natural_language_search.js"></script>
+  </body>
+</html>

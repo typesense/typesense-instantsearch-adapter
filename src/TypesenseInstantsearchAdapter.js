@@ -26,6 +26,7 @@ export default class TypesenseInstantsearchAdapter {
       if (typesenseResponse.union_request_params) {
         // Handle union search response - single unified response
         this._validateTypesenseResult(typesenseResponse);
+
         const responseAdapter = new SearchResponseAdapter(
           typesenseResponse,
           instantsearchRequests[0], // Use first request as base
@@ -45,6 +46,7 @@ export default class TypesenseInstantsearchAdapter {
         // Handle regular multi-search response - multiple separate responses
         const adaptedResponses = typesenseResponse.results.map((typesenseResult, index) => {
           this._validateTypesenseResult(typesenseResult);
+
           const responseAdapter = new SearchResponseAdapter(
             typesenseResult,
             instantsearchRequests[index],
@@ -116,3 +118,6 @@ export default class TypesenseInstantsearchAdapter {
     }
   }
 }
+
+// Export widgets for easy access
+export { naturalLanguageSync, connectNaturalLanguageSync } from "./widgets/index.js";
