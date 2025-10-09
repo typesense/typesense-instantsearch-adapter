@@ -1,0 +1,72 @@
+[
+  {
+    "id": "1",
+    "name": "Wireless Headphones",
+    "description": "Premium wireless headphones with noise cancellation",
+    "brand": "AudioTech",
+    "category": "Electronics"
+  },
+  {
+    "id": "2",
+    "name": "Smart Watch",
+    "description": "Fitness tracking smart watch with heart rate monitor",
+    "brand": "TechWear",
+    "category": "Electronics"
+  },
+  {
+    "id": "3",
+    "name": "Running Shoes",
+    "description": "Lightweight running shoes for marathon training",
+    "brand": "SportFit",
+    "category": "Footwear"
+  },
+  {
+    "id": "4",
+    "name": "Coffee Maker",
+    "description": "Programmable coffee maker with thermal carafe",
+    "brand": "BrewMaster",
+    "category": "Appliances"
+  },
+  {
+    "id": "5",
+    "name": "Yoga Mat",
+    "description": "Extra thick yoga mat with carrying strap",
+    "brand": "ZenFit",
+    "category": "Fitness"
+  },
+  {
+    "id": "6",
+    "name": "Laptop Backpack",
+    "description": "Water-resistant laptop backpack with USB charging port",
+    "brand": "TravelPro",
+    "category": "Accessories"
+  },
+  {
+    "id": "7",
+    "name": "Bluetooth Speaker",
+    "description": "Portable waterproof Bluetooth speaker",
+    "brand": "SoundWave",
+    "category": "Electronics"
+  },
+  {
+    "id": "8",
+    "name": "Desk Lamp",
+    "description": "LED desk lamp with adjustable brightness",
+    "brand": "LightCraft",
+    "category": "Home"
+  },
+  {
+    "id": "9",
+    "name": "Water Bottle",
+    "description": "Insulated stainless steel water bottle",
+    "brand": "HydroFlow",
+    "category": "Accessories"
+  },
+  {
+    "id": "10",
+    "name": "Wireless Mouse",
+    "description": "Ergonomic wireless mouse with programmable buttons",
+    "brand": "TechGear",
+    "category": "Electronics"
+  }
+]
