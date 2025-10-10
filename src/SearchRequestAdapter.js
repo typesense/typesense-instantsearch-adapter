@@ -14,7 +14,7 @@ export class SearchRequestAdapter {
   }
 
   static get JOINED_RELATION_FILTER_REGEX() {
-    return /^(\$[^(]+)\(([^)]+)\)$/;
+    return new RegExp("^(\\$[^(]+)\\(([^)]+)\\)$");
   }
 
   constructor(instantsearchRequests, typesenseClient, configuration) {
@@ -36,8 +36,8 @@ export class SearchRequestAdapter {
     }
   }
 
-  _buildFacetFilterString(fieldName, fieldValues, isExcluded, collectionName) {
-    // Check if this is a joined relation filter (e.g., "$product_prices(retailer)")
+  _buildFacetFilterString({ fieldName, fieldValues, isExcluded, collectionName }) {
+    // Check if this is a joined relation filter (e.g., "$refCollection(retailer)")
     const joinedRelationMatch = fieldName.match(this.constructor.JOINED_RELATION_FILTER_REGEX);
 
     const operator = this._shouldUseExactMatchForField(fieldName, collectionName)
@@ -48,9 +48,9 @@ export class SearchRequestAdapter {
         ? ":!"
         : ":";
 
-    if (joinedRelationMatch) {
+    if (joinedRelationMatch && joinedRelationMatch.length >= 3) {
       // This is a joined relation filter
-      const collection = joinedRelationMatch[1]; // e.g., "$product_prices"
+      const collection = joinedRelationMatch[1]; // e.g., "$refCollection"
       const fieldPath = joinedRelationMatch[2]; // e.g., "retailer"
       // For joined relations, the filter should be: $collection(field:=[value1,value2])
       return `${collection}(${fieldPath}${operator}[${fieldValues.map((v) => this._escapeFacetValue(v)).join(",")}])`;
@@ -137,12 +137,22 @@ export class SearchRequestAdapter {
         const typesenseFilterStringComponents = [];
         if (includedFieldValues.length > 0) {
           typesenseFilterStringComponents.push(
-            this._buildFacetFilterString(fieldName, includedFieldValues, false, collectionName),
+            this._buildFacetFilterString({
+              fieldName,
+              fieldValues: includedFieldValues,
+              isExcluded: false,
+              collectionName,
+            }),
           );
         }
         if (excludedFieldValues.length > 0) {
           typesenseFilterStringComponents.push(
-            this._buildFacetFilterString(fieldName, excludedFieldValues, true, collectionName),
+            this._buildFacetFilterString({
+              fieldName,
+              fieldValues: excludedFieldValues,
+              isExcluded: true,
+              collectionName,
+            }),
           );
         }
 
@@ -158,14 +168,19 @@ export class SearchRequestAdapter {
         const { fieldName, fieldValue } = this._parseFacetFilter(item);
         let typesenseFilterString;
         if (fieldValue.startsWith("-") && !this._isNumber(fieldValue)) {
-          typesenseFilterString = this._buildFacetFilterString(
+          typesenseFilterString = this._buildFacetFilterString({
             fieldName,
-            [fieldValue.substring(1)],
-            true,
+            fieldValues: [fieldValue.substring(1)],
+            isExcluded: true,
             collectionName,
-          );
+          });
         } else {
-          typesenseFilterString = this._buildFacetFilterString(fieldName, [fieldValue], false, collectionName);
+          typesenseFilterString = this._buildFacetFilterString({
+            fieldName,
+            fieldValues: [fieldValue],
+            isExcluded: false,
+            collectionName,
+          });
         }
 
         return typesenseFilterString;
@@ -276,46 +291,44 @@ export class SearchRequestAdapter {
     //  "field1:=[634..289] && field2:<=5 && field3:>=3"
     const adaptedFilters = [];
     Object.keys(filtersHash).forEach((field) => {
-      // Check if this is a joined relation filter (e.g., "$product_prices(price.current)")
+      // Check if this is a joined relation filter (e.g., "$refCollection(price.current)")
       const joinedRelationMatch = field.match(this.constructor.JOINED_RELATION_FILTER_REGEX);
 
-      let collection, fieldPath;
-      if (joinedRelationMatch) {
+      if (joinedRelationMatch && joinedRelationMatch.length >= 3) {
         // This is a joined relation filter
-        collection = joinedRelationMatch[1]; // e.g., "$product_prices"
-        fieldPath = joinedRelationMatch[2]; // e.g., "price.current"
-      }
+        const collection = joinedRelationMatch[1]; // e.g., "$refCollection"
+        const fieldPath = joinedRelationMatch[2]; // e.g., "price.current"
 
-      if (filtersHash[field]["<="] != null && filtersHash[field][">="] != null) {
-        if (joinedRelationMatch) {
+        if (filtersHash[field]["<="] != null && filtersHash[field][">="] != null) {
           adaptedFilters.push(
             `${collection}(${fieldPath}:=[${filtersHash[field][">="]}..${filtersHash[field]["<="]}])`,
           );
-        } else {
-          adaptedFilters.push(`${field}:=[${filtersHash[field][">="]}..${filtersHash[field]["<="]}]`);
-        }
-      } else if (filtersHash[field]["<="] != null) {
-        if (joinedRelationMatch) {
+        } else if (filtersHash[field]["<="] != null) {
           adaptedFilters.push(`${collection}(${fieldPath}:<=${filtersHash[field]["<="]})`);
-        } else {
-          adaptedFilters.push(`${field}:<=${filtersHash[field]["<="]}`);
-        }
-      } else if (filtersHash[field][">="] != null) {
-        if (joinedRelationMatch) {
+        } else if (filtersHash[field][">="] != null) {
           adaptedFilters.push(`${collection}(${fieldPath}:>=${filtersHash[field][">="]})`);
-        } else {
-          adaptedFilters.push(`${field}:>=${filtersHash[field][">="]}`);
-        }
-      } else if (filtersHash[field]["="] != null) {
-        if (joinedRelationMatch) {
+        } else if (filtersHash[field]["="] != null) {
           adaptedFilters.push(`${collection}(${fieldPath}:=${filtersHash[field]["="]})`);
         } else {
-          adaptedFilters.push(`${field}:=${filtersHash[field]["="]}`);
+          console.warn(
+            `[Typesense-Instantsearch-Adapter] Unsupported operator found ${JSON.stringify(filtersHash[field])}`,
+          );
         }
       } else {
-        console.warn(
-          `[Typesense-Instantsearch-Adapter] Unsupported operator found ${JSON.stringify(filtersHash[field])}`,
-        );
+        // Regular field filter (non-joined)
+        if (filtersHash[field]["<="] != null && filtersHash[field][">="] != null) {
+          adaptedFilters.push(`${field}:=[${filtersHash[field][">="]}..${filtersHash[field]["<="]}]`);
+        } else if (filtersHash[field]["<="] != null) {
+          adaptedFilters.push(`${field}:<=${filtersHash[field]["<="]}`);
+        } else if (filtersHash[field][">="] != null) {
+          adaptedFilters.push(`${field}:>=${filtersHash[field][">="]}`);
+        } else if (filtersHash[field]["="] != null) {
+          adaptedFilters.push(`${field}:=${filtersHash[field]["="]}`);
+        } else {
+          console.warn(
+            `[Typesense-Instantsearch-Adapter] Unsupported operator found ${JSON.stringify(filtersHash[field])}`,
+          );
+        }
       }
     });
 
