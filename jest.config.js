@@ -184,5 +184,22 @@ module.exports = {
   // Whether to use watchman for file crawling
   // watchman: true,
 
+  transform: {
+    "^.+\\.js$": [
+      "babel-jest",
+      {
+        presets: [
+          [
+            "@babel/preset-env",
+            {
+              modules: "commonjs",
+            },
+          ],
+        ],
+        plugins: ["@babel/plugin-transform-runtime"],
+      },
+    ],
+  },
+  transformIgnorePatterns: ["node_modules/(?!(.*\\.mjs$))"],
   testTimeout: 30000,
 };
