@@ -153,7 +153,7 @@ var FacetSearchResponseAdapter = /*#__PURE__*/function () {
       var facet = typesenseFacetCounts.find(function (facet) {
         return facet.field_name === _this.instantsearchRequest.params.facetName;
       });
-      if (typeof facet !== 'undefined') {
+      if (typeof facet !== "undefined") {
         adaptedResult = facet.counts.map(function (facetCount) {
           return {
             value: facetCount.value,
@@ -236,7 +236,7 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
         collectionName = _ref.collectionName;
       // Check if this is a joined relation filter (e.g., "$refCollection(retailer)")
       var joinedRelationMatch = fieldName.match(this.constructor.JOINED_RELATION_FILTER_REGEX);
-      var operator = this._shouldUseExactMatchForField(fieldName, collectionName) ? isExcluded ? ":!=" : ":=" : isExcluded ? ":!" : ":";
+      var operator = isExcluded ? this._shouldUseExactMatchForField(fieldName, collectionName) ? ":!=" : ":!" : this._shouldUseExactMatchForField(fieldName, collectionName) ? ":=" : ":";
       if (joinedRelationMatch && joinedRelationMatch.length >= 3) {
         // This is a joined relation filter
         var collection = joinedRelationMatch[1]; // e.g., "$refCollection"

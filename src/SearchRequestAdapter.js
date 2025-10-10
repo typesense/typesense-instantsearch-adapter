@@ -40,12 +40,12 @@ export class SearchRequestAdapter {
     // Check if this is a joined relation filter (e.g., "$refCollection(retailer)")
     const joinedRelationMatch = fieldName.match(this.constructor.JOINED_RELATION_FILTER_REGEX);
 
-    const operator = this._shouldUseExactMatchForField(fieldName, collectionName)
-      ? isExcluded
+    const operator = isExcluded
+      ? this._shouldUseExactMatchForField(fieldName, collectionName)
         ? ":!="
-        : ":="
-      : isExcluded
-        ? ":!"
+        : ":!"
+      : this._shouldUseExactMatchForField(fieldName, collectionName)
+        ? ":="
         : ":";
 
     if (joinedRelationMatch && joinedRelationMatch.length >= 3) {
