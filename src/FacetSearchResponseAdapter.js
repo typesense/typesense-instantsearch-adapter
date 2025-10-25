@@ -12,7 +12,7 @@ export class FacetSearchResponseAdapter {
     let adaptedResult = [];
     const facet = typesenseFacetCounts.find((facet) => facet.field_name === this.instantsearchRequest.params.facetName);
 
-    if (typeof facet !== 'undefined') {
+    if (typeof facet !== "undefined") {
       adaptedResult = facet.counts.map((facetCount) => ({
         value: facetCount.value,
         highlighted: this._adaptHighlightTag(

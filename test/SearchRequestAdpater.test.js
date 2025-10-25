@@ -161,6 +161,40 @@ describe("SearchRequestAdapter", () => {
         const result = subject._adaptNumericFilters(["$product_prices(quantity)=5"]);
         expect(result).toEqual("$product_prices(quantity:=5)");
       });
+
+      it("adapts multiple numeric filters from the same join collection without grouping", () => {
+        const subject = new SearchRequestAdapter([], null, {});
+
+        const result = subject._adaptNumericFilters([
+          "$product_prices(price.current)>=100",
+          "$product_prices(quantity)=5",
+        ]);
+        expect(result).toEqual("$product_prices(price.current:>=100) && $product_prices(quantity:=5)");
+      });
+
+      it("adapts numeric join filters and regular numeric filters without grouping", () => {
+        const subject = new SearchRequestAdapter([], null, {});
+
+        const result = subject._adaptNumericFilters([
+          "$product_prices(price.current)>=100",
+          "rating>=4",
+          "$product_prices(quantity)=5",
+        ]);
+        expect(result).toEqual("$product_prices(price.current:>=100) && rating:>=4 && $product_prices(quantity:=5)");
+      });
+
+      it("adapts multiple different join collections without grouping for numeric filters", () => {
+        const subject = new SearchRequestAdapter([], null, {});
+
+        const result = subject._adaptNumericFilters([
+          "$product_prices(price.current)>=100",
+          "$product_reviews(rating)>=4",
+          "$product_prices(quantity)=5",
+        ]);
+        expect(result).toEqual(
+          "$product_prices(price.current:>=100) && $product_reviews(rating:>=4) && $product_prices(quantity:=5)",
+        );
+      });
     });
   });
 
@@ -313,6 +347,122 @@ describe("SearchRequestAdapter", () => {
           "collection1",
         );
         expect(result).toEqual("$product_prices(price.current:=[100]) && $product_prices(price.original:=[200])");
+      });
+
+      it("adapts multiple join filters from the same collection without grouping", () => {
+        const subject = new SearchRequestAdapter([], null, {});
+
+        const result = subject._adaptFacetFilters(
+          ["$product_prices(retailer):Amazon", "$product_prices(status):active", "$product_prices(type):new"],
+          "collection1",
+        );
+        expect(result).toEqual(
+          "$product_prices(retailer:=[`Amazon`]) && $product_prices(status:=[`active`]) && $product_prices(type:=[`new`])",
+        );
+      });
+
+      it("adapts join filters and regular filters without grouping", () => {
+        const subject = new SearchRequestAdapter([], null, {});
+
+        const result = subject._adaptFacetFilters(
+          ["$product_prices(retailer):Amazon", "brand:Apple", "$product_prices(status):active"],
+          "collection1",
+        );
+        expect(result).toEqual(
+          "$product_prices(retailer:=[`Amazon`]) && brand:=[`Apple`] && $product_prices(status:=[`active`])",
+        );
+      });
+
+      it("adapts multiple different join collections without grouping", () => {
+        const subject = new SearchRequestAdapter([], null, {});
+
+        const result = subject._adaptFacetFilters(
+          [
+            "$product_prices(retailer):Amazon",
+            "$product_reviews(rating):5",
+            "$product_prices(status):active",
+            "$product_reviews(verified):true",
+          ],
+          "collection1",
+        );
+        expect(result).toEqual(
+          "$product_prices(retailer:=[`Amazon`]) && $product_reviews(rating:=[5]) && $product_prices(status:=[`active`]) && $product_reviews(verified:=[true])",
+        );
+      });
+    });
+  });
+
+  describe("._adaptFilters", () => {
+    describe("when grouping join filters across facet and numeric filters", () => {
+      it("groups join filters from the same collection across facet and numeric filters", () => {
+        const subject = new SearchRequestAdapter([], null, {});
+
+        const result = subject._adaptFilters(
+          {
+            facetFilters: ["$product_prices(retailer):Amazon", "$product_prices(status):active"],
+            numericFilters: ["$product_prices(price)>=100", "$product_prices(quantity)=5"],
+          },
+          "collection1",
+        );
+        expect(result).toEqual(
+          "$product_prices(retailer:=[`Amazon`] && status:=[`active`] && price:>=100 && quantity:=5)",
+        );
+      });
+
+      it("groups multiple join collections separately", () => {
+        const subject = new SearchRequestAdapter([], null, {});
+
+        const result = subject._adaptFilters(
+          {
+            facetFilters: ["$product_prices(retailer):Amazon", "$product_reviews(rating):5"],
+            numericFilters: ["$product_prices(price)>=100", "$product_reviews(count)>=10"],
+          },
+          "collection1",
+        );
+        expect(result).toEqual(
+          "$product_prices(retailer:=[`Amazon`] && price:>=100) && $product_reviews(rating:=[5] && count:>=10)",
+        );
+      });
+
+      it("groups join filters separately from regular filters", () => {
+        const subject = new SearchRequestAdapter([], null, {});
+
+        const result = subject._adaptFilters(
+          {
+            facetFilters: ["$product_prices(retailer):Amazon", "brand:Apple"],
+            numericFilters: ["$product_prices(price)>=100", "rating>=4"],
+          },
+          "collection1",
+        );
+        expect(result).toEqual(
+          "$product_prices(retailer:=[`Amazon`] && price:>=100) && brand:=[`Apple`] && rating:>=4",
+        );
+      });
+
+      it("handles only regular filters without join filters", () => {
+        const subject = new SearchRequestAdapter([], null, {});
+
+        const result = subject._adaptFilters(
+          {
+            facetFilters: ["brand:Apple", "category:Electronics"],
+            numericFilters: ["price>=100", "rating>=4"],
+          },
+          "collection1",
+        );
+        expect(result).toEqual("brand:=[`Apple`] && category:=[`Electronics`] && price:>=100 && rating:>=4");
+      });
+
+      it("handles empty filters", () => {
+        const subject = new SearchRequestAdapter([], null, {});
+
+        const result = subject._adaptFilters(
+          {
+            facetFilters: null,
+            numericFilters: null,
+          },
+          "collection1",
+        );
+        expect(result).toEqual("");
       });
     });
   });

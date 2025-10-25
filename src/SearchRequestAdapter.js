@@ -256,6 +256,41 @@ export class SearchRequestAdapter {
     ); // Is Float
   }
 
+  _groupJoinFilters(filters) {
+    // Group join filters by their collection name
+    // Example: ["$product_prices(retailer:=[`value1`])", "$product_prices(status:=[`active`])", "brand:=[`Apple`]"]
+    // Should become: ["$product_prices(retailer:=[`value1`] && status:=[`active`])", "brand:=[`Apple`]"]
+
+    const joinFiltersMap = {};
+    const regularFilters = [];
+
+    filters.forEach((filter) => {
+      // Match pattern like "$collection(field:=value)" or "$collection(field:>=value)"
+      const joinMatch = filter.match(/^(\$[^(]+)\((.*)\)$/);
+
+      if (joinMatch && joinMatch.length >= 3) {
+        const collection = joinMatch[1]; // e.g., "$product_prices"
+        const innerFilter = joinMatch[2]; // e.g., "retailer:=[`value1`]"
+
+        if (!joinFiltersMap[collection]) {
+          joinFiltersMap[collection] = [];
+        }
+        joinFiltersMap[collection].push(innerFilter);
+      } else {
+        regularFilters.push(filter);
+      }
+    });
+
+    // Rebuild grouped join filters
+    const groupedJoinFilters = Object.keys(joinFiltersMap).map((collection) => {
+      const innerFilters = joinFiltersMap[collection].join(" && ");
+      return `${collection}(${innerFilters})`;
+    });
+
+    // Combine grouped join filters with regular filters
+    return [...groupedJoinFilters, ...regularFilters].filter((f) => f).join(" && ");
+  }
+
   _adaptNumericFilters(numericFilters) {
     // Need to transform this:
     // ["field1<=634", "field1>=289", "field2<=5", "field3>=3"]
@@ -432,7 +467,13 @@ export class SearchRequestAdapter {
     adaptedFilters.push(this._adaptNumericFilters(instantsearchParams.numericFilters));
     adaptedFilters.push(this._adaptGeoFilter(instantsearchParams));
 
-    return adaptedFilters.filter((filter) => filter && filter !== "").join(" && ");
+    // Filter out empty strings, split by && to get individual filters, then group join filters
+    const allFilters = adaptedFilters
+      .filter((filter) => filter && filter !== "")
+      .flatMap((filter) => filter.split(" && ").map((f) => f.trim()))
+      .filter((f) => f);
+
+    return this._groupJoinFilters(allFilters);
   }
 
   _adaptIndexName(indexName) {
