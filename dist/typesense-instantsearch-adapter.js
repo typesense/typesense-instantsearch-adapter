@@ -153,7 +153,7 @@ var FacetSearchResponseAdapter = /*#__PURE__*/function () {
       var facet = typesenseFacetCounts.find(function (facet) {
         return facet.field_name === _this.instantsearchRequest.params.facetName;
       });
-      if (typeof facet !== 'undefined') {
+      if (typeof facet !== "undefined") {
         adaptedResult = facet.counts.map(function (facetCount) {
           return {
             value: facetCount.value,
@@ -193,11 +193,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ "./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6__);
+
 
 
 
@@ -209,14 +211,14 @@ var _excluded = ["q", "conversation", "conversation_id", "conversation_model_id"
 
 var SearchRequestAdapter = /*#__PURE__*/function () {
   function SearchRequestAdapter(instantsearchRequests, typesenseClient, configuration) {
-    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_3__["default"])(this, SearchRequestAdapter);
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_4__["default"])(this, SearchRequestAdapter);
     this.instantsearchRequests = instantsearchRequests;
     this.typesenseClient = typesenseClient;
     this.configuration = configuration;
     this.additionalSearchParameters = configuration.additionalSearchParameters;
     this.collectionSpecificSearchParameters = configuration.collectionSpecificSearchParameters;
   }
-  return (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4__["default"])(SearchRequestAdapter, [{
+  return (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_5__["default"])(SearchRequestAdapter, [{
     key: "_shouldUseExactMatchForField",
     value: function _shouldUseExactMatchForField(fieldName, collectionName) {
       var _this$configuration$c, _this$configuration$f;
@@ -227,9 +229,35 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
       }
     }
   }, {
+    key: "_buildFacetFilterString",
+    value: function _buildFacetFilterString(_ref) {
+      var _this = this;
+      var fieldName = _ref.fieldName,
+        fieldValues = _ref.fieldValues,
+        isExcluded = _ref.isExcluded,
+        collectionName = _ref.collectionName;
+      // Check if this is a joined relation filter (e.g., "$refCollection(retailer)")
+      var joinedRelationMatch = fieldName.match(this.constructor.JOINED_RELATION_FILTER_REGEX);
+      var operator = isExcluded ? this._shouldUseExactMatchForField(fieldName, collectionName) ? ":!=" : ":!" : this._shouldUseExactMatchForField(fieldName, collectionName) ? ":=" : ":";
+      if (joinedRelationMatch && joinedRelationMatch.length >= 3) {
+        // This is a joined relation filter
+        var collection = joinedRelationMatch[1]; // e.g., "$refCollection"
+        var fieldPath = joinedRelationMatch[2]; // e.g., "retailer"
+        // For joined relations, the filter should be: $collection(field:=[value1,value2])
+        return "".concat(collection, "(").concat(fieldPath).concat(operator, "[").concat(fieldValues.map(function (v) {
+          return _this._escapeFacetValue(v);
+        }).join(","), "])");
+      } else {
+        // Regular field filter (non-joined)
+        return "".concat(fieldName).concat(operator, "[").concat(fieldValues.map(function (v) {
+          return _this._escapeFacetValue(v);
+        }).join(","), "]");
+      }
+    }
+  }, {
     key: "_adaptFacetFilters",
     value: function _adaptFacetFilters(facetFilters, collectionName) {
-      var _this = this;
+      var _this2 = this;
       var adaptedResult = "";
       if (!facetFilters) {
         return adaptedResult;
@@ -264,9 +292,9 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
 
           var intermediateFacetFilters = {};
           item.forEach(function (facetFilter) {
-            var _this$_parseFacetFilt = _this._parseFacetFilter(facetFilter),
-              fieldName = _this$_parseFacetFilt.fieldName,
-              fieldValue = _this$_parseFacetFilt.fieldValue;
+            var _this2$_parseFacetFil = _this2._parseFacetFilter(facetFilter),
+              fieldName = _this2$_parseFacetFil.fieldName,
+              fieldValue = _this2$_parseFacetFil.fieldValue;
             intermediateFacetFilters[fieldName] = intermediateFacetFilters[fieldName] || [];
             intermediateFacetFilters[fieldName].push(fieldValue);
           });
@@ -288,28 +316,32 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
 
           // Partition values into included and excluded values
           var _fieldValues$reduce = fieldValues.reduce(function (result, fieldValue) {
-              if (fieldValue.startsWith("-") && !_this._isNumber(fieldValue)) {
+              if (fieldValue.startsWith("-") && !_this2._isNumber(fieldValue)) {
                 result[0].push(fieldValue.substring(1));
               } else {
                 result[1].push(fieldValue);
               }
               return result;
             }, [[], []]),
-            _fieldValues$reduce2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_fieldValues$reduce, 2),
+            _fieldValues$reduce2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3__["default"])(_fieldValues$reduce, 2),
             excludedFieldValues = _fieldValues$reduce2[0],
             includedFieldValues = _fieldValues$reduce2[1];
           var typesenseFilterStringComponents = [];
           if (includedFieldValues.length > 0) {
-            var operator = _this._shouldUseExactMatchForField(fieldName, collectionName) ? ":=" : ":";
-            typesenseFilterStringComponents.push("".concat(fieldName).concat(operator, "[").concat(includedFieldValues.map(function (v) {
-              return _this._escapeFacetValue(v);
-            }).join(","), "]"));
+            typesenseFilterStringComponents.push(_this2._buildFacetFilterString({
+              fieldName: fieldName,
+              fieldValues: includedFieldValues,
+              isExcluded: false,
+              collectionName: collectionName
+            }));
           }
           if (excludedFieldValues.length > 0) {
-            var _operator = _this._shouldUseExactMatchForField(fieldName, collectionName) ? ":!=" : ":!";
-            typesenseFilterStringComponents.push("".concat(fieldName).concat(_operator, "[").concat(excludedFieldValues.map(function (v) {
-              return _this._escapeFacetValue(v);
-            }).join(","), "]"));
+            typesenseFilterStringComponents.push(_this2._buildFacetFilterString({
+              fieldName: fieldName,
+              fieldValues: excludedFieldValues,
+              isExcluded: true,
+              collectionName: collectionName
+            }));
           }
           var typesenseFilterString = typesenseFilterStringComponents.filter(function (f) {
             return f;
@@ -321,16 +353,24 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
           // Into
           //  fieldName:=fieldValue
 
-          var _this$_parseFacetFilt2 = _this._parseFacetFilter(item),
-            _fieldName = _this$_parseFacetFilt2.fieldName,
-            fieldValue = _this$_parseFacetFilt2.fieldValue;
+          var _this2$_parseFacetFil2 = _this2._parseFacetFilter(item),
+            _fieldName = _this2$_parseFacetFil2.fieldName,
+            fieldValue = _this2$_parseFacetFil2.fieldValue;
           var _typesenseFilterString;
-          if (fieldValue.startsWith("-") && !_this._isNumber(fieldValue)) {
-            var _operator2 = _this._shouldUseExactMatchForField(_fieldName, collectionName) ? ":!=" : ":!";
-            _typesenseFilterString = "".concat(_fieldName).concat(_operator2, "[").concat(_this._escapeFacetValue(fieldValue.substring(1)), "]");
+          if (fieldValue.startsWith("-") && !_this2._isNumber(fieldValue)) {
+            _typesenseFilterString = _this2._buildFacetFilterString({
+              fieldName: _fieldName,
+              fieldValues: [fieldValue.substring(1)],
+              isExcluded: true,
+              collectionName: collectionName
+            });
           } else {
-            var _operator3 = _this._shouldUseExactMatchForField(_fieldName, collectionName) ? ":=" : ":";
-            _typesenseFilterString = "".concat(_fieldName).concat(_operator3, "[").concat(_this._escapeFacetValue(fieldValue), "]");
+            _typesenseFilterString = _this2._buildFacetFilterString({
+              fieldName: _fieldName,
+              fieldValues: [fieldValue],
+              isExcluded: false,
+              collectionName: collectionName
+            });
           }
           return _typesenseFilterString;
         }
@@ -402,9 +442,45 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
       !!(value % 1); // Is Float
     }
   }, {
+    key: "_groupJoinFilters",
+    value: function _groupJoinFilters(filters) {
+      // Group join filters by their collection name
+      // Example: ["$product_prices(retailer:=[`value1`])", "$product_prices(status:=[`active`])", "brand:=[`Apple`]"]
+      // Should become: ["$product_prices(retailer:=[`value1`] && status:=[`active`])", "brand:=[`Apple`]"]
+
+      var joinFiltersMap = {};
+      var regularFilters = [];
+      filters.forEach(function (filter) {
+        // Match pattern like "$collection(field:=value)" or "$collection(field:>=value)"
+        var joinMatch = filter.match(/^(\$[^(]+)\((.*)\)$/);
+        if (joinMatch && joinMatch.length >= 3) {
+          var collection = joinMatch[1]; // e.g., "$product_prices"
+          var innerFilter = joinMatch[2]; // e.g., "retailer:=[`value1`]"
+
+          if (!joinFiltersMap[collection]) {
+            joinFiltersMap[collection] = [];
+          }
+          joinFiltersMap[collection].push(innerFilter);
+        } else {
+          regularFilters.push(filter);
+        }
+      });
+
+      // Rebuild grouped join filters
+      var groupedJoinFilters = Object.keys(joinFiltersMap).map(function (collection) {
+        var innerFilters = joinFiltersMap[collection].join(" && ");
+        return "".concat(collection, "(").concat(innerFilters, ")");
+      });
+
+      // Combine grouped join filters with regular filters
+      return [].concat((0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2__["default"])(groupedJoinFilters), regularFilters).filter(function (f) {
+        return f;
+      }).join(" && ");
+    }
+  }, {
     key: "_adaptNumericFilters",
     value: function _adaptNumericFilters(numericFilters) {
-      var _this2 = this;
+      var _this3 = this;
       // Need to transform this:
       // ["field1<=634", "field1>=289", "field2<=5", "field3>=3"]
       // to:
@@ -429,10 +505,10 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
       // };
       var filtersHash = {};
       numericFilters.forEach(function (filter) {
-        var _this2$_parseNumericF = _this2._parseNumericFilter(filter),
-          fieldName = _this2$_parseNumericF.fieldName,
-          operator = _this2$_parseNumericF.operator,
-          fieldValue = _this2$_parseNumericF.fieldValue;
+        var _this3$_parseNumericF = _this3._parseNumericFilter(filter),
+          fieldName = _this3$_parseNumericF.fieldName,
+          operator = _this3$_parseNumericF.operator,
+          fieldValue = _this3$_parseNumericF.fieldValue;
         filtersHash[fieldName] = filtersHash[fieldName] || {};
         filtersHash[fieldName][operator] = fieldValue;
       });
@@ -441,16 +517,37 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
       //  "field1:=[634..289] && field2:<=5 && field3:>=3"
       var adaptedFilters = [];
       Object.keys(filtersHash).forEach(function (field) {
-        if (filtersHash[field]["<="] != null && filtersHash[field][">="] != null) {
-          adaptedFilters.push("".concat(field, ":=[").concat(filtersHash[field][">="], "..").concat(filtersHash[field]["<="], "]"));
-        } else if (filtersHash[field]["<="] != null) {
-          adaptedFilters.push("".concat(field, ":<=").concat(filtersHash[field]["<="]));
-        } else if (filtersHash[field][">="] != null) {
-          adaptedFilters.push("".concat(field, ":>=").concat(filtersHash[field][">="]));
-        } else if (filtersHash[field]["="] != null) {
-          adaptedFilters.push("".concat(field, ":=").concat(filtersHash[field]["="]));
+        // Check if this is a joined relation filter (e.g., "$refCollection(price.current)")
+        var joinedRelationMatch = field.match(_this3.constructor.JOINED_RELATION_FILTER_REGEX);
+        if (joinedRelationMatch && joinedRelationMatch.length >= 3) {
+          // This is a joined relation filter
+          var collection = joinedRelationMatch[1]; // e.g., "$refCollection"
+          var fieldPath = joinedRelationMatch[2]; // e.g., "price.current"
+
+          if (filtersHash[field]["<="] != null && filtersHash[field][">="] != null) {
+            adaptedFilters.push("".concat(collection, "(").concat(fieldPath, ":=[").concat(filtersHash[field][">="], "..").concat(filtersHash[field]["<="], "])"));
+          } else if (filtersHash[field]["<="] != null) {
+            adaptedFilters.push("".concat(collection, "(").concat(fieldPath, ":<=").concat(filtersHash[field]["<="], ")"));
+          } else if (filtersHash[field][">="] != null) {
+            adaptedFilters.push("".concat(collection, "(").concat(fieldPath, ":>=").concat(filtersHash[field][">="], ")"));
+          } else if (filtersHash[field]["="] != null) {
+            adaptedFilters.push("".concat(collection, "(").concat(fieldPath, ":=").concat(filtersHash[field]["="], ")"));
+          } else {
+            console.warn("[Typesense-Instantsearch-Adapter] Unsupported operator found ".concat(JSON.stringify(filtersHash[field])));
+          }
         } else {
-          console.warn("[Typesense-Instantsearch-Adapter] Unsupported operator found ".concat(JSON.stringify(filtersHash[field])));
+          // Regular field filter (non-joined)
+          if (filtersHash[field]["<="] != null && filtersHash[field][">="] != null) {
+            adaptedFilters.push("".concat(field, ":=[").concat(filtersHash[field][">="], "..").concat(filtersHash[field]["<="], "]"));
+          } else if (filtersHash[field]["<="] != null) {
+            adaptedFilters.push("".concat(field, ":<=").concat(filtersHash[field]["<="]));
+          } else if (filtersHash[field][">="] != null) {
+            adaptedFilters.push("".concat(field, ":>=").concat(filtersHash[field][">="]));
+          } else if (filtersHash[field]["="] != null) {
+            adaptedFilters.push("".concat(field, ":=").concat(filtersHash[field]["="]));
+          } else {
+            console.warn("[Typesense-Instantsearch-Adapter] Unsupported operator found ".concat(JSON.stringify(filtersHash[field])));
+          }
         }
       });
       adaptedResult = adaptedFilters.join(" && ");
@@ -475,7 +572,7 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
         if (numericFilterMatches != null) {
           // If no matches are found or if the above didn't trigger, fall back to the default regex
           var _numericFilterMatches = numericFilterMatches;
-          var _numericFilterMatches2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_numericFilterMatches, 4);
+          var _numericFilterMatches2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3__["default"])(_numericFilterMatches, 4);
           fieldName = _numericFilterMatches2[1];
           operator = _numericFilterMatches2[2];
           fieldValue = _numericFilterMatches2[3];
@@ -499,7 +596,7 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
         console.error("[Typesense-Instantsearch-Adapter] Parsing failed for a numeric filter `".concat(numericFilter, "` with the Regex `").concat(filterStringMatchingRegex, "`. If you have field names with special characters, be sure to add them to a parameter called `facetableFieldsWithSpecialCharacters` when instantiating the adapter."));
       } else {
         var _numericFilterMatches3 = numericFilterMatches;
-        var _numericFilterMatches4 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_numericFilterMatches3, 4);
+        var _numericFilterMatches4 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3__["default"])(_numericFilterMatches3, 4);
         fieldName = _numericFilterMatches4[1];
         operator = _numericFilterMatches4[2];
         fieldValue = _numericFilterMatches4[3];
@@ -512,24 +609,24 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
     }
   }, {
     key: "_adaptGeoFilter",
-    value: function _adaptGeoFilter(_ref) {
-      var insideBoundingBox = _ref.insideBoundingBox,
-        aroundRadius = _ref.aroundRadius,
-        aroundLatLng = _ref.aroundLatLng,
-        insidePolygon = _ref.insidePolygon;
+    value: function _adaptGeoFilter(_ref2) {
+      var insideBoundingBox = _ref2.insideBoundingBox,
+        aroundRadius = _ref2.aroundRadius,
+        aroundLatLng = _ref2.aroundLatLng,
+        insidePolygon = _ref2.insidePolygon;
       // Give this parameter first priority if it exists, since
       if (insideBoundingBox) {
         var x1, y1, x2, y2;
         if (Array.isArray(insideBoundingBox)) {
           var _insideBoundingBox$fl = insideBoundingBox.flat();
-          var _insideBoundingBox$fl2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_insideBoundingBox$fl, 4);
+          var _insideBoundingBox$fl2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3__["default"])(_insideBoundingBox$fl, 4);
           x1 = _insideBoundingBox$fl2[0];
           y1 = _insideBoundingBox$fl2[1];
           x2 = _insideBoundingBox$fl2[2];
           y2 = _insideBoundingBox$fl2[3];
         } else {
           var _insideBoundingBox$sp = insideBoundingBox.split(",");
-          var _insideBoundingBox$sp2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_insideBoundingBox$sp, 4);
+          var _insideBoundingBox$sp2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3__["default"])(_insideBoundingBox$sp, 4);
           x1 = _insideBoundingBox$sp2[0];
           y1 = _insideBoundingBox$sp2[1];
           x2 = _insideBoundingBox$sp2[2];
@@ -565,9 +662,18 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
       adaptedFilters.push(this._adaptFacetFilters(instantsearchParams.facetFilters, collectionName));
       adaptedFilters.push(this._adaptNumericFilters(instantsearchParams.numericFilters));
       adaptedFilters.push(this._adaptGeoFilter(instantsearchParams));
-      return adaptedFilters.filter(function (filter) {
+
+      // Filter out empty strings, split by && to get individual filters, then group join filters
+      var allFilters = adaptedFilters.filter(function (filter) {
         return filter && filter !== "";
-      }).join(" && ");
+      }).flatMap(function (filter) {
+        return filter.split(" && ").map(function (f) {
+          return f.trim();
+        });
+      }).filter(function (f) {
+        return f;
+      });
+      return this._groupJoinFilters(allFilters);
     }
   }, {
     key: "_adaptIndexName",
@@ -582,13 +688,13 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
   }, {
     key: "_adaptFacetBy",
     value: function _adaptFacetBy(facets, collectionName) {
-      var _this3 = this;
+      var _this4 = this;
       return [facets].flat().map(function (facet) {
-        var _this3$configuration$;
-        if ((_this3$configuration$ = _this3.configuration.collectionSpecificFacetByOptions) !== null && _this3$configuration$ !== void 0 && (_this3$configuration$ = _this3$configuration$[collectionName]) !== null && _this3$configuration$ !== void 0 && _this3$configuration$[facet]) {
-          return "".concat(facet).concat(_this3.configuration.collectionSpecificFacetByOptions[collectionName][facet]);
-        } else if (_this3.configuration.facetByOptions[facet]) {
-          return "".concat(facet).concat(_this3.configuration.facetByOptions[facet]);
+        var _this4$configuration$;
+        if ((_this4$configuration$ = _this4.configuration.collectionSpecificFacetByOptions) !== null && _this4$configuration$ !== void 0 && (_this4$configuration$ = _this4$configuration$[collectionName]) !== null && _this4$configuration$ !== void 0 && _this4$configuration$[facet]) {
+          return "".concat(facet).concat(_this4.configuration.collectionSpecificFacetByOptions[collectionName][facet]);
+        } else if (_this4.configuration.facetByOptions[facet]) {
+          return "".concat(facet).concat(_this4.configuration.facetByOptions[facet]);
         } else {
           return facet;
         }
@@ -610,7 +716,7 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
       // Convert all common parameters to snake case
       var snakeCasedAdditionalSearchParameters = {};
       for (var _i = 0, _Object$entries = Object.entries(this.additionalSearchParameters); _i < _Object$entries.length; _i++) {
-        var _Object$entries$_i = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_Object$entries[_i], 2),
+        var _Object$entries$_i = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3__["default"])(_Object$entries[_i], 2),
           key = _Object$entries$_i[0],
           value = _Object$entries$_i[1];
         snakeCasedAdditionalSearchParameters[this._camelToSnakeCase(key)] = value;
@@ -619,7 +725,7 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
       // Override, collection specific parameters
       if (this.collectionSpecificSearchParameters[adaptedCollectionName]) {
         for (var _i2 = 0, _Object$entries2 = Object.entries(this.collectionSpecificSearchParameters[adaptedCollectionName]); _i2 < _Object$entries2.length; _i2++) {
-          var _Object$entries2$_i = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_Object$entries2[_i2], 2),
+          var _Object$entries2$_i = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3__["default"])(_Object$entries2[_i2], 2),
             _key = _Object$entries2$_i[0],
             _value = _Object$entries2$_i[1];
           snakeCasedAdditionalSearchParameters[this._camelToSnakeCase(_key)] = _value;
@@ -663,10 +769,10 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
 
       // Filter out empty or null values, so we don't accidentally override values set in presets
       // eslint-disable-next-line no-unused-vars
-      return Object.fromEntries(Object.entries(typesenseSearchParams).filter(function (_ref2) {
-        var _ref3 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_ref2, 2),
-          _ = _ref3[0],
-          v = _ref3[1];
+      return Object.fromEntries(Object.entries(typesenseSearchParams).filter(function (_ref3) {
+        var _ref4 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3__["default"])(_ref3, 2),
+          _ = _ref4[0],
+          v = _ref4[1];
         return v != null && v !== "";
       }));
     }
@@ -678,17 +784,17 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
   }, {
     key: "request",
     value: function () {
-      var _request = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5___default().mark(function _callee() {
-        var _this4 = this,
+      var _request = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default().mark(function _callee() {
+        var _this5 = this,
           _searches$,
           _searches$2;
         var searches, commonParams, _searches$3, q, conversation, conversation_id, conversation_model_id, searchRequest;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5___default().wrap(function _callee$(_context) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
               // console.log(this.instantsearchRequests);
               searches = this.instantsearchRequests.map(function (instantsearchRequest) {
-                return _this4._buildSearchParameters(instantsearchRequest);
+                return _this5._buildSearchParameters(instantsearchRequest);
               }); // If this is a conversational search, then move conversation related params to query params
               commonParams = {};
               if (((_searches$ = searches[0]) === null || _searches$ === void 0 ? void 0 : _searches$.conversation) === true || ((_searches$2 = searches[0]) === null || _searches$2 === void 0 ? void 0 : _searches$2.conversation) === "true") {
@@ -742,6 +848,11 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
     key: "DEFAULT_NUMERIC_FILTER_STRING_MATCHING_REGEX",
     get: function get() {
       return new RegExp("(.*?)(<=|>=|>|<|=)(.*)");
+    }
+  }, {
+    key: "JOINED_RELATION_FILTER_REGEX",
+    get: function get() {
+      return new RegExp("^(\\$[^(]+)\\(([^)]+)\\)$");
     }
   }]);
 }();
