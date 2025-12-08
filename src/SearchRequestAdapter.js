@@ -41,16 +41,16 @@ export class SearchRequestAdapter {
 
     /**
      * Need to transform:
-     *  facetFilters = [["field1:value1", "field1:value2"], "field2:value3", "field2:value4"]
+     *  facetFilters = [["field1:value1", "field1:value2"], "field2:value3", "field2:value4", ["field3:value5", "field4:value6", "field4:value7"]]
      *
      * Into this:
-     *  field1:=[value1,value2] && field2:=value3 && field2:=value4
+     *  field1:=[value1,value2] && field2:=value3 && field2:=value4 && (field3:=value5 || field4:=[value6,value7])
      *
      * Steps:
      *  - For each item in facetFilters
      *    - If item is array
      *      - OR values together.
-     *      - Warn if field names are not the same
+     *      - If field names are not the same, group them and join different fields with ||
      *    - If item is string, convert to facet:=value format
      *  - Join strings by &&
      */
@@ -73,56 +73,72 @@ export class SearchRequestAdapter {
           intermediateFacetFilters[fieldName].push(fieldValue);
         });
 
-        if (Object.keys(intermediateFacetFilters).length > 1) {
-          console.error(
-            `[Typesense-Instantsearch-Adapter] Typesense does not support cross-field ORs at the moment. The adapter could not OR values between these fields: ${Object.keys(
-              intermediateFacetFilters,
-            ).join(",")}`,
+        // Helper function to build filter string for a single field
+        const buildFieldFilter = (fieldName, fieldValues) => {
+          // Need to transform:
+          // intermediateFacetFilters = {
+          //     "field1": ["value1", "value2"],
+          // }
+          //
+          // Into this:
+          // field1:=[value1,value2]
+
+          // Partition values into included and excluded values
+          const [excludedFieldValues, includedFieldValues] = fieldValues.reduce(
+            (result, fieldValue) => {
+              if (fieldValue.startsWith("-") && !this._isNumber(fieldValue)) {
+                result[0].push(fieldValue.substring(1));
+              } else {
+                result[1].push(fieldValue);
+              }
+              return result;
+            },
+            [[], []],
           );
-        }
 
-        // Pick first value from intermediateFacetFilters
-        const fieldName = Object.keys(intermediateFacetFilters)[0];
-        const fieldValues = intermediateFacetFilters[fieldName];
+          const typesenseFilterStringComponents = [];
+          if (includedFieldValues.length > 0) {
+            const operator = this._shouldUseExactMatchForField(fieldName, collectionName) ? ":=" : ":";
+            typesenseFilterStringComponents.push(
+              `${fieldName}${operator}[${includedFieldValues.map((v) => this._escapeFacetValue(v)).join(",")}]`,
+            );
+          }
+          if (excludedFieldValues.length > 0) {
+            const operator = this._shouldUseExactMatchForField(fieldName, collectionName) ? ":!=" : ":!";
+            typesenseFilterStringComponents.push(
+              `${fieldName}${operator}[${excludedFieldValues.map((v) => this._escapeFacetValue(v)).join(",")}]`,
+            );
+          }
 
+          return typesenseFilterStringComponents.filter((f) => f).join(" && ");
+        };
+
+        // Handle cross-field ORs
         // Need to transform:
         // intermediateFacetFilters = {
         //     "field1": ["value1", "value2"],
+        //     "field2": ["value3"]
         // }
         //
         // Into this:
-        // field1:=[value1,value2]
-
-        // Partition values into included and excluded values
-        const [excludedFieldValues, includedFieldValues] = fieldValues.reduce(
-          (result, fieldValue) => {
-            if (fieldValue.startsWith("-") && !this._isNumber(fieldValue)) {
-              result[0].push(fieldValue.substring(1));
-            } else {
-              result[1].push(fieldValue);
-            }
-            return result;
-          },
-          [[], []],
-        );
-
-        const typesenseFilterStringComponents = [];
-        if (includedFieldValues.length > 0) {
-          const operator = this._shouldUseExactMatchForField(fieldName, collectionName) ? ":=" : ":";
-          typesenseFilterStringComponents.push(
-            `${fieldName}${operator}[${includedFieldValues.map((v) => this._escapeFacetValue(v)).join(",")}]`,
+        // (field1:=[value1,value2] || field2:=[value3])
+        const fieldNames = Object.keys(intermediateFacetFilters);
+        if (fieldNames.length > 1) {
+          const fieldFilterStrings = fieldNames.map((fieldName) => 
+            buildFieldFilter(fieldName, intermediateFacetFilters[fieldName])
           );
-        }
-        if (excludedFieldValues.length > 0) {
-          const operator = this._shouldUseExactMatchForField(fieldName, collectionName) ? ":!=" : ":!";
-          typesenseFilterStringComponents.push(
-            `${fieldName}${operator}[${excludedFieldValues.map((v) => this._escapeFacetValue(v)).join(",")}]`,
-          );
+          return `(${fieldFilterStrings.join(" || ")})`;
         }
 
-        const typesenseFilterString = typesenseFilterStringComponents.filter((f) => f).join(" && ");
-
-        return typesenseFilterString;
+        // Single field case
+        // Need to transform:
+        //  intermediateFacetFilters = {
+        //      "field1": ["value1", "value2"],
+        //  }
+        //
+        // Into this:
+        //  field1:=[value1,value2]
+        return buildFieldFilter(fieldNames[0], intermediateFacetFilters[fieldNames[0]]);
       } else {
         // Need to transform:
         //  fieldName:fieldValue
