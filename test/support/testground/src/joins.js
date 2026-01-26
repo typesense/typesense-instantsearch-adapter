@@ -26,6 +26,7 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   },
   additionalSearchParameters: {
     query_by: "name,description,brand",
+    filter_by: "$product_prices(id: *)",
   },
 });
 
@@ -34,7 +35,7 @@ const searchClient = typesenseInstantsearchAdapter.searchClient;
 const search = instantsearch({
   searchClient,
   indexName: "products_with_joins",
-  routing: true
+  routing: true,
 });
 
 // ============ Begin Widget Configuration
