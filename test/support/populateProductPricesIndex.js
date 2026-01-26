@@ -14,9 +14,11 @@ module.exports = (async () => {
     retryIntervalSeconds: 5,
   });
 
+  const productsCollectionName = "products_with_joins";
+
   // Products collection schema
   const productsSchema = {
-    name: "products",
+    name: productsCollectionName,
     fields: [
       {
         name: "id",
@@ -56,7 +58,7 @@ module.exports = (async () => {
       {
         name: "productId",
         type: "string",
-        reference: "products.id",
+        reference: `${productsCollectionName}.id`,
       },
       {
         name: "retailer",
@@ -79,12 +81,12 @@ module.exports = (async () => {
   // Handle products collection
   let reindexProductsNeeded = false;
   try {
-    const collection = await typesense.collections("products").retrieve();
+    const collection = await typesense.collections(productsCollectionName).retrieve();
     console.log("Found existing products schema");
     if (collection.num_documents !== products.length || process.env.FORCE_REINDEX === "true") {
       console.log("Deleting existing products schema");
       reindexProductsNeeded = true;
-      await typesense.collections("products").delete();
+      await typesense.collections(productsCollectionName).delete();
     }
   } catch (e) {
     reindexProductsNeeded = true;
@@ -97,7 +99,7 @@ module.exports = (async () => {
 
     console.log("Adding products records: ");
     try {
-      const returnData = await typesense.collections("products").documents().import(products);
+      const returnData = await typesense.collections(productsCollectionName).documents().import(products);
       console.log(returnData);
       console.log("Done indexing products.");
 

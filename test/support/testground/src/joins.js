@@ -33,8 +33,8 @@ const searchClient = typesenseInstantsearchAdapter.searchClient;
 
 const search = instantsearch({
   searchClient,
-  indexName: "products",
-  routing: true,
+  indexName: "products_with_joins",
+  routing: true
 });
 
 // ============ Begin Widget Configuration
