@@ -43,7 +43,6 @@ module.exports = (async () => {
         facet: true,
       },
     ],
-    default_sorting_field: "id",
   };
 
   // Prices collection schema with reference to products
@@ -70,7 +69,6 @@ module.exports = (async () => {
         facet: true,
       },
     ],
-    default_sorting_field: "id",
   };
 
   console.log("Populating products and prices collections in Typesense");
