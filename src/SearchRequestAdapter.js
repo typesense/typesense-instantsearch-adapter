@@ -1,20 +1,8 @@
 "use strict";
 
 export class SearchRequestAdapter {
-  static get INDEX_NAME_MATCHING_REGEX() {
-    return new RegExp("^(.+?)(?=(/sort/(.*))|$)");
-  }
-
-  static get DEFAULT_FACET_FILTER_STRING_MATCHING_REGEX() {
-    return new RegExp("(.*)((?!:).):(?!:)(.*)");
-  }
-
-  static get DEFAULT_NUMERIC_FILTER_STRING_MATCHING_REGEX() {
-    return new RegExp("(.*?)(<=|>=|>|<|=)(.*)");
-  }
-
-  static get JOINED_RELATION_FILTER_REGEX() {
-    return new RegExp("^(\\$[^(]+)\\(([^)]+)\\)$");
+  static get NUMERIC_OPERATORS() {
+    return ["<=", ">=", "<", ">", "="];
   }
 
   constructor(instantsearchRequests, typesenseClient, configuration) {
@@ -36,9 +24,192 @@ export class SearchRequestAdapter {
     }
   }
 
+  /**
+   * Returns the configured list of field names that may include delimiters.
+   * Always returns a flat array so callers can treat it uniformly.
+   */
+  _getFacetableFieldsWithSpecialCharacters() {
+    const fields = this.configuration.facetableFieldsWithSpecialCharacters;
+    if (!Array.isArray(fields)) {
+      return [];
+    }
+    return fields.flat();
+  }
+
+  /**
+   * Finds the best matching field name at the start of `filter`.
+   * Uses the provided delimiter check so it works for both facets and numeric filters.
+   */
+  _matchFieldNameWithDelimiter(filter, fields, isDelimiterAtIndex) {
+    const matches = fields
+      .filter((fieldName) => filter.startsWith(fieldName) && isDelimiterAtIndex(fieldName.length))
+      .map((fieldName) => ({
+        fieldName,
+        delimiterIndex: fieldName.length,
+      }));
+
+    if (matches.length === 0) {
+      return null;
+    }
+
+    return matches.reduce((best, current) => (current.fieldName.length > best.fieldName.length ? current : best));
+  }
+
+  /**
+   * Returns the index of the first ":" that is not inside backticks.
+   */
+  _findFacetDelimiterIndex(filter) {
+    let inBacktick = false;
+    for (let i = 0; i < filter.length; i += 1) {
+      const character = filter[i];
+      if (character === "`") {
+        inBacktick = !inBacktick;
+      }
+      if (!inBacktick && character === ":") {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  /**
+   * Returns the index of the last ":" that is not inside backticks.
+   * Used as a fallback when field names may contain colons.
+   */
+  _findLastFacetDelimiterIndex(filter) {
+    let inBacktick = false;
+    let lastIndex = -1;
+    for (let i = 0; i < filter.length; i += 1) {
+      const character = filter[i];
+      if (character === "`") {
+        inBacktick = !inBacktick;
+      }
+      if (!inBacktick && character === ":") {
+        lastIndex = i;
+      }
+    }
+    return lastIndex;
+  }
+
+  /**
+   * Finds the first numeric operator outside backticks and returns its position.
+   * @param {string} filter
+   */
+  _findNumericOperator(filter) {
+    const operators = SearchRequestAdapter.NUMERIC_OPERATORS;
+    let inBacktick = false;
+
+    const index = Array.from(filter).findIndex((character, i) => {
+      if (character === "`") {
+        inBacktick = !inBacktick;
+      }
+      if (inBacktick) {
+        return false;
+      }
+      return operators.some((operator) => filter.startsWith(operator, i));
+    });
+
+    if (index === -1) {
+      return null;
+    }
+
+    const operator = operators.find((op) => filter.startsWith(op, index));
+    return { index, operator };
+  }
+
+  /**
+   * Parses "$collection(field.path)" (or "!$collection(field.path)").
+   * Example: "$product_prices(retailer)" -> { collection: "product_prices", fieldPath: "retailer" }
+   * Returns null if the string is not a join field.
+   * @param {string} fieldName
+   */
+  _parseJoinFieldName(fieldName) {
+    const trimmed = fieldName.trim();
+    if (!(trimmed.startsWith("$") || trimmed.startsWith("!$"))) {
+      return null;
+    }
+    const collectionStart = trimmed.startsWith("!$") ? 2 : 1;
+    const openParenIndex = trimmed.indexOf("(", collectionStart);
+    if (openParenIndex === -1) {
+      return null;
+    }
+
+    let parenCount = 0;
+    let closeParenIndex = -1;
+    for (let i = openParenIndex; i < trimmed.length; i += 1) {
+      const character = trimmed[i];
+      if (character === "(") {
+        parenCount += 1;
+      } else if (character === ")") {
+        parenCount -= 1;
+        if (parenCount === 0) {
+          closeParenIndex = i;
+          break;
+        }
+      }
+    }
+
+    if (closeParenIndex === -1 || closeParenIndex !== trimmed.length - 1) {
+      return null;
+    }
+
+    const collection = trimmed.slice(0, openParenIndex).trim();
+    const fieldPath = trimmed.slice(openParenIndex + 1, closeParenIndex).trim();
+    if (!collection || !fieldPath) {
+      return null;
+    }
+
+    return { collection, fieldPath };
+  }
+
+  /**
+   * Parses "$collection(innerFilter)" (or "!$collection(innerFilter)").
+   * Example: "$product_prices(retailer:=[`value1`])" -> { collection: "product_prices", innerFilter: "retailer:=[`value1`]" }
+   * Returns null if the filter is not a join filter string or parsing fails.
+   * @param {string} filter
+   */
+  _parseJoinFilterString(filter) {
+    const trimmed = filter.trim();
+    if (!(trimmed.startsWith("$") || trimmed.startsWith("!$"))) {
+      return null;
+    }
+    const collectionStartsAfterCharIndex = trimmed.startsWith("!$") ? 2 : 1;
+    const openParenIndex = trimmed.indexOf("(", collectionStartsAfterCharIndex);
+    if (openParenIndex === -1) {
+      return null;
+    }
+
+    let parenCount = 0;
+    let closeParenIndex = -1;
+    for (let i = openParenIndex; i < trimmed.length; i += 1) {
+      const character = trimmed[i];
+      if (character === "(") {
+        parenCount += 1;
+      } else if (character === ")") {
+        parenCount -= 1;
+        if (parenCount === 0) {
+          closeParenIndex = i;
+          break;
+        }
+      }
+    }
+
+    if (closeParenIndex === -1 || closeParenIndex !== trimmed.length - 1) {
+      return null;
+    }
+
+    const collection = trimmed.slice(0, openParenIndex).trim();
+    const innerFilter = trimmed.slice(openParenIndex + 1, closeParenIndex).trim();
+    if (!collection || !innerFilter) {
+      return null;
+    }
+
+    return { collection, innerFilter };
+  }
+
   _buildFacetFilterString({ fieldName, fieldValues, isExcluded, collectionName }) {
     // Check if this is a joined relation filter (e.g., "$refCollection(retailer)")
-    const joinedRelationMatch = fieldName.match(this.constructor.JOINED_RELATION_FILTER_REGEX);
+    const joinedRelationMatch = this._parseJoinFieldName(fieldName);
 
     const operator = isExcluded
       ? this._shouldUseExactMatchForField(fieldName, collectionName)
@@ -48,10 +219,9 @@ export class SearchRequestAdapter {
         ? ":="
         : ":";
 
-    if (joinedRelationMatch && joinedRelationMatch.length >= 3) {
+    if (joinedRelationMatch) {
       // This is a joined relation filter
-      const collection = joinedRelationMatch[1]; // e.g., "$refCollection"
-      const fieldPath = joinedRelationMatch[2]; // e.g., "retailer"
+      const { collection, fieldPath } = joinedRelationMatch; // e.g., "$refCollection", "retailer"
       // For joined relations, the filter should be: $collection(field:=[value1,value2])
       return `${collection}(${fieldPath}${operator}[${fieldValues.map((v) => this._escapeFacetValue(v)).join(",")}])`;
     } else {
@@ -194,22 +364,20 @@ export class SearchRequestAdapter {
   }
 
   _parseFacetFilter(facetFilter) {
-    let filterStringMatchingRegex, facetFilterMatches, fieldName, fieldValue;
+    let fieldName, fieldValue;
 
-    // This is helpful when the filter looks like `facetName:with:colons:facetValue:with:colons` and the default regex above parses the filter as `facetName:with:colons:facetValue:with` and `colon`.
+    // This is helpful when the filter looks like `facetName:with:colons:facetValue:with:colons` and a naive split would parse it as `facetName:with:colons:facetValue:with` and `colon`.
     // So if a facetValue can contain a colon, we ask users to pass in all possible facetable fields in `facetableFieldsWithSpecialCharacters` when instantiating the adapter, so we can explicitly match against that.
-    if (this.configuration.facetableFieldsWithSpecialCharacters?.length > 0) {
-      // escape any Regex special characters, source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
-      const sanitizedFacetableFieldsWithSpecialCharacters = this.configuration.facetableFieldsWithSpecialCharacters
-        .flat()
-        .map((f) => f.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
-      filterStringMatchingRegex = new RegExp(`^(${sanitizedFacetableFieldsWithSpecialCharacters.join("|")}):(.*)$`);
-      facetFilterMatches = facetFilter.match(filterStringMatchingRegex);
-
-      if (facetFilterMatches != null) {
-        fieldName = `${facetFilterMatches[1]}`;
-        fieldValue = `${facetFilterMatches[2]}`;
-
+    const facetableFieldsWithSpecialCharacters = this._getFacetableFieldsWithSpecialCharacters();
+    if (facetableFieldsWithSpecialCharacters.length > 0) {
+      const matched = this._matchFieldNameWithDelimiter(
+        facetFilter,
+        facetableFieldsWithSpecialCharacters,
+        (index) => facetFilter[index] === ":",
+      );
+      if (matched) {
+        fieldName = matched.fieldName;
+        fieldValue = facetFilter.slice(matched.delimiterIndex + 1);
         return {
           fieldName,
           fieldValue,
@@ -217,22 +385,53 @@ export class SearchRequestAdapter {
       }
     }
 
-    // If we haven't found any matches yet
-    // Use the default filter parsing regex, which assumes that only facet names have colons, and not facet values
-    filterStringMatchingRegex = this.constructor.DEFAULT_FACET_FILTER_STRING_MATCHING_REGEX;
-    facetFilterMatches = facetFilter.match(filterStringMatchingRegex);
+    // If we haven't found any matches yet, check if this is a join filter
+    // JOIN filters have the format "$collection(field):value" or "!$collection(field):value" (https://typesense.org/docs/latest/api/search.html#facet-referencing)
+    // for join filters, we need to find the colon after the closing parenthesis, not use the last colon
+    if (facetFilter.startsWith("$") || facetFilter.startsWith("!$")) {
+      const collectionStartsAfterCharIndex = facetFilter.startsWith("!$") ? 2 : 1;
+      const openParenIndex = facetFilter.indexOf("(", collectionStartsAfterCharIndex);
+      if (openParenIndex !== -1) {
+        // find the matching closing parenthesis
+        let parenCount = 0;
+        let closeParenIndex = -1;
+        for (let i = openParenIndex; i < facetFilter.length; i += 1) {
+          const character = facetFilter[i];
+          if (character === "(") {
+            parenCount += 1;
+          } else if (character === ")") {
+            parenCount -= 1;
+            if (parenCount === 0) {
+              closeParenIndex = i;
+              break;
+            }
+          }
+        }
+        // found a closing paren, find the colon after it
+        if (closeParenIndex !== -1) {
+          const colonAfterJoin = facetFilter.indexOf(":", closeParenIndex + 1);
+          if (colonAfterJoin !== -1) {
+            fieldName = facetFilter.slice(0, colonAfterJoin).trim();
+            fieldValue = facetFilter.slice(colonAfterJoin + 1).trim();
+            return {
+              fieldName,
+              fieldValue,
+            };
+          }
+        }
+      }
+    }
 
-    // console.log(filterStringMatchingRegex);
-    // console.log(facetFilter);
-    // console.log(facetFilterMatches);
-
-    if (facetFilterMatches == null) {
+    // use a scan that assumes field names may have colons so we use the last colon as the delimiter.
+    // handles cases like "field2:with:colons:value3" where the field name is "field2:with:colons". (edge case, not sure if this is supported by the server)
+    const delimiterIndex = this._findLastFacetDelimiterIndex(facetFilter);
+    if (delimiterIndex === -1) {
       console.error(
-        `[Typesense-Instantsearch-Adapter] Parsing failed for a facet filter \`${facetFilter}\` with the Regex \`${filterStringMatchingRegex}\`. If you have field names with special characters, be sure to add them to a parameter called \`facetableFieldsWithSpecialCharacters\` when instantiating the adapter.`,
+        `[Typesense-Instantsearch-Adapter] Parsing failed for a facet filter \`${facetFilter}\`. If you have field names with special characters, add them to a parameter called \`facetableFieldsWithSpecialCharacters\` when instantiating the adapter.`,
       );
     } else {
-      fieldName = `${facetFilterMatches[1]}${facetFilterMatches[2]}`;
-      fieldValue = `${facetFilterMatches[3]}`;
+      fieldName = facetFilter.slice(0, delimiterIndex).trim();
+      fieldValue = facetFilter.slice(delimiterIndex + 1).trim();
     }
 
     return {
@@ -265,12 +464,10 @@ export class SearchRequestAdapter {
     const regularFilters = [];
 
     filters.forEach((filter) => {
-      // Match pattern like "$collection(field:=value)" or "$collection(field:>=value)"
-      const joinMatch = filter.match(/^(\$[^(]+)\((.*)\)$/);
+      const joinMatch = this._parseJoinFilterString(filter);
 
-      if (joinMatch && joinMatch.length >= 3) {
-        const collection = joinMatch[1]; // e.g., "$product_prices"
-        const innerFilter = joinMatch[2]; // e.g., "retailer:=[`value1`]"
+      if (joinMatch) {
+        const { collection, innerFilter } = joinMatch;
 
         if (!joinFiltersMap[collection]) {
           joinFiltersMap[collection] = [];
@@ -327,12 +524,11 @@ export class SearchRequestAdapter {
     const adaptedFilters = [];
     Object.keys(filtersHash).forEach((field) => {
       // Check if this is a joined relation filter (e.g., "$refCollection(price.current)")
-      const joinedRelationMatch = field.match(this.constructor.JOINED_RELATION_FILTER_REGEX);
+      const joinedRelationMatch = this._parseJoinFieldName(field);
 
-      if (joinedRelationMatch && joinedRelationMatch.length >= 3) {
+      if (joinedRelationMatch) {
         // This is a joined relation filter
-        const collection = joinedRelationMatch[1]; // e.g., "$refCollection"
-        const fieldPath = joinedRelationMatch[2]; // e.g., "price.current"
+        const { collection, fieldPath } = joinedRelationMatch; // e.g., "$refCollection", "price.current"
 
         if (filtersHash[field]["<="] != null && filtersHash[field][">="] != null) {
           adaptedFilters.push(
@@ -372,47 +568,46 @@ export class SearchRequestAdapter {
   }
 
   _parseNumericFilter(numericFilter) {
-    let filterStringMatchingRegex, numericFilterMatches;
     let fieldName, operator, fieldValue;
 
-    // The following is helpful when the facetName has special characters like > and the default regex fails to parse it properly.
+    // The following is helpful when the facetName has special characters like > and a naive operator scan would parse it improperly.
     // So we ask users to pass in facetable fields in `facetableFieldsWithSpecialCharactersWithSpecialCharacters` when instantiating the adapter, so we can explicitly match against that.
-    if (this.configuration.facetableFieldsWithSpecialCharacters?.length > 0) {
-      // escape any Regex special characters, source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
-      const sanitizedFacetableFieldsWithSpecialCharacters = this.configuration.facetableFieldsWithSpecialCharacters.map(
-        (f) => f.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+    const facetableFieldsWithSpecialCharacters = this._getFacetableFieldsWithSpecialCharacters();
+    if (facetableFieldsWithSpecialCharacters.length > 0) {
+      const matched = this._matchFieldNameWithDelimiter(
+        numericFilter,
+        facetableFieldsWithSpecialCharacters,
+        () => true,
       );
-      filterStringMatchingRegex = new RegExp(
-        `^(${sanitizedFacetableFieldsWithSpecialCharacters.join("|")})(<=|>=|>|<|=)(.*)$`,
-      );
-
-      numericFilterMatches = numericFilter.match(filterStringMatchingRegex);
-
-      if (numericFilterMatches != null) {
-        // If no matches are found or if the above didn't trigger, fall back to the default regex
-        [, fieldName, operator, fieldValue] = numericFilterMatches;
-        return {
-          fieldName,
-          operator,
-          fieldValue,
-        };
+      if (matched) {
+        const remainder = numericFilter.slice(matched.delimiterIndex);
+        const trimmedRemainder = remainder.trimStart();
+        const leadingTrimOffset = remainder.length - trimmedRemainder.length;
+        const opMatch = this._findNumericOperator(trimmedRemainder);
+        if (opMatch && opMatch.index === 0) {
+          const operatorIndex = matched.delimiterIndex + leadingTrimOffset;
+          fieldName = numericFilter.slice(0, operatorIndex).trim();
+          operator = opMatch.operator;
+          fieldValue = trimmedRemainder.slice(opMatch.operator.length).trim();
+          return {
+            fieldName,
+            operator,
+            fieldValue,
+          };
+        }
       }
     }
 
-    // If we haven't found any matches yet, fall back to the default regex
-    filterStringMatchingRegex = this.constructor.DEFAULT_NUMERIC_FILTER_STRING_MATCHING_REGEX;
-    numericFilterMatches = numericFilter.match(filterStringMatchingRegex);
-
-    // console.log(filterStringMatchingRegex);
-    // console.log(numericFilter);
-    // console.log(numericFilterMatches);
-
-    if (numericFilterMatches == null) {
+    // If we haven't found any matches yet, fall back to scanning for an operator.
+    const opMatch = this._findNumericOperator(numericFilter);
+    if (!opMatch) {
       console.error(
-        `[Typesense-Instantsearch-Adapter] Parsing failed for a numeric filter \`${numericFilter}\` with the Regex \`${filterStringMatchingRegex}\`. If you have field names with special characters, be sure to add them to a parameter called \`facetableFieldsWithSpecialCharacters\` when instantiating the adapter.`,
+        `[Typesense-Instantsearch-Adapter] Parsing failed for a numeric filter \`${numericFilter}\`. If you have field names with special characters, be sure to add them to a parameter called \`facetableFieldsWithSpecialCharacters\` when instantiating the adapter.`,
       );
     } else {
-      [, fieldName, operator, fieldValue] = numericFilterMatches;
+      fieldName = numericFilter.slice(0, opMatch.index).trim();
+      operator = opMatch.operator;
+      fieldValue = numericFilter.slice(opMatch.index + opMatch.operator.length).trim();
     }
 
     return {
@@ -477,11 +672,21 @@ export class SearchRequestAdapter {
   }
 
   _adaptIndexName(indexName) {
-    return indexName.match(this.constructor.INDEX_NAME_MATCHING_REGEX)[1];
+    const sortToken = "/sort/";
+    const sortIndex = indexName.indexOf(sortToken);
+    if (sortIndex === -1) {
+      return indexName;
+    }
+    return indexName.slice(0, sortIndex);
   }
 
   _adaptSortBy(indexName) {
-    return indexName.match(this.constructor.INDEX_NAME_MATCHING_REGEX)[3];
+    const sortToken = "/sort/";
+    const sortIndex = indexName.indexOf(sortToken);
+    if (sortIndex === -1) {
+      return undefined;
+    }
+    return indexName.slice(sortIndex + sortToken.length);
   }
 
   _adaptFacetBy(facets, collectionName) {
