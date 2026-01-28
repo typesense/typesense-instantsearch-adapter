@@ -435,7 +435,8 @@ export class SearchRequestAdapter {
     }
 
     if (params.ruleContexts && params.ruleContexts.length > 0) {
-      typesenseSearchParams.override_tags = this._adaptRulesContextsToOverrideTags(params.ruleContexts);
+      const tagsParamName = this.configuration.useOverrideTags ? "override_tags" : "curation_tags";
+      typesenseSearchParams[tagsParamName] = this._adaptRulesContextsToOverrideTags(params.ruleContexts);
     }
 
     // If a custom vector query is specified, set q=*

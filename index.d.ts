@@ -98,6 +98,11 @@ interface BaseAdapterOptions {
   collectionSpecificFilterByOptions?: object;
   sortByOptions?: object;
   collectionSpecificSortByOptions?: object;
+  /**
+   * For Typesense versions before v30, set to true to use override_tags.
+   * For v30+, leave as false (default) to use curation_tags.
+   */
+  useOverrideTags?: boolean;
 }
 
 type CollectionSearchParameters = Record<string, BaseSearchParameters<DocumentSchema>>;
