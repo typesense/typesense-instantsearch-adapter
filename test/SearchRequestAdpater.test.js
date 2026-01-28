@@ -75,13 +75,35 @@ describe("SearchRequestAdapter", () => {
           enable_overrides: false,
         });
 
-        //with an override tag
+        //with curation tags (default for v30+)
         result = subject._buildSearchParameters({
           indexName: "collection2",
           params: { ruleContexts: ["context1", "context2"] },
         });
         expect(result).toEqual({
           collection: "collection2",
+          page: 1,
+          q: "*",
+          curation_tags: "context1,context2",
+        });
+      });
+    });
+
+    describe("when useOverrideTags is true (for pre-v30)", () => {
+      it("uses override_tags instead of curation_tags", () => {
+        const subject = new SearchRequestAdapter(
+          [],
+          null,
+          new Configuration({
+            useOverrideTags: true,
+          }),
+        );
+        const result = subject._buildSearchParameters({
+          indexName: "collection1",
+          params: { ruleContexts: ["context1", "context2"] },
+        });
+        expect(result).toEqual({
+          collection: "collection1",
           page: 1,
           q: "*",
           override_tags: "context1,context2",
