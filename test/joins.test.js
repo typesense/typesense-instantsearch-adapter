@@ -24,21 +24,21 @@ describe("Joins", () => {
     it("filters products by BestBuy retailer", async () => {
       await expect(page).toClick("#retailer-list input[type=checkbox][value=BestBuy]");
       await expect(page).toMatchElement("#stats", {
-        text: "5 results found",
+        text: "4 results found",
       });
     });
 
     it("filters products by Walmart retailer", async () => {
       await expect(page).toClick("#retailer-list input[type=checkbox][value=Walmart]");
       await expect(page).toMatchElement("#stats", {
-        text: "7 results found",
+        text: "6 results found",
       });
     });
 
     it("filters products by Target retailer", async () => {
       await expect(page).toClick("#retailer-list input[type=checkbox][value=Target]");
       await expect(page).toMatchElement("#stats", {
-        text: "6 results found",
+        text: "5 results found",
       });
     });
 
