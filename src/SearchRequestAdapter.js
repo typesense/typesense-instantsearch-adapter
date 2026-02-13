@@ -350,6 +350,155 @@ export class SearchRequestAdapter {
     }
   }
 
+  _splitByTopLevelAnd(filterBy) {
+    const clauses = [];
+    let currentClause = "";
+    let backtickOpen = false;
+
+    for (let i = 0; i < filterBy.length; i += 1) {
+      const char = filterBy[i];
+      const nextChar = filterBy[i + 1];
+
+      if (char === "`") {
+        backtickOpen = !backtickOpen;
+      }
+
+      if (!backtickOpen && char === "&" && nextChar === "&") {
+        if (currentClause.trim() !== "") {
+          clauses.push(currentClause.trim());
+        }
+        currentClause = "";
+        i += 1;
+        continue;
+      }
+
+      currentClause += char;
+    }
+
+    if (currentClause.trim() !== "") {
+      clauses.push(currentClause.trim());
+    }
+
+    return clauses;
+  }
+
+  _splitListValues(valuesString) {
+    const values = [];
+    let currentValue = "";
+    let backtickOpen = false;
+
+    for (let i = 0; i < valuesString.length; i += 1) {
+      const char = valuesString[i];
+      if (char === "`") {
+        backtickOpen = !backtickOpen;
+      }
+
+      if (!backtickOpen && char === ",") {
+        if (currentValue.trim() !== "") {
+          values.push(currentValue.trim());
+        }
+        currentValue = "";
+        continue;
+      }
+
+      currentValue += char;
+    }
+
+    if (currentValue.trim() !== "") {
+      values.push(currentValue.trim());
+    }
+
+    return values;
+  }
+
+  _parseListClause(clause) {
+    const trimmedClause = clause.trim();
+    const openBracketIndex = trimmedClause.indexOf("[");
+    const closeBracketIndex = trimmedClause.lastIndexOf("]");
+
+    if (openBracketIndex === -1 || closeBracketIndex === -1 || closeBracketIndex !== trimmedClause.length - 1) {
+      return null;
+    }
+
+    const leftSide = trimmedClause.slice(0, openBracketIndex).trim();
+    const valuesString = trimmedClause.slice(openBracketIndex + 1, closeBracketIndex);
+
+    const operators = [":!=", ":=", ":!", ":"];
+    const operator = operators.find((candidateOperator) => leftSide.endsWith(candidateOperator));
+    if (!operator) {
+      return null;
+    }
+
+    const fieldName = leftSide.slice(0, leftSide.length - operator.length).trim();
+    if (!fieldName) {
+      return null;
+    }
+
+    return {
+      fieldName,
+      operator,
+      values: this._splitListValues(valuesString),
+    };
+  }
+
+  _mergeSameFieldListClauses(filterBy) {
+    if (!filterBy) return filterBy;
+
+    const clauses = this._splitByTopLevelAnd(filterBy);
+    const groupedListClauses = {};
+    const rebuiltClauses = [];
+
+    clauses.forEach((clause, clauseIndex) => {
+      const parsedClause = this._parseListClause(clause);
+      if (!parsedClause) {
+        rebuiltClauses.push({ clauseIndex, clause });
+        return;
+      }
+
+      const normalizedOperator =
+        parsedClause.operator === ":!" || parsedClause.operator === ":!="
+          ? "exclude"
+          : parsedClause.operator === ":" || parsedClause.operator === ":="
+            ? "include"
+            : parsedClause.operator;
+      const groupingKey = `${parsedClause.fieldName}|${normalizedOperator}`;
+      if (!groupedListClauses[groupingKey]) {
+        groupedListClauses[groupingKey] = {
+          clauseIndex,
+          fieldName: parsedClause.fieldName,
+          operator: parsedClause.operator,
+          normalizedOperator,
+          values: [],
+        };
+      }
+
+      parsedClause.values.forEach((value) => {
+        if (!groupedListClauses[groupingKey].values.includes(value)) {
+          groupedListClauses[groupingKey].values.push(value);
+        }
+      });
+    });
+
+    Object.values(groupedListClauses).forEach((group) => {
+      let mergedOperator = group.operator;
+      if (group.normalizedOperator === "exclude") {
+        mergedOperator = ":!";
+      } else if (group.normalizedOperator === "include") {
+        mergedOperator = ":";
+      }
+
+      rebuiltClauses.push({
+        clauseIndex: group.clauseIndex,
+        clause: `${group.fieldName}${mergedOperator}[${group.values.join(",")}]`,
+      });
+    });
+
+    return rebuiltClauses
+      .sort((left, right) => left.clauseIndex - right.clauseIndex)
+      .map((entry) => entry.clause)
+      .join(" && ");
+  }
+
   _adaptFilters(instantsearchParams, collectionName) {
     const adaptedFilters = [];
 
@@ -362,7 +511,8 @@ export class SearchRequestAdapter {
     adaptedFilters.push(this._adaptNumericFilters(instantsearchParams.numericFilters));
     adaptedFilters.push(this._adaptGeoFilter(instantsearchParams));
 
-    return adaptedFilters.filter((filter) => filter && filter !== "").join(" && ");
+    const combinedFilter = adaptedFilters.filter((filter) => filter && filter !== "").join(" && ");
+    return this._mergeSameFieldListClauses(combinedFilter);
   }
 
   _adaptIndexName(indexName) {

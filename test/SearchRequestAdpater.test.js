@@ -227,6 +227,24 @@ describe("SearchRequestAdapter", () => {
     });
   });
 
+  describe("._adaptFilters", () => {
+    it("merges same-field exclusion list clauses from static filters and facetFilters", () => {
+      const subject = new SearchRequestAdapter([], null, {});
+
+      const result = subject._adaptFilters(
+        {
+          filters: "application_ids:webapp && tags:![Internal,Deprecated,Archive,Experimental] && is_public:true",
+          facetFilters: [["tags:-CategoryA", "tags:-CategoryB"]],
+        },
+        "collection1",
+      );
+
+      expect(result).toEqual(
+        "application_ids:webapp && tags:![Internal,Deprecated,Archive,Experimental,`CategoryA`,`CategoryB`] && is_public:true",
+      );
+    });
+  });
+
   describe(".adaptFacetBy", () => {
     it("adapts the given facet names, given a configuration called facetByOptions ", () => {
       const subject = new SearchRequestAdapter([], null, {
