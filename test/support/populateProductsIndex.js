@@ -14,32 +14,39 @@ module.exports = (async () => {
     retryIntervalSeconds: 5,
   });
 
-  const overrideWithoutTag = {
-    rule: {
-      query: "Samsung",
-      match: "contains",
-    },
-    remove_matched_tokens: false,
-    metadata: {
-      promo_content: "20% on all Samsung Phones!",
-    },
-  };
-
-  const overrideWithTag = {
-    rule: {
-      query: "Google",
-      match: "contains",
-      tags: ["Google"],
-    },
-    remove_matched_tokens: false,
-    metadata: {
-      promo_content: "New Google Pixel!",
-    },
+  const curationSetName = "products-curations";
+  const curationSet = {
+    items: [
+      {
+        id: "samsung-override",
+        rule: {
+          query: "Samsung",
+          match: "contains",
+        },
+        remove_matched_tokens: false,
+        metadata: {
+          promo_content: "20% on all Samsung Phones!",
+        },
+      },
+      {
+        id: "google-override",
+        rule: {
+          query: "Google",
+          match: "contains",
+          tags: ["Google"],
+        },
+        remove_matched_tokens: false,
+        metadata: {
+          promo_content: "New Google Pixel!",
+        },
+      },
+    ],
   };
 
   const schema = {
     name: "products",
     enable_nested_fields: true,
+    curation_sets: [curationSetName],
     fields: [
       {
         name: "name",
@@ -103,8 +110,8 @@ module.exports = (async () => {
   try {
     const collection = await typesense.collections("products").retrieve();
     console.log("Found existing schema");
-    await typesense.collections("products").overrides().upsert("samsung-override", overrideWithoutTag);
-    await typesense.collections("products").overrides().upsert("google-override", overrideWithTag);
+    await typesense.curationSets(curationSetName).upsert(curationSet);
+    await typesense.collections("products").update({ curation_sets: [curationSetName] });
 
     // console.log(JSON.stringify(collection, null, 2));
     if (collection.num_documents !== products.length || process.env.FORCE_REINDEX === "true") {
@@ -122,6 +129,7 @@ module.exports = (async () => {
 
   console.log("Creating schema: ");
   console.log(JSON.stringify(schema, null, 2));
+  await typesense.curationSets(curationSetName).upsert(curationSet);
   await typesense.collections().create(schema);
 
   // const collectionRetrieved = await typesense
@@ -142,8 +150,7 @@ module.exports = (async () => {
     });
   });
 
-  await typesense.collections("products").overrides().upsert("samsung-override", overrideWithoutTag);
-  await typesense.collections("products").overrides().upsert("google-override", overrideWithTag);
+  await typesense.curationSets(curationSetName).upsert(curationSet);
 
   try {
     const returnData = await typesense.collections("products").documents().import(products);

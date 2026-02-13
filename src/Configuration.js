@@ -60,6 +60,8 @@ export class Configuration {
     this.collectionSpecificFilterByOptions = options.collectionSpecificFilterByOptions ?? {};
     this.collectionSpecificSortByOptions = options.collectionSpecificSortByOptions ?? {};
     this.union = options.union ?? false;
+    // For Typesense v30+, use curation_tags. Set to true for older versions that use override_tags.
+    this.useOverrideTags = options.useOverrideTags ?? false;
   }
 
   validate() {
