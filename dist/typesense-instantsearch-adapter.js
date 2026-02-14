@@ -153,7 +153,7 @@ var FacetSearchResponseAdapter = /*#__PURE__*/function () {
       var facet = typesenseFacetCounts.find(function (facet) {
         return facet.field_name === _this.instantsearchRequest.params.facetName;
       });
-      if (typeof facet !== 'undefined') {
+      if (typeof facet !== "undefined") {
         adaptedResult = facet.counts.map(function (facetCount) {
           return {
             value: facetCount.value,
@@ -193,11 +193,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ "./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6__);
+
 
 
 
@@ -209,14 +211,14 @@ var _excluded = ["q", "conversation", "conversation_id", "conversation_model_id"
 
 var SearchRequestAdapter = /*#__PURE__*/function () {
   function SearchRequestAdapter(instantsearchRequests, typesenseClient, configuration) {
-    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_3__["default"])(this, SearchRequestAdapter);
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_4__["default"])(this, SearchRequestAdapter);
     this.instantsearchRequests = instantsearchRequests;
     this.typesenseClient = typesenseClient;
     this.configuration = configuration;
     this.additionalSearchParameters = configuration.additionalSearchParameters;
     this.collectionSpecificSearchParameters = configuration.collectionSpecificSearchParameters;
   }
-  return (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4__["default"])(SearchRequestAdapter, [{
+  return (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_5__["default"])(SearchRequestAdapter, [{
     key: "_shouldUseExactMatchForField",
     value: function _shouldUseExactMatchForField(fieldName, collectionName) {
       var _this$configuration$c, _this$configuration$f;
@@ -226,10 +228,237 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
         return true;
       }
     }
+
+    /**
+     * Returns the configured list of field names that may include delimiters.
+     * Always returns a flat array so callers can treat it uniformly.
+     */
+  }, {
+    key: "_getFacetableFieldsWithSpecialCharacters",
+    value: function _getFacetableFieldsWithSpecialCharacters() {
+      var fields = this.configuration.facetableFieldsWithSpecialCharacters;
+      if (!Array.isArray(fields)) {
+        return [];
+      }
+      return fields.flat();
+    }
+
+    /**
+     * Finds the best matching field name at the start of `filter`.
+     * Uses the provided delimiter check so it works for both facets and numeric filters.
+     */
+  }, {
+    key: "_matchFieldNameWithDelimiter",
+    value: function _matchFieldNameWithDelimiter(filter, fields, isDelimiterAtIndex) {
+      var matches = fields.filter(function (fieldName) {
+        return filter.startsWith(fieldName) && isDelimiterAtIndex(fieldName.length);
+      }).map(function (fieldName) {
+        return {
+          fieldName: fieldName,
+          delimiterIndex: fieldName.length
+        };
+      });
+      if (matches.length === 0) {
+        return null;
+      }
+      return matches.reduce(function (best, current) {
+        return current.fieldName.length > best.fieldName.length ? current : best;
+      });
+    }
+
+    /**
+     * Returns the index of the first ":" that is not inside backticks.
+     */
+  }, {
+    key: "_findFacetDelimiterIndex",
+    value: function _findFacetDelimiterIndex(filter) {
+      var inBacktick = false;
+      for (var i = 0; i < filter.length; i += 1) {
+        var character = filter[i];
+        if (character === "`") {
+          inBacktick = !inBacktick;
+        }
+        if (!inBacktick && character === ":") {
+          return i;
+        }
+      }
+      return -1;
+    }
+
+    /**
+     * Returns the index of the last ":" that is not inside backticks.
+     * Used as a fallback when field names may contain colons.
+     */
+  }, {
+    key: "_findLastFacetDelimiterIndex",
+    value: function _findLastFacetDelimiterIndex(filter) {
+      var inBacktick = false;
+      var lastIndex = -1;
+      for (var i = 0; i < filter.length; i += 1) {
+        var character = filter[i];
+        if (character === "`") {
+          inBacktick = !inBacktick;
+        }
+        if (!inBacktick && character === ":") {
+          lastIndex = i;
+        }
+      }
+      return lastIndex;
+    }
+
+    /**
+     * Finds the first numeric operator outside backticks and returns its position.
+     * @param {string} filter
+     */
+  }, {
+    key: "_findNumericOperator",
+    value: function _findNumericOperator(filter) {
+      var operators = SearchRequestAdapter.NUMERIC_OPERATORS;
+      var inBacktick = false;
+      var index = Array.from(filter).findIndex(function (character, i) {
+        if (character === "`") {
+          inBacktick = !inBacktick;
+        }
+        if (inBacktick) {
+          return false;
+        }
+        return operators.some(function (operator) {
+          return filter.startsWith(operator, i);
+        });
+      });
+      if (index === -1) {
+        return null;
+      }
+      var operator = operators.find(function (op) {
+        return filter.startsWith(op, index);
+      });
+      return {
+        index: index,
+        operator: operator
+      };
+    }
+
+    /**
+     * Parses "$collection(field.path)" (or "!$collection(field.path)").
+     * Example: "$product_prices(retailer)" -> { collection: "product_prices", fieldPath: "retailer" }
+     * Returns null if the string is not a join field.
+     * @param {string} fieldName
+     */
+  }, {
+    key: "_parseJoinFieldName",
+    value: function _parseJoinFieldName(fieldName) {
+      var trimmed = fieldName.trim();
+      if (!(trimmed.startsWith("$") || trimmed.startsWith("!$"))) {
+        return null;
+      }
+      var collectionStart = trimmed.startsWith("!$") ? 2 : 1;
+      var openParenIndex = trimmed.indexOf("(", collectionStart);
+      if (openParenIndex === -1) {
+        return null;
+      }
+      var parenCount = 0;
+      var closeParenIndex = -1;
+      for (var i = openParenIndex; i < trimmed.length; i += 1) {
+        var character = trimmed[i];
+        if (character === "(") {
+          parenCount += 1;
+        } else if (character === ")") {
+          parenCount -= 1;
+          if (parenCount === 0) {
+            closeParenIndex = i;
+            break;
+          }
+        }
+      }
+      if (closeParenIndex === -1 || closeParenIndex !== trimmed.length - 1) {
+        return null;
+      }
+      var collection = trimmed.slice(0, openParenIndex).trim();
+      var fieldPath = trimmed.slice(openParenIndex + 1, closeParenIndex).trim();
+      if (!collection || !fieldPath) {
+        return null;
+      }
+      return {
+        collection: collection,
+        fieldPath: fieldPath
+      };
+    }
+
+    /**
+     * Parses "$collection(innerFilter)" (or "!$collection(innerFilter)").
+     * Example: "$product_prices(retailer:=[`value1`])" -> { collection: "product_prices", innerFilter: "retailer:=[`value1`]" }
+     * Returns null if the filter is not a join filter string or parsing fails.
+     * @param {string} filter
+     */
+  }, {
+    key: "_parseJoinFilterString",
+    value: function _parseJoinFilterString(filter) {
+      var trimmed = filter.trim();
+      if (!(trimmed.startsWith("$") || trimmed.startsWith("!$"))) {
+        return null;
+      }
+      var collectionStartsAfterCharIndex = trimmed.startsWith("!$") ? 2 : 1;
+      var openParenIndex = trimmed.indexOf("(", collectionStartsAfterCharIndex);
+      if (openParenIndex === -1) {
+        return null;
+      }
+      var parenCount = 0;
+      var closeParenIndex = -1;
+      for (var i = openParenIndex; i < trimmed.length; i += 1) {
+        var character = trimmed[i];
+        if (character === "(") {
+          parenCount += 1;
+        } else if (character === ")") {
+          parenCount -= 1;
+          if (parenCount === 0) {
+            closeParenIndex = i;
+            break;
+          }
+        }
+      }
+      if (closeParenIndex === -1 || closeParenIndex !== trimmed.length - 1) {
+        return null;
+      }
+      var collection = trimmed.slice(0, openParenIndex).trim();
+      var innerFilter = trimmed.slice(openParenIndex + 1, closeParenIndex).trim();
+      if (!collection || !innerFilter) {
+        return null;
+      }
+      return {
+        collection: collection,
+        innerFilter: innerFilter
+      };
+    }
+  }, {
+    key: "_buildFacetFilterString",
+    value: function _buildFacetFilterString(_ref) {
+      var _this = this;
+      var fieldName = _ref.fieldName,
+        fieldValues = _ref.fieldValues,
+        isExcluded = _ref.isExcluded,
+        collectionName = _ref.collectionName;
+      // Check if this is a joined relation filter (e.g., "$refCollection(retailer)")
+      var joinedRelationMatch = this._parseJoinFieldName(fieldName);
+      var operator = isExcluded ? this._shouldUseExactMatchForField(fieldName, collectionName) ? ":!=" : ":!" : this._shouldUseExactMatchForField(fieldName, collectionName) ? ":=" : ":";
+      if (joinedRelationMatch) {
+        // This is a joined relation filter
+        var collection = joinedRelationMatch.collection,
+          fieldPath = joinedRelationMatch.fieldPath; // e.g., "$refCollection", "retailer"
+        // For joined relations, the filter should be: $collection(field:=[value1,value2])
+        return "".concat(collection, "(").concat(fieldPath).concat(operator, "[").concat(fieldValues.map(function (v) {
+          return _this._escapeFacetValue(v);
+        }).join(","), "])");
+      } else {
+        // Regular field filter (non-joined)
+        return "".concat(fieldName).concat(operator, "[").concat(fieldValues.map(function (v) {
+          return _this._escapeFacetValue(v);
+        }).join(","), "]");
+      }
+    }
   }, {
     key: "_adaptFacetFilters",
     value: function _adaptFacetFilters(facetFilters, collectionName) {
-      var _this = this;
+      var _this2 = this;
       var adaptedResult = "";
       if (!facetFilters) {
         return adaptedResult;
@@ -264,9 +493,9 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
 
           var intermediateFacetFilters = {};
           item.forEach(function (facetFilter) {
-            var _this$_parseFacetFilt = _this._parseFacetFilter(facetFilter),
-              fieldName = _this$_parseFacetFilt.fieldName,
-              fieldValue = _this$_parseFacetFilt.fieldValue;
+            var _this2$_parseFacetFil = _this2._parseFacetFilter(facetFilter),
+              fieldName = _this2$_parseFacetFil.fieldName,
+              fieldValue = _this2$_parseFacetFil.fieldValue;
             intermediateFacetFilters[fieldName] = intermediateFacetFilters[fieldName] || [];
             intermediateFacetFilters[fieldName].push(fieldValue);
           });
@@ -288,28 +517,32 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
 
           // Partition values into included and excluded values
           var _fieldValues$reduce = fieldValues.reduce(function (result, fieldValue) {
-              if (fieldValue.startsWith("-") && !_this._isNumber(fieldValue)) {
+              if (fieldValue.startsWith("-") && !_this2._isNumber(fieldValue)) {
                 result[0].push(fieldValue.substring(1));
               } else {
                 result[1].push(fieldValue);
               }
               return result;
             }, [[], []]),
-            _fieldValues$reduce2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_fieldValues$reduce, 2),
+            _fieldValues$reduce2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3__["default"])(_fieldValues$reduce, 2),
             excludedFieldValues = _fieldValues$reduce2[0],
             includedFieldValues = _fieldValues$reduce2[1];
           var typesenseFilterStringComponents = [];
           if (includedFieldValues.length > 0) {
-            var operator = _this._shouldUseExactMatchForField(fieldName, collectionName) ? ":=" : ":";
-            typesenseFilterStringComponents.push("".concat(fieldName).concat(operator, "[").concat(includedFieldValues.map(function (v) {
-              return _this._escapeFacetValue(v);
-            }).join(","), "]"));
+            typesenseFilterStringComponents.push(_this2._buildFacetFilterString({
+              fieldName: fieldName,
+              fieldValues: includedFieldValues,
+              isExcluded: false,
+              collectionName: collectionName
+            }));
           }
           if (excludedFieldValues.length > 0) {
-            var _operator = _this._shouldUseExactMatchForField(fieldName, collectionName) ? ":!=" : ":!";
-            typesenseFilterStringComponents.push("".concat(fieldName).concat(_operator, "[").concat(excludedFieldValues.map(function (v) {
-              return _this._escapeFacetValue(v);
-            }).join(","), "]"));
+            typesenseFilterStringComponents.push(_this2._buildFacetFilterString({
+              fieldName: fieldName,
+              fieldValues: excludedFieldValues,
+              isExcluded: true,
+              collectionName: collectionName
+            }));
           }
           var typesenseFilterString = typesenseFilterStringComponents.filter(function (f) {
             return f;
@@ -321,16 +554,24 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
           // Into
           //  fieldName:=fieldValue
 
-          var _this$_parseFacetFilt2 = _this._parseFacetFilter(item),
-            _fieldName = _this$_parseFacetFilt2.fieldName,
-            fieldValue = _this$_parseFacetFilt2.fieldValue;
+          var _this2$_parseFacetFil2 = _this2._parseFacetFilter(item),
+            _fieldName = _this2$_parseFacetFil2.fieldName,
+            fieldValue = _this2$_parseFacetFil2.fieldValue;
           var _typesenseFilterString;
-          if (fieldValue.startsWith("-") && !_this._isNumber(fieldValue)) {
-            var _operator2 = _this._shouldUseExactMatchForField(_fieldName, collectionName) ? ":!=" : ":!";
-            _typesenseFilterString = "".concat(_fieldName).concat(_operator2, "[").concat(_this._escapeFacetValue(fieldValue.substring(1)), "]");
+          if (fieldValue.startsWith("-") && !_this2._isNumber(fieldValue)) {
+            _typesenseFilterString = _this2._buildFacetFilterString({
+              fieldName: _fieldName,
+              fieldValues: [fieldValue.substring(1)],
+              isExcluded: true,
+              collectionName: collectionName
+            });
           } else {
-            var _operator3 = _this._shouldUseExactMatchForField(_fieldName, collectionName) ? ":=" : ":";
-            _typesenseFilterString = "".concat(_fieldName).concat(_operator3, "[").concat(_this._escapeFacetValue(fieldValue), "]");
+            _typesenseFilterString = _this2._buildFacetFilterString({
+              fieldName: _fieldName,
+              fieldValues: [fieldValue],
+              isExcluded: false,
+              collectionName: collectionName
+            });
           }
           return _typesenseFilterString;
         }
@@ -343,21 +584,18 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
   }, {
     key: "_parseFacetFilter",
     value: function _parseFacetFilter(facetFilter) {
-      var _this$configuration$f2;
-      var filterStringMatchingRegex, facetFilterMatches, fieldName, fieldValue;
+      var fieldName, fieldValue;
 
-      // This is helpful when the filter looks like `facetName:with:colons:facetValue:with:colons` and the default regex above parses the filter as `facetName:with:colons:facetValue:with` and `colon`.
+      // This is helpful when the filter looks like `facetName:with:colons:facetValue:with:colons` and a naive split would parse it as `facetName:with:colons:facetValue:with` and `colon`.
       // So if a facetValue can contain a colon, we ask users to pass in all possible facetable fields in `facetableFieldsWithSpecialCharacters` when instantiating the adapter, so we can explicitly match against that.
-      if (((_this$configuration$f2 = this.configuration.facetableFieldsWithSpecialCharacters) === null || _this$configuration$f2 === void 0 ? void 0 : _this$configuration$f2.length) > 0) {
-        // escape any Regex special characters, source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
-        var sanitizedFacetableFieldsWithSpecialCharacters = this.configuration.facetableFieldsWithSpecialCharacters.flat().map(function (f) {
-          return f.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      var facetableFieldsWithSpecialCharacters = this._getFacetableFieldsWithSpecialCharacters();
+      if (facetableFieldsWithSpecialCharacters.length > 0) {
+        var matched = this._matchFieldNameWithDelimiter(facetFilter, facetableFieldsWithSpecialCharacters, function (index) {
+          return facetFilter[index] === ":";
         });
-        filterStringMatchingRegex = new RegExp("^(".concat(sanitizedFacetableFieldsWithSpecialCharacters.join("|"), "):(.*)$"));
-        facetFilterMatches = facetFilter.match(filterStringMatchingRegex);
-        if (facetFilterMatches != null) {
-          fieldName = "".concat(facetFilterMatches[1]);
-          fieldValue = "".concat(facetFilterMatches[2]);
+        if (matched) {
+          fieldName = matched.fieldName;
+          fieldValue = facetFilter.slice(matched.delimiterIndex + 1);
           return {
             fieldName: fieldName,
             fieldValue: fieldValue
@@ -365,20 +603,51 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
         }
       }
 
-      // If we haven't found any matches yet
-      // Use the default filter parsing regex, which assumes that only facet names have colons, and not facet values
-      filterStringMatchingRegex = this.constructor.DEFAULT_FACET_FILTER_STRING_MATCHING_REGEX;
-      facetFilterMatches = facetFilter.match(filterStringMatchingRegex);
+      // If we haven't found any matches yet, check if this is a join filter
+      // JOIN filters have the format "$collection(field):value" or "!$collection(field):value" (https://typesense.org/docs/latest/api/search.html#facet-referencing)
+      // for join filters, we need to find the colon after the closing parenthesis, not use the last colon
+      if (facetFilter.startsWith("$") || facetFilter.startsWith("!$")) {
+        var collectionStartsAfterCharIndex = facetFilter.startsWith("!$") ? 2 : 1;
+        var openParenIndex = facetFilter.indexOf("(", collectionStartsAfterCharIndex);
+        if (openParenIndex !== -1) {
+          // find the matching closing parenthesis
+          var parenCount = 0;
+          var closeParenIndex = -1;
+          for (var i = openParenIndex; i < facetFilter.length; i += 1) {
+            var character = facetFilter[i];
+            if (character === "(") {
+              parenCount += 1;
+            } else if (character === ")") {
+              parenCount -= 1;
+              if (parenCount === 0) {
+                closeParenIndex = i;
+                break;
+              }
+            }
+          }
+          // found a closing paren, find the colon after it
+          if (closeParenIndex !== -1) {
+            var colonAfterJoin = facetFilter.indexOf(":", closeParenIndex + 1);
+            if (colonAfterJoin !== -1) {
+              fieldName = facetFilter.slice(0, colonAfterJoin).trim();
+              fieldValue = facetFilter.slice(colonAfterJoin + 1).trim();
+              return {
+                fieldName: fieldName,
+                fieldValue: fieldValue
+              };
+            }
+          }
+        }
+      }
 
-      // console.log(filterStringMatchingRegex);
-      // console.log(facetFilter);
-      // console.log(facetFilterMatches);
-
-      if (facetFilterMatches == null) {
-        console.error("[Typesense-Instantsearch-Adapter] Parsing failed for a facet filter `".concat(facetFilter, "` with the Regex `").concat(filterStringMatchingRegex, "`. If you have field names with special characters, be sure to add them to a parameter called `facetableFieldsWithSpecialCharacters` when instantiating the adapter."));
+      // use a scan that assumes field names may have colons so we use the last colon as the delimiter.
+      // handles cases like "field2:with:colons:value3" where the field name is "field2:with:colons". (edge case, not sure if this is supported by the server)
+      var delimiterIndex = this._findLastFacetDelimiterIndex(facetFilter);
+      if (delimiterIndex === -1) {
+        console.error("[Typesense-Instantsearch-Adapter] Parsing failed for a facet filter `".concat(facetFilter, "`. If you have field names with special characters, add them to a parameter called `facetableFieldsWithSpecialCharacters` when instantiating the adapter."));
       } else {
-        fieldName = "".concat(facetFilterMatches[1]).concat(facetFilterMatches[2]);
-        fieldValue = "".concat(facetFilterMatches[3]);
+        fieldName = facetFilter.slice(0, delimiterIndex).trim();
+        fieldValue = facetFilter.slice(delimiterIndex + 1).trim();
       }
       return {
         fieldName: fieldName,
@@ -402,9 +671,44 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
       !!(value % 1); // Is Float
     }
   }, {
+    key: "_groupJoinFilters",
+    value: function _groupJoinFilters(filters) {
+      var _this3 = this;
+      // Group join filters by their collection name
+      // Example: ["$product_prices(retailer:=[`value1`])", "$product_prices(status:=[`active`])", "brand:=[`Apple`]"]
+      // Should become: ["$product_prices(retailer:=[`value1`] && status:=[`active`])", "brand:=[`Apple`]"]
+
+      var joinFiltersMap = {};
+      var regularFilters = [];
+      filters.forEach(function (filter) {
+        var joinMatch = _this3._parseJoinFilterString(filter);
+        if (joinMatch) {
+          var collection = joinMatch.collection,
+            innerFilter = joinMatch.innerFilter;
+          if (!joinFiltersMap[collection]) {
+            joinFiltersMap[collection] = [];
+          }
+          joinFiltersMap[collection].push(innerFilter);
+        } else {
+          regularFilters.push(filter);
+        }
+      });
+
+      // Rebuild grouped join filters
+      var groupedJoinFilters = Object.keys(joinFiltersMap).map(function (collection) {
+        var innerFilters = joinFiltersMap[collection].join(" && ");
+        return "".concat(collection, "(").concat(innerFilters, ")");
+      });
+
+      // Combine grouped join filters with regular filters
+      return [].concat((0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2__["default"])(groupedJoinFilters), regularFilters).filter(function (f) {
+        return f;
+      }).join(" && ");
+    }
+  }, {
     key: "_adaptNumericFilters",
     value: function _adaptNumericFilters(numericFilters) {
-      var _this2 = this;
+      var _this4 = this;
       // Need to transform this:
       // ["field1<=634", "field1>=289", "field2<=5", "field3>=3"]
       // to:
@@ -429,10 +733,10 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
       // };
       var filtersHash = {};
       numericFilters.forEach(function (filter) {
-        var _this2$_parseNumericF = _this2._parseNumericFilter(filter),
-          fieldName = _this2$_parseNumericF.fieldName,
-          operator = _this2$_parseNumericF.operator,
-          fieldValue = _this2$_parseNumericF.fieldValue;
+        var _this4$_parseNumericF = _this4._parseNumericFilter(filter),
+          fieldName = _this4$_parseNumericF.fieldName,
+          operator = _this4$_parseNumericF.operator,
+          fieldValue = _this4$_parseNumericF.fieldValue;
         filtersHash[fieldName] = filtersHash[fieldName] || {};
         filtersHash[fieldName][operator] = fieldValue;
       });
@@ -441,16 +745,37 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
       //  "field1:=[634..289] && field2:<=5 && field3:>=3"
       var adaptedFilters = [];
       Object.keys(filtersHash).forEach(function (field) {
-        if (filtersHash[field]["<="] != null && filtersHash[field][">="] != null) {
-          adaptedFilters.push("".concat(field, ":=[").concat(filtersHash[field][">="], "..").concat(filtersHash[field]["<="], "]"));
-        } else if (filtersHash[field]["<="] != null) {
-          adaptedFilters.push("".concat(field, ":<=").concat(filtersHash[field]["<="]));
-        } else if (filtersHash[field][">="] != null) {
-          adaptedFilters.push("".concat(field, ":>=").concat(filtersHash[field][">="]));
-        } else if (filtersHash[field]["="] != null) {
-          adaptedFilters.push("".concat(field, ":=").concat(filtersHash[field]["="]));
+        // Check if this is a joined relation filter (e.g., "$refCollection(price.current)")
+        var joinedRelationMatch = _this4._parseJoinFieldName(field);
+        if (joinedRelationMatch) {
+          // This is a joined relation filter
+          var collection = joinedRelationMatch.collection,
+            fieldPath = joinedRelationMatch.fieldPath; // e.g., "$refCollection", "price.current"
+
+          if (filtersHash[field]["<="] != null && filtersHash[field][">="] != null) {
+            adaptedFilters.push("".concat(collection, "(").concat(fieldPath, ":=[").concat(filtersHash[field][">="], "..").concat(filtersHash[field]["<="], "])"));
+          } else if (filtersHash[field]["<="] != null) {
+            adaptedFilters.push("".concat(collection, "(").concat(fieldPath, ":<=").concat(filtersHash[field]["<="], ")"));
+          } else if (filtersHash[field][">="] != null) {
+            adaptedFilters.push("".concat(collection, "(").concat(fieldPath, ":>=").concat(filtersHash[field][">="], ")"));
+          } else if (filtersHash[field]["="] != null) {
+            adaptedFilters.push("".concat(collection, "(").concat(fieldPath, ":=").concat(filtersHash[field]["="], ")"));
+          } else {
+            console.warn("[Typesense-Instantsearch-Adapter] Unsupported operator found ".concat(JSON.stringify(filtersHash[field])));
+          }
         } else {
-          console.warn("[Typesense-Instantsearch-Adapter] Unsupported operator found ".concat(JSON.stringify(filtersHash[field])));
+          // Regular field filter (non-joined)
+          if (filtersHash[field]["<="] != null && filtersHash[field][">="] != null) {
+            adaptedFilters.push("".concat(field, ":=[").concat(filtersHash[field][">="], "..").concat(filtersHash[field]["<="], "]"));
+          } else if (filtersHash[field]["<="] != null) {
+            adaptedFilters.push("".concat(field, ":<=").concat(filtersHash[field]["<="]));
+          } else if (filtersHash[field][">="] != null) {
+            adaptedFilters.push("".concat(field, ":>=").concat(filtersHash[field][">="]));
+          } else if (filtersHash[field]["="] != null) {
+            adaptedFilters.push("".concat(field, ":=").concat(filtersHash[field]["="]));
+          } else {
+            console.warn("[Typesense-Instantsearch-Adapter] Unsupported operator found ".concat(JSON.stringify(filtersHash[field])));
+          }
         }
       });
       adaptedResult = adaptedFilters.join(" && ");
@@ -459,50 +784,42 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
   }, {
     key: "_parseNumericFilter",
     value: function _parseNumericFilter(numericFilter) {
-      var _this$configuration$f3;
-      var filterStringMatchingRegex, numericFilterMatches;
       var fieldName, operator, fieldValue;
 
-      // The following is helpful when the facetName has special characters like > and the default regex fails to parse it properly.
+      // The following is helpful when the facetName has special characters like > and a naive operator scan would parse it improperly.
       // So we ask users to pass in facetable fields in `facetableFieldsWithSpecialCharactersWithSpecialCharacters` when instantiating the adapter, so we can explicitly match against that.
-      if (((_this$configuration$f3 = this.configuration.facetableFieldsWithSpecialCharacters) === null || _this$configuration$f3 === void 0 ? void 0 : _this$configuration$f3.length) > 0) {
-        // escape any Regex special characters, source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
-        var sanitizedFacetableFieldsWithSpecialCharacters = this.configuration.facetableFieldsWithSpecialCharacters.map(function (f) {
-          return f.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      var facetableFieldsWithSpecialCharacters = this._getFacetableFieldsWithSpecialCharacters();
+      if (facetableFieldsWithSpecialCharacters.length > 0) {
+        var matched = this._matchFieldNameWithDelimiter(numericFilter, facetableFieldsWithSpecialCharacters, function () {
+          return true;
         });
-        filterStringMatchingRegex = new RegExp("^(".concat(sanitizedFacetableFieldsWithSpecialCharacters.join("|"), ")(<=|>=|>|<|=)(.*)$"));
-        numericFilterMatches = numericFilter.match(filterStringMatchingRegex);
-        if (numericFilterMatches != null) {
-          // If no matches are found or if the above didn't trigger, fall back to the default regex
-          var _numericFilterMatches = numericFilterMatches;
-          var _numericFilterMatches2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_numericFilterMatches, 4);
-          fieldName = _numericFilterMatches2[1];
-          operator = _numericFilterMatches2[2];
-          fieldValue = _numericFilterMatches2[3];
-          return {
-            fieldName: fieldName,
-            operator: operator,
-            fieldValue: fieldValue
-          };
+        if (matched) {
+          var remainder = numericFilter.slice(matched.delimiterIndex);
+          var trimmedRemainder = remainder.trimStart();
+          var leadingTrimOffset = remainder.length - trimmedRemainder.length;
+          var _opMatch = this._findNumericOperator(trimmedRemainder);
+          if (_opMatch && _opMatch.index === 0) {
+            var operatorIndex = matched.delimiterIndex + leadingTrimOffset;
+            fieldName = numericFilter.slice(0, operatorIndex).trim();
+            operator = _opMatch.operator;
+            fieldValue = trimmedRemainder.slice(_opMatch.operator.length).trim();
+            return {
+              fieldName: fieldName,
+              operator: operator,
+              fieldValue: fieldValue
+            };
+          }
         }
       }
 
-      // If we haven't found any matches yet, fall back to the default regex
-      filterStringMatchingRegex = this.constructor.DEFAULT_NUMERIC_FILTER_STRING_MATCHING_REGEX;
-      numericFilterMatches = numericFilter.match(filterStringMatchingRegex);
-
-      // console.log(filterStringMatchingRegex);
-      // console.log(numericFilter);
-      // console.log(numericFilterMatches);
-
-      if (numericFilterMatches == null) {
-        console.error("[Typesense-Instantsearch-Adapter] Parsing failed for a numeric filter `".concat(numericFilter, "` with the Regex `").concat(filterStringMatchingRegex, "`. If you have field names with special characters, be sure to add them to a parameter called `facetableFieldsWithSpecialCharacters` when instantiating the adapter."));
+      // If we haven't found any matches yet, fall back to scanning for an operator.
+      var opMatch = this._findNumericOperator(numericFilter);
+      if (!opMatch) {
+        console.error("[Typesense-Instantsearch-Adapter] Parsing failed for a numeric filter `".concat(numericFilter, "`. If you have field names with special characters, be sure to add them to a parameter called `facetableFieldsWithSpecialCharacters` when instantiating the adapter."));
       } else {
-        var _numericFilterMatches3 = numericFilterMatches;
-        var _numericFilterMatches4 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_numericFilterMatches3, 4);
-        fieldName = _numericFilterMatches4[1];
-        operator = _numericFilterMatches4[2];
-        fieldValue = _numericFilterMatches4[3];
+        fieldName = numericFilter.slice(0, opMatch.index).trim();
+        operator = opMatch.operator;
+        fieldValue = numericFilter.slice(opMatch.index + opMatch.operator.length).trim();
       }
       return {
         fieldName: fieldName,
@@ -512,24 +829,24 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
     }
   }, {
     key: "_adaptGeoFilter",
-    value: function _adaptGeoFilter(_ref) {
-      var insideBoundingBox = _ref.insideBoundingBox,
-        aroundRadius = _ref.aroundRadius,
-        aroundLatLng = _ref.aroundLatLng,
-        insidePolygon = _ref.insidePolygon;
+    value: function _adaptGeoFilter(_ref2) {
+      var insideBoundingBox = _ref2.insideBoundingBox,
+        aroundRadius = _ref2.aroundRadius,
+        aroundLatLng = _ref2.aroundLatLng,
+        insidePolygon = _ref2.insidePolygon;
       // Give this parameter first priority if it exists, since
       if (insideBoundingBox) {
         var x1, y1, x2, y2;
         if (Array.isArray(insideBoundingBox)) {
           var _insideBoundingBox$fl = insideBoundingBox.flat();
-          var _insideBoundingBox$fl2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_insideBoundingBox$fl, 4);
+          var _insideBoundingBox$fl2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3__["default"])(_insideBoundingBox$fl, 4);
           x1 = _insideBoundingBox$fl2[0];
           y1 = _insideBoundingBox$fl2[1];
           x2 = _insideBoundingBox$fl2[2];
           y2 = _insideBoundingBox$fl2[3];
         } else {
           var _insideBoundingBox$sp = insideBoundingBox.split(",");
-          var _insideBoundingBox$sp2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_insideBoundingBox$sp, 4);
+          var _insideBoundingBox$sp2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3__["default"])(_insideBoundingBox$sp, 4);
           x1 = _insideBoundingBox$sp2[0];
           y1 = _insideBoundingBox$sp2[1];
           x2 = _insideBoundingBox$sp2[2];
@@ -565,30 +882,49 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
       adaptedFilters.push(this._adaptFacetFilters(instantsearchParams.facetFilters, collectionName));
       adaptedFilters.push(this._adaptNumericFilters(instantsearchParams.numericFilters));
       adaptedFilters.push(this._adaptGeoFilter(instantsearchParams));
-      return adaptedFilters.filter(function (filter) {
+
+      // Filter out empty strings, split by && to get individual filters, then group join filters
+      var allFilters = adaptedFilters.filter(function (filter) {
         return filter && filter !== "";
-      }).join(" && ");
+      }).flatMap(function (filter) {
+        return filter.split(" && ").map(function (f) {
+          return f.trim();
+        });
+      }).filter(function (f) {
+        return f;
+      });
+      return this._groupJoinFilters(allFilters);
     }
   }, {
     key: "_adaptIndexName",
     value: function _adaptIndexName(indexName) {
-      return indexName.match(this.constructor.INDEX_NAME_MATCHING_REGEX)[1];
+      var sortToken = "/sort/";
+      var sortIndex = indexName.indexOf(sortToken);
+      if (sortIndex === -1) {
+        return indexName;
+      }
+      return indexName.slice(0, sortIndex);
     }
   }, {
     key: "_adaptSortBy",
     value: function _adaptSortBy(indexName) {
-      return indexName.match(this.constructor.INDEX_NAME_MATCHING_REGEX)[3];
+      var sortToken = "/sort/";
+      var sortIndex = indexName.indexOf(sortToken);
+      if (sortIndex === -1) {
+        return undefined;
+      }
+      return indexName.slice(sortIndex + sortToken.length);
     }
   }, {
     key: "_adaptFacetBy",
     value: function _adaptFacetBy(facets, collectionName) {
-      var _this3 = this;
+      var _this5 = this;
       return [facets].flat().map(function (facet) {
-        var _this3$configuration$;
-        if ((_this3$configuration$ = _this3.configuration.collectionSpecificFacetByOptions) !== null && _this3$configuration$ !== void 0 && (_this3$configuration$ = _this3$configuration$[collectionName]) !== null && _this3$configuration$ !== void 0 && _this3$configuration$[facet]) {
-          return "".concat(facet).concat(_this3.configuration.collectionSpecificFacetByOptions[collectionName][facet]);
-        } else if (_this3.configuration.facetByOptions[facet]) {
-          return "".concat(facet).concat(_this3.configuration.facetByOptions[facet]);
+        var _this5$configuration$;
+        if ((_this5$configuration$ = _this5.configuration.collectionSpecificFacetByOptions) !== null && _this5$configuration$ !== void 0 && (_this5$configuration$ = _this5$configuration$[collectionName]) !== null && _this5$configuration$ !== void 0 && _this5$configuration$[facet]) {
+          return "".concat(facet).concat(_this5.configuration.collectionSpecificFacetByOptions[collectionName][facet]);
+        } else if (_this5.configuration.facetByOptions[facet]) {
+          return "".concat(facet).concat(_this5.configuration.facetByOptions[facet]);
         } else {
           return facet;
         }
@@ -610,7 +946,7 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
       // Convert all common parameters to snake case
       var snakeCasedAdditionalSearchParameters = {};
       for (var _i = 0, _Object$entries = Object.entries(this.additionalSearchParameters); _i < _Object$entries.length; _i++) {
-        var _Object$entries$_i = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_Object$entries[_i], 2),
+        var _Object$entries$_i = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3__["default"])(_Object$entries[_i], 2),
           key = _Object$entries$_i[0],
           value = _Object$entries$_i[1];
         snakeCasedAdditionalSearchParameters[this._camelToSnakeCase(key)] = value;
@@ -619,7 +955,7 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
       // Override, collection specific parameters
       if (this.collectionSpecificSearchParameters[adaptedCollectionName]) {
         for (var _i2 = 0, _Object$entries2 = Object.entries(this.collectionSpecificSearchParameters[adaptedCollectionName]); _i2 < _Object$entries2.length; _i2++) {
-          var _Object$entries2$_i = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_Object$entries2[_i2], 2),
+          var _Object$entries2$_i = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3__["default"])(_Object$entries2[_i2], 2),
             _key = _Object$entries2$_i[0],
             _value = _Object$entries2$_i[1];
           snakeCasedAdditionalSearchParameters[this._camelToSnakeCase(_key)] = _value;
@@ -663,10 +999,10 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
 
       // Filter out empty or null values, so we don't accidentally override values set in presets
       // eslint-disable-next-line no-unused-vars
-      return Object.fromEntries(Object.entries(typesenseSearchParams).filter(function (_ref2) {
-        var _ref3 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_ref2, 2),
-          _ = _ref3[0],
-          v = _ref3[1];
+      return Object.fromEntries(Object.entries(typesenseSearchParams).filter(function (_ref3) {
+        var _ref4 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_3__["default"])(_ref3, 2),
+          _ = _ref4[0],
+          v = _ref4[1];
         return v != null && v !== "";
       }));
     }
@@ -678,17 +1014,17 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
   }, {
     key: "request",
     value: function () {
-      var _request = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5___default().mark(function _callee() {
-        var _this4 = this,
+      var _request = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default().mark(function _callee() {
+        var _this6 = this,
           _searches$,
           _searches$2;
         var searches, commonParams, _searches$3, q, conversation, conversation_id, conversation_model_id, searchRequest;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5___default().wrap(function _callee$(_context) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_6___default().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
               // console.log(this.instantsearchRequests);
               searches = this.instantsearchRequests.map(function (instantsearchRequest) {
-                return _this4._buildSearchParameters(instantsearchRequest);
+                return _this6._buildSearchParameters(instantsearchRequest);
               }); // If this is a conversational search, then move conversation related params to query params
               commonParams = {};
               if (((_searches$ = searches[0]) === null || _searches$ === void 0 ? void 0 : _searches$.conversation) === true || ((_searches$2 = searches[0]) === null || _searches$2 === void 0 ? void 0 : _searches$2.conversation) === "true") {
@@ -729,19 +1065,9 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
       return request;
     }()
   }], [{
-    key: "INDEX_NAME_MATCHING_REGEX",
+    key: "NUMERIC_OPERATORS",
     get: function get() {
-      return new RegExp("^(.+?)(?=(/sort/(.*))|$)");
-    }
-  }, {
-    key: "DEFAULT_FACET_FILTER_STRING_MATCHING_REGEX",
-    get: function get() {
-      return new RegExp("(.*)((?!:).):(?!:)(.*)");
-    }
-  }, {
-    key: "DEFAULT_NUMERIC_FILTER_STRING_MATCHING_REGEX",
-    get: function get() {
-      return new RegExp("(.*?)(<=|>=|>|<|=)(.*)");
+      return ["<=", ">=", "<", ">", "="];
     }
   }]);
 }();
@@ -1653,6 +1979,13 @@ var AnalyticsEvents = /** @class */ (function () {
             });
         });
     };
+    AnalyticsEvents.prototype.retrieve = function (params) {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                return [2 /*return*/, this.apiCall.get(this.endpointPath(), params)];
+            });
+        });
+    };
     AnalyticsEvents.prototype.endpointPath = function (operation) {
         return "".concat(AnalyticsEvents.RESOURCEPATH).concat(operation === undefined ? "" : "/" + encodeURIComponent(operation));
     };
@@ -1710,6 +2043,46 @@ exports["default"] = AnalyticsRule;
 
 /***/ }),
 
+/***/ "./node_modules/typesense/lib/Typesense/AnalyticsRuleV1.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/typesense/lib/Typesense/AnalyticsRuleV1.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
+var AnalyticsRulesV1_1 = tslib_1.__importDefault(__webpack_require__(/*! ./AnalyticsRulesV1 */ "./node_modules/typesense/lib/Typesense/AnalyticsRulesV1.js"));
+var AnalyticsRuleV1 = /** @class */ (function () {
+    function AnalyticsRuleV1(name, apiCall) {
+        this.name = name;
+        this.apiCall = apiCall;
+    }
+    AnalyticsRuleV1.prototype.retrieve = function () {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                return [2 /*return*/, this.apiCall.get(this.endpointPath())];
+            });
+        });
+    };
+    AnalyticsRuleV1.prototype.delete = function () {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                return [2 /*return*/, this.apiCall.delete(this.endpointPath())];
+            });
+        });
+    };
+    AnalyticsRuleV1.prototype.endpointPath = function () {
+        return "".concat(AnalyticsRulesV1_1.default.RESOURCEPATH, "/").concat(encodeURIComponent(this.name));
+    };
+    return AnalyticsRuleV1;
+}());
+exports["default"] = AnalyticsRuleV1;
+//# sourceMappingURL=AnalyticsRuleV1.js.map
+
+/***/ }),
+
 /***/ "./node_modules/typesense/lib/Typesense/AnalyticsRules.js":
 /*!****************************************************************!*\
   !*** ./node_modules/typesense/lib/Typesense/AnalyticsRules.js ***!
@@ -1726,6 +2099,13 @@ var AnalyticsRules = /** @class */ (function () {
         this.apiCall = apiCall;
         this.apiCall = apiCall;
     }
+    AnalyticsRules.prototype.create = function (params) {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                return [2 /*return*/, this.apiCall.post(this.endpointPath(), params, {}, {})];
+            });
+        });
+    };
     AnalyticsRules.prototype.upsert = function (name, params) {
         return tslib_1.__awaiter(this, void 0, void 0, function () {
             return tslib_1.__generator(this, function (_a) {
@@ -1733,10 +2113,15 @@ var AnalyticsRules = /** @class */ (function () {
             });
         });
     };
-    AnalyticsRules.prototype.retrieve = function () {
+    AnalyticsRules.prototype.retrieve = function (ruleTag) {
         return tslib_1.__awaiter(this, void 0, void 0, function () {
+            var query;
             return tslib_1.__generator(this, function (_a) {
-                return [2 /*return*/, this.apiCall.get(this.endpointPath())];
+                query = {};
+                if (ruleTag) {
+                    query["rule_tag"] = ruleTag;
+                }
+                return [2 /*return*/, this.apiCall.get(this.endpointPath(), query)];
             });
         });
     };
@@ -1754,6 +2139,112 @@ var AnalyticsRules = /** @class */ (function () {
 }());
 exports["default"] = AnalyticsRules;
 //# sourceMappingURL=AnalyticsRules.js.map
+
+/***/ }),
+
+/***/ "./node_modules/typesense/lib/Typesense/AnalyticsRulesV1.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/typesense/lib/Typesense/AnalyticsRulesV1.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
+var RESOURCEPATH = "/analytics/rules";
+var AnalyticsRulesV1 = /** @class */ (function () {
+    function AnalyticsRulesV1(apiCall) {
+        this.apiCall = apiCall;
+        this.apiCall = apiCall;
+    }
+    AnalyticsRulesV1.prototype.upsert = function (name, params) {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                return [2 /*return*/, this.apiCall.put(this.endpointPath(name), params)];
+            });
+        });
+    };
+    AnalyticsRulesV1.prototype.retrieve = function () {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                return [2 /*return*/, this.apiCall.get(this.endpointPath())];
+            });
+        });
+    };
+    AnalyticsRulesV1.prototype.endpointPath = function (operation) {
+        return "".concat(AnalyticsRulesV1.RESOURCEPATH).concat(operation === undefined ? "" : "/" + encodeURIComponent(operation));
+    };
+    Object.defineProperty(AnalyticsRulesV1, "RESOURCEPATH", {
+        get: function () {
+            return RESOURCEPATH;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    return AnalyticsRulesV1;
+}());
+exports["default"] = AnalyticsRulesV1;
+//# sourceMappingURL=AnalyticsRulesV1.js.map
+
+/***/ }),
+
+/***/ "./node_modules/typesense/lib/Typesense/AnalyticsV1.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/typesense/lib/Typesense/AnalyticsV1.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
+var AnalyticsRulesV1_1 = tslib_1.__importDefault(__webpack_require__(/*! ./AnalyticsRulesV1 */ "./node_modules/typesense/lib/Typesense/AnalyticsRulesV1.js"));
+var AnalyticsRuleV1_1 = tslib_1.__importDefault(__webpack_require__(/*! ./AnalyticsRuleV1 */ "./node_modules/typesense/lib/Typesense/AnalyticsRuleV1.js"));
+var AnalyticsEvents_1 = tslib_1.__importDefault(__webpack_require__(/*! ./AnalyticsEvents */ "./node_modules/typesense/lib/Typesense/AnalyticsEvents.js"));
+var RESOURCEPATH = "/analytics";
+/**
+ * @deprecated Deprecated starting with Typesense Server v30. Please migrate to `client.analytics` (new Analytics APIs).
+ */
+var AnalyticsV1 = /** @class */ (function () {
+    function AnalyticsV1(apiCall) {
+        this.apiCall = apiCall;
+        this.individualAnalyticsRules = {};
+        this.apiCall = apiCall;
+        this._analyticsRules = new AnalyticsRulesV1_1.default(this.apiCall);
+        this._analyticsEvents = new AnalyticsEvents_1.default(this.apiCall);
+    }
+    AnalyticsV1.prototype.rules = function (id) {
+        if (!AnalyticsV1.hasWarnedDeprecation) {
+            // eslint-disable-next-line no-console
+            console.warn("[typesense] 'analyticsV1' is deprecated starting with Typesense Server v30 and will be removed in a future release. Please use 'analytics' instead.");
+            AnalyticsV1.hasWarnedDeprecation = true;
+        }
+        if (id === undefined) {
+            return this._analyticsRules;
+        }
+        else {
+            if (this.individualAnalyticsRules[id] === undefined) {
+                this.individualAnalyticsRules[id] = new AnalyticsRuleV1_1.default(id, this.apiCall);
+            }
+            return this.individualAnalyticsRules[id];
+        }
+    };
+    AnalyticsV1.prototype.events = function () {
+        return this._analyticsEvents;
+    };
+    Object.defineProperty(AnalyticsV1, "RESOURCEPATH", {
+        get: function () {
+            return RESOURCEPATH;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    AnalyticsV1.hasWarnedDeprecation = false;
+    return AnalyticsV1;
+}());
+exports["default"] = AnalyticsV1;
+//# sourceMappingURL=AnalyticsV1.js.map
 
 /***/ }),
 
@@ -2571,12 +3062,19 @@ var Operations_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Operations 
 var MultiSearch_1 = tslib_1.__importDefault(__webpack_require__(/*! ./MultiSearch */ "./node_modules/typesense/lib/Typesense/MultiSearch.js"));
 var Presets_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Presets */ "./node_modules/typesense/lib/Typesense/Presets.js"));
 var Preset_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Preset */ "./node_modules/typesense/lib/Typesense/Preset.js"));
+var AnalyticsV1_1 = tslib_1.__importDefault(__webpack_require__(/*! ./AnalyticsV1 */ "./node_modules/typesense/lib/Typesense/AnalyticsV1.js"));
 var Analytics_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Analytics */ "./node_modules/typesense/lib/Typesense/Analytics.js"));
 var Stopwords_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Stopwords */ "./node_modules/typesense/lib/Typesense/Stopwords.js"));
 var Stopword_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Stopword */ "./node_modules/typesense/lib/Typesense/Stopword.js"));
 var Conversations_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Conversations */ "./node_modules/typesense/lib/Typesense/Conversations.js"));
 var Conversation_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Conversation */ "./node_modules/typesense/lib/Typesense/Conversation.js"));
 var Stemming_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Stemming */ "./node_modules/typesense/lib/Typesense/Stemming.js"));
+var NLSearchModels_1 = tslib_1.__importDefault(__webpack_require__(/*! ./NLSearchModels */ "./node_modules/typesense/lib/Typesense/NLSearchModels.js"));
+var NLSearchModel_1 = tslib_1.__importDefault(__webpack_require__(/*! ./NLSearchModel */ "./node_modules/typesense/lib/Typesense/NLSearchModel.js"));
+var SynonymSets_1 = tslib_1.__importDefault(__webpack_require__(/*! ./SynonymSets */ "./node_modules/typesense/lib/Typesense/SynonymSets.js"));
+var SynonymSet_1 = tslib_1.__importDefault(__webpack_require__(/*! ./SynonymSet */ "./node_modules/typesense/lib/Typesense/SynonymSet.js"));
+var CurationSets_1 = tslib_1.__importDefault(__webpack_require__(/*! ./CurationSets */ "./node_modules/typesense/lib/Typesense/CurationSets.js"));
+var CurationSet_1 = tslib_1.__importDefault(__webpack_require__(/*! ./CurationSet */ "./node_modules/typesense/lib/Typesense/CurationSet.js"));
 var Client = /** @class */ (function () {
     function Client(options) {
         var _a;
@@ -2600,9 +3098,16 @@ var Client = /** @class */ (function () {
         this._stopwords = new Stopwords_1.default(this.apiCall);
         this.individualStopwords = {};
         this.analytics = new Analytics_1.default(this.apiCall);
+        this.analyticsV1 = new AnalyticsV1_1.default(this.apiCall);
         this.stemming = new Stemming_1.default(this.apiCall);
         this._conversations = new Conversations_1.default(this.apiCall);
         this.individualConversations = {};
+        this._nlSearchModels = new NLSearchModels_1.default(this.apiCall);
+        this.individualNLSearchModels = {};
+        this._synonymSets = new SynonymSets_1.default(this.apiCall);
+        this.individualSynonymSets = {};
+        this._curationSets = new CurationSets_1.default(this.apiCall);
+        this.individualCurationSets = {};
     }
     Client.prototype.collections = function (collectionName) {
         if (collectionName === undefined) {
@@ -2668,6 +3173,39 @@ var Client = /** @class */ (function () {
                 this.individualConversations[id] = new Conversation_1.default(id, this.apiCall);
             }
             return this.individualConversations[id];
+        }
+    };
+    Client.prototype.nlSearchModels = function (id) {
+        if (id === undefined) {
+            return this._nlSearchModels;
+        }
+        else {
+            if (this.individualNLSearchModels[id] === undefined) {
+                this.individualNLSearchModels[id] = new NLSearchModel_1.default(id, this.apiCall);
+            }
+            return this.individualNLSearchModels[id];
+        }
+    };
+    Client.prototype.synonymSets = function (synonymSetName) {
+        if (synonymSetName === undefined) {
+            return this._synonymSets;
+        }
+        else {
+            if (this.individualSynonymSets[synonymSetName] === undefined) {
+                this.individualSynonymSets[synonymSetName] = new SynonymSet_1.default(synonymSetName, this.apiCall);
+            }
+            return this.individualSynonymSets[synonymSetName];
+        }
+    };
+    Client.prototype.curationSets = function (name) {
+        if (name === undefined) {
+            return this._curationSets;
+        }
+        else {
+            if (this.individualCurationSets[name] === undefined) {
+                this.individualCurationSets[name] = new CurationSet_1.default(name, this.apiCall);
+            }
+            return this.individualCurationSets[name];
         }
     };
     return Client;
@@ -3156,6 +3694,178 @@ exports["default"] = Conversations;
 
 /***/ }),
 
+/***/ "./node_modules/typesense/lib/Typesense/CurationSet.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/typesense/lib/Typesense/CurationSet.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
+var CurationSets_1 = tslib_1.__importDefault(__webpack_require__(/*! ./CurationSets */ "./node_modules/typesense/lib/Typesense/CurationSets.js"));
+var CurationSetItems_1 = tslib_1.__importDefault(__webpack_require__(/*! ./CurationSetItems */ "./node_modules/typesense/lib/Typesense/CurationSetItems.js"));
+var CurationSetItem_1 = tslib_1.__importDefault(__webpack_require__(/*! ./CurationSetItem */ "./node_modules/typesense/lib/Typesense/CurationSetItem.js"));
+var CurationSet = /** @class */ (function () {
+    function CurationSet(name, apiCall) {
+        this.name = name;
+        this.apiCall = apiCall;
+        this.individualItems = {};
+        this._items = new CurationSetItems_1.default(this.name, apiCall);
+    }
+    CurationSet.prototype.upsert = function (params) {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                return [2 /*return*/, this.apiCall.put(this.endpointPath(), params)];
+            });
+        });
+    };
+    CurationSet.prototype.retrieve = function () {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                return [2 /*return*/, this.apiCall.get(this.endpointPath())];
+            });
+        });
+    };
+    CurationSet.prototype.delete = function () {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                return [2 /*return*/, this.apiCall.delete(this.endpointPath())];
+            });
+        });
+    };
+    CurationSet.prototype.items = function (itemId) {
+        if (itemId === undefined) {
+            return this._items;
+        }
+        else {
+            if (this.individualItems[itemId] === undefined) {
+                this.individualItems[itemId] = new CurationSetItem_1.default(this.name, itemId, this.apiCall);
+            }
+            return this.individualItems[itemId];
+        }
+    };
+    CurationSet.prototype.endpointPath = function () {
+        return "".concat(CurationSets_1.default.RESOURCEPATH, "/").concat(encodeURIComponent(this.name));
+    };
+    return CurationSet;
+}());
+exports["default"] = CurationSet;
+//# sourceMappingURL=CurationSet.js.map
+
+/***/ }),
+
+/***/ "./node_modules/typesense/lib/Typesense/CurationSetItem.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/typesense/lib/Typesense/CurationSetItem.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
+var CurationSets_1 = tslib_1.__importDefault(__webpack_require__(/*! ./CurationSets */ "./node_modules/typesense/lib/Typesense/CurationSets.js"));
+var CurationSetItem = /** @class */ (function () {
+    function CurationSetItem(name, itemId, apiCall) {
+        this.name = name;
+        this.itemId = itemId;
+        this.apiCall = apiCall;
+    }
+    CurationSetItem.prototype.retrieve = function () {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                return [2 /*return*/, this.apiCall.get(this.endpointPath())];
+            });
+        });
+    };
+    CurationSetItem.prototype.upsert = function (params) {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                return [2 /*return*/, this.apiCall.put(this.endpointPath(), params)];
+            });
+        });
+    };
+    CurationSetItem.prototype.delete = function () {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                return [2 /*return*/, this.apiCall.delete(this.endpointPath())];
+            });
+        });
+    };
+    CurationSetItem.prototype.endpointPath = function () {
+        return "".concat(CurationSets_1.default.RESOURCEPATH, "/").concat(encodeURIComponent(this.name), "/items/").concat(encodeURIComponent(this.itemId));
+    };
+    return CurationSetItem;
+}());
+exports["default"] = CurationSetItem;
+//# sourceMappingURL=CurationSetItem.js.map
+
+/***/ }),
+
+/***/ "./node_modules/typesense/lib/Typesense/CurationSetItems.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/typesense/lib/Typesense/CurationSetItems.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
+var CurationSets_1 = tslib_1.__importDefault(__webpack_require__(/*! ./CurationSets */ "./node_modules/typesense/lib/Typesense/CurationSets.js"));
+var CurationSetItems = /** @class */ (function () {
+    function CurationSetItems(name, apiCall) {
+        this.name = name;
+        this.apiCall = apiCall;
+    }
+    CurationSetItems.prototype.retrieve = function () {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                return [2 /*return*/, this.apiCall.get(this.endpointPath())];
+            });
+        });
+    };
+    CurationSetItems.prototype.endpointPath = function (operation) {
+        return "".concat(CurationSets_1.default.RESOURCEPATH, "/").concat(encodeURIComponent(this.name), "/items").concat(operation === undefined ? "" : "/" + encodeURIComponent(operation));
+    };
+    return CurationSetItems;
+}());
+exports["default"] = CurationSetItems;
+//# sourceMappingURL=CurationSetItems.js.map
+
+/***/ }),
+
+/***/ "./node_modules/typesense/lib/Typesense/CurationSets.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/typesense/lib/Typesense/CurationSets.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
+var CurationSets = /** @class */ (function () {
+    function CurationSets(apiCall) {
+        this.apiCall = apiCall;
+    }
+    CurationSets.prototype.retrieve = function () {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                return [2 /*return*/, this.apiCall.get(CurationSets.RESOURCEPATH)];
+            });
+        });
+    };
+    CurationSets.RESOURCEPATH = "/curation_sets";
+    return CurationSets;
+}());
+exports["default"] = CurationSets;
+//# sourceMappingURL=CurationSets.js.map
+
+/***/ }),
+
 /***/ "./node_modules/typesense/lib/Typesense/Debug.js":
 /*!*******************************************************!*\
   !*** ./node_modules/typesense/lib/Typesense/Debug.js ***!
@@ -3312,10 +4022,11 @@ var Documents = /** @class */ (function (_super) {
     Documents.prototype.import = function (documents, options) {
         if (options === void 0) { options = {}; }
         return tslib_1.__awaiter(this, void 0, void 0, function () {
-            var documentsInJSONLFormat, resultsInJSONLFormat, resultsInJSONFormat, failedItems;
+            var finalOptions, documentsInJSONLFormat, resultsInJSONLFormat, resultsInJSONFormat, failedItems;
             return tslib_1.__generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        finalOptions = tslib_1.__assign({ throwOnFail: true }, options);
                         if (Array.isArray(documents)) {
                             if (documents.length === 0) {
                                 throw new Errors_1.RequestMalformed("No documents provided");
@@ -3342,7 +4053,7 @@ var Documents = /** @class */ (function (_super) {
                             }
                         }
                         return [4 /*yield*/, this.apiCall.performRequest("post", this.endpointPath("import"), {
-                                queryParameters: options,
+                                queryParameters: finalOptions,
                                 bodyParameters: documentsInJSONLFormat,
                                 additionalHeaders: { "Content-Type": "text/plain" },
                                 skipConnectionTimeout: true, // We never want to client-side-timeout on an import and retry, since imports are syncronous and we want to let them take as long as it takes to complete fully
@@ -3355,10 +4066,10 @@ var Documents = /** @class */ (function (_super) {
                                 .split("\n")
                                 .map(function (r) { return JSON.parse(r); });
                             failedItems = resultsInJSONFormat.filter(function (r) { return r.success === false; });
-                            if (failedItems.length > 0) {
+                            if (failedItems.length > 0 && finalOptions.throwOnFail) {
                                 throw new Errors_1.ImportError("".concat(resultsInJSONFormat.length - failedItems.length, " documents imported successfully, ").concat(failedItems.length, " documents failed during import. Use `error.importResults` from the raised exception to get a detailed error reason for each document."), resultsInJSONFormat, {
                                     documentsInJSONLFormat: documentsInJSONLFormat,
-                                    options: options,
+                                    options: finalOptions,
                                     failedItems: failedItems,
                                     successCount: resultsInJSONFormat.length - failedItems.length,
                                 });
@@ -3381,26 +4092,28 @@ var Documents = /** @class */ (function (_super) {
     Documents.prototype.importStream = function (readableStream, options) {
         if (options === void 0) { options = {}; }
         return tslib_1.__awaiter(this, void 0, void 0, function () {
-            var resultsInJSONLFormat, resultsInJSONFormat, failedItems;
+            var finalOptions, resultsInJSONLFormat, resultsInJSONFormat, failedItems;
             return tslib_1.__generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.apiCall.performRequest("post", this.endpointPath("import"), {
-                            queryParameters: options,
-                            bodyParameters: readableStream,
-                            additionalHeaders: { "Content-Type": "text/plain" },
-                            skipConnectionTimeout: true, // We never want to client-side-timeout on an import and retry, since imports are syncronous and we want to let them take as long as it takes to complete fully
-                            enableKeepAlive: isNodeJSEnvironment ? true : false, // This is to prevent ECONNRESET socket hang up errors. Reference: https://github.com/axios/axios/issues/2936#issuecomment-779439991
-                        })];
+                    case 0:
+                        finalOptions = tslib_1.__assign({ throwOnFail: true }, options);
+                        return [4 /*yield*/, this.apiCall.performRequest("post", this.endpointPath("import"), {
+                                queryParameters: finalOptions,
+                                bodyParameters: readableStream,
+                                additionalHeaders: { "Content-Type": "text/plain" },
+                                skipConnectionTimeout: true, // We never want to client-side-timeout on an import and retry, since imports are syncronous and we want to let them take as long as it takes to complete fully
+                                enableKeepAlive: isNodeJSEnvironment ? true : false, // This is to prevent ECONNRESET socket hang up errors. Reference: https://github.com/axios/axios/issues/2936#issuecomment-779439991
+                            })];
                     case 1:
                         resultsInJSONLFormat = _a.sent();
                         resultsInJSONFormat = resultsInJSONLFormat
                             .split("\n")
                             .map(function (r) { return JSON.parse(r); });
                         failedItems = resultsInJSONFormat.filter(function (r) { return r.success === false; });
-                        if (failedItems.length > 0) {
+                        if (failedItems.length > 0 && finalOptions.throwOnFail) {
                             throw new Errors_1.ImportError("".concat(resultsInJSONFormat.length - failedItems.length, " documents imported successfully, ").concat(failedItems.length, " documents failed during import. Use `error.importResults` from the raised exception to get a detailed error reason for each document."), resultsInJSONFormat, {
                                 documentsInJSONLFormat: readableStream,
-                                options: options,
+                                options: finalOptions,
                                 failedItems: failedItems,
                                 successCount: resultsInJSONFormat.length - failedItems.length,
                             });
@@ -3895,19 +4608,21 @@ var MultiSearch = /** @class */ (function () {
         this.configuration = configuration;
         this.useTextContentType = useTextContentType;
         this.requestWithCache = new RequestWithCache_1.default();
+        this.logger = this.apiCall.logger;
     }
     MultiSearch.prototype.clearCache = function () {
         this.requestWithCache.clearCache();
     };
-    MultiSearch.prototype.perform = function (searchRequests, commonParams, _a) {
-        var _b = _a === void 0 ? {} : _a, _c = _b.cacheSearchResultsForSeconds, cacheSearchResultsForSeconds = _c === void 0 ? this.configuration
-            .cacheSearchResultsForSeconds : _c;
+    MultiSearch.prototype.perform = function (searchRequests, commonParams, options) {
         return tslib_1.__awaiter(this, void 0, void 0, function () {
             var params, normalizedSearchRequests, streamConfig, paramsWithoutStream, normalizedQueryParams;
-            return tslib_1.__generator(this, function (_d) {
+            return tslib_1.__generator(this, function (_a) {
                 params = commonParams ? tslib_1.__assign({}, commonParams) : {};
                 if (this.configuration.useServerSideSearchCache === true) {
                     params.use_cache = true;
+                }
+                if (searchRequests.union === true && this.hasAnySearchObjectPagination(searchRequests)) {
+                    this.logger.warn("Individual `searches` pagination parameters are ignored when `union: true` is set. Use a top-level pagination parameter instead. See https://typesense.org/docs/29.0/api/federated-multi-search.html#union-search");
                 }
                 normalizedSearchRequests = {
                     union: searchRequests.union,
@@ -3923,18 +4638,117 @@ var MultiSearch = /** @class */ (function () {
                             ? { "content-type": "text/plain" }
                             : {},
                         streamConfig: streamConfig,
+                        abortSignal: options === null || options === void 0 ? void 0 : options.abortSignal,
                         isStreamingRequest: this.isStreamingRequest(params),
-                    }, { cacheResponseForSeconds: cacheSearchResultsForSeconds })];
+                    }, (options === null || options === void 0 ? void 0 : options.cacheSearchResultsForSeconds) !== undefined
+                        ? { cacheResponseForSeconds: options.cacheSearchResultsForSeconds }
+                        : undefined)];
             });
         });
     };
     MultiSearch.prototype.isStreamingRequest = function (commonParams) {
         return commonParams.streamConfig !== undefined;
     };
+    MultiSearch.prototype.hasAnySearchObjectPagination = function (searchRequests) {
+        return searchRequests.searches.some(function (search) { return search.page !== undefined || search.per_page !== undefined || search.offset !== undefined || search.limit !== undefined || search.limit_hits !== undefined; });
+    };
     return MultiSearch;
 }());
 exports["default"] = MultiSearch;
 //# sourceMappingURL=MultiSearch.js.map
+
+/***/ }),
+
+/***/ "./node_modules/typesense/lib/Typesense/NLSearchModel.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/typesense/lib/Typesense/NLSearchModel.js ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
+var NLSearchModels_1 = tslib_1.__importDefault(__webpack_require__(/*! ./NLSearchModels */ "./node_modules/typesense/lib/Typesense/NLSearchModels.js"));
+var NLSearchModel = /** @class */ (function () {
+    function NLSearchModel(id, apiCall) {
+        this.id = id;
+        this.apiCall = apiCall;
+    }
+    NLSearchModel.prototype.retrieve = function () {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                return [2 /*return*/, this.apiCall.get(this.endpointPath())];
+            });
+        });
+    };
+    NLSearchModel.prototype.update = function (schema) {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                return [2 /*return*/, this.apiCall.put(this.endpointPath(), schema)];
+            });
+        });
+    };
+    NLSearchModel.prototype.delete = function () {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                return [2 /*return*/, this.apiCall.delete(this.endpointPath())];
+            });
+        });
+    };
+    NLSearchModel.prototype.endpointPath = function () {
+        return "".concat(NLSearchModels_1.default.RESOURCEPATH, "/").concat(encodeURIComponent(this.id));
+    };
+    return NLSearchModel;
+}());
+exports["default"] = NLSearchModel;
+//# sourceMappingURL=NLSearchModel.js.map
+
+/***/ }),
+
+/***/ "./node_modules/typesense/lib/Typesense/NLSearchModels.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/typesense/lib/Typesense/NLSearchModels.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
+var RESOURCEPATH = "/nl_search_models";
+var NLSearchModels = /** @class */ (function () {
+    function NLSearchModels(apiCall) {
+        this.apiCall = apiCall;
+    }
+    NLSearchModels.prototype.create = function (schema) {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                return [2 /*return*/, this.apiCall.post(this.endpointPath(), schema)];
+            });
+        });
+    };
+    NLSearchModels.prototype.retrieve = function () {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                return [2 /*return*/, this.apiCall.get(this.endpointPath())];
+            });
+        });
+    };
+    NLSearchModels.prototype.endpointPath = function () {
+        return NLSearchModels.RESOURCEPATH;
+    };
+    Object.defineProperty(NLSearchModels, "RESOURCEPATH", {
+        get: function () {
+            return RESOURCEPATH;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    return NLSearchModels;
+}());
+exports["default"] = NLSearchModels;
+//# sourceMappingURL=NLSearchModels.js.map
 
 /***/ }),
 
@@ -4180,12 +4994,14 @@ var RequestWithCache = /** @class */ (function () {
     };
     RequestWithCache.prototype.perform = function (requestContext, methodName, requestParams, cacheOptions) {
         return tslib_1.__awaiter(this, void 0, void 0, function () {
-            var _a, cacheResponseForSeconds, _b, maxSize, isCacheDisabled, path, queryParams, body, headers, streamConfig, abortSignal, responseType, isStreamingRequest, requestParamsJSON, cacheEntry, now, isEntryValid, cachePromiseEntry, isEntryValid, responsePromise, response, isCacheOverMaxSize, oldestEntry, isResponsePromiseCacheOverMaxSize, oldestEntry;
-            return tslib_1.__generator(this, function (_c) {
-                switch (_c.label) {
+            var _a, _b, cacheResponseForSeconds, _c, maxSize, isCacheDisabled, path, queryParams, body, headers, streamConfig, abortSignal, responseType, isStreamingRequest, requestParamsJSON, cacheEntry, now, isEntryValid, cachePromiseEntry, isEntryValid, responsePromise, response, isCacheOverMaxSize, oldestEntry, isResponsePromiseCacheOverMaxSize, oldestEntry;
+            return tslib_1.__generator(this, function (_d) {
+                switch (_d.label) {
                     case 0:
-                        _a = cacheOptions.cacheResponseForSeconds, cacheResponseForSeconds = _a === void 0 ? defaultCacheResponseForSeconds : _a, _b = cacheOptions.maxSize, maxSize = _b === void 0 ? defaultMaxSize : _b;
-                        isCacheDisabled = cacheResponseForSeconds <= 0 || maxSize <= 0;
+                        _a = cacheOptions || {}, _b = _a.cacheResponseForSeconds, cacheResponseForSeconds = _b === void 0 ? defaultCacheResponseForSeconds : _b, _c = _a.maxSize, maxSize = _c === void 0 ? defaultMaxSize : _c;
+                        isCacheDisabled = cacheOptions === undefined ||
+                            cacheResponseForSeconds <= 0 ||
+                            maxSize <= 0;
                         path = requestParams.path, queryParams = requestParams.queryParams, body = requestParams.body, headers = requestParams.headers, streamConfig = requestParams.streamConfig, abortSignal = requestParams.abortSignal, responseType = requestParams.responseType, isStreamingRequest = requestParams.isStreamingRequest;
                         if (isCacheDisabled) {
                             return [2 /*return*/, this.executeRequest(requestContext, methodName, path, queryParams, body, headers, { abortSignal: abortSignal, responseType: responseType, streamConfig: streamConfig, isStreamingRequest: isStreamingRequest })];
@@ -4224,7 +5040,7 @@ var RequestWithCache = /** @class */ (function () {
                         });
                         return [4 /*yield*/, responsePromise];
                     case 1:
-                        response = _c.sent();
+                        response = _d.sent();
                         this.responseCache.set(requestParamsJSON, {
                             requestTimestamp: now,
                             response: response,
@@ -4705,6 +5521,9 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var Collections_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Collections */ "./node_modules/typesense/lib/Typesense/Collections.js"));
 var Synonyms_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Synonyms */ "./node_modules/typesense/lib/Typesense/Synonyms.js"));
+/**
+ * @deprecated Deprecated starting with Typesense Server v30. Please migrate to `client.synonymSets` (new Synonym Sets APIs).
+ */
 var Synonym = /** @class */ (function () {
     function Synonym(collectionName, synonymId, apiCall) {
         this.collectionName = collectionName;
@@ -4726,12 +5545,190 @@ var Synonym = /** @class */ (function () {
         });
     };
     Synonym.prototype.endpointPath = function () {
+        if (!Synonym.hasWarnedDeprecation) {
+            // eslint-disable-next-line no-console
+            console.warn("[typesense] 'synonym' APIs are deprecated starting with Typesense Server v30. Please migrate to synonym sets 'synonym_sets'.");
+            Synonym.hasWarnedDeprecation = true;
+        }
         return "".concat(Collections_1.default.RESOURCEPATH, "/").concat(encodeURIComponent(this.collectionName)).concat(Synonyms_1.default.RESOURCEPATH, "/").concat(encodeURIComponent(this.synonymId));
     };
+    Synonym.hasWarnedDeprecation = false;
     return Synonym;
 }());
 exports["default"] = Synonym;
 //# sourceMappingURL=Synonym.js.map
+
+/***/ }),
+
+/***/ "./node_modules/typesense/lib/Typesense/SynonymSet.js":
+/*!************************************************************!*\
+  !*** ./node_modules/typesense/lib/Typesense/SynonymSet.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
+var SynonymSets_1 = tslib_1.__importDefault(__webpack_require__(/*! ./SynonymSets */ "./node_modules/typesense/lib/Typesense/SynonymSets.js"));
+var SynonymSetItems_1 = tslib_1.__importDefault(__webpack_require__(/*! ./SynonymSetItems */ "./node_modules/typesense/lib/Typesense/SynonymSetItems.js"));
+var SynonymSetItem_1 = tslib_1.__importDefault(__webpack_require__(/*! ./SynonymSetItem */ "./node_modules/typesense/lib/Typesense/SynonymSetItem.js"));
+var SynonymSet = /** @class */ (function () {
+    function SynonymSet(synonymSetName, apiCall) {
+        this.synonymSetName = synonymSetName;
+        this.apiCall = apiCall;
+        this.individualItems = {};
+        this._items = new SynonymSetItems_1.default(this.synonymSetName, apiCall);
+    }
+    SynonymSet.prototype.upsert = function (params) {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                return [2 /*return*/, this.apiCall.put(this.endpointPath(), params)];
+            });
+        });
+    };
+    SynonymSet.prototype.retrieve = function () {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                return [2 /*return*/, this.apiCall.get(this.endpointPath())];
+            });
+        });
+    };
+    SynonymSet.prototype.delete = function () {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                return [2 /*return*/, this.apiCall.delete(this.endpointPath())];
+            });
+        });
+    };
+    SynonymSet.prototype.items = function (itemId) {
+        if (itemId === undefined) {
+            return this._items;
+        }
+        else {
+            if (this.individualItems[itemId] === undefined) {
+                this.individualItems[itemId] = new SynonymSetItem_1.default(this.synonymSetName, itemId, this.apiCall);
+            }
+            return this.individualItems[itemId];
+        }
+    };
+    SynonymSet.prototype.endpointPath = function () {
+        return "".concat(SynonymSets_1.default.RESOURCEPATH, "/").concat(encodeURIComponent(this.synonymSetName));
+    };
+    return SynonymSet;
+}());
+exports["default"] = SynonymSet;
+//# sourceMappingURL=SynonymSet.js.map
+
+/***/ }),
+
+/***/ "./node_modules/typesense/lib/Typesense/SynonymSetItem.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/typesense/lib/Typesense/SynonymSetItem.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
+var SynonymSets_1 = tslib_1.__importDefault(__webpack_require__(/*! ./SynonymSets */ "./node_modules/typesense/lib/Typesense/SynonymSets.js"));
+var SynonymSetItem = /** @class */ (function () {
+    function SynonymSetItem(synonymSetName, itemId, apiCall) {
+        this.synonymSetName = synonymSetName;
+        this.itemId = itemId;
+        this.apiCall = apiCall;
+    }
+    SynonymSetItem.prototype.retrieve = function () {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                return [2 /*return*/, this.apiCall.get(this.endpointPath())];
+            });
+        });
+    };
+    SynonymSetItem.prototype.delete = function () {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                return [2 /*return*/, this.apiCall.delete(this.endpointPath())];
+            });
+        });
+    };
+    SynonymSetItem.prototype.endpointPath = function () {
+        return "".concat(SynonymSets_1.default.RESOURCEPATH, "/").concat(encodeURIComponent(this.synonymSetName), "/items/").concat(encodeURIComponent(this.itemId));
+    };
+    return SynonymSetItem;
+}());
+exports["default"] = SynonymSetItem;
+//# sourceMappingURL=SynonymSetItem.js.map
+
+/***/ }),
+
+/***/ "./node_modules/typesense/lib/Typesense/SynonymSetItems.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/typesense/lib/Typesense/SynonymSetItems.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
+var SynonymSets_1 = tslib_1.__importDefault(__webpack_require__(/*! ./SynonymSets */ "./node_modules/typesense/lib/Typesense/SynonymSets.js"));
+var SynonymSetItems = /** @class */ (function () {
+    function SynonymSetItems(synonymSetName, apiCall) {
+        this.synonymSetName = synonymSetName;
+        this.apiCall = apiCall;
+    }
+    SynonymSetItems.prototype.upsert = function (itemId, params) {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                return [2 /*return*/, this.apiCall.put(this.endpointPath(itemId), params)];
+            });
+        });
+    };
+    SynonymSetItems.prototype.retrieve = function () {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                return [2 /*return*/, this.apiCall.get(this.endpointPath())];
+            });
+        });
+    };
+    SynonymSetItems.prototype.endpointPath = function (operation) {
+        return "".concat(SynonymSets_1.default.RESOURCEPATH, "/").concat(encodeURIComponent(this.synonymSetName), "/items").concat(operation === undefined ? "" : "/" + encodeURIComponent(operation));
+    };
+    return SynonymSetItems;
+}());
+exports["default"] = SynonymSetItems;
+//# sourceMappingURL=SynonymSetItems.js.map
+
+/***/ }),
+
+/***/ "./node_modules/typesense/lib/Typesense/SynonymSets.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/typesense/lib/Typesense/SynonymSets.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
+var SynonymSets = /** @class */ (function () {
+    function SynonymSets(apiCall) {
+        this.apiCall = apiCall;
+    }
+    SynonymSets.prototype.retrieve = function () {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            return tslib_1.__generator(this, function (_a) {
+                return [2 /*return*/, this.apiCall.get(SynonymSets.RESOURCEPATH)];
+            });
+        });
+    };
+    SynonymSets.RESOURCEPATH = "/synonym_sets";
+    return SynonymSets;
+}());
+exports["default"] = SynonymSets;
+//# sourceMappingURL=SynonymSets.js.map
 
 /***/ }),
 
@@ -4747,6 +5744,9 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var Collections_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Collections */ "./node_modules/typesense/lib/Typesense/Collections.js"));
 var RESOURCEPATH = "/synonyms";
+/**
+ * @deprecated Deprecated starting with Typesense Server v30. Please migrate to `client.synonymSets` (new Synonym Sets APIs).
+ */
 var Synonyms = /** @class */ (function () {
     function Synonyms(collectionName, apiCall) {
         this.collectionName = collectionName;
@@ -4767,6 +5767,11 @@ var Synonyms = /** @class */ (function () {
         });
     };
     Synonyms.prototype.endpointPath = function (operation) {
+        if (!Synonyms.hasWarnedDeprecation) {
+            // eslint-disable-next-line no-console
+            console.warn("[typesense] 'synonyms' APIs are deprecated starting with Typesense Server v30. Please migrate to synonym sets ('synonym_sets').");
+            Synonyms.hasWarnedDeprecation = true;
+        }
         return "".concat(Collections_1.default.RESOURCEPATH, "/").concat(encodeURIComponent(this.collectionName)).concat(Synonyms.RESOURCEPATH).concat(operation === undefined ? "" : "/" + encodeURIComponent(operation));
     };
     Object.defineProperty(Synonyms, "RESOURCEPATH", {
@@ -4776,6 +5781,7 @@ var Synonyms = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    Synonyms.hasWarnedDeprecation = false;
     return Synonyms;
 }());
 exports["default"] = Synonyms;
@@ -4808,6 +5814,7 @@ exports.arrayableParams = {
     override_tags: "override_tags",
     num_typos: "num_typos",
     prefix: "prefix",
+    synonym_sets: "synonym_sets",
     sort_by: "sort_by",
 };
 //# sourceMappingURL=Types.js.map

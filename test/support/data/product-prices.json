@@ -1,0 +1,152 @@
+[
+  {
+    "id": "p1",
+    "productId": "1",
+    "retailer": "Amazon",
+    "price": 149.99
+  },
+  {
+    "id": "p2",
+    "productId": "1",
+    "retailer": "BestBuy",
+    "price": 159.99
+  },
+  {
+    "id": "p3",
+    "productId": "1",
+    "retailer": "Walmart",
+    "price": 144.99
+  },
+  {
+    "id": "p4",
+    "productId": "2",
+    "retailer": "Amazon",
+    "price": 299.99
+  },
+  {
+    "id": "p5",
+    "productId": "2",
+    "retailer": "Target",
+    "price": 289.99
+  },
+  {
+    "id": "p6",
+    "productId": "3",
+    "retailer": "Amazon",
+    "price": 89.99
+  },
+  {
+    "id": "p7",
+    "productId": "3",
+    "retailer": "Walmart",
+    "price": 79.99
+  },
+  {
+    "id": "p8",
+    "productId": "3",
+    "retailer": "Target",
+    "price": 84.99
+  },
+  {
+    "id": "p9",
+    "productId": "4",
+    "retailer": "Amazon",
+    "price": 59.99
+  },
+  {
+    "id": "p10",
+    "productId": "4",
+    "retailer": "BestBuy",
+    "price": 64.99
+  },
+  {
+    "id": "p11",
+    "productId": "5",
+    "retailer": "Amazon",
+    "price": 29.99
+  },
+  {
+    "id": "p12",
+    "productId": "5",
+    "retailer": "Walmart",
+    "price": 24.99
+  },
+  {
+    "id": "p13",
+    "productId": "5",
+    "retailer": "Target",
+    "price": 27.99
+  },
+  {
+    "id": "p14",
+    "productId": "6",
+    "retailer": "Amazon",
+    "price": 49.99
+  },
+  {
+    "id": "p15",
+    "productId": "6",
+    "retailer": "BestBuy",
+    "price": 54.99
+  },
+  {
+    "id": "p16",
+    "productId": "7",
+    "retailer": "Amazon",
+    "price": 39.99
+  },
+  {
+    "id": "p17",
+    "productId": "7",
+    "retailer": "Walmart",
+    "price": 37.99
+  },
+  {
+    "id": "p18",
+    "productId": "7",
+    "retailer": "Target",
+    "price": 38.99
+  },
+  {
+    "id": "p19",
+    "productId": "8",
+    "retailer": "Amazon",
+    "price": 34.99
+  },
+  {
+    "id": "p20",
+    "productId": "8",
+    "retailer": "Walmart",
+    "price": 32.99
+  },
+  {
+    "id": "p21",
+    "productId": "9",
+    "retailer": "Amazon",
+    "price": 24.99
+  },
+  {
+    "id": "p22",
+    "productId": "9",
+    "retailer": "Target",
+    "price": 22.99
+  },
+  {
+    "id": "p23",
+    "productId": "10",
+    "retailer": "Amazon",
+    "price": 29.99
+  },
+  {
+    "id": "p24",
+    "productId": "10",
+    "retailer": "BestBuy",
+    "price": 34.99
+  },
+  {
+    "id": "p25",
+    "productId": "10",
+    "retailer": "Walmart",
+    "price": 27.99
+  }
+]
