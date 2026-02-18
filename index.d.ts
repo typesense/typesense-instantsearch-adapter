@@ -103,6 +103,11 @@ interface BaseAdapterOptions {
    * For v30+, leave as false (default) to use curation_tags.
    */
   useOverrideTags?: boolean;
+  /**
+   * Flips negative refinement encoding.
+   * AND groups become `field:![a,b]`, OR groups become `field:!a || field:!b`.
+   */
+  flipNegativeRefinementOperator?: boolean;
 }
 
 type CollectionSearchParameters = Record<string, BaseSearchParameters<DocumentSchema>>;
