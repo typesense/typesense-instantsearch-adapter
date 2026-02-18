@@ -225,10 +225,36 @@ describe("SearchRequestAdapter", () => {
         );
       });
     });
+
+    describe("when flipNegativeRefinementOperator is enabled", () => {
+      it("encodes OR'ed negative refinements as explicit OR clauses", () => {
+        const subject = new SearchRequestAdapter([], null, {
+          flipNegativeRefinementOperator: true,
+          filterByOptions: {
+            tags: { exactMatch: false },
+          },
+        });
+
+        const result = subject._adaptFacetFilters([["tags:-value1", "tags:-value2"]], "collection1");
+        expect(result).toEqual("(tags:!`value1` || tags:!`value2`)");
+      });
+
+      it("keeps OR'ed positive refinements as list unions", () => {
+        const subject = new SearchRequestAdapter([], null, {
+          flipNegativeRefinementOperator: true,
+          filterByOptions: {
+            tags: { exactMatch: false },
+          },
+        });
+
+        const result = subject._adaptFacetFilters([["tags:value1", "tags:value2"]], "collection1");
+        expect(result).toEqual("tags:[`value1`,`value2`]");
+      });
+    });
   });
 
   describe("._adaptFilters", () => {
-    it("merges same-field exclusion list clauses from static filters and facetFilters", () => {
+    it("preserves same-field clause boundaries by default", () => {
       const subject = new SearchRequestAdapter([], null, {});
 
       const result = subject._adaptFilters(
@@ -240,8 +266,46 @@ describe("SearchRequestAdapter", () => {
       );
 
       expect(result).toEqual(
-        "application_ids:webapp && tags:![Internal,Deprecated,Archive,Experimental,`CategoryA`,`CategoryB`] && is_public:true",
+        "application_ids:webapp && tags:![Internal,Deprecated,Archive,Experimental] && is_public:true && tags:!=[`CategoryA`,`CategoryB`]",
       );
+    });
+
+    it("merges AND'ed negative refinements into a single exclusion list when flipNegativeRefinementOperator is enabled", () => {
+      const subject = new SearchRequestAdapter([], null, {
+        flipNegativeRefinementOperator: true,
+        filterByOptions: {
+          tags: { exactMatch: false },
+        },
+      });
+
+      const result = subject._adaptFilters(
+        {
+          filters: "is_public:true",
+          facetFilters: ["tags:-value1", "tags:-value2"],
+        },
+        "collection1",
+      );
+
+      expect(result).toEqual("is_public:true && tags:![`value1`,`value2`]");
+    });
+
+    it("keeps AND'ed positive refinements separate even when flipNegativeRefinementOperator is enabled", () => {
+      const subject = new SearchRequestAdapter([], null, {
+        flipNegativeRefinementOperator: true,
+        filterByOptions: {
+          tags: { exactMatch: false },
+        },
+      });
+
+      const result = subject._adaptFilters(
+        {
+          filters: "is_public:true",
+          facetFilters: ["tags:value1", "tags:value2"],
+        },
+        "collection1",
+      );
+
+      expect(result).toEqual("is_public:true && tags:[`value1`] && tags:[`value2`]");
     });
   });
 

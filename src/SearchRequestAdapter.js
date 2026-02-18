@@ -115,9 +115,15 @@ export class SearchRequestAdapter {
         }
         if (excludedFieldValues.length > 0) {
           const operator = this._shouldUseExactMatchForField(fieldName, collectionName) ? ":!=" : ":!";
-          typesenseFilterStringComponents.push(
-            `${fieldName}${operator}[${excludedFieldValues.map((v) => this._escapeFacetValue(v)).join(",")}]`,
-          );
+          if (this.configuration.flipNegativeRefinementOperator) {
+            typesenseFilterStringComponents.push(
+              `(${excludedFieldValues.map((v) => `${fieldName}${operator}${this._escapeFacetValue(v)}`).join(" || ")})`,
+            );
+          } else {
+            typesenseFilterStringComponents.push(
+              `${fieldName}${operator}[${excludedFieldValues.map((v) => this._escapeFacetValue(v)).join(",")}]`,
+            );
+          }
         }
 
         const typesenseFilterString = typesenseFilterStringComponents.filter((f) => f).join(" && ");
@@ -441,7 +447,7 @@ export class SearchRequestAdapter {
     };
   }
 
-  _mergeSameFieldListClauses(filterBy) {
+  _mergeSameFieldExclusionListClauses(filterBy) {
     if (!filterBy) return filterBy;
 
     const clauses = this._splitByTopLevelAnd(filterBy);
@@ -455,12 +461,12 @@ export class SearchRequestAdapter {
         return;
       }
 
-      const normalizedOperator =
-        parsedClause.operator === ":!" || parsedClause.operator === ":!="
-          ? "exclude"
-          : parsedClause.operator === ":" || parsedClause.operator === ":="
-            ? "include"
-            : parsedClause.operator;
+      const normalizedOperator = parsedClause.operator === ":!" || parsedClause.operator === ":!=" ? "exclude" : null;
+      if (normalizedOperator == null) {
+        rebuiltClauses.push({ clauseIndex, clause });
+        return;
+      }
+
       const groupingKey = `${parsedClause.fieldName}|${normalizedOperator}`;
       if (!groupedListClauses[groupingKey]) {
         groupedListClauses[groupingKey] = {
@@ -480,16 +486,9 @@ export class SearchRequestAdapter {
     });
 
     Object.values(groupedListClauses).forEach((group) => {
-      let mergedOperator = group.operator;
-      if (group.normalizedOperator === "exclude") {
-        mergedOperator = ":!";
-      } else if (group.normalizedOperator === "include") {
-        mergedOperator = ":";
-      }
-
       rebuiltClauses.push({
         clauseIndex: group.clauseIndex,
-        clause: `${group.fieldName}${mergedOperator}[${group.values.join(",")}]`,
+        clause: `${group.fieldName}${group.operator}[${group.values.join(",")}]`,
       });
     });
 
@@ -512,7 +511,10 @@ export class SearchRequestAdapter {
     adaptedFilters.push(this._adaptGeoFilter(instantsearchParams));
 
     const combinedFilter = adaptedFilters.filter((filter) => filter && filter !== "").join(" && ");
-    return this._mergeSameFieldListClauses(combinedFilter);
+    if (this.configuration.flipNegativeRefinementOperator) {
+      return this._mergeSameFieldExclusionListClauses(combinedFilter);
+    }
+    return combinedFilter;
   }
 
   _adaptIndexName(indexName) {
