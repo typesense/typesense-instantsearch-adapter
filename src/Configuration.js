@@ -62,6 +62,9 @@ export class Configuration {
     this.union = options.union ?? false;
     // For Typesense v30+, use curation_tags. Set to true for older versions that use override_tags.
     this.useOverrideTags = options.useOverrideTags ?? false;
+    // flips negative refinement encoding between AND/OR groups
+    // AND groups become field:![a,b], OR groups become field:!a || field:!b
+    this.flipNegativeRefinementOperator = options.flipNegativeRefinementOperator ?? false;
   }
 
   validate() {

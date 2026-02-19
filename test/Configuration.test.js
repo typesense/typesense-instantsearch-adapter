@@ -38,6 +38,20 @@ describe("Configuration", () => {
         expect(subject.union).toBe("true");
       });
     });
+
+    describe("flipNegativeRefinementOperator parameter", () => {
+      it("defaults flipNegativeRefinementOperator to false when not provided", () => {
+        const subject = new Configuration({});
+        expect(subject.flipNegativeRefinementOperator).toBe(false);
+      });
+
+      it("sets flipNegativeRefinementOperator to true when explicitly provided", () => {
+        const subject = new Configuration({
+          flipNegativeRefinementOperator: true,
+        });
+        expect(subject.flipNegativeRefinementOperator).toBe(true);
+      });
+    });
   });
 
   describe(".validate", () => {

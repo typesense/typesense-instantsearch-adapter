@@ -557,6 +557,41 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
 });
 ```
 
+### Flipping negative refinement operators
+
+By default, excluded values from `refinementList` are encoded as list filters,
+like `field:![a,b]`, while included OR values are encoded as `field:[a,b]`.
+
+If you want to flip how negative refinements are encoded, set
+`flipNegativeRefinementOperator: true`:
+
+```js
+const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
+  server: {
+    apiKey: "xyz",
+    nodes: [
+      {
+        host: "localhost",
+        port: "8108",
+        path: "/",
+        protocol: "http",
+      },
+    ],
+  },
+  flipNegativeRefinementOperator: true,
+  additionalSearchParameters,
+});
+```
+
+With this option enabled:
+
+- `operator: "and"` with negative values is merged as:
+  `field:![a,b]`
+- `operator: "or"` with negative values is expanded as:
+  `(field:!a || field:!b)`
+- positive OR behavior is unchanged:
+  `field:[a,b]`
+
 ### Disabling overrides for certain sorts
 
 > Available as of typesense-instantsearch-adapter `2.9.0-0`
