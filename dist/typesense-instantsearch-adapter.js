@@ -97,7 +97,7 @@ var Configuration = /*#__PURE__*/function () {
     this.union = (_options$union = options.union) !== null && _options$union !== void 0 ? _options$union : false;
     // For Typesense v30+, use curation_tags. Set to true for older versions that use override_tags.
     this.useOverrideTags = (_options$useOverrideT = options.useOverrideTags) !== null && _options$useOverrideT !== void 0 ? _options$useOverrideT : false;
-    // When enabled, flips negative refinement encoding between AND/OR groups:
+    // flips negative refinement encoding between AND/OR groups
     // AND groups become field:![a,b], OR groups become field:!a || field:!b
     this.flipNegativeRefinementOperator = (_options$flipNegative = options.flipNegativeRefinementOperator) !== null && _options$flipNegative !== void 0 ? _options$flipNegative : false;
   }
@@ -1157,9 +1157,10 @@ var SearchResponseAdapter = /*#__PURE__*/function () {
     key: "_adaptHighlightInPrimitiveValue",
     value: function _adaptHighlightInPrimitiveValue(primitiveValue, highlightPrimitiveValue, snippetOrValue) {
       if (highlightPrimitiveValue != null) {
-        var _ref9, _highlightPrimitiveVa;
+        var _ref9, _ref10, _highlightPrimitiveVa;
+        var highlightedValue = (_ref9 = (_ref10 = (_highlightPrimitiveVa = highlightPrimitiveValue[snippetOrValue]) !== null && _highlightPrimitiveVa !== void 0 ? _highlightPrimitiveVa : highlightPrimitiveValue["highlight"]) !== null && _ref10 !== void 0 ? _ref10 : highlightPrimitiveValue["snippet"]) !== null && _ref9 !== void 0 ? _ref9 : primitiveValue;
         return {
-          value: this._adaptHighlightTag("".concat((_ref9 = (_highlightPrimitiveVa = highlightPrimitiveValue[snippetOrValue]) !== null && _highlightPrimitiveVa !== void 0 ? _highlightPrimitiveVa : highlightPrimitiveValue["highlight"]) !== null && _ref9 !== void 0 ? _ref9 : highlightPrimitiveValue["snippet"]), this.instantsearchRequest.params.highlightPreTag, this.instantsearchRequest.params.highlightPostTag),
+          value: this._adaptHighlightTag("".concat(highlightedValue), this.instantsearchRequest.params.highlightPreTag, this.instantsearchRequest.params.highlightPostTag),
           matchLevel: (highlightPrimitiveValue.matched_tokens || []).length > 0 ? "full" : "none",
           matchedWords: highlightPrimitiveValue.matched_tokens || []
         };
@@ -1633,7 +1634,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Errors = exports.SearchClient = exports.Client = void 0;
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var Client_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Typesense/Client */ "./node_modules/typesense/lib/Typesense/Client.js"));
 exports.Client = Client_1.default;
 var SearchClient_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Typesense/SearchClient */ "./node_modules/typesense/lib/Typesense/SearchClient.js"));
@@ -1654,7 +1655,7 @@ exports["default"] = { Client: Client_1.default, SearchClient: SearchClient_1.de
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var Aliases_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Aliases */ "./node_modules/typesense/lib/Typesense/Aliases.js"));
 var Alias = /** @class */ (function () {
     function Alias(name, apiCall) {
@@ -1694,7 +1695,7 @@ exports["default"] = Alias;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var RESOURCEPATH = "/aliases";
 var Aliases = /** @class */ (function () {
     function Aliases(apiCall) {
@@ -1740,7 +1741,7 @@ exports["default"] = Aliases;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var AnalyticsRules_1 = tslib_1.__importDefault(__webpack_require__(/*! ./AnalyticsRules */ "./node_modules/typesense/lib/Typesense/AnalyticsRules.js"));
 var AnalyticsRule_1 = tslib_1.__importDefault(__webpack_require__(/*! ./AnalyticsRule */ "./node_modules/typesense/lib/Typesense/AnalyticsRule.js"));
 var AnalyticsEvents_1 = tslib_1.__importDefault(__webpack_require__(/*! ./AnalyticsEvents */ "./node_modules/typesense/lib/Typesense/AnalyticsEvents.js"));
@@ -1790,7 +1791,7 @@ exports["default"] = Analytics;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var RESOURCEPATH = "/analytics/events";
 var AnalyticsEvents = /** @class */ (function () {
     function AnalyticsEvents(apiCall) {
@@ -1837,7 +1838,7 @@ exports["default"] = AnalyticsEvents;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var AnalyticsRules_1 = tslib_1.__importDefault(__webpack_require__(/*! ./AnalyticsRules */ "./node_modules/typesense/lib/Typesense/AnalyticsRules.js"));
 var AnalyticsRule = /** @class */ (function () {
     function AnalyticsRule(name, apiCall) {
@@ -1877,7 +1878,7 @@ exports["default"] = AnalyticsRule;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var AnalyticsRulesV1_1 = tslib_1.__importDefault(__webpack_require__(/*! ./AnalyticsRulesV1 */ "./node_modules/typesense/lib/Typesense/AnalyticsRulesV1.js"));
 var AnalyticsRuleV1 = /** @class */ (function () {
     function AnalyticsRuleV1(name, apiCall) {
@@ -1917,7 +1918,7 @@ exports["default"] = AnalyticsRuleV1;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var RESOURCEPATH = "/analytics/rules";
 var AnalyticsRules = /** @class */ (function () {
     function AnalyticsRules(apiCall) {
@@ -1976,7 +1977,7 @@ exports["default"] = AnalyticsRules;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var RESOURCEPATH = "/analytics/rules";
 var AnalyticsRulesV1 = /** @class */ (function () {
     function AnalyticsRulesV1(apiCall) {
@@ -2023,7 +2024,7 @@ exports["default"] = AnalyticsRulesV1;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var AnalyticsRulesV1_1 = tslib_1.__importDefault(__webpack_require__(/*! ./AnalyticsRulesV1 */ "./node_modules/typesense/lib/Typesense/AnalyticsRulesV1.js"));
 var AnalyticsRuleV1_1 = tslib_1.__importDefault(__webpack_require__(/*! ./AnalyticsRuleV1 */ "./node_modules/typesense/lib/Typesense/AnalyticsRuleV1.js"));
 var AnalyticsEvents_1 = tslib_1.__importDefault(__webpack_require__(/*! ./AnalyticsEvents */ "./node_modules/typesense/lib/Typesense/AnalyticsEvents.js"));
@@ -2082,7 +2083,7 @@ exports["default"] = AnalyticsV1;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var axios_1 = tslib_1.__importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/dist/browser/axios.cjs"));
 var http_1 = __webpack_require__(/*! http */ "?92a5");
 var https_1 = __webpack_require__(/*! https */ "?ba77");
@@ -2870,7 +2871,7 @@ exports["default"] = ApiCall;
 
 /* eslint-disable no-dupe-class-members */
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var Configuration_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Configuration */ "./node_modules/typesense/lib/Typesense/Configuration.js"));
 var ApiCall_1 = tslib_1.__importDefault(__webpack_require__(/*! ./ApiCall */ "./node_modules/typesense/lib/Typesense/ApiCall.js"));
 var Collections_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Collections */ "./node_modules/typesense/lib/Typesense/Collections.js"));
@@ -3049,7 +3050,7 @@ exports["default"] = Client;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var Collections_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Collections */ "./node_modules/typesense/lib/Typesense/Collections.js"));
 var Documents_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Documents */ "./node_modules/typesense/lib/Typesense/Documents.js"));
 var Errors_1 = __webpack_require__(/*! ./Errors */ "./node_modules/typesense/lib/Typesense/Errors/index.js");
@@ -3168,7 +3169,7 @@ exports["default"] = Collection;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var RESOURCEPATH = "/collections";
 var Collections = /** @class */ (function () {
     function Collections(apiCall) {
@@ -3212,7 +3213,7 @@ exports["default"] = Collections;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var logger = tslib_1.__importStar(__webpack_require__(/*! loglevel */ "./node_modules/loglevel/lib/loglevel.js"));
 var Errors_1 = __webpack_require__(/*! ./Errors */ "./node_modules/typesense/lib/Typesense/Errors/index.js");
 var Configuration = /** @class */ (function () {
@@ -3335,7 +3336,7 @@ exports["default"] = Configuration;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var Conversations_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Conversations */ "./node_modules/typesense/lib/Typesense/Conversations.js"));
 var Conversation = /** @class */ (function () {
     function Conversation(id, apiCall) {
@@ -3382,7 +3383,7 @@ exports["default"] = Conversation;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var ConversationModels_1 = tslib_1.__importDefault(__webpack_require__(/*! ./ConversationModels */ "./node_modules/typesense/lib/Typesense/ConversationModels.js"));
 var ConversationModel = /** @class */ (function () {
     function ConversationModel(id, apiCall) {
@@ -3429,7 +3430,7 @@ exports["default"] = ConversationModel;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var RESOURCEPATH = "/conversations/models";
 var ConversationModels = /** @class */ (function () {
     function ConversationModels(apiCall) {
@@ -3476,7 +3477,7 @@ exports["default"] = ConversationModels;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var ConversationModels_1 = tslib_1.__importDefault(__webpack_require__(/*! ./ConversationModels */ "./node_modules/typesense/lib/Typesense/ConversationModels.js"));
 var ConversationModel_1 = tslib_1.__importDefault(__webpack_require__(/*! ./ConversationModel */ "./node_modules/typesense/lib/Typesense/ConversationModel.js"));
 var RESOURCEPATH = "/conversations";
@@ -3528,7 +3529,7 @@ exports["default"] = Conversations;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var CurationSets_1 = tslib_1.__importDefault(__webpack_require__(/*! ./CurationSets */ "./node_modules/typesense/lib/Typesense/CurationSets.js"));
 var CurationSetItems_1 = tslib_1.__importDefault(__webpack_require__(/*! ./CurationSetItems */ "./node_modules/typesense/lib/Typesense/CurationSetItems.js"));
 var CurationSetItem_1 = tslib_1.__importDefault(__webpack_require__(/*! ./CurationSetItem */ "./node_modules/typesense/lib/Typesense/CurationSetItem.js"));
@@ -3590,7 +3591,7 @@ exports["default"] = CurationSet;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var CurationSets_1 = tslib_1.__importDefault(__webpack_require__(/*! ./CurationSets */ "./node_modules/typesense/lib/Typesense/CurationSets.js"));
 var CurationSetItem = /** @class */ (function () {
     function CurationSetItem(name, itemId, apiCall) {
@@ -3638,7 +3639,7 @@ exports["default"] = CurationSetItem;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var CurationSets_1 = tslib_1.__importDefault(__webpack_require__(/*! ./CurationSets */ "./node_modules/typesense/lib/Typesense/CurationSets.js"));
 var CurationSetItems = /** @class */ (function () {
     function CurationSetItems(name, apiCall) {
@@ -3671,7 +3672,7 @@ exports["default"] = CurationSetItems;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var CurationSets = /** @class */ (function () {
     function CurationSets(apiCall) {
         this.apiCall = apiCall;
@@ -3700,7 +3701,7 @@ exports["default"] = CurationSets;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var RESOURCEPATH = "/debug";
 var Debug = /** @class */ (function () {
     function Debug(apiCall) {
@@ -3730,7 +3731,7 @@ exports["default"] = Debug;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Document = void 0;
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var Collections_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Collections */ "./node_modules/typesense/lib/Typesense/Collections.js"));
 var Documents_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Documents */ "./node_modules/typesense/lib/Typesense/Documents.js"));
 var Document = /** @class */ (function () {
@@ -3780,7 +3781,7 @@ exports.Document = Document;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var Errors_1 = __webpack_require__(/*! ./Errors */ "./node_modules/typesense/lib/Typesense/Errors/index.js");
 var SearchOnlyDocuments_1 = __webpack_require__(/*! ./SearchOnlyDocuments */ "./node_modules/typesense/lib/Typesense/SearchOnlyDocuments.js");
 var isNodeJSEnvironment = typeof process !== "undefined" &&
@@ -3994,7 +3995,7 @@ function isEmptyString(str) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var TypesenseError_1 = tslib_1.__importDefault(__webpack_require__(/*! ./TypesenseError */ "./node_modules/typesense/lib/Typesense/Errors/TypesenseError.js"));
 var HTTPError = /** @class */ (function (_super) {
     tslib_1.__extends(HTTPError, _super);
@@ -4017,7 +4018,7 @@ exports["default"] = HTTPError;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var TypesenseError_1 = tslib_1.__importDefault(__webpack_require__(/*! ./TypesenseError */ "./node_modules/typesense/lib/Typesense/Errors/TypesenseError.js"));
 var ImportError = /** @class */ (function (_super) {
     tslib_1.__extends(ImportError, _super);
@@ -4043,7 +4044,7 @@ exports["default"] = ImportError;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var TypesenseError_1 = tslib_1.__importDefault(__webpack_require__(/*! ./TypesenseError */ "./node_modules/typesense/lib/Typesense/Errors/TypesenseError.js"));
 var MissingConfigurationError = /** @class */ (function (_super) {
     tslib_1.__extends(MissingConfigurationError, _super);
@@ -4066,7 +4067,7 @@ exports["default"] = MissingConfigurationError;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var TypesenseError_1 = tslib_1.__importDefault(__webpack_require__(/*! ./TypesenseError */ "./node_modules/typesense/lib/Typesense/Errors/TypesenseError.js"));
 var ObjectAlreadyExists = /** @class */ (function (_super) {
     tslib_1.__extends(ObjectAlreadyExists, _super);
@@ -4089,7 +4090,7 @@ exports["default"] = ObjectAlreadyExists;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var TypesenseError_1 = tslib_1.__importDefault(__webpack_require__(/*! ./TypesenseError */ "./node_modules/typesense/lib/Typesense/Errors/TypesenseError.js"));
 var ObjectNotFound = /** @class */ (function (_super) {
     tslib_1.__extends(ObjectNotFound, _super);
@@ -4112,7 +4113,7 @@ exports["default"] = ObjectNotFound;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var TypesenseError_1 = tslib_1.__importDefault(__webpack_require__(/*! ./TypesenseError */ "./node_modules/typesense/lib/Typesense/Errors/TypesenseError.js"));
 var ObjectUnprocessable = /** @class */ (function (_super) {
     tslib_1.__extends(ObjectUnprocessable, _super);
@@ -4135,7 +4136,7 @@ exports["default"] = ObjectUnprocessable;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var TypesenseError_1 = tslib_1.__importDefault(__webpack_require__(/*! ./TypesenseError */ "./node_modules/typesense/lib/Typesense/Errors/TypesenseError.js"));
 var RequestMalformed = /** @class */ (function (_super) {
     tslib_1.__extends(RequestMalformed, _super);
@@ -4158,7 +4159,7 @@ exports["default"] = RequestMalformed;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var TypesenseError_1 = tslib_1.__importDefault(__webpack_require__(/*! ./TypesenseError */ "./node_modules/typesense/lib/Typesense/Errors/TypesenseError.js"));
 var RequestUnauthorized = /** @class */ (function (_super) {
     tslib_1.__extends(RequestUnauthorized, _super);
@@ -4181,7 +4182,7 @@ exports["default"] = RequestUnauthorized;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var TypesenseError_1 = tslib_1.__importDefault(__webpack_require__(/*! ./TypesenseError */ "./node_modules/typesense/lib/Typesense/Errors/TypesenseError.js"));
 var ServerError = /** @class */ (function (_super) {
     tslib_1.__extends(ServerError, _super);
@@ -4204,7 +4205,7 @@ exports["default"] = ServerError;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var TypesenseError = /** @class */ (function (_super) {
     tslib_1.__extends(TypesenseError, _super);
     // Source: https://stackoverflow.com/a/58417721/123545
@@ -4234,7 +4235,7 @@ exports["default"] = TypesenseError;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ImportError = exports.TypesenseError = exports.ServerError = exports.RequestUnauthorized = exports.RequestMalformed = exports.ObjectUnprocessable = exports.ObjectNotFound = exports.ObjectAlreadyExists = exports.MissingConfigurationError = exports.HTTPError = void 0;
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var HTTPError_1 = tslib_1.__importDefault(__webpack_require__(/*! ./HTTPError */ "./node_modules/typesense/lib/Typesense/Errors/HTTPError.js"));
 exports.HTTPError = HTTPError_1.default;
 var MissingConfigurationError_1 = tslib_1.__importDefault(__webpack_require__(/*! ./MissingConfigurationError */ "./node_modules/typesense/lib/Typesense/Errors/MissingConfigurationError.js"));
@@ -4268,7 +4269,7 @@ exports.TypesenseError = TypesenseError_1.default;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var RESOURCEPATH = "/health";
 var Health = /** @class */ (function () {
     function Health(apiCall) {
@@ -4297,7 +4298,7 @@ exports["default"] = Health;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var Keys_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Keys */ "./node_modules/typesense/lib/Typesense/Keys.js"));
 var Key = /** @class */ (function () {
     function Key(id, apiCall) {
@@ -4337,7 +4338,7 @@ exports["default"] = Key;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var crypto_1 = __webpack_require__(/*! crypto */ "?6884");
 var Utils_1 = __webpack_require__(/*! ./Utils */ "./node_modules/typesense/lib/Typesense/Utils.js");
 var RESOURCEPATH = "/keys";
@@ -4393,7 +4394,7 @@ exports["default"] = Keys;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var RESOURCEPATH = "/metrics.json";
 var Metrics = /** @class */ (function () {
     function Metrics(apiCall) {
@@ -4422,7 +4423,7 @@ exports["default"] = Metrics;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var RequestWithCache_1 = tslib_1.__importDefault(__webpack_require__(/*! ./RequestWithCache */ "./node_modules/typesense/lib/Typesense/RequestWithCache.js"));
 var Utils_1 = __webpack_require__(/*! ./Utils */ "./node_modules/typesense/lib/Typesense/Utils.js");
 var RESOURCEPATH = "/multi_search";
@@ -4493,7 +4494,7 @@ exports["default"] = MultiSearch;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var NLSearchModels_1 = tslib_1.__importDefault(__webpack_require__(/*! ./NLSearchModels */ "./node_modules/typesense/lib/Typesense/NLSearchModels.js"));
 var NLSearchModel = /** @class */ (function () {
     function NLSearchModel(id, apiCall) {
@@ -4540,7 +4541,7 @@ exports["default"] = NLSearchModel;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var RESOURCEPATH = "/nl_search_models";
 var NLSearchModels = /** @class */ (function () {
     function NLSearchModels(apiCall) {
@@ -4586,7 +4587,7 @@ exports["default"] = NLSearchModels;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var RESOURCEPATH = "/operations";
 var Operations = /** @class */ (function () {
     function Operations(apiCall) {
@@ -4616,7 +4617,7 @@ exports["default"] = Operations;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var Collections_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Collections */ "./node_modules/typesense/lib/Typesense/Collections.js"));
 var Overrides_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Overrides */ "./node_modules/typesense/lib/Typesense/Overrides.js"));
 var Override = /** @class */ (function () {
@@ -4658,7 +4659,7 @@ exports["default"] = Override;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var Collections_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Collections */ "./node_modules/typesense/lib/Typesense/Collections.js"));
 var RESOURCEPATH = "/overrides";
 var Overrides = /** @class */ (function () {
@@ -4706,7 +4707,7 @@ exports["default"] = Overrides;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var Presets_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Presets */ "./node_modules/typesense/lib/Typesense/Presets.js"));
 var Preset = /** @class */ (function () {
     function Preset(presetId, apiCall) {
@@ -4746,7 +4747,7 @@ exports["default"] = Preset;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var Utils_1 = __webpack_require__(/*! ./Utils */ "./node_modules/typesense/lib/Typesense/Utils.js");
 var RESOURCEPATH = "/presets";
 var Presets = /** @class */ (function () {
@@ -4805,7 +4806,7 @@ exports["default"] = Presets;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var defaultCacheResponseForSeconds = 2 * 60;
 var defaultMaxSize = 100;
 var RequestWithCache = /** @class */ (function () {
@@ -4932,7 +4933,7 @@ exports["default"] = RequestWithCache;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var Configuration_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Configuration */ "./node_modules/typesense/lib/Typesense/Configuration.js"));
 var ApiCall_1 = tslib_1.__importDefault(__webpack_require__(/*! ./ApiCall */ "./node_modules/typesense/lib/Typesense/ApiCall.js"));
 var MultiSearch_1 = tslib_1.__importDefault(__webpack_require__(/*! ./MultiSearch */ "./node_modules/typesense/lib/Typesense/MultiSearch.js"));
@@ -5016,7 +5017,7 @@ exports.SearchOnlyCollection = SearchOnlyCollection;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.SearchOnlyDocuments = void 0;
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var RequestWithCache_1 = tslib_1.__importDefault(__webpack_require__(/*! ./RequestWithCache */ "./node_modules/typesense/lib/Typesense/RequestWithCache.js"));
 var Collections_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Collections */ "./node_modules/typesense/lib/Typesense/Collections.js"));
 var Utils_1 = __webpack_require__(/*! ./Utils */ "./node_modules/typesense/lib/Typesense/Utils.js");
@@ -5082,7 +5083,7 @@ exports.SearchOnlyDocuments = SearchOnlyDocuments;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var RESOURCEPATH = "/stats.json";
 var Metrics = /** @class */ (function () {
     function Metrics(apiCall) {
@@ -5111,7 +5112,7 @@ exports["default"] = Metrics;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var StemmingDictionaries_1 = tslib_1.__importDefault(__webpack_require__(/*! ./StemmingDictionaries */ "./node_modules/typesense/lib/Typesense/StemmingDictionaries.js"));
 var StemmingDictionary_1 = tslib_1.__importDefault(__webpack_require__(/*! ./StemmingDictionary */ "./node_modules/typesense/lib/Typesense/StemmingDictionary.js"));
 var RESOURCEPATH = "/stemming";
@@ -5156,7 +5157,7 @@ exports["default"] = Stemming;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var RESOURCEPATH = "/stemming/dictionaries";
 var StemmingDictionaries = /** @class */ (function () {
     function StemmingDictionaries(apiCall) {
@@ -5224,7 +5225,7 @@ exports["default"] = StemmingDictionaries;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var StemmingDictionaries_1 = tslib_1.__importDefault(__webpack_require__(/*! ./StemmingDictionaries */ "./node_modules/typesense/lib/Typesense/StemmingDictionaries.js"));
 var StemmingDictionary = /** @class */ (function () {
     function StemmingDictionary(id, apiCall) {
@@ -5257,7 +5258,7 @@ exports["default"] = StemmingDictionary;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var Stopwords_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Stopwords */ "./node_modules/typesense/lib/Typesense/Stopwords.js"));
 var Stopword = /** @class */ (function () {
     function Stopword(stopwordId, apiCall) {
@@ -5297,7 +5298,7 @@ exports["default"] = Stopword;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var RESOURCEPATH = "/stopwords";
 var Stopwords = /** @class */ (function () {
     function Stopwords(apiCall) {
@@ -5343,7 +5344,7 @@ exports["default"] = Stopwords;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var Collections_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Collections */ "./node_modules/typesense/lib/Typesense/Collections.js"));
 var Synonyms_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Synonyms */ "./node_modules/typesense/lib/Typesense/Synonyms.js"));
 /**
@@ -5394,7 +5395,7 @@ exports["default"] = Synonym;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var SynonymSets_1 = tslib_1.__importDefault(__webpack_require__(/*! ./SynonymSets */ "./node_modules/typesense/lib/Typesense/SynonymSets.js"));
 var SynonymSetItems_1 = tslib_1.__importDefault(__webpack_require__(/*! ./SynonymSetItems */ "./node_modules/typesense/lib/Typesense/SynonymSetItems.js"));
 var SynonymSetItem_1 = tslib_1.__importDefault(__webpack_require__(/*! ./SynonymSetItem */ "./node_modules/typesense/lib/Typesense/SynonymSetItem.js"));
@@ -5456,7 +5457,7 @@ exports["default"] = SynonymSet;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var SynonymSets_1 = tslib_1.__importDefault(__webpack_require__(/*! ./SynonymSets */ "./node_modules/typesense/lib/Typesense/SynonymSets.js"));
 var SynonymSetItem = /** @class */ (function () {
     function SynonymSetItem(synonymSetName, itemId, apiCall) {
@@ -5497,7 +5498,7 @@ exports["default"] = SynonymSetItem;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var SynonymSets_1 = tslib_1.__importDefault(__webpack_require__(/*! ./SynonymSets */ "./node_modules/typesense/lib/Typesense/SynonymSets.js"));
 var SynonymSetItems = /** @class */ (function () {
     function SynonymSetItems(synonymSetName, apiCall) {
@@ -5537,7 +5538,7 @@ exports["default"] = SynonymSetItems;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var SynonymSets = /** @class */ (function () {
     function SynonymSets(apiCall) {
         this.apiCall = apiCall;
@@ -5566,7 +5567,7 @@ exports["default"] = SynonymSets;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var Collections_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Collections */ "./node_modules/typesense/lib/Typesense/Collections.js"));
 var RESOURCEPATH = "/synonyms";
 /**
@@ -5656,7 +5657,7 @@ exports.arrayableParams = {
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.toErrorWithMessage = exports.normalizeArrayableParams = void 0;
-var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.mjs");
+var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var Types_1 = __webpack_require__(/*! ./Types */ "./node_modules/typesense/lib/Typesense/Types.js");
 function hasNoArrayValues(params) {
     return Object.keys(Types_1.arrayableParams)
@@ -10280,10 +10281,10 @@ function _unsupportedIterableToArray(r, a) {
 
 /***/ }),
 
-/***/ "./node_modules/tslib/tslib.es6.mjs":
-/*!******************************************!*\
-  !*** ./node_modules/tslib/tslib.es6.mjs ***!
-  \******************************************/
+/***/ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs":
+/*!*****************************************************************!*\
+  !*** ./node_modules/typesense/node_modules/tslib/tslib.es6.mjs ***!
+  \*****************************************************************/
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -10314,6 +10315,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   __propKey: () => (/* binding */ __propKey),
 /* harmony export */   __read: () => (/* binding */ __read),
 /* harmony export */   __rest: () => (/* binding */ __rest),
+/* harmony export */   __rewriteRelativeImportExtension: () => (/* binding */ __rewriteRelativeImportExtension),
 /* harmony export */   __runInitializers: () => (/* binding */ __runInitializers),
 /* harmony export */   __setFunctionName: () => (/* binding */ __setFunctionName),
 /* harmony export */   __spread: () => (/* binding */ __spread),
@@ -10336,7 +10338,7 @@ LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
 OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
 ***************************************************************************** */
-/* global Reflect, Promise, SuppressedError, Symbol */
+/* global Reflect, Promise, SuppressedError, Symbol, Iterator */
 
 var extendStatics = function(d, b) {
   extendStatics = Object.setPrototypeOf ||
@@ -10447,8 +10449,8 @@ function __awaiter(thisArg, _arguments, P, generator) {
 }
 
 function __generator(thisArg, body) {
-  var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-  return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+  var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
+  return g.next = verb(0), g["throw"] = verb(1), g["return"] = verb(2), typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
   function verb(n) { return function (v) { return step([n, v]); }; }
   function step(op) {
       if (f) throw new TypeError("Generator is already executing.");
@@ -10552,8 +10554,9 @@ function __await(v) {
 function __asyncGenerator(thisArg, _arguments, generator) {
   if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
   var g = generator.apply(thisArg, _arguments || []), i, q = [];
-  return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i;
-  function verb(n) { if (g[n]) i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; }
+  return i = Object.create((typeof AsyncIterator === "function" ? AsyncIterator : Object).prototype), verb("next"), verb("throw"), verb("return", awaitReturn), i[Symbol.asyncIterator] = function () { return this; }, i;
+  function awaitReturn(f) { return function (v) { return Promise.resolve(v).then(f, reject); }; }
+  function verb(n, f) { if (g[n]) { i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; if (f) i[n] = f(i[n]); } }
   function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
   function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
   function fulfill(value) { resume("next", value); }
@@ -10586,10 +10589,19 @@ var __setModuleDefault = Object.create ? (function(o, v) {
   o["default"] = v;
 };
 
+var ownKeys = function(o) {
+  ownKeys = Object.getOwnPropertyNames || function (o) {
+    var ar = [];
+    for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+    return ar;
+  };
+  return ownKeys(o);
+};
+
 function __importStar(mod) {
   if (mod && mod.__esModule) return mod;
   var result = {};
-  if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
   __setModuleDefault(result, mod);
   return result;
 }
@@ -10619,16 +10631,18 @@ function __classPrivateFieldIn(state, receiver) {
 function __addDisposableResource(env, value, async) {
   if (value !== null && value !== void 0) {
     if (typeof value !== "object" && typeof value !== "function") throw new TypeError("Object expected.");
-    var dispose;
+    var dispose, inner;
     if (async) {
-        if (!Symbol.asyncDispose) throw new TypeError("Symbol.asyncDispose is not defined.");
-        dispose = value[Symbol.asyncDispose];
+      if (!Symbol.asyncDispose) throw new TypeError("Symbol.asyncDispose is not defined.");
+      dispose = value[Symbol.asyncDispose];
     }
     if (dispose === void 0) {
-        if (!Symbol.dispose) throw new TypeError("Symbol.dispose is not defined.");
-        dispose = value[Symbol.dispose];
+      if (!Symbol.dispose) throw new TypeError("Symbol.dispose is not defined.");
+      dispose = value[Symbol.dispose];
+      if (async) inner = dispose;
     }
     if (typeof dispose !== "function") throw new TypeError("Object not disposable.");
+    if (inner) dispose = function() { try { inner.call(this); } catch (e) { return Promise.reject(e); } };
     env.stack.push({ value: value, dispose: dispose, async: async });
   }
   else if (async) {
@@ -10647,20 +10661,34 @@ function __disposeResources(env) {
     env.error = env.hasError ? new _SuppressedError(e, env.error, "An error was suppressed during disposal.") : e;
     env.hasError = true;
   }
+  var r, s = 0;
   function next() {
-    while (env.stack.length) {
-      var rec = env.stack.pop();
+    while (r = env.stack.pop()) {
       try {
-        var result = rec.dispose && rec.dispose.call(rec.value);
-        if (rec.async) return Promise.resolve(result).then(next, function(e) { fail(e); return next(); });
+        if (!r.async && s === 1) return s = 0, env.stack.push(r), Promise.resolve().then(next);
+        if (r.dispose) {
+          var result = r.dispose.call(r.value);
+          if (r.async) return s |= 2, Promise.resolve(result).then(next, function(e) { fail(e); return next(); });
+        }
+        else s |= 1;
       }
       catch (e) {
-          fail(e);
+        fail(e);
       }
     }
+    if (s === 1) return env.hasError ? Promise.reject(env.error) : Promise.resolve();
     if (env.hasError) throw env.error;
   }
   return next();
+}
+
+function __rewriteRelativeImportExtension(path, preserveJsx) {
+  if (typeof path === "string" && /^\.\.?\//.test(path)) {
+      return path.replace(/\.(tsx)$|((?:\.d)?)((?:\.[^./]+?)?)\.([cm]?)ts$/i, function (m, tsx, d, ext, cm) {
+          return tsx ? preserveJsx ? ".jsx" : ".js" : d && (!ext || !cm) ? m : (d + ext + "." + cm.toLowerCase() + "js");
+      });
+  }
+  return path;
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -10669,6 +10697,10 @@ function __disposeResources(env) {
   __rest,
   __decorate,
   __param,
+  __esDecorate,
+  __runInitializers,
+  __propKey,
+  __setFunctionName,
   __metadata,
   __awaiter,
   __generator,
@@ -10691,6 +10723,7 @@ function __disposeResources(env) {
   __classPrivateFieldIn,
   __addDisposableResource,
   __disposeResources,
+  __rewriteRelativeImportExtension,
 });
 
 
