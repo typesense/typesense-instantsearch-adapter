@@ -291,7 +291,7 @@ describe("Search Experience", () => {
 
     it("renders the grouped results", async () => {
       await expect(page).toMatchElement("#brand-list", {
-        text: "360fly",
+        text: "ALLie",
       });
       await expect(page).toMatchElement("#stats", {
         text: /26\d results found/,
