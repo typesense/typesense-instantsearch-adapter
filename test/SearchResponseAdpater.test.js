@@ -272,6 +272,56 @@ describe("SearchResponseAdapter", () => {
           },
         });
       });
+
+      it("falls back to the raw primitive value when highlight text is missing", () => {
+        const subject = new SearchResponseAdapter(
+          {},
+          {
+            params: {
+              highlightPreTag: "<mark>",
+              highlightPostTag: "</mark>",
+            },
+          },
+          new Configuration(),
+        );
+
+        const result = subject._adaptHighlightResult(
+          {
+            document: {
+              hierarchy: {
+                lvl0: "Laravel Full-Text Search",
+              },
+              "hierarchy.lvl0": "Laravel Full-Text Search",
+            },
+            highlight: {
+              hierarchy: {
+                lvl0: {
+                  matched_tokens: [],
+                },
+              },
+              "hierarchy.lvl0": {
+                matched_tokens: [],
+              },
+            },
+          },
+          "value",
+        );
+
+        expect(result).toEqual({
+          hierarchy: {
+            lvl0: {
+              value: "Laravel Full-Text Search",
+              matchLevel: "none",
+              matchedWords: [],
+            },
+          },
+          "hierarchy.lvl0": {
+            value: "Laravel Full-Text Search",
+            matchLevel: "none",
+            matchedWords: [],
+          },
+        });
+      });
     });
   });
 

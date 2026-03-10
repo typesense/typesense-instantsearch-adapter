@@ -247,13 +247,15 @@ export class SearchResponseAdapter {
 
   _adaptHighlightInPrimitiveValue(primitiveValue, highlightPrimitiveValue, snippetOrValue) {
     if (highlightPrimitiveValue != null) {
+      const highlightedValue =
+        highlightPrimitiveValue[snippetOrValue] ??
+        highlightPrimitiveValue["highlight"] ??
+        highlightPrimitiveValue["snippet"] ??
+        primitiveValue;
+
       return {
         value: this._adaptHighlightTag(
-          `${
-            highlightPrimitiveValue[snippetOrValue] ??
-            highlightPrimitiveValue["highlight"] ??
-            highlightPrimitiveValue["snippet"]
-          }`,
+          `${highlightedValue}`,
           this.instantsearchRequest.params.highlightPreTag,
           this.instantsearchRequest.params.highlightPostTag,
         ),
