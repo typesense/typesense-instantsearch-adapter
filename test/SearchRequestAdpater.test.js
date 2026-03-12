@@ -499,6 +499,75 @@ describe("SearchRequestAdapter", () => {
         );
       });
 
+      it("promotes union-global pagination params from the first search request", async () => {
+        const mockTypesenseClient = {
+          multiSearch: {
+            perform: jest.fn().mockResolvedValue({ results: [] }),
+          },
+        };
+
+        const configuration = new Configuration({
+          union: true,
+          additionalSearchParameters: {
+            query_by: "name",
+            offset: 40,
+            limit: 20,
+            limit_hits: 200,
+          },
+        });
+
+        const instantsearchRequests = [
+          {
+            indexName: "products",
+            params: { query: "test", page: 1, hitsPerPage: 20 },
+          },
+          {
+            indexName: "brands",
+            params: { query: "test", page: 1, hitsPerPage: 20 },
+          },
+        ];
+
+        const subject = new SearchRequestAdapter(instantsearchRequests, mockTypesenseClient, configuration);
+        await subject.request();
+
+        expect(mockTypesenseClient.multiSearch.perform).toHaveBeenCalledWith(
+          {
+            union: true,
+            searches: [
+              {
+                collection: "products",
+                q: "test",
+                page: 2,
+                per_page: 20,
+                query_by: "name",
+                offset: 40,
+                limit: 20,
+                limit_hits: 200,
+                highlight_full_fields: "name",
+              },
+              {
+                collection: "brands",
+                q: "test",
+                page: 2,
+                per_page: 20,
+                query_by: "name",
+                offset: 40,
+                limit: 20,
+                limit_hits: 200,
+                highlight_full_fields: "name",
+              },
+            ],
+          },
+          {
+            page: 2,
+            per_page: 20,
+            offset: 40,
+            limit: 20,
+            limit_hits: 200,
+          },
+        );
+      });
+
       it("does not include union parameter in multisearch request when union is false", async () => {
         const mockTypesenseClient = {
           multiSearch: {

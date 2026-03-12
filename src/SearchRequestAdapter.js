@@ -644,8 +644,11 @@ export class SearchRequestAdapter {
     // Add union parameter if configured
     if (this.configuration.union) {
       searchRequest.union = this.configuration.union;
-      commonParams.page = searches[0].page;
-      commonParams.per_page = searches[0].per_page;
+      ["page", "per_page", "offset", "limit", "limit_hits"].forEach((paramName) => {
+        if (searches[0][paramName] != null) {
+          commonParams[paramName] = searches[0][paramName];
+        }
+      });
     }
 
     return this.typesenseClient.multiSearch.perform(searchRequest, commonParams);
