@@ -442,6 +442,132 @@ describe("SearchRequestAdapter", () => {
         );
       });
 
+      it("promotes per_page to common params for union search", async () => {
+        const mockTypesenseClient = {
+          multiSearch: {
+            perform: jest.fn().mockResolvedValue({ results: [] }),
+          },
+        };
+
+        const configuration = new Configuration({
+          union: true,
+          additionalSearchParameters: {
+            query_by: "name",
+          },
+        });
+
+        const instantsearchRequests = [
+          {
+            indexName: "products",
+            params: { query: "test", hitsPerPage: 20 },
+          },
+          {
+            indexName: "brands",
+            params: { query: "test", hitsPerPage: 20 },
+          },
+        ];
+
+        const subject = new SearchRequestAdapter(instantsearchRequests, mockTypesenseClient, configuration);
+        await subject.request();
+
+        expect(mockTypesenseClient.multiSearch.perform).toHaveBeenCalledWith(
+          {
+            union: true,
+            searches: [
+              {
+                collection: "products",
+                q: "test",
+                page: 1,
+                per_page: 20,
+                query_by: "name",
+                highlight_full_fields: "name",
+              },
+              {
+                collection: "brands",
+                q: "test",
+                page: 1,
+                per_page: 20,
+                query_by: "name",
+                highlight_full_fields: "name",
+              },
+            ],
+          },
+          {
+            page: 1,
+            per_page: 20,
+          },
+        );
+      });
+
+      it("promotes union-global pagination params from the first search request", async () => {
+        const mockTypesenseClient = {
+          multiSearch: {
+            perform: jest.fn().mockResolvedValue({ results: [] }),
+          },
+        };
+
+        const configuration = new Configuration({
+          union: true,
+          additionalSearchParameters: {
+            query_by: "name",
+            offset: 40,
+            limit: 20,
+            limit_hits: 200,
+          },
+        });
+
+        const instantsearchRequests = [
+          {
+            indexName: "products",
+            params: { query: "test", page: 1, hitsPerPage: 20 },
+          },
+          {
+            indexName: "brands",
+            params: { query: "test", page: 1, hitsPerPage: 20 },
+          },
+        ];
+
+        const subject = new SearchRequestAdapter(instantsearchRequests, mockTypesenseClient, configuration);
+        await subject.request();
+
+        expect(mockTypesenseClient.multiSearch.perform).toHaveBeenCalledWith(
+          {
+            union: true,
+            searches: [
+              {
+                collection: "products",
+                q: "test",
+                page: 2,
+                per_page: 20,
+                query_by: "name",
+                offset: 40,
+                limit: 20,
+                limit_hits: 200,
+                highlight_full_fields: "name",
+              },
+              {
+                collection: "brands",
+                q: "test",
+                page: 2,
+                per_page: 20,
+                query_by: "name",
+                offset: 40,
+                limit: 20,
+                limit_hits: 200,
+                highlight_full_fields: "name",
+              },
+            ],
+          },
+          {
+            page: 2,
+            per_page: 20,
+            offset: 40,
+            limit: 20,
+            limit_hits: 200,
+          },
+        );
+      });
+
       it("does not include union parameter in multisearch request when union is false", async () => {
         const mockTypesenseClient = {
           multiSearch: {
@@ -548,6 +674,7 @@ describe("SearchRequestAdapter", () => {
           collection: "products",
           q: "test",
           page: 1,
+          per_page: 20,
           query_by: "name",
           conversation: true,
           conversation_id: "conv_123",
@@ -563,6 +690,7 @@ describe("SearchRequestAdapter", () => {
               {
                 collection: "products",
                 page: 1,
+                per_page: 20,
                 query_by: "name",
               },
             ],
@@ -573,6 +701,7 @@ describe("SearchRequestAdapter", () => {
             conversation_id: "conv_123",
             conversation_model_id: "model_456",
             page: 1,
+            per_page: 20,
           },
         );
       });
