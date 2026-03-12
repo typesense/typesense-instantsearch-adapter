@@ -84,7 +84,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "typesense": "^3.0.0-2"
+    "typesense": "^3.0.2"
   },
   "peerDependencies": {
     "@babel/runtime": "^7.24.1"
