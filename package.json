@@ -32,6 +32,7 @@
   "scripts": {
     "pretest": "npm run lint && npm run test:type",
     "postinstall": "node scripts/postinstall.js",
+    "prepublishOnly": "npm run build",
     "lint": "eslint --fix . && prettier --write .",
     "test": "jest --maxWorkers=1 --verbose",
     "build:lib": "babel src -d lib --source-maps",
