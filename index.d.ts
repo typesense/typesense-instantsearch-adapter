@@ -110,7 +110,10 @@ interface BaseAdapterOptions {
   flipNegativeRefinementOperator?: boolean;
 }
 
-type CollectionSearchParameters<Infix extends string = string> = Record<string, BaseSearchParameters<DocumentSchema, Infix>>;
+type CollectionSearchParameters<Infix extends string = string> = Record<
+  string,
+  BaseSearchParameters<DocumentSchema, Infix>
+>;
 
 interface AdditionalSearchParametersWithQueryBy<T extends DocumentSchema, Infix extends string = string>
   extends BaseAdapterOptions {
@@ -130,16 +133,23 @@ interface CollectionSpecificSearchParametersOptionalQueryBy<Infix extends string
   collectionSpecificSearchParameters?: CollectionSearchParameters<Infix>;
 }
 
-type AdapterOptionsWithQueryByInAdditionalSearchParameters<T extends DocumentSchema, Infix extends string = string> =
-  AdditionalSearchParametersWithQueryBy<T, Infix> & CollectionSpecificSearchParametersOptionalQueryBy<Infix>;
-type AdapterOptionWithQueryByInCollectionSpecificSearchParameters<T extends DocumentSchema, Infix extends string = string> =
-  AdditionalSearchParametersOptionalQueryBy<T, Infix> & CollectionSpecificSearchParametersWithQueryBy<Infix>;
+type AdapterOptionsWithQueryByInAdditionalSearchParameters<
+  T extends DocumentSchema,
+  Infix extends string = string,
+> = AdditionalSearchParametersWithQueryBy<T, Infix> & CollectionSpecificSearchParametersOptionalQueryBy<Infix>;
+type AdapterOptionWithQueryByInCollectionSpecificSearchParameters<
+  T extends DocumentSchema,
+  Infix extends string = string,
+> = AdditionalSearchParametersOptionalQueryBy<T, Infix> & CollectionSpecificSearchParametersWithQueryBy<Infix>;
 
 type TypesenseInstantsearchAdapterOptions<T extends DocumentSchema = DocumentSchema, Infix extends string = string> =
   | AdapterOptionWithQueryByInCollectionSpecificSearchParameters<T, Infix>
   | AdapterOptionsWithQueryByInAdditionalSearchParameters<T, Infix>;
 
-export default class TypesenseInstantsearchAdapter<T extends DocumentSchema = DocumentSchema, Infix extends string = string> {
+export default class TypesenseInstantsearchAdapter<
+  T extends DocumentSchema = DocumentSchema,
+  Infix extends string = string,
+> {
   readonly searchClient: SearchClient;
   readonly typesenseClient: TypesenseSearchClient;
   constructor(options: TypesenseInstantsearchAdapterOptions<T, Infix>);
