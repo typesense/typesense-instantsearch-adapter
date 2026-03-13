@@ -110,37 +110,39 @@ interface BaseAdapterOptions {
   flipNegativeRefinementOperator?: boolean;
 }
 
-type CollectionSearchParameters = Record<string, BaseSearchParameters<DocumentSchema>>;
+type CollectionSearchParameters<Infix extends string = string> = Record<string, BaseSearchParameters<DocumentSchema, Infix>>;
 
-interface AdditionalSearchParametersWithQueryBy<T extends DocumentSchema> extends BaseAdapterOptions {
-  additionalSearchParameters: BaseSearchParameters<T>;
+interface AdditionalSearchParametersWithQueryBy<T extends DocumentSchema, Infix extends string = string>
+  extends BaseAdapterOptions {
+  additionalSearchParameters: BaseSearchParameters<T, Infix>;
 }
 
-interface AdditionalSearchParametersOptionalQueryBy<T extends DocumentSchema> extends BaseAdapterOptions {
-  additionalSearchParameters?: BaseSearchParameters<T>;
+interface AdditionalSearchParametersOptionalQueryBy<T extends DocumentSchema, Infix extends string = string>
+  extends BaseAdapterOptions {
+  additionalSearchParameters?: BaseSearchParameters<T, Infix>;
 }
 
-interface CollectionSpecificSearchParametersWithQueryBy extends BaseAdapterOptions {
-  collectionSpecificSearchParameters: CollectionSearchParameters;
+interface CollectionSpecificSearchParametersWithQueryBy<Infix extends string = string> extends BaseAdapterOptions {
+  collectionSpecificSearchParameters: CollectionSearchParameters<Infix>;
 }
 
-interface CollectionSpecificSearchParametersOptionalQueryBy extends BaseAdapterOptions {
-  collectionSpecificSearchParameters?: CollectionSearchParameters;
+interface CollectionSpecificSearchParametersOptionalQueryBy<Infix extends string = string> extends BaseAdapterOptions {
+  collectionSpecificSearchParameters?: CollectionSearchParameters<Infix>;
 }
 
-type AdapterOptionsWithQueryByInAdditionalSearchParameters<T extends DocumentSchema> =
-  AdditionalSearchParametersWithQueryBy<T> & CollectionSpecificSearchParametersOptionalQueryBy;
-type AdapterOptionWithQueryByInCollectionSpecificSearchParameters<T extends DocumentSchema> =
-  AdditionalSearchParametersOptionalQueryBy<T> & CollectionSpecificSearchParametersWithQueryBy;
+type AdapterOptionsWithQueryByInAdditionalSearchParameters<T extends DocumentSchema, Infix extends string = string> =
+  AdditionalSearchParametersWithQueryBy<T, Infix> & CollectionSpecificSearchParametersOptionalQueryBy<Infix>;
+type AdapterOptionWithQueryByInCollectionSpecificSearchParameters<T extends DocumentSchema, Infix extends string = string> =
+  AdditionalSearchParametersOptionalQueryBy<T, Infix> & CollectionSpecificSearchParametersWithQueryBy<Infix>;
 
-type TypesenseInstantsearchAdapterOptions<T extends DocumentSchema = DocumentSchema> =
-  | AdapterOptionWithQueryByInCollectionSpecificSearchParameters<T>
-  | AdapterOptionsWithQueryByInAdditionalSearchParameters<T>;
+type TypesenseInstantsearchAdapterOptions<T extends DocumentSchema = DocumentSchema, Infix extends string = string> =
+  | AdapterOptionWithQueryByInCollectionSpecificSearchParameters<T, Infix>
+  | AdapterOptionsWithQueryByInAdditionalSearchParameters<T, Infix>;
 
-export default class TypesenseInstantsearchAdapter<T extends DocumentSchema = DocumentSchema> {
+export default class TypesenseInstantsearchAdapter<T extends DocumentSchema = DocumentSchema, Infix extends string = string> {
   readonly searchClient: SearchClient;
   readonly typesenseClient: TypesenseSearchClient;
-  constructor(options: TypesenseInstantsearchAdapterOptions<T>);
+  constructor(options: TypesenseInstantsearchAdapterOptions<T, Infix>);
   clearCache(): SearchClient;
-  updateConfiguration(options: TypesenseInstantsearchAdapterOptions<T>): boolean;
+  updateConfiguration(options: TypesenseInstantsearchAdapterOptions<T, Infix>): boolean;
 }
