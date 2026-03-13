@@ -1,5 +1,5 @@
-import { expectAssignable, expectNotAssignable } from "tsd";
-import { TypesenseInstantsearchAdapterOptions } from ".";
+import { expectAssignable, expectError, expectNotAssignable } from "tsd";
+import TypesenseInstantsearchAdapter, { TypesenseInstantsearchAdapterOptions } from ".";
 import { NodeConfiguration } from "typesense/lib/Typesense/Configuration";
 
 expectAssignable<TypesenseInstantsearchAdapterOptions>({
@@ -127,6 +127,36 @@ expectAssignable<TypesenseInstantsearchAdapterOptions>({
   },
   additionalSearchParameters: { query_by: "a,b,c", sort_by: "a" },
 });
+
+const genericInfix = "off,yes,not";
+
+new TypesenseInstantsearchAdapter({
+  server: {
+    apiKey: "foo",
+    nodes: [{ host: "example.com", port: 1234, protocol: "http" }],
+  },
+  additionalSearchParameters: { query_by: "d", infix: "off,fallback, off, always" },
+});
+
+expectError(
+  new TypesenseInstantsearchAdapter({
+    server: {
+      apiKey: "foo",
+      nodes: [{ host: "example.com", port: 1234, protocol: "http" }],
+    },
+    additionalSearchParameters: { query_by: "d", infix: genericInfix },
+  }),
+);
+
+expectError(
+  new TypesenseInstantsearchAdapter({
+    server: {
+      apiKey: "foo",
+      nodes: [{ host: "example.com", port: 1234, protocol: "http" }],
+    },
+    additionalSearchParameters: { query_by: "d", infix: "off,yes,not" },
+  }),
+);
 
 expectNotAssignable<TypesenseInstantsearchAdapterOptions>({
   server: {
