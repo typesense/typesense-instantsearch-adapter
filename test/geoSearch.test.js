@@ -3,7 +3,7 @@ if (process.env.CI) {
   describeFunc = xdescribe;
 }
 describeFunc("Geo Search", () => {
-  beforeAll(require("./support/beforeAll"), 60 * 1000);
+  beforeAll(require("./support/beforeAll.cjs"), 60 * 1000);
 
   beforeEach(async () => {
     await page.goto("http://localhost:3000/geosearch.html");

@@ -1,5 +1,5 @@
 describe("Instant Search Widgets", () => {
-  beforeAll(require("./support/beforeAll"), 60 * 1000);
+  beforeAll(require("./support/beforeAll.cjs"), 60 * 1000);
 
   beforeEach(async () => {
     return page.goto("http://localhost:3000/index.html");
@@ -154,7 +154,7 @@ describe("Instant Search Widgets", () => {
   });
 
   describe("queryRuleCustomData", () => {
-    beforeAll(require("./support/beforeAll"));
+    beforeAll(require("./support/beforeAll.cjs"));
     beforeEach(async () => {
       return page.goto("http://localhost:3000/index.html");
     });
@@ -175,7 +175,7 @@ describe("Instant Search Widgets", () => {
   });
 
   describe("queryRuleContext", () => {
-    beforeAll(require("./support/beforeAll"));
+    beforeAll(require("./support/beforeAll.cjs"));
     beforeEach(async () => {
       return page.goto("http://localhost:3000/index.html");
     });

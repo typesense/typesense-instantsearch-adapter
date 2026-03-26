@@ -1,6 +1,6 @@
 "use strict";
 
-import { utils } from "./support/utils";
+import { utils } from "./support/utils.js";
 
 export class FacetSearchResponseAdapter {
   constructor(typesenseResponse, instantsearchRequest) {

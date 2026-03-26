@@ -1,4 +1,4 @@
-import { setDefaultOptions } from "expect-puppeteer";
+const { setDefaultOptions } = require("expect-puppeteer");
 
 module.exports = async () => {
   setDefaultOptions({ timeout: 30000 });
@@ -29,8 +29,8 @@ module.exports = async () => {
       }
     });
 
-  await require("./populateProductsIndex");
-  await require("./populateBrandsIndex");
-  await require("./populateRecipesIndex");
-  return require("./populateAirportsIndex");
+  await require("./populateProductsIndex.cjs");
+  await require("./populateBrandsIndex.cjs");
+  await require("./populateRecipesIndex.cjs");
+  return require("./populateAirportsIndex.cjs");
 };
