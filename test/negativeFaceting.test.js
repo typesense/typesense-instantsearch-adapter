@@ -1,5 +1,5 @@
 describe("Negative Faceting", () => {
-  beforeAll(require("./support/beforeAll"), 60 * 1000);
+  beforeAll(require("./support/beforeAll.cjs"), 60 * 1000);
 
   describe("for a single value", () => {
     beforeEach(async () => {

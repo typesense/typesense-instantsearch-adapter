@@ -1,10 +1,10 @@
 "use strict";
 
-import { Configuration } from "./Configuration";
+import { Configuration } from "./Configuration.js";
 import { SearchClient as TypesenseSearchClient } from "typesense";
-import { SearchRequestAdapter } from "./SearchRequestAdapter";
-import { SearchResponseAdapter } from "./SearchResponseAdapter";
-import { FacetSearchResponseAdapter } from "./FacetSearchResponseAdapter";
+import { SearchRequestAdapter } from "./SearchRequestAdapter.js";
+import { SearchResponseAdapter } from "./SearchResponseAdapter.js";
+import { FacetSearchResponseAdapter } from "./FacetSearchResponseAdapter.js";
 
 export default class TypesenseInstantsearchAdapter {
   constructor(options) {

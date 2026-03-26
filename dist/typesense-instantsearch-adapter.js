@@ -11,1316 +11,6 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/Configuration.js":
-/*!******************************!*\
-  !*** ./src/Configuration.js ***!
-  \******************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Configuration: () => (/* binding */ Configuration)
-/* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
-
-
-
-
-var Configuration = /*#__PURE__*/function () {
-  function Configuration() {
-    var _this$server$cacheSea,
-      _options$additionalSe,
-      _ref,
-      _this$additionalSearc,
-      _ref2,
-      _this$additionalSearc2,
-      _ref3,
-      _this$additionalSearc3,
-      _ref4,
-      _this$additionalSearc4,
-      _options$geoLocationF,
-      _options$facetableFie,
-      _options$collectionSp,
-      _this = this,
-      _options$flattenGroup,
-      _options$facetByOptio,
-      _options$filterByOpti,
-      _options$sortByOption,
-      _options$collectionSp2,
-      _options$collectionSp3,
-      _options$collectionSp4,
-      _options$union,
-      _options$useOverrideT,
-      _options$flipNegative;
-    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, Configuration);
-    this.server = options.server || {
-      nodes: [{
-        host: "localhost",
-        port: "8108",
-        path: "",
-        protocol: "http"
-      }]
-    };
-    this.server.cacheSearchResultsForSeconds = (_this$server$cacheSea = this.server.cacheSearchResultsForSeconds) !== null && _this$server$cacheSea !== void 0 ? _this$server$cacheSea : 2 * 60;
-    this.additionalSearchParameters = (_options$additionalSe = options.additionalSearchParameters) !== null && _options$additionalSe !== void 0 ? _options$additionalSe : {};
-    this.additionalSearchParameters.query_by = (_ref = (_this$additionalSearc = this.additionalSearchParameters.queryBy) !== null && _this$additionalSearc !== void 0 ? _this$additionalSearc : this.additionalSearchParameters.query_by) !== null && _ref !== void 0 ? _ref : "";
-    this.additionalSearchParameters.preset = (_ref2 = (_this$additionalSearc2 = this.additionalSearchParameters.preset) !== null && _this$additionalSearc2 !== void 0 ? _this$additionalSearc2 : this.additionalSearchParameters.preset) !== null && _ref2 !== void 0 ? _ref2 : "";
-    this.additionalSearchParameters.sort_by = (_ref3 = (_this$additionalSearc3 = this.additionalSearchParameters.sortBy) !== null && _this$additionalSearc3 !== void 0 ? _this$additionalSearc3 : this.additionalSearchParameters.sort_by) !== null && _ref3 !== void 0 ? _ref3 : "";
-    this.additionalSearchParameters.highlight_full_fields = (_ref4 = (_this$additionalSearc4 = this.additionalSearchParameters.highlightFullFields) !== null && _this$additionalSearc4 !== void 0 ? _this$additionalSearc4 : this.additionalSearchParameters.highlight_full_fields) !== null && _ref4 !== void 0 ? _ref4 : this.additionalSearchParameters.query_by;
-    this.geoLocationField = (_options$geoLocationF = options.geoLocationField) !== null && _options$geoLocationF !== void 0 ? _options$geoLocationF : "_geoloc";
-    this.facetableFieldsWithSpecialCharacters = (_options$facetableFie = options.facetableFieldsWithSpecialCharacters) !== null && _options$facetableFie !== void 0 ? _options$facetableFie : [];
-    this.collectionSpecificSearchParameters = (_options$collectionSp = options.collectionSpecificSearchParameters) !== null && _options$collectionSp !== void 0 ? _options$collectionSp : {};
-    Object.keys(this.collectionSpecificSearchParameters).forEach(function (collection) {
-      var _params$queryBy, _params$preset, _params$sortBy, _ref5, _ref6, _params$highlightFull;
-      var params = _this.collectionSpecificSearchParameters[collection];
-      params.query_by = (_params$queryBy = params.queryBy) !== null && _params$queryBy !== void 0 ? _params$queryBy : params.query_by;
-      params.preset = (_params$preset = params.preset) !== null && _params$preset !== void 0 ? _params$preset : params.preset;
-      params.sort_by = (_params$sortBy = params.sortBy) !== null && _params$sortBy !== void 0 ? _params$sortBy : params.sort_by;
-      params.highlight_full_fields = (_ref5 = (_ref6 = (_params$highlightFull = params.highlightFullFields) !== null && _params$highlightFull !== void 0 ? _params$highlightFull : params.highlight_full_fields) !== null && _ref6 !== void 0 ? _ref6 : _this.additionalSearchParameters.highlight_full_fields) !== null && _ref5 !== void 0 ? _ref5 : params.query_by;
-
-      // Remove undefined values
-      Object.keys(params).forEach(function (key) {
-        return params[key] === undefined ? delete params[key] : {};
-      });
-    });
-    this.renderingContent = options.renderingContent;
-    this.flattenGroupedHits = (_options$flattenGroup = options.flattenGroupedHits) !== null && _options$flattenGroup !== void 0 ? _options$flattenGroup : true;
-    this.facetByOptions = (_options$facetByOptio = options.facetByOptions) !== null && _options$facetByOptio !== void 0 ? _options$facetByOptio : {};
-    this.filterByOptions = (_options$filterByOpti = options.filterByOptions) !== null && _options$filterByOpti !== void 0 ? _options$filterByOpti : {};
-    this.sortByOptions = (_options$sortByOption = options.sortByOptions) !== null && _options$sortByOption !== void 0 ? _options$sortByOption : {};
-    this.collectionSpecificFacetByOptions = (_options$collectionSp2 = options.collectionSpecificFacetByOptions) !== null && _options$collectionSp2 !== void 0 ? _options$collectionSp2 : {};
-    this.collectionSpecificFilterByOptions = (_options$collectionSp3 = options.collectionSpecificFilterByOptions) !== null && _options$collectionSp3 !== void 0 ? _options$collectionSp3 : {};
-    this.collectionSpecificSortByOptions = (_options$collectionSp4 = options.collectionSpecificSortByOptions) !== null && _options$collectionSp4 !== void 0 ? _options$collectionSp4 : {};
-    this.union = (_options$union = options.union) !== null && _options$union !== void 0 ? _options$union : false;
-    // For Typesense v30+, use curation_tags. Set to true for older versions that use override_tags.
-    this.useOverrideTags = (_options$useOverrideT = options.useOverrideTags) !== null && _options$useOverrideT !== void 0 ? _options$useOverrideT : false;
-    // flips negative refinement encoding between AND/OR groups
-    // AND groups become field:![a,b], OR groups become field:!a || field:!b
-    this.flipNegativeRefinementOperator = (_options$flipNegative = options.flipNegativeRefinementOperator) !== null && _options$flipNegative !== void 0 ? _options$flipNegative : false;
-  }
-  return (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(Configuration, [{
-    key: "validate",
-    value: function validate() {
-      // Warn if camelCased parameters are used, suggest using snake_cased parameters instead
-      if (this.additionalSearchParameters.queryBy || Object.values(this.collectionSpecificSearchParameters).some(function (c) {
-        return c.queryBy;
-      })) {
-        console.warn("[typesense-instantsearch-adapter] Please use snake_cased versions of parameters in additionalSearchParameters instead of camelCased parameters. For example: Use query_by instead of queryBy. camelCased parameters will be deprecated in a future version." + " We're making this change so that parameter names are identical to the ones sent to Typesense (which are all snake_cased), and to also keep the types for these parameters in sync with the types defined in typesense-js.");
-      }
-
-      /*
-       * Either additionalSearchParameters.query_by or additionalSearchParameters.preset needs to be set, or
-       *   All collectionSpecificSearchParameters need to have query_by or preset
-       *
-       * */
-      if (this.additionalSearchParameters.query_by.length === 0 && this.additionalSearchParameters.preset.length === 0 && (Object.keys(this.collectionSpecificSearchParameters).length === 0 || Object.values(this.collectionSpecificSearchParameters).some(function (c) {
-        return (c.query_by || "").length === 0 && (c.preset || "").length === 0;
-      }))) {
-        throw new Error("[typesense-instantsearch-adapter] Missing parameter: One of additionalSearchParameters.query_by or additionalSearchParameters.preset needs to be set, or all collectionSpecificSearchParameters need to have either .query_by or .preset set.");
-      }
-    }
-  }]);
-}();
-
-/***/ }),
-
-/***/ "./src/FacetSearchResponseAdapter.js":
-/*!*******************************************!*\
-  !*** ./src/FacetSearchResponseAdapter.js ***!
-  \*******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   FacetSearchResponseAdapter: () => (/* binding */ FacetSearchResponseAdapter)
-/* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
-/* harmony import */ var _support_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./support/utils */ "./src/support/utils.js");
-
-
-
-
-
-var FacetSearchResponseAdapter = /*#__PURE__*/function () {
-  function FacetSearchResponseAdapter(typesenseResponse, instantsearchRequest) {
-    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, FacetSearchResponseAdapter);
-    this.typesenseResponse = typesenseResponse;
-    this.instantsearchRequest = instantsearchRequest;
-  }
-  return (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(FacetSearchResponseAdapter, [{
-    key: "_adaptFacetHits",
-    value: function _adaptFacetHits(typesenseFacetCounts) {
-      var _this = this;
-      var adaptedResult = [];
-      var facet = typesenseFacetCounts.find(function (facet) {
-        return facet.field_name === _this.instantsearchRequest.params.facetName;
-      });
-      if (typeof facet !== "undefined") {
-        adaptedResult = facet.counts.map(function (facetCount) {
-          return {
-            value: facetCount.value,
-            highlighted: _this._adaptHighlightTag(facetCount.highlighted, _this.instantsearchRequest.params.highlightPreTag, _this.instantsearchRequest.params.highlightPostTag),
-            count: facetCount.count
-          };
-        });
-      }
-      return adaptedResult;
-    }
-  }, {
-    key: "adapt",
-    value: function adapt() {
-      var adaptedResult = {
-        facetHits: this._adaptFacetHits(this.typesenseResponse.facet_counts),
-        exhaustiveFacetsCount: true,
-        processingTimeMS: this.typesenseResponse.search_time_ms
-      };
-      return adaptedResult;
-    }
-  }]);
-}();
-Object.assign(FacetSearchResponseAdapter.prototype, _support_utils__WEBPACK_IMPORTED_MODULE_2__.utils);
-
-/***/ }),
-
-/***/ "./src/SearchRequestAdapter.js":
-/*!*************************************!*\
-  !*** ./src/SearchRequestAdapter.js ***!
-  \*************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   SearchRequestAdapter: () => (/* binding */ SearchRequestAdapter)
-/* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
-/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5__);
-
-
-
-
-
-
-
-var _excluded = ["q", "conversation", "conversation_id", "conversation_model_id"];
-
-var SearchRequestAdapter = /*#__PURE__*/function () {
-  function SearchRequestAdapter(instantsearchRequests, typesenseClient, configuration) {
-    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_3__["default"])(this, SearchRequestAdapter);
-    this.instantsearchRequests = instantsearchRequests;
-    this.typesenseClient = typesenseClient;
-    this.configuration = configuration;
-    this.additionalSearchParameters = configuration.additionalSearchParameters;
-    this.collectionSpecificSearchParameters = configuration.collectionSpecificSearchParameters;
-  }
-  return (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4__["default"])(SearchRequestAdapter, [{
-    key: "_shouldUseExactMatchForField",
-    value: function _shouldUseExactMatchForField(fieldName, collectionName) {
-      var _this$configuration$c, _this$configuration$f;
-      if (((_this$configuration$c = this.configuration.collectionSpecificFilterByOptions) === null || _this$configuration$c === void 0 || (_this$configuration$c = _this$configuration$c[collectionName]) === null || _this$configuration$c === void 0 || (_this$configuration$c = _this$configuration$c[fieldName]) === null || _this$configuration$c === void 0 ? void 0 : _this$configuration$c.exactMatch) === false || ((_this$configuration$f = this.configuration.filterByOptions) === null || _this$configuration$f === void 0 || (_this$configuration$f = _this$configuration$f[fieldName]) === null || _this$configuration$f === void 0 ? void 0 : _this$configuration$f.exactMatch) === false) {
-        return false;
-      } else {
-        return true;
-      }
-    }
-  }, {
-    key: "_adaptFacetFilters",
-    value: function _adaptFacetFilters(facetFilters, collectionName) {
-      var _this = this;
-      var adaptedResult = "";
-      if (!facetFilters) {
-        return adaptedResult;
-      }
-
-      /**
-       * Need to transform:
-       *  facetFilters = [["field1:value1", "field1:value2"], "field2:value3", "field2:value4"]
-       *
-       * Into this:
-       *  field1:=[value1,value2] && field2:=value3 && field2:=value4
-       *
-       * Steps:
-       *  - For each item in facetFilters
-       *    - If item is array
-       *      - OR values together.
-       *      - Warn if field names are not the same
-       *    - If item is string, convert to facet:=value format
-       *  - Join strings by &&
-       */
-
-      var transformedTypesenseFilters = facetFilters.map(function (item) {
-        if (Array.isArray(item)) {
-          // Need to transform:
-          // facetFilters = ["field1:value1", "field1:value2", "facetN:valueN"]
-          //
-          // Into this:
-          // intermediateFacetFilters = {
-          //     "field1": ["value1", "value2"],
-          //     "fieldN": ["valueN"]
-          // }
-
-          var intermediateFacetFilters = {};
-          item.forEach(function (facetFilter) {
-            var _this$_parseFacetFilt = _this._parseFacetFilter(facetFilter),
-              fieldName = _this$_parseFacetFilt.fieldName,
-              fieldValue = _this$_parseFacetFilt.fieldValue;
-            intermediateFacetFilters[fieldName] = intermediateFacetFilters[fieldName] || [];
-            intermediateFacetFilters[fieldName].push(fieldValue);
-          });
-          if (Object.keys(intermediateFacetFilters).length > 1) {
-            console.error("[Typesense-Instantsearch-Adapter] Typesense does not support cross-field ORs at the moment. The adapter could not OR values between these fields: ".concat(Object.keys(intermediateFacetFilters).join(",")));
-          }
-
-          // Pick first value from intermediateFacetFilters
-          var fieldName = Object.keys(intermediateFacetFilters)[0];
-          var fieldValues = intermediateFacetFilters[fieldName];
-
-          // Need to transform:
-          // intermediateFacetFilters = {
-          //     "field1": ["value1", "value2"],
-          // }
-          //
-          // Into this:
-          // field1:=[value1,value2]
-
-          // Partition values into included and excluded values
-          var _fieldValues$reduce = fieldValues.reduce(function (result, fieldValue) {
-              if (fieldValue.startsWith("-") && !_this._isNumber(fieldValue)) {
-                result[0].push(fieldValue.substring(1));
-              } else {
-                result[1].push(fieldValue);
-              }
-              return result;
-            }, [[], []]),
-            _fieldValues$reduce2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_fieldValues$reduce, 2),
-            excludedFieldValues = _fieldValues$reduce2[0],
-            includedFieldValues = _fieldValues$reduce2[1];
-          var typesenseFilterStringComponents = [];
-          if (includedFieldValues.length > 0) {
-            var operator = _this._shouldUseExactMatchForField(fieldName, collectionName) ? ":=" : ":";
-            typesenseFilterStringComponents.push("".concat(fieldName).concat(operator, "[").concat(includedFieldValues.map(function (v) {
-              return _this._escapeFacetValue(v);
-            }).join(","), "]"));
-          }
-          if (excludedFieldValues.length > 0) {
-            var _operator = _this._shouldUseExactMatchForField(fieldName, collectionName) ? ":!=" : ":!";
-            if (_this.configuration.flipNegativeRefinementOperator) {
-              typesenseFilterStringComponents.push("(".concat(excludedFieldValues.map(function (v) {
-                return "".concat(fieldName).concat(_operator).concat(_this._escapeFacetValue(v));
-              }).join(" || "), ")"));
-            } else {
-              typesenseFilterStringComponents.push("".concat(fieldName).concat(_operator, "[").concat(excludedFieldValues.map(function (v) {
-                return _this._escapeFacetValue(v);
-              }).join(","), "]"));
-            }
-          }
-          var typesenseFilterString = typesenseFilterStringComponents.filter(function (f) {
-            return f;
-          }).join(" && ");
-          return typesenseFilterString;
-        } else {
-          // Need to transform:
-          //  fieldName:fieldValue
-          // Into
-          //  fieldName:=fieldValue
-
-          var _this$_parseFacetFilt2 = _this._parseFacetFilter(item),
-            _fieldName = _this$_parseFacetFilt2.fieldName,
-            fieldValue = _this$_parseFacetFilt2.fieldValue;
-          var _typesenseFilterString;
-          if (fieldValue.startsWith("-") && !_this._isNumber(fieldValue)) {
-            var _operator2 = _this._shouldUseExactMatchForField(_fieldName, collectionName) ? ":!=" : ":!";
-            _typesenseFilterString = "".concat(_fieldName).concat(_operator2, "[").concat(_this._escapeFacetValue(fieldValue.substring(1)), "]");
-          } else {
-            var _operator3 = _this._shouldUseExactMatchForField(_fieldName, collectionName) ? ":=" : ":";
-            _typesenseFilterString = "".concat(_fieldName).concat(_operator3, "[").concat(_this._escapeFacetValue(fieldValue), "]");
-          }
-          return _typesenseFilterString;
-        }
-      });
-      adaptedResult = transformedTypesenseFilters.join(" && ");
-      // console.log(`${JSON.stringify(facetFilters)} => ${adaptedResult}`);
-
-      return adaptedResult;
-    }
-  }, {
-    key: "_parseFacetFilter",
-    value: function _parseFacetFilter(facetFilter) {
-      var _this$configuration$f2;
-      var filterStringMatchingRegex, facetFilterMatches, fieldName, fieldValue;
-
-      // This is helpful when the filter looks like `facetName:with:colons:facetValue:with:colons` and the default regex above parses the filter as `facetName:with:colons:facetValue:with` and `colon`.
-      // So if a facetValue can contain a colon, we ask users to pass in all possible facetable fields in `facetableFieldsWithSpecialCharacters` when instantiating the adapter, so we can explicitly match against that.
-      if (((_this$configuration$f2 = this.configuration.facetableFieldsWithSpecialCharacters) === null || _this$configuration$f2 === void 0 ? void 0 : _this$configuration$f2.length) > 0) {
-        // escape any Regex special characters, source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
-        var sanitizedFacetableFieldsWithSpecialCharacters = this.configuration.facetableFieldsWithSpecialCharacters.flat().map(function (f) {
-          return f.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-        });
-        filterStringMatchingRegex = new RegExp("^(".concat(sanitizedFacetableFieldsWithSpecialCharacters.join("|"), "):(.*)$"));
-        facetFilterMatches = facetFilter.match(filterStringMatchingRegex);
-        if (facetFilterMatches != null) {
-          fieldName = "".concat(facetFilterMatches[1]);
-          fieldValue = "".concat(facetFilterMatches[2]);
-          return {
-            fieldName: fieldName,
-            fieldValue: fieldValue
-          };
-        }
-      }
-
-      // If we haven't found any matches yet
-      // Use the default filter parsing regex, which assumes that only facet names have colons, and not facet values
-      filterStringMatchingRegex = this.constructor.DEFAULT_FACET_FILTER_STRING_MATCHING_REGEX;
-      facetFilterMatches = facetFilter.match(filterStringMatchingRegex);
-
-      // console.log(filterStringMatchingRegex);
-      // console.log(facetFilter);
-      // console.log(facetFilterMatches);
-
-      if (facetFilterMatches == null) {
-        console.error("[Typesense-Instantsearch-Adapter] Parsing failed for a facet filter `".concat(facetFilter, "` with the Regex `").concat(filterStringMatchingRegex, "`. If you have field names with special characters, be sure to add them to a parameter called `facetableFieldsWithSpecialCharacters` when instantiating the adapter."));
-      } else {
-        fieldName = "".concat(facetFilterMatches[1]).concat(facetFilterMatches[2]);
-        fieldValue = "".concat(facetFilterMatches[3]);
-      }
-      return {
-        fieldName: fieldName,
-        fieldValue: fieldValue
-      };
-    }
-  }, {
-    key: "_escapeFacetValue",
-    value: function _escapeFacetValue(value) {
-      // Don't escape booleans, integers or floats
-      if (typeof value === "boolean" || value === "true" || value === "false" || this._isNumber(value)) {
-        return value;
-      }
-      return "`".concat(value, "`");
-    }
-  }, {
-    key: "_isNumber",
-    value: function _isNumber(value) {
-      return Number.isInteger(value % 1) ||
-      // Mod 1 will automatically try converting string values to integer/float
-      !!(value % 1); // Is Float
-    }
-  }, {
-    key: "_adaptNumericFilters",
-    value: function _adaptNumericFilters(numericFilters) {
-      var _this2 = this;
-      // Need to transform this:
-      // ["field1<=634", "field1>=289", "field2<=5", "field3>=3"]
-      // to:
-      // "field1:=[634..289] && field2:<=5 && field3:>=3"
-      var adaptedResult = "";
-      if (!numericFilters) {
-        return adaptedResult;
-      }
-
-      // Transform to intermediate structure:
-      // {
-      //   field1: {
-      //     "<=": 634,
-      //     ">=": 289
-      //   },
-      //   field2: {
-      //     "<=": 5
-      //   },
-      //   field3: {
-      //     ">=": 3
-      //   }
-      // };
-      var filtersHash = {};
-      numericFilters.forEach(function (filter) {
-        var _this2$_parseNumericF = _this2._parseNumericFilter(filter),
-          fieldName = _this2$_parseNumericF.fieldName,
-          operator = _this2$_parseNumericF.operator,
-          fieldValue = _this2$_parseNumericF.fieldValue;
-        filtersHash[fieldName] = filtersHash[fieldName] || {};
-        filtersHash[fieldName][operator] = fieldValue;
-      });
-
-      // Transform that to:
-      //  "field1:=[634..289] && field2:<=5 && field3:>=3"
-      var adaptedFilters = [];
-      Object.keys(filtersHash).forEach(function (field) {
-        if (filtersHash[field]["<="] != null && filtersHash[field][">="] != null) {
-          adaptedFilters.push("".concat(field, ":=[").concat(filtersHash[field][">="], "..").concat(filtersHash[field]["<="], "]"));
-        } else if (filtersHash[field]["<="] != null) {
-          adaptedFilters.push("".concat(field, ":<=").concat(filtersHash[field]["<="]));
-        } else if (filtersHash[field][">="] != null) {
-          adaptedFilters.push("".concat(field, ":>=").concat(filtersHash[field][">="]));
-        } else if (filtersHash[field]["="] != null) {
-          adaptedFilters.push("".concat(field, ":=").concat(filtersHash[field]["="]));
-        } else {
-          console.warn("[Typesense-Instantsearch-Adapter] Unsupported operator found ".concat(JSON.stringify(filtersHash[field])));
-        }
-      });
-      adaptedResult = adaptedFilters.join(" && ");
-      return adaptedResult;
-    }
-  }, {
-    key: "_parseNumericFilter",
-    value: function _parseNumericFilter(numericFilter) {
-      var _this$configuration$f3;
-      var filterStringMatchingRegex, numericFilterMatches;
-      var fieldName, operator, fieldValue;
-
-      // The following is helpful when the facetName has special characters like > and the default regex fails to parse it properly.
-      // So we ask users to pass in facetable fields in `facetableFieldsWithSpecialCharactersWithSpecialCharacters` when instantiating the adapter, so we can explicitly match against that.
-      if (((_this$configuration$f3 = this.configuration.facetableFieldsWithSpecialCharacters) === null || _this$configuration$f3 === void 0 ? void 0 : _this$configuration$f3.length) > 0) {
-        // escape any Regex special characters, source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
-        var sanitizedFacetableFieldsWithSpecialCharacters = this.configuration.facetableFieldsWithSpecialCharacters.map(function (f) {
-          return f.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-        });
-        filterStringMatchingRegex = new RegExp("^(".concat(sanitizedFacetableFieldsWithSpecialCharacters.join("|"), ")(<=|>=|>|<|=)(.*)$"));
-        numericFilterMatches = numericFilter.match(filterStringMatchingRegex);
-        if (numericFilterMatches != null) {
-          // If no matches are found or if the above didn't trigger, fall back to the default regex
-          var _numericFilterMatches = numericFilterMatches;
-          var _numericFilterMatches2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_numericFilterMatches, 4);
-          fieldName = _numericFilterMatches2[1];
-          operator = _numericFilterMatches2[2];
-          fieldValue = _numericFilterMatches2[3];
-          return {
-            fieldName: fieldName,
-            operator: operator,
-            fieldValue: fieldValue
-          };
-        }
-      }
-
-      // If we haven't found any matches yet, fall back to the default regex
-      filterStringMatchingRegex = this.constructor.DEFAULT_NUMERIC_FILTER_STRING_MATCHING_REGEX;
-      numericFilterMatches = numericFilter.match(filterStringMatchingRegex);
-
-      // console.log(filterStringMatchingRegex);
-      // console.log(numericFilter);
-      // console.log(numericFilterMatches);
-
-      if (numericFilterMatches == null) {
-        console.error("[Typesense-Instantsearch-Adapter] Parsing failed for a numeric filter `".concat(numericFilter, "` with the Regex `").concat(filterStringMatchingRegex, "`. If you have field names with special characters, be sure to add them to a parameter called `facetableFieldsWithSpecialCharacters` when instantiating the adapter."));
-      } else {
-        var _numericFilterMatches3 = numericFilterMatches;
-        var _numericFilterMatches4 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_numericFilterMatches3, 4);
-        fieldName = _numericFilterMatches4[1];
-        operator = _numericFilterMatches4[2];
-        fieldValue = _numericFilterMatches4[3];
-      }
-      return {
-        fieldName: fieldName,
-        operator: operator,
-        fieldValue: fieldValue
-      };
-    }
-  }, {
-    key: "_adaptGeoFilter",
-    value: function _adaptGeoFilter(_ref) {
-      var insideBoundingBox = _ref.insideBoundingBox,
-        aroundRadius = _ref.aroundRadius,
-        aroundLatLng = _ref.aroundLatLng,
-        insidePolygon = _ref.insidePolygon;
-      // Give this parameter first priority if it exists, since
-      if (insideBoundingBox) {
-        var x1, y1, x2, y2;
-        if (Array.isArray(insideBoundingBox)) {
-          var _insideBoundingBox$fl = insideBoundingBox.flat();
-          var _insideBoundingBox$fl2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_insideBoundingBox$fl, 4);
-          x1 = _insideBoundingBox$fl2[0];
-          y1 = _insideBoundingBox$fl2[1];
-          x2 = _insideBoundingBox$fl2[2];
-          y2 = _insideBoundingBox$fl2[3];
-        } else {
-          var _insideBoundingBox$sp = insideBoundingBox.split(",");
-          var _insideBoundingBox$sp2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_insideBoundingBox$sp, 4);
-          x1 = _insideBoundingBox$sp2[0];
-          y1 = _insideBoundingBox$sp2[1];
-          x2 = _insideBoundingBox$sp2[2];
-          y2 = _insideBoundingBox$sp2[3];
-        }
-        return "".concat(this.configuration.geoLocationField, ":(").concat(x1, ", ").concat(y1, ", ").concat(x1, ", ").concat(y2, ", ").concat(x2, ", ").concat(y2, ", ").concat(x2, ", ").concat(y1, ")");
-      }
-      if (aroundLatLng || aroundRadius) {
-        if (!aroundRadius || aroundRadius === "all") {
-          throw new Error("[Typesense-Instantsearch-Adapter] In Typesense, geo-filtering around a lat/lng also requires a numerical radius. " + "So the `aroundRadius` parameter is required when `aroundLatLng` is used. " + "If you intend to just geo-sort around a lat/long, you want to use the sortBy InstantSearch widget (or a virtual sortBy custom widget).");
-        }
-        var adaptedAroundRadius = "".concat(parseFloat(aroundRadius) / 1000, " km"); // aroundRadius is in meters
-        return "".concat(this.configuration.geoLocationField, ":(").concat(aroundLatLng, ", ").concat(adaptedAroundRadius, ")");
-      }
-      if (insidePolygon) {
-        var coordinates = insidePolygon;
-        if (Array.isArray(insidePolygon)) {
-          coordinates = insidePolygon.flat().join(",");
-        }
-        return "".concat(this.configuration.geoLocationField, ":(").concat(coordinates, ")");
-      }
-    }
-  }, {
-    key: "_splitByTopLevelAnd",
-    value: function _splitByTopLevelAnd(filterBy) {
-      var clauses = [];
-      var currentClause = "";
-      var backtickOpen = false;
-      for (var i = 0; i < filterBy.length; i += 1) {
-        var _char = filterBy[i];
-        var nextChar = filterBy[i + 1];
-        if (_char === "`") {
-          backtickOpen = !backtickOpen;
-        }
-        if (!backtickOpen && _char === "&" && nextChar === "&") {
-          if (currentClause.trim() !== "") {
-            clauses.push(currentClause.trim());
-          }
-          currentClause = "";
-          i += 1;
-          continue;
-        }
-        currentClause += _char;
-      }
-      if (currentClause.trim() !== "") {
-        clauses.push(currentClause.trim());
-      }
-      return clauses;
-    }
-  }, {
-    key: "_splitListValues",
-    value: function _splitListValues(valuesString) {
-      var values = [];
-      var currentValue = "";
-      var backtickOpen = false;
-      for (var i = 0; i < valuesString.length; i += 1) {
-        var _char2 = valuesString[i];
-        if (_char2 === "`") {
-          backtickOpen = !backtickOpen;
-        }
-        if (!backtickOpen && _char2 === ",") {
-          if (currentValue.trim() !== "") {
-            values.push(currentValue.trim());
-          }
-          currentValue = "";
-          continue;
-        }
-        currentValue += _char2;
-      }
-      if (currentValue.trim() !== "") {
-        values.push(currentValue.trim());
-      }
-      return values;
-    }
-  }, {
-    key: "_parseListClause",
-    value: function _parseListClause(clause) {
-      var trimmedClause = clause.trim();
-      var openBracketIndex = trimmedClause.indexOf("[");
-      var closeBracketIndex = trimmedClause.lastIndexOf("]");
-      if (openBracketIndex === -1 || closeBracketIndex === -1 || closeBracketIndex !== trimmedClause.length - 1) {
-        return null;
-      }
-      var leftSide = trimmedClause.slice(0, openBracketIndex).trim();
-      var valuesString = trimmedClause.slice(openBracketIndex + 1, closeBracketIndex);
-      var operators = [":!=", ":=", ":!", ":"];
-      var operator = operators.find(function (candidateOperator) {
-        return leftSide.endsWith(candidateOperator);
-      });
-      if (!operator) {
-        return null;
-      }
-      var fieldName = leftSide.slice(0, leftSide.length - operator.length).trim();
-      if (!fieldName) {
-        return null;
-      }
-      return {
-        fieldName: fieldName,
-        operator: operator,
-        values: this._splitListValues(valuesString)
-      };
-    }
-  }, {
-    key: "_mergeSameFieldExclusionListClauses",
-    value: function _mergeSameFieldExclusionListClauses(filterBy) {
-      var _this3 = this;
-      if (!filterBy) return filterBy;
-      var clauses = this._splitByTopLevelAnd(filterBy);
-      var groupedListClauses = {};
-      var rebuiltClauses = [];
-      clauses.forEach(function (clause, clauseIndex) {
-        var parsedClause = _this3._parseListClause(clause);
-        if (!parsedClause) {
-          rebuiltClauses.push({
-            clauseIndex: clauseIndex,
-            clause: clause
-          });
-          return;
-        }
-        var normalizedOperator = parsedClause.operator === ":!" || parsedClause.operator === ":!=" ? "exclude" : null;
-        if (normalizedOperator == null) {
-          rebuiltClauses.push({
-            clauseIndex: clauseIndex,
-            clause: clause
-          });
-          return;
-        }
-        var groupingKey = "".concat(parsedClause.fieldName, "|").concat(normalizedOperator);
-        if (!groupedListClauses[groupingKey]) {
-          groupedListClauses[groupingKey] = {
-            clauseIndex: clauseIndex,
-            fieldName: parsedClause.fieldName,
-            operator: parsedClause.operator,
-            normalizedOperator: normalizedOperator,
-            values: []
-          };
-        }
-        parsedClause.values.forEach(function (value) {
-          if (!groupedListClauses[groupingKey].values.includes(value)) {
-            groupedListClauses[groupingKey].values.push(value);
-          }
-        });
-      });
-      Object.values(groupedListClauses).forEach(function (group) {
-        rebuiltClauses.push({
-          clauseIndex: group.clauseIndex,
-          clause: "".concat(group.fieldName).concat(group.operator, "[").concat(group.values.join(","), "]")
-        });
-      });
-      return rebuiltClauses.sort(function (left, right) {
-        return left.clauseIndex - right.clauseIndex;
-      }).map(function (entry) {
-        return entry.clause;
-      }).join(" && ");
-    }
-  }, {
-    key: "_adaptFilters",
-    value: function _adaptFilters(instantsearchParams, collectionName) {
-      var adaptedFilters = [];
-
-      // `filters` can be used with the `Configure` widget
-      // However the format needs to be in the Typesense filter_by format, instead of Algolia filter format.
-      if (instantsearchParams.filters) {
-        adaptedFilters.push(instantsearchParams.filters);
-      }
-      adaptedFilters.push(this._adaptFacetFilters(instantsearchParams.facetFilters, collectionName));
-      adaptedFilters.push(this._adaptNumericFilters(instantsearchParams.numericFilters));
-      adaptedFilters.push(this._adaptGeoFilter(instantsearchParams));
-      var combinedFilter = adaptedFilters.filter(function (filter) {
-        return filter && filter !== "";
-      }).join(" && ");
-      if (this.configuration.flipNegativeRefinementOperator) {
-        return this._mergeSameFieldExclusionListClauses(combinedFilter);
-      }
-      return combinedFilter;
-    }
-  }, {
-    key: "_adaptIndexName",
-    value: function _adaptIndexName(indexName) {
-      return indexName.match(this.constructor.INDEX_NAME_MATCHING_REGEX)[1];
-    }
-  }, {
-    key: "_adaptSortBy",
-    value: function _adaptSortBy(indexName) {
-      return indexName.match(this.constructor.INDEX_NAME_MATCHING_REGEX)[3];
-    }
-  }, {
-    key: "_adaptFacetBy",
-    value: function _adaptFacetBy(facets, collectionName) {
-      var _this4 = this;
-      return [facets].flat().map(function (facet) {
-        var _this4$configuration$;
-        if ((_this4$configuration$ = _this4.configuration.collectionSpecificFacetByOptions) !== null && _this4$configuration$ !== void 0 && (_this4$configuration$ = _this4$configuration$[collectionName]) !== null && _this4$configuration$ !== void 0 && _this4$configuration$[facet]) {
-          return "".concat(facet).concat(_this4.configuration.collectionSpecificFacetByOptions[collectionName][facet]);
-        } else if (_this4.configuration.facetByOptions[facet]) {
-          return "".concat(facet).concat(_this4.configuration.facetByOptions[facet]);
-        } else {
-          return facet;
-        }
-      }).join(",");
-    }
-  }, {
-    key: "_adaptRulesContextsToOverrideTags",
-    value: function _adaptRulesContextsToOverrideTags(ruleContexts) {
-      return ruleContexts.join(",");
-    }
-  }, {
-    key: "_buildSearchParameters",
-    value: function _buildSearchParameters(instantsearchRequest) {
-      var _this$configuration$c2, _this$configuration$s;
-      var params = instantsearchRequest.params;
-      var indexName = instantsearchRequest.indexName;
-      var adaptedCollectionName = this._adaptIndexName(indexName);
-
-      // Convert all common parameters to snake case
-      var snakeCasedAdditionalSearchParameters = {};
-      for (var _i = 0, _Object$entries = Object.entries(this.additionalSearchParameters); _i < _Object$entries.length; _i++) {
-        var _Object$entries$_i = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_Object$entries[_i], 2),
-          key = _Object$entries$_i[0],
-          value = _Object$entries$_i[1];
-        snakeCasedAdditionalSearchParameters[this._camelToSnakeCase(key)] = value;
-      }
-
-      // Override, collection specific parameters
-      if (this.collectionSpecificSearchParameters[adaptedCollectionName]) {
-        for (var _i2 = 0, _Object$entries2 = Object.entries(this.collectionSpecificSearchParameters[adaptedCollectionName]); _i2 < _Object$entries2.length; _i2++) {
-          var _Object$entries2$_i = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_Object$entries2[_i2], 2),
-            _key = _Object$entries2$_i[0],
-            _value = _Object$entries2$_i[1];
-          snakeCasedAdditionalSearchParameters[this._camelToSnakeCase(_key)] = _value;
-        }
-      }
-      var typesenseSearchParams = Object.assign({}, snakeCasedAdditionalSearchParameters);
-      var adaptedSortBy = this._adaptSortBy(indexName);
-      Object.assign(typesenseSearchParams, {
-        collection: adaptedCollectionName,
-        q: params.query === "" || params.query === undefined ? "*" : params.query,
-        facet_by: snakeCasedAdditionalSearchParameters.facet_by || this._adaptFacetBy(params.facets, adaptedCollectionName),
-        filter_by: this._adaptFilters(params, adaptedCollectionName) || snakeCasedAdditionalSearchParameters.filter_by,
-        sort_by: adaptedSortBy || snakeCasedAdditionalSearchParameters.sort_by,
-        max_facet_values: params.maxValuesPerFacet,
-        page: (params.page || 0) + 1
-      });
-      if (params.hitsPerPage != null) {
-        typesenseSearchParams.per_page = params.hitsPerPage;
-      }
-      if (params.facetQuery) {
-        typesenseSearchParams.facet_query = "".concat(params.facetName, ":").concat(params.facetQuery);
-        typesenseSearchParams.per_page = 0;
-      }
-      if (params.ruleContexts && params.ruleContexts.length > 0) {
-        var tagsParamName = this.configuration.useOverrideTags ? "override_tags" : "curation_tags";
-        typesenseSearchParams[tagsParamName] = this._adaptRulesContextsToOverrideTags(params.ruleContexts);
-      }
-
-      // If a custom vector query is specified, set q=*
-      if (params.typesenseVectorQuery) {
-        typesenseSearchParams.vector_query = params.typesenseVectorQuery;
-      }
-
-      // Allow for conditional disabling of overrides, for particular sort orders
-      var sortByOption = ((_this$configuration$c2 = this.configuration.collectionSpecificSortByOptions) === null || _this$configuration$c2 === void 0 || (_this$configuration$c2 = _this$configuration$c2[adaptedCollectionName]) === null || _this$configuration$c2 === void 0 ? void 0 : _this$configuration$c2[typesenseSearchParams["sort_by"]]) || ((_this$configuration$s = this.configuration.sortByOptions) === null || _this$configuration$s === void 0 ? void 0 : _this$configuration$s[typesenseSearchParams["sort_by"]]);
-      if ((sortByOption === null || sortByOption === void 0 ? void 0 : sortByOption["enable_overrides"]) != null) {
-        typesenseSearchParams["enable_overrides"] = sortByOption["enable_overrides"];
-      }
-
-      // console.log(params);
-      // console.log(typesenseSearchParams);
-
-      // Filter out empty or null values, so we don't accidentally override values set in presets
-      // eslint-disable-next-line no-unused-vars
-      return Object.fromEntries(Object.entries(typesenseSearchParams).filter(function (_ref2) {
-        var _ref3 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_ref2, 2),
-          _ = _ref3[0],
-          v = _ref3[1];
-        return v != null && v !== "";
-      }));
-    }
-  }, {
-    key: "_camelToSnakeCase",
-    value: function _camelToSnakeCase(str) {
-      return str.split(/(?=[A-Z])/).join("_").toLowerCase();
-    }
-  }, {
-    key: "request",
-    value: function () {
-      var _request = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5___default().mark(function _callee() {
-        var _this5 = this,
-          _searches$,
-          _searches$2;
-        var searches, commonParams, _searches$3, q, conversation, conversation_id, conversation_model_id, searchRequest;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5___default().wrap(function _callee$(_context) {
-          while (1) switch (_context.prev = _context.next) {
-            case 0:
-              // console.log(this.instantsearchRequests);
-              searches = this.instantsearchRequests.map(function (instantsearchRequest) {
-                return _this5._buildSearchParameters(instantsearchRequest);
-              }); // If this is a conversational search, then move conversation related params to query params
-              commonParams = {};
-              if (((_searches$ = searches[0]) === null || _searches$ === void 0 ? void 0 : _searches$.conversation) === true || ((_searches$2 = searches[0]) === null || _searches$2 === void 0 ? void 0 : _searches$2.conversation) === "true") {
-                _searches$3 = searches[0], q = _searches$3.q, conversation = _searches$3.conversation, conversation_id = _searches$3.conversation_id, conversation_model_id = _searches$3.conversation_model_id;
-                commonParams = {
-                  q: q,
-                  conversation: conversation,
-                  conversation_id: conversation_id,
-                  conversation_model_id: conversation_model_id
-                };
-                searches = searches.map(function (searchParams) {
-                  // eslint-disable-next-line no-unused-vars
-                  var q = searchParams.q,
-                    conversation = searchParams.conversation,
-                    conversation_id = searchParams.conversation_id,
-                    conversation_model_id = searchParams.conversation_model_id,
-                    modifiedSearchParams = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__["default"])(searchParams, _excluded);
-                  return modifiedSearchParams;
-                });
-              }
-              searchRequest = {
-                searches: searches
-              }; // Add union parameter if configured
-              if (this.configuration.union) {
-                searchRequest.union = this.configuration.union;
-                ["page", "per_page", "offset", "limit", "limit_hits"].forEach(function (paramName) {
-                  if (searches[0][paramName] != null) {
-                    commonParams[paramName] = searches[0][paramName];
-                  }
-                });
-              }
-              return _context.abrupt("return", this.typesenseClient.multiSearch.perform(searchRequest, commonParams));
-            case 6:
-            case "end":
-              return _context.stop();
-          }
-        }, _callee, this);
-      }));
-      function request() {
-        return _request.apply(this, arguments);
-      }
-      return request;
-    }()
-  }], [{
-    key: "INDEX_NAME_MATCHING_REGEX",
-    get: function get() {
-      return new RegExp("^(.+?)(?=(/sort/(.*))|$)");
-    }
-  }, {
-    key: "DEFAULT_FACET_FILTER_STRING_MATCHING_REGEX",
-    get: function get() {
-      return new RegExp("(.*)((?!:).):(?!:)(.*)");
-    }
-  }, {
-    key: "DEFAULT_NUMERIC_FILTER_STRING_MATCHING_REGEX",
-    get: function get() {
-      return new RegExp("(.*?)(<=|>=|>|<|=)(.*)");
-    }
-  }]);
-}();
-
-/***/ }),
-
-/***/ "./src/SearchResponseAdapter.js":
-/*!**************************************!*\
-  !*** ./src/SearchResponseAdapter.js ***!
-  \**************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   SearchResponseAdapter: () => (/* binding */ SearchResponseAdapter)
-/* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/typeof */ "./node_modules/@babel/runtime/helpers/esm/typeof.js");
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
-/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ "./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js");
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
-/* harmony import */ var _support_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./support/utils */ "./src/support/utils.js");
-
-
-
-
-
-
-
-
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__["default"])(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-
-var SearchResponseAdapter = /*#__PURE__*/function () {
-  function SearchResponseAdapter(typesenseResponse, instantsearchRequest, configuration) {
-    var allTypesenseResults = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
-    var fullTypesenseResponse = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : {};
-    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_4__["default"])(this, SearchResponseAdapter);
-    this.typesenseResponse = typesenseResponse;
-    this.instantsearchRequest = instantsearchRequest;
-    this.configuration = configuration;
-    this.allTypesenseResults = allTypesenseResults;
-    this.fullTypesenseResponse = fullTypesenseResponse;
-  }
-  return (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_5__["default"])(SearchResponseAdapter, [{
-    key: "_adaptGroupedHits",
-    value: function _adaptGroupedHits(typesenseGroupedHits) {
-      var _this = this;
-      var adaptedResult = [];
-      adaptedResult = typesenseGroupedHits.map(function (groupedHit) {
-        var adaptedHits = _this._adaptHits(groupedHit.hits);
-        adaptedHits.forEach(function (hit) {
-          hit["group_key"] = hit["_group_key"] = groupedHit.group_key;
-          if (groupedHit.found) {
-            hit["_group_found"] = groupedHit.found;
-          }
-        });
-        return adaptedHits;
-      });
-
-      // adaptedResult is now in the form of [[{}, {}], [{}, {}], ...]
-      //  where each element in the outermost array corresponds to a group.
-
-      if (this.configuration.flattenGroupedHits) {
-        // We flatten it to [{}, {}, {}]
-        adaptedResult = adaptedResult.flat();
-      } else {
-        // We flatten it to [{ ..., grouped_hits: [{}, {}] }, {}, {}]
-        // We set the first element in the group as the hit, and then add a new key called grouped_hits with the other hits
-        adaptedResult = adaptedResult.map(function (adaptedGroupedHit) {
-          return _objectSpread(_objectSpread({}, adaptedGroupedHit[0]), {}, {
-            _grouped_hits: adaptedGroupedHit
-          });
-        });
-      }
-      return adaptedResult;
-    }
-  }, {
-    key: "_adaptHits",
-    value: function _adaptHits(typesenseHits) {
-      var _this2 = this;
-      var adaptedResult = [];
-      adaptedResult = typesenseHits.map(function (typesenseHit) {
-        var adaptedHit = _objectSpread({}, typesenseHit.document);
-        adaptedHit.objectID = typesenseHit.document.id;
-        adaptedHit._snippetResult = _this2._adaptHighlightResult(typesenseHit, "snippet");
-        adaptedHit._highlightResult = _this2._adaptHighlightResult(typesenseHit, "value");
-        adaptedHit._rawTypesenseHit = typesenseHit;
-
-        // We're adding `conversation` into each hit, since there doesn't seem to be any other way to pass this up to Instantsearch outside of hits
-        if (_this2.fullTypesenseResponse.conversation) {
-          adaptedHit._rawTypesenseConversation = _this2.fullTypesenseResponse.conversation;
-        }
-
-        // Add metadata fields to result, if a field with that name doesn't already exist
-        ["text_match", "geo_distance_meters", "curated", "text_match_info", "hybrid_search_info", "vector_distance", "collection",
-        // Union search specific
-        "search_index" // Union search specific
-        ].forEach(function (metadataField) {
-          if (Object.keys(typesenseHit).includes(metadataField) && !Object.keys(adaptedHit).includes(metadataField)) {
-            adaptedHit[metadataField] = typesenseHit[metadataField];
-          }
-        });
-        var geoLocationValue = adaptedHit[_this2.configuration.geoLocationField];
-        if (geoLocationValue) {
-          adaptedHit._geoloc = {
-            lat: geoLocationValue[0],
-            lng: geoLocationValue[1]
-          };
-        }
-        return adaptedHit;
-      });
-      return adaptedResult;
-    }
-  }, {
-    key: "_adaptHighlightResult",
-    value: function _adaptHighlightResult(typesenseHit, snippetOrValue) {
-      var result = {};
-
-      // If there is a highlight object available (as of v0.24.0),
-      // And the highlight object uses the highlight format available in v0.24.0.rcn32 and above
-      //  use that instead of the highlights array, since it supports highlights of nested fields
-      if (typesenseHit.highlight != null && this.isHighlightPost0240RCN32Format(typesenseHit.highlight)) {
-        this.adaptHighlightObject(typesenseHit, result, snippetOrValue);
-      } else {
-        this.adaptHighlightsArray(typesenseHit, result, snippetOrValue);
-      }
-      return result;
-    }
-  }, {
-    key: "isHighlightPost0240RCN32Format",
-    value: function isHighlightPost0240RCN32Format(highlight) {
-      return highlight.full == null && highlight.snippet == null;
-    }
-  }, {
-    key: "adaptHighlightsArray",
-    value: function adaptHighlightsArray(typesenseHit, result, snippetOrValue) {
-      var _this3 = this;
-      // Algolia lists all searchable attributes in this key, even if there are no matches
-      // So do the same and then override highlights
-
-      Object.assign.apply(Object, [result].concat((0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2__["default"])(Object.entries(typesenseHit.document).map(function (_ref) {
-        var _ref2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_ref, 2),
-          attribute = _ref2[0],
-          value = _ref2[1];
-        return (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__["default"])({}, attribute, {
-          value: value,
-          matchLevel: "none",
-          matchedWords: []
-        });
-      }))));
-      typesenseHit.highlights.forEach(function (highlight) {
-        result[highlight.field] = {
-          value: highlight[snippetOrValue] || highlight["".concat(snippetOrValue, "s")],
-          matchLevel: "full",
-          matchedWords: highlight.matched_tokens
-        };
-        if (highlight.indices) {
-          result[highlight.field]["matchedIndices"] = highlight.indices;
-        }
-      });
-
-      // Now convert any values that have an array value
-      // Also, replace highlight tag
-      Object.entries(result).forEach(function (_ref4) {
-        var _ref5 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_ref4, 2),
-          k = _ref5[0],
-          v = _ref5[1];
-        var attribute = k;
-        var value = v.value,
-          matchLevel = v.matchLevel,
-          matchedWords = v.matchedWords,
-          matchedIndices = v.matchedIndices;
-        if (value == null) {
-          result[attribute] = _this3._adaptHighlightNullValue();
-        } else if (Array.isArray(value)) {
-          // Algolia lists all values of the key in highlights, even those that don't have any highlights
-          // So add all values of the array field, including highlights
-          result[attribute] = [];
-          typesenseHit.document[attribute].forEach(function (unhighlightedValueFromArray, index) {
-            if (matchedIndices && matchedIndices.includes(index)) {
-              result[attribute].push({
-                value: _this3._adaptHighlightTag("".concat(value[matchedIndices.indexOf(index)]), _this3.instantsearchRequest.params.highlightPreTag, _this3.instantsearchRequest.params.highlightPostTag),
-                matchLevel: matchLevel,
-                matchedWords: matchedWords[index]
-              });
-            } else if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(unhighlightedValueFromArray) === "object") {
-              // Handle arrays of objects
-              // Side note: Typesense does not support highlights for nested objects in this `highlights` array,
-              //  so we pass in an empty object below
-              result[attribute].push(_this3._adaptHighlightInObjectValue(unhighlightedValueFromArray, {}, snippetOrValue));
-            } else {
-              result[attribute].push({
-                value: "".concat(unhighlightedValueFromArray),
-                matchLevel: "none",
-                matchedWords: []
-              });
-            }
-          });
-        } else if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(value) === "object") {
-          // Handle nested objects
-          // Side note: Typesense does not support highlights for nested objects in this `highlights` array,
-          //  so we pass in an empty object below
-          result[attribute] = _this3._adaptHighlightInObjectValue(value, {}, snippetOrValue);
-        } else {
-          // Convert all values to strings
-          result[attribute].value = _this3._adaptHighlightTag("".concat(value), _this3.instantsearchRequest.params.highlightPreTag, _this3.instantsearchRequest.params.highlightPostTag);
-        }
-      });
-    }
-  }, {
-    key: "adaptHighlightObject",
-    value: function adaptHighlightObject(typesenseHit, result, snippetOrValue) {
-      Object.assign(result, this._adaptHighlightInObjectValue(typesenseHit.document, typesenseHit.highlight, snippetOrValue));
-    }
-  }, {
-    key: "_adaptHighlightInObjectValue",
-    value: function _adaptHighlightInObjectValue(objectValue, highlightObjectValue, snippetOrValue) {
-      var _this4 = this;
-      return Object.assign.apply(Object, [{}].concat((0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2__["default"])(Object.entries(objectValue).map(function (_ref6) {
-        var _ref7 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_ref6, 2),
-          attribute = _ref7[0],
-          value = _ref7[1];
-        var adaptedValue;
-        if (value == null) {
-          adaptedValue = _this4._adaptHighlightNullValue();
-        } else if (Array.isArray(value)) {
-          var _highlightObjectValue;
-          adaptedValue = _this4._adaptHighlightInArrayValue(value, (_highlightObjectValue = highlightObjectValue === null || highlightObjectValue === void 0 ? void 0 : highlightObjectValue[attribute]) !== null && _highlightObjectValue !== void 0 ? _highlightObjectValue : [], snippetOrValue);
-        } else if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(value) === "object") {
-          var _highlightObjectValue2;
-          adaptedValue = _this4._adaptHighlightInObjectValue(value, (_highlightObjectValue2 = highlightObjectValue === null || highlightObjectValue === void 0 ? void 0 : highlightObjectValue[attribute]) !== null && _highlightObjectValue2 !== void 0 ? _highlightObjectValue2 : {}, snippetOrValue);
-        } else {
-          adaptedValue = _this4._adaptHighlightInPrimitiveValue(value, highlightObjectValue === null || highlightObjectValue === void 0 ? void 0 : highlightObjectValue[attribute], snippetOrValue);
-        }
-        return (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__["default"])({}, attribute, adaptedValue);
-      }))));
-    }
-  }, {
-    key: "_adaptHighlightInArrayValue",
-    value: function _adaptHighlightInArrayValue(arrayValue, highlightArrayValue, snippetOrValue) {
-      var _this5 = this;
-      return arrayValue.map(function (value, index) {
-        var adaptedValue;
-        if (value == null) {
-          adaptedValue = _this5._adaptHighlightNullValue();
-        } else if (Array.isArray(value)) {
-          var _highlightArrayValue$;
-          adaptedValue = _this5._adaptHighlightInArrayValue(value, (_highlightArrayValue$ = highlightArrayValue === null || highlightArrayValue === void 0 ? void 0 : highlightArrayValue[index]) !== null && _highlightArrayValue$ !== void 0 ? _highlightArrayValue$ : [], snippetOrValue);
-        } else if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(value) === "object") {
-          var _highlightArrayValue$2;
-          adaptedValue = _this5._adaptHighlightInObjectValue(value, (_highlightArrayValue$2 = highlightArrayValue === null || highlightArrayValue === void 0 ? void 0 : highlightArrayValue[index]) !== null && _highlightArrayValue$2 !== void 0 ? _highlightArrayValue$2 : {}, snippetOrValue);
-        } else {
-          adaptedValue = _this5._adaptHighlightInPrimitiveValue(value, highlightArrayValue === null || highlightArrayValue === void 0 ? void 0 : highlightArrayValue[index], snippetOrValue);
-        }
-        return adaptedValue;
-      });
-    }
-  }, {
-    key: "_adaptHighlightInPrimitiveValue",
-    value: function _adaptHighlightInPrimitiveValue(primitiveValue, highlightPrimitiveValue, snippetOrValue) {
-      if (highlightPrimitiveValue != null) {
-        var _ref9, _ref10, _highlightPrimitiveVa;
-        var highlightedValue = (_ref9 = (_ref10 = (_highlightPrimitiveVa = highlightPrimitiveValue[snippetOrValue]) !== null && _highlightPrimitiveVa !== void 0 ? _highlightPrimitiveVa : highlightPrimitiveValue["highlight"]) !== null && _ref10 !== void 0 ? _ref10 : highlightPrimitiveValue["snippet"]) !== null && _ref9 !== void 0 ? _ref9 : primitiveValue;
-        return {
-          value: this._adaptHighlightTag("".concat(highlightedValue), this.instantsearchRequest.params.highlightPreTag, this.instantsearchRequest.params.highlightPostTag),
-          matchLevel: (highlightPrimitiveValue.matched_tokens || []).length > 0 ? "full" : "none",
-          matchedWords: highlightPrimitiveValue.matched_tokens || []
-        };
-      } else {
-        return {
-          // Convert all values to strings
-          value: this._adaptHighlightTag("".concat(primitiveValue), this.instantsearchRequest.params.highlightPreTag, this.instantsearchRequest.params.highlightPostTag),
-          matchLevel: "none",
-          matchedWords: []
-        };
-      }
-    }
-  }, {
-    key: "_adaptHighlightNullValue",
-    value: function _adaptHighlightNullValue() {
-      return {
-        value: "",
-        matchLevel: "none",
-        matchedWords: []
-      };
-    }
-  }, {
-    key: "_adaptFacets",
-    value: function _adaptFacets(typesenseFacetCounts) {
-      var adaptedResult = {};
-      if (Array.isArray(typesenseFacetCounts)) {
-        typesenseFacetCounts.forEach(function (facet) {
-          Object.assign(adaptedResult, (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__["default"])({}, facet.field_name, Object.assign.apply(Object, [{}].concat((0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2__["default"])(facet.counts.map(function (count) {
-            return (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__["default"])({}, count.value, count.count);
-          }))))));
-        });
-      }
-      return adaptedResult;
-    }
-  }, {
-    key: "_adaptFacetStats",
-    value: function _adaptFacetStats(typesenseFacetCounts) {
-      var adaptedResult = {};
-      if (Array.isArray(typesenseFacetCounts)) {
-        typesenseFacetCounts.forEach(function (facet) {
-          if (facet.stats && Object.keys(facet.stats).length > 0) {
-            Object.assign(adaptedResult, (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__["default"])({}, facet.field_name, facet.stats));
-          }
-        });
-      }
-      return adaptedResult;
-    }
-  }, {
-    key: "_adaptRenderingContent",
-    value: function _adaptRenderingContent(typesenseFacetCounts) {
-      var _adaptedResult$facetO;
-      var adaptedResult = Object.assign({}, this.configuration.renderingContent);
-
-      // Only set facet ordering if the user has not set one
-      if (((_adaptedResult$facetO = adaptedResult.facetOrdering) === null || _adaptedResult$facetO === void 0 || (_adaptedResult$facetO = _adaptedResult$facetO.facets) === null || _adaptedResult$facetO === void 0 ? void 0 : _adaptedResult$facetO.order) == null) {
-        adaptedResult.facetOrdering = adaptedResult.facetOrdering || {};
-        adaptedResult.facetOrdering.facets = adaptedResult.facetOrdering.facets || {};
-        adaptedResult.facetOrdering.facets.order = (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2__["default"])(new Set((Array.isArray(typesenseFacetCounts) ? typesenseFacetCounts : []).map(function (fc) {
-          return fc["field_name"];
-        }).concat(this.allTypesenseResults.map(function (r) {
-          return r.facet_counts || [];
-        }).flat().map(function (fc) {
-          return fc["field_name"];
-        }).filter(function (f) {
-          return f;
-        }))));
-      }
-      return adaptedResult;
-    }
-  }, {
-    key: "_adaptUserData",
-    value: function _adaptUserData(metadata) {
-      if (!metadata) return [];
-      return Array.isArray(metadata) ? metadata : [metadata];
-    }
-  }, {
-    key: "adapt",
-    value: function adapt() {
-      var adaptedRenderingContent = this._adaptRenderingContent(this.typesenseResponse.facet_counts || []);
-
-      // For union search, use union_request_params, otherwise use request_params
-      var requestParams = this.typesenseResponse.union_request_params ? this.typesenseResponse.union_request_params[0] : this.typesenseResponse.request_params;
-      var adaptedResult = _objectSpread({
-        hits: this.typesenseResponse.grouped_hits ? this._adaptGroupedHits(this.typesenseResponse.grouped_hits) : this._adaptHits(this.typesenseResponse.hits),
-        nbHits: this.typesenseResponse.found,
-        page: this.typesenseResponse.union_request_params ? this.typesenseResponse.page // Union search already uses 0-based page
-        : this.typesenseResponse.page - 1,
-        // Regular search uses 1-based page, convert to 0-based
-        nbPages: this._adaptNumberOfPages(),
-        hitsPerPage: (requestParams === null || requestParams === void 0 ? void 0 : requestParams.per_page) || 10,
-        facets: this._adaptFacets(this.typesenseResponse.facet_counts || []),
-        facets_stats: this._adaptFacetStats(this.typesenseResponse.facet_counts || []),
-        query: (requestParams === null || requestParams === void 0 ? void 0 : requestParams.q) || "",
-        processingTimeMS: this.typesenseResponse.search_time_ms
-      }, Object.keys(adaptedRenderingContent).length > 0 ? {
-        renderingContent: adaptedRenderingContent
-      } : null);
-
-      // Add appliedRules if metadata is present
-      if (this.typesenseResponse.metadata) {
-        adaptedResult.appliedRules = ["typesense-override"];
-        adaptedResult.userData = this._adaptUserData(this.typesenseResponse.metadata);
-      }
-
-      // Add parsed_nl_query if natural language search was used
-      if (this.typesenseResponse.parsed_nl_query) {
-        adaptedResult.parsed_nl_query = this.typesenseResponse.parsed_nl_query;
-      }
-
-      // If no results were found for the search, but there is still a conversation response,
-      // still send that as a hit so the conversation is accessible via Instantsearch
-      if (this.fullTypesenseResponse.conversation && adaptedResult.hits.length === 0) {
-        adaptedResult.hits = [{
-          _rawTypesenseConversation: this.fullTypesenseResponse.conversation
-        }];
-      }
-
-      // console.log(adaptedResult);
-      return adaptedResult;
-    }
-  }]);
-}();
-Object.assign(SearchResponseAdapter.prototype, _support_utils__WEBPACK_IMPORTED_MODULE_6__.utils);
-
-/***/ }),
-
-/***/ "./src/support/utils.js":
-/*!******************************!*\
-  !*** ./src/support/utils.js ***!
-  \******************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   utils: () => (/* binding */ utils)
-/* harmony export */ });
-var utils = {
-  _adaptHighlightTag: function _adaptHighlightTag(value, highlightPreTag, highlightPostTag) {
-    return value.replace(new RegExp("<mark>", "g"), highlightPreTag || "<mark>").replace(new RegExp("</mark>", "g"), highlightPostTag || "</mark>");
-  },
-  _adaptNumberOfPages: function _adaptNumberOfPages() {
-    // For union search, use union_request_params, otherwise use request_params
-    var requestParams = this.typesenseResponse.union_request_params ? this.typesenseResponse.union_request_params[0] : this.typesenseResponse.request_params;
-    var perPage = (requestParams === null || requestParams === void 0 ? void 0 : requestParams.per_page) || 10;
-    var result = this.typesenseResponse.found / perPage;
-    if (Number.isFinite(result)) {
-      return Math.ceil(result);
-    } else {
-      return 1;
-    }
-  }
-};
-
-/***/ }),
-
 /***/ "./node_modules/loglevel/lib/loglevel.js":
 /*!***********************************************!*\
   !*** ./node_modules/loglevel/lib/loglevel.js ***!
@@ -10891,6 +9581,1315 @@ function _unsupportedIterableToArray(r, a) {
 
 /***/ }),
 
+/***/ "./src/Configuration.js":
+/*!******************************!*\
+  !*** ./src/Configuration.js ***!
+  \******************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Configuration: () => (/* binding */ Configuration)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+
+
+
+
+var Configuration = /*#__PURE__*/function () {
+  function Configuration() {
+    var _this$server$cacheSea,
+      _options$additionalSe,
+      _ref,
+      _this$additionalSearc,
+      _ref2,
+      _this$additionalSearc2,
+      _ref3,
+      _this$additionalSearc3,
+      _ref4,
+      _this$additionalSearc4,
+      _options$geoLocationF,
+      _options$facetableFie,
+      _options$collectionSp,
+      _this = this,
+      _options$flattenGroup,
+      _options$facetByOptio,
+      _options$filterByOpti,
+      _options$sortByOption,
+      _options$collectionSp2,
+      _options$collectionSp3,
+      _options$collectionSp4,
+      _options$union,
+      _options$useOverrideT,
+      _options$flipNegative;
+    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, Configuration);
+    this.server = options.server || {
+      nodes: [{
+        host: "localhost",
+        port: "8108",
+        path: "",
+        protocol: "http"
+      }]
+    };
+    this.server.cacheSearchResultsForSeconds = (_this$server$cacheSea = this.server.cacheSearchResultsForSeconds) !== null && _this$server$cacheSea !== void 0 ? _this$server$cacheSea : 2 * 60;
+    this.additionalSearchParameters = (_options$additionalSe = options.additionalSearchParameters) !== null && _options$additionalSe !== void 0 ? _options$additionalSe : {};
+    this.additionalSearchParameters.query_by = (_ref = (_this$additionalSearc = this.additionalSearchParameters.queryBy) !== null && _this$additionalSearc !== void 0 ? _this$additionalSearc : this.additionalSearchParameters.query_by) !== null && _ref !== void 0 ? _ref : "";
+    this.additionalSearchParameters.preset = (_ref2 = (_this$additionalSearc2 = this.additionalSearchParameters.preset) !== null && _this$additionalSearc2 !== void 0 ? _this$additionalSearc2 : this.additionalSearchParameters.preset) !== null && _ref2 !== void 0 ? _ref2 : "";
+    this.additionalSearchParameters.sort_by = (_ref3 = (_this$additionalSearc3 = this.additionalSearchParameters.sortBy) !== null && _this$additionalSearc3 !== void 0 ? _this$additionalSearc3 : this.additionalSearchParameters.sort_by) !== null && _ref3 !== void 0 ? _ref3 : "";
+    this.additionalSearchParameters.highlight_full_fields = (_ref4 = (_this$additionalSearc4 = this.additionalSearchParameters.highlightFullFields) !== null && _this$additionalSearc4 !== void 0 ? _this$additionalSearc4 : this.additionalSearchParameters.highlight_full_fields) !== null && _ref4 !== void 0 ? _ref4 : this.additionalSearchParameters.query_by;
+    this.geoLocationField = (_options$geoLocationF = options.geoLocationField) !== null && _options$geoLocationF !== void 0 ? _options$geoLocationF : "_geoloc";
+    this.facetableFieldsWithSpecialCharacters = (_options$facetableFie = options.facetableFieldsWithSpecialCharacters) !== null && _options$facetableFie !== void 0 ? _options$facetableFie : [];
+    this.collectionSpecificSearchParameters = (_options$collectionSp = options.collectionSpecificSearchParameters) !== null && _options$collectionSp !== void 0 ? _options$collectionSp : {};
+    Object.keys(this.collectionSpecificSearchParameters).forEach(function (collection) {
+      var _params$queryBy, _params$preset, _params$sortBy, _ref5, _ref6, _params$highlightFull;
+      var params = _this.collectionSpecificSearchParameters[collection];
+      params.query_by = (_params$queryBy = params.queryBy) !== null && _params$queryBy !== void 0 ? _params$queryBy : params.query_by;
+      params.preset = (_params$preset = params.preset) !== null && _params$preset !== void 0 ? _params$preset : params.preset;
+      params.sort_by = (_params$sortBy = params.sortBy) !== null && _params$sortBy !== void 0 ? _params$sortBy : params.sort_by;
+      params.highlight_full_fields = (_ref5 = (_ref6 = (_params$highlightFull = params.highlightFullFields) !== null && _params$highlightFull !== void 0 ? _params$highlightFull : params.highlight_full_fields) !== null && _ref6 !== void 0 ? _ref6 : _this.additionalSearchParameters.highlight_full_fields) !== null && _ref5 !== void 0 ? _ref5 : params.query_by;
+
+      // Remove undefined values
+      Object.keys(params).forEach(function (key) {
+        return params[key] === undefined ? delete params[key] : {};
+      });
+    });
+    this.renderingContent = options.renderingContent;
+    this.flattenGroupedHits = (_options$flattenGroup = options.flattenGroupedHits) !== null && _options$flattenGroup !== void 0 ? _options$flattenGroup : true;
+    this.facetByOptions = (_options$facetByOptio = options.facetByOptions) !== null && _options$facetByOptio !== void 0 ? _options$facetByOptio : {};
+    this.filterByOptions = (_options$filterByOpti = options.filterByOptions) !== null && _options$filterByOpti !== void 0 ? _options$filterByOpti : {};
+    this.sortByOptions = (_options$sortByOption = options.sortByOptions) !== null && _options$sortByOption !== void 0 ? _options$sortByOption : {};
+    this.collectionSpecificFacetByOptions = (_options$collectionSp2 = options.collectionSpecificFacetByOptions) !== null && _options$collectionSp2 !== void 0 ? _options$collectionSp2 : {};
+    this.collectionSpecificFilterByOptions = (_options$collectionSp3 = options.collectionSpecificFilterByOptions) !== null && _options$collectionSp3 !== void 0 ? _options$collectionSp3 : {};
+    this.collectionSpecificSortByOptions = (_options$collectionSp4 = options.collectionSpecificSortByOptions) !== null && _options$collectionSp4 !== void 0 ? _options$collectionSp4 : {};
+    this.union = (_options$union = options.union) !== null && _options$union !== void 0 ? _options$union : false;
+    // For Typesense v30+, use curation_tags. Set to true for older versions that use override_tags.
+    this.useOverrideTags = (_options$useOverrideT = options.useOverrideTags) !== null && _options$useOverrideT !== void 0 ? _options$useOverrideT : false;
+    // flips negative refinement encoding between AND/OR groups
+    // AND groups become field:![a,b], OR groups become field:!a || field:!b
+    this.flipNegativeRefinementOperator = (_options$flipNegative = options.flipNegativeRefinementOperator) !== null && _options$flipNegative !== void 0 ? _options$flipNegative : false;
+  }
+  return (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(Configuration, [{
+    key: "validate",
+    value: function validate() {
+      // Warn if camelCased parameters are used, suggest using snake_cased parameters instead
+      if (this.additionalSearchParameters.queryBy || Object.values(this.collectionSpecificSearchParameters).some(function (c) {
+        return c.queryBy;
+      })) {
+        console.warn("[typesense-instantsearch-adapter] Please use snake_cased versions of parameters in additionalSearchParameters instead of camelCased parameters. For example: Use query_by instead of queryBy. camelCased parameters will be deprecated in a future version." + " We're making this change so that parameter names are identical to the ones sent to Typesense (which are all snake_cased), and to also keep the types for these parameters in sync with the types defined in typesense-js.");
+      }
+
+      /*
+       * Either additionalSearchParameters.query_by or additionalSearchParameters.preset needs to be set, or
+       *   All collectionSpecificSearchParameters need to have query_by or preset
+       *
+       * */
+      if (this.additionalSearchParameters.query_by.length === 0 && this.additionalSearchParameters.preset.length === 0 && (Object.keys(this.collectionSpecificSearchParameters).length === 0 || Object.values(this.collectionSpecificSearchParameters).some(function (c) {
+        return (c.query_by || "").length === 0 && (c.preset || "").length === 0;
+      }))) {
+        throw new Error("[typesense-instantsearch-adapter] Missing parameter: One of additionalSearchParameters.query_by or additionalSearchParameters.preset needs to be set, or all collectionSpecificSearchParameters need to have either .query_by or .preset set.");
+      }
+    }
+  }]);
+}();
+
+/***/ }),
+
+/***/ "./src/FacetSearchResponseAdapter.js":
+/*!*******************************************!*\
+  !*** ./src/FacetSearchResponseAdapter.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   FacetSearchResponseAdapter: () => (/* binding */ FacetSearchResponseAdapter)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _support_utils_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./support/utils.js */ "./src/support/utils.js");
+
+
+
+
+
+var FacetSearchResponseAdapter = /*#__PURE__*/function () {
+  function FacetSearchResponseAdapter(typesenseResponse, instantsearchRequest) {
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, FacetSearchResponseAdapter);
+    this.typesenseResponse = typesenseResponse;
+    this.instantsearchRequest = instantsearchRequest;
+  }
+  return (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(FacetSearchResponseAdapter, [{
+    key: "_adaptFacetHits",
+    value: function _adaptFacetHits(typesenseFacetCounts) {
+      var _this = this;
+      var adaptedResult = [];
+      var facet = typesenseFacetCounts.find(function (facet) {
+        return facet.field_name === _this.instantsearchRequest.params.facetName;
+      });
+      if (typeof facet !== "undefined") {
+        adaptedResult = facet.counts.map(function (facetCount) {
+          return {
+            value: facetCount.value,
+            highlighted: _this._adaptHighlightTag(facetCount.highlighted, _this.instantsearchRequest.params.highlightPreTag, _this.instantsearchRequest.params.highlightPostTag),
+            count: facetCount.count
+          };
+        });
+      }
+      return adaptedResult;
+    }
+  }, {
+    key: "adapt",
+    value: function adapt() {
+      var adaptedResult = {
+        facetHits: this._adaptFacetHits(this.typesenseResponse.facet_counts),
+        exhaustiveFacetsCount: true,
+        processingTimeMS: this.typesenseResponse.search_time_ms
+      };
+      return adaptedResult;
+    }
+  }]);
+}();
+Object.assign(FacetSearchResponseAdapter.prototype, _support_utils_js__WEBPACK_IMPORTED_MODULE_2__.utils);
+
+/***/ }),
+
+/***/ "./src/SearchRequestAdapter.js":
+/*!*************************************!*\
+  !*** ./src/SearchRequestAdapter.js ***!
+  \*************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SearchRequestAdapter: () => (/* binding */ SearchRequestAdapter)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+
+
+
+
+
+
+
+var _excluded = ["q", "conversation", "conversation_id", "conversation_model_id"];
+
+var SearchRequestAdapter = /*#__PURE__*/function () {
+  function SearchRequestAdapter(instantsearchRequests, typesenseClient, configuration) {
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_3__["default"])(this, SearchRequestAdapter);
+    this.instantsearchRequests = instantsearchRequests;
+    this.typesenseClient = typesenseClient;
+    this.configuration = configuration;
+    this.additionalSearchParameters = configuration.additionalSearchParameters;
+    this.collectionSpecificSearchParameters = configuration.collectionSpecificSearchParameters;
+  }
+  return (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_4__["default"])(SearchRequestAdapter, [{
+    key: "_shouldUseExactMatchForField",
+    value: function _shouldUseExactMatchForField(fieldName, collectionName) {
+      var _this$configuration$c, _this$configuration$f;
+      if (((_this$configuration$c = this.configuration.collectionSpecificFilterByOptions) === null || _this$configuration$c === void 0 || (_this$configuration$c = _this$configuration$c[collectionName]) === null || _this$configuration$c === void 0 || (_this$configuration$c = _this$configuration$c[fieldName]) === null || _this$configuration$c === void 0 ? void 0 : _this$configuration$c.exactMatch) === false || ((_this$configuration$f = this.configuration.filterByOptions) === null || _this$configuration$f === void 0 || (_this$configuration$f = _this$configuration$f[fieldName]) === null || _this$configuration$f === void 0 ? void 0 : _this$configuration$f.exactMatch) === false) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }, {
+    key: "_adaptFacetFilters",
+    value: function _adaptFacetFilters(facetFilters, collectionName) {
+      var _this = this;
+      var adaptedResult = "";
+      if (!facetFilters) {
+        return adaptedResult;
+      }
+
+      /**
+       * Need to transform:
+       *  facetFilters = [["field1:value1", "field1:value2"], "field2:value3", "field2:value4"]
+       *
+       * Into this:
+       *  field1:=[value1,value2] && field2:=value3 && field2:=value4
+       *
+       * Steps:
+       *  - For each item in facetFilters
+       *    - If item is array
+       *      - OR values together.
+       *      - Warn if field names are not the same
+       *    - If item is string, convert to facet:=value format
+       *  - Join strings by &&
+       */
+
+      var transformedTypesenseFilters = facetFilters.map(function (item) {
+        if (Array.isArray(item)) {
+          // Need to transform:
+          // facetFilters = ["field1:value1", "field1:value2", "facetN:valueN"]
+          //
+          // Into this:
+          // intermediateFacetFilters = {
+          //     "field1": ["value1", "value2"],
+          //     "fieldN": ["valueN"]
+          // }
+
+          var intermediateFacetFilters = {};
+          item.forEach(function (facetFilter) {
+            var _this$_parseFacetFilt = _this._parseFacetFilter(facetFilter),
+              fieldName = _this$_parseFacetFilt.fieldName,
+              fieldValue = _this$_parseFacetFilt.fieldValue;
+            intermediateFacetFilters[fieldName] = intermediateFacetFilters[fieldName] || [];
+            intermediateFacetFilters[fieldName].push(fieldValue);
+          });
+          if (Object.keys(intermediateFacetFilters).length > 1) {
+            console.error("[Typesense-Instantsearch-Adapter] Typesense does not support cross-field ORs at the moment. The adapter could not OR values between these fields: ".concat(Object.keys(intermediateFacetFilters).join(",")));
+          }
+
+          // Pick first value from intermediateFacetFilters
+          var fieldName = Object.keys(intermediateFacetFilters)[0];
+          var fieldValues = intermediateFacetFilters[fieldName];
+
+          // Need to transform:
+          // intermediateFacetFilters = {
+          //     "field1": ["value1", "value2"],
+          // }
+          //
+          // Into this:
+          // field1:=[value1,value2]
+
+          // Partition values into included and excluded values
+          var _fieldValues$reduce = fieldValues.reduce(function (result, fieldValue) {
+              if (fieldValue.startsWith("-") && !_this._isNumber(fieldValue)) {
+                result[0].push(fieldValue.substring(1));
+              } else {
+                result[1].push(fieldValue);
+              }
+              return result;
+            }, [[], []]),
+            _fieldValues$reduce2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_fieldValues$reduce, 2),
+            excludedFieldValues = _fieldValues$reduce2[0],
+            includedFieldValues = _fieldValues$reduce2[1];
+          var typesenseFilterStringComponents = [];
+          if (includedFieldValues.length > 0) {
+            var operator = _this._shouldUseExactMatchForField(fieldName, collectionName) ? ":=" : ":";
+            typesenseFilterStringComponents.push("".concat(fieldName).concat(operator, "[").concat(includedFieldValues.map(function (v) {
+              return _this._escapeFacetValue(v);
+            }).join(","), "]"));
+          }
+          if (excludedFieldValues.length > 0) {
+            var _operator = _this._shouldUseExactMatchForField(fieldName, collectionName) ? ":!=" : ":!";
+            if (_this.configuration.flipNegativeRefinementOperator) {
+              typesenseFilterStringComponents.push("(".concat(excludedFieldValues.map(function (v) {
+                return "".concat(fieldName).concat(_operator).concat(_this._escapeFacetValue(v));
+              }).join(" || "), ")"));
+            } else {
+              typesenseFilterStringComponents.push("".concat(fieldName).concat(_operator, "[").concat(excludedFieldValues.map(function (v) {
+                return _this._escapeFacetValue(v);
+              }).join(","), "]"));
+            }
+          }
+          var typesenseFilterString = typesenseFilterStringComponents.filter(function (f) {
+            return f;
+          }).join(" && ");
+          return typesenseFilterString;
+        } else {
+          // Need to transform:
+          //  fieldName:fieldValue
+          // Into
+          //  fieldName:=fieldValue
+
+          var _this$_parseFacetFilt2 = _this._parseFacetFilter(item),
+            _fieldName = _this$_parseFacetFilt2.fieldName,
+            fieldValue = _this$_parseFacetFilt2.fieldValue;
+          var _typesenseFilterString;
+          if (fieldValue.startsWith("-") && !_this._isNumber(fieldValue)) {
+            var _operator2 = _this._shouldUseExactMatchForField(_fieldName, collectionName) ? ":!=" : ":!";
+            _typesenseFilterString = "".concat(_fieldName).concat(_operator2, "[").concat(_this._escapeFacetValue(fieldValue.substring(1)), "]");
+          } else {
+            var _operator3 = _this._shouldUseExactMatchForField(_fieldName, collectionName) ? ":=" : ":";
+            _typesenseFilterString = "".concat(_fieldName).concat(_operator3, "[").concat(_this._escapeFacetValue(fieldValue), "]");
+          }
+          return _typesenseFilterString;
+        }
+      });
+      adaptedResult = transformedTypesenseFilters.join(" && ");
+      // console.log(`${JSON.stringify(facetFilters)} => ${adaptedResult}`);
+
+      return adaptedResult;
+    }
+  }, {
+    key: "_parseFacetFilter",
+    value: function _parseFacetFilter(facetFilter) {
+      var _this$configuration$f2;
+      var filterStringMatchingRegex, facetFilterMatches, fieldName, fieldValue;
+
+      // This is helpful when the filter looks like `facetName:with:colons:facetValue:with:colons` and the default regex above parses the filter as `facetName:with:colons:facetValue:with` and `colon`.
+      // So if a facetValue can contain a colon, we ask users to pass in all possible facetable fields in `facetableFieldsWithSpecialCharacters` when instantiating the adapter, so we can explicitly match against that.
+      if (((_this$configuration$f2 = this.configuration.facetableFieldsWithSpecialCharacters) === null || _this$configuration$f2 === void 0 ? void 0 : _this$configuration$f2.length) > 0) {
+        // escape any Regex special characters, source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
+        var sanitizedFacetableFieldsWithSpecialCharacters = this.configuration.facetableFieldsWithSpecialCharacters.flat().map(function (f) {
+          return f.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        });
+        filterStringMatchingRegex = new RegExp("^(".concat(sanitizedFacetableFieldsWithSpecialCharacters.join("|"), "):(.*)$"));
+        facetFilterMatches = facetFilter.match(filterStringMatchingRegex);
+        if (facetFilterMatches != null) {
+          fieldName = "".concat(facetFilterMatches[1]);
+          fieldValue = "".concat(facetFilterMatches[2]);
+          return {
+            fieldName: fieldName,
+            fieldValue: fieldValue
+          };
+        }
+      }
+
+      // If we haven't found any matches yet
+      // Use the default filter parsing regex, which assumes that only facet names have colons, and not facet values
+      filterStringMatchingRegex = this.constructor.DEFAULT_FACET_FILTER_STRING_MATCHING_REGEX;
+      facetFilterMatches = facetFilter.match(filterStringMatchingRegex);
+
+      // console.log(filterStringMatchingRegex);
+      // console.log(facetFilter);
+      // console.log(facetFilterMatches);
+
+      if (facetFilterMatches == null) {
+        console.error("[Typesense-Instantsearch-Adapter] Parsing failed for a facet filter `".concat(facetFilter, "` with the Regex `").concat(filterStringMatchingRegex, "`. If you have field names with special characters, be sure to add them to a parameter called `facetableFieldsWithSpecialCharacters` when instantiating the adapter."));
+      } else {
+        fieldName = "".concat(facetFilterMatches[1]).concat(facetFilterMatches[2]);
+        fieldValue = "".concat(facetFilterMatches[3]);
+      }
+      return {
+        fieldName: fieldName,
+        fieldValue: fieldValue
+      };
+    }
+  }, {
+    key: "_escapeFacetValue",
+    value: function _escapeFacetValue(value) {
+      // Don't escape booleans, integers or floats
+      if (typeof value === "boolean" || value === "true" || value === "false" || this._isNumber(value)) {
+        return value;
+      }
+      return "`".concat(value, "`");
+    }
+  }, {
+    key: "_isNumber",
+    value: function _isNumber(value) {
+      return Number.isInteger(value % 1) ||
+      // Mod 1 will automatically try converting string values to integer/float
+      !!(value % 1); // Is Float
+    }
+  }, {
+    key: "_adaptNumericFilters",
+    value: function _adaptNumericFilters(numericFilters) {
+      var _this2 = this;
+      // Need to transform this:
+      // ["field1<=634", "field1>=289", "field2<=5", "field3>=3"]
+      // to:
+      // "field1:=[634..289] && field2:<=5 && field3:>=3"
+      var adaptedResult = "";
+      if (!numericFilters) {
+        return adaptedResult;
+      }
+
+      // Transform to intermediate structure:
+      // {
+      //   field1: {
+      //     "<=": 634,
+      //     ">=": 289
+      //   },
+      //   field2: {
+      //     "<=": 5
+      //   },
+      //   field3: {
+      //     ">=": 3
+      //   }
+      // };
+      var filtersHash = {};
+      numericFilters.forEach(function (filter) {
+        var _this2$_parseNumericF = _this2._parseNumericFilter(filter),
+          fieldName = _this2$_parseNumericF.fieldName,
+          operator = _this2$_parseNumericF.operator,
+          fieldValue = _this2$_parseNumericF.fieldValue;
+        filtersHash[fieldName] = filtersHash[fieldName] || {};
+        filtersHash[fieldName][operator] = fieldValue;
+      });
+
+      // Transform that to:
+      //  "field1:=[634..289] && field2:<=5 && field3:>=3"
+      var adaptedFilters = [];
+      Object.keys(filtersHash).forEach(function (field) {
+        if (filtersHash[field]["<="] != null && filtersHash[field][">="] != null) {
+          adaptedFilters.push("".concat(field, ":=[").concat(filtersHash[field][">="], "..").concat(filtersHash[field]["<="], "]"));
+        } else if (filtersHash[field]["<="] != null) {
+          adaptedFilters.push("".concat(field, ":<=").concat(filtersHash[field]["<="]));
+        } else if (filtersHash[field][">="] != null) {
+          adaptedFilters.push("".concat(field, ":>=").concat(filtersHash[field][">="]));
+        } else if (filtersHash[field]["="] != null) {
+          adaptedFilters.push("".concat(field, ":=").concat(filtersHash[field]["="]));
+        } else {
+          console.warn("[Typesense-Instantsearch-Adapter] Unsupported operator found ".concat(JSON.stringify(filtersHash[field])));
+        }
+      });
+      adaptedResult = adaptedFilters.join(" && ");
+      return adaptedResult;
+    }
+  }, {
+    key: "_parseNumericFilter",
+    value: function _parseNumericFilter(numericFilter) {
+      var _this$configuration$f3;
+      var filterStringMatchingRegex, numericFilterMatches;
+      var fieldName, operator, fieldValue;
+
+      // The following is helpful when the facetName has special characters like > and the default regex fails to parse it properly.
+      // So we ask users to pass in facetable fields in `facetableFieldsWithSpecialCharactersWithSpecialCharacters` when instantiating the adapter, so we can explicitly match against that.
+      if (((_this$configuration$f3 = this.configuration.facetableFieldsWithSpecialCharacters) === null || _this$configuration$f3 === void 0 ? void 0 : _this$configuration$f3.length) > 0) {
+        // escape any Regex special characters, source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
+        var sanitizedFacetableFieldsWithSpecialCharacters = this.configuration.facetableFieldsWithSpecialCharacters.map(function (f) {
+          return f.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        });
+        filterStringMatchingRegex = new RegExp("^(".concat(sanitizedFacetableFieldsWithSpecialCharacters.join("|"), ")(<=|>=|>|<|=)(.*)$"));
+        numericFilterMatches = numericFilter.match(filterStringMatchingRegex);
+        if (numericFilterMatches != null) {
+          // If no matches are found or if the above didn't trigger, fall back to the default regex
+          var _numericFilterMatches = numericFilterMatches;
+          var _numericFilterMatches2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_numericFilterMatches, 4);
+          fieldName = _numericFilterMatches2[1];
+          operator = _numericFilterMatches2[2];
+          fieldValue = _numericFilterMatches2[3];
+          return {
+            fieldName: fieldName,
+            operator: operator,
+            fieldValue: fieldValue
+          };
+        }
+      }
+
+      // If we haven't found any matches yet, fall back to the default regex
+      filterStringMatchingRegex = this.constructor.DEFAULT_NUMERIC_FILTER_STRING_MATCHING_REGEX;
+      numericFilterMatches = numericFilter.match(filterStringMatchingRegex);
+
+      // console.log(filterStringMatchingRegex);
+      // console.log(numericFilter);
+      // console.log(numericFilterMatches);
+
+      if (numericFilterMatches == null) {
+        console.error("[Typesense-Instantsearch-Adapter] Parsing failed for a numeric filter `".concat(numericFilter, "` with the Regex `").concat(filterStringMatchingRegex, "`. If you have field names with special characters, be sure to add them to a parameter called `facetableFieldsWithSpecialCharacters` when instantiating the adapter."));
+      } else {
+        var _numericFilterMatches3 = numericFilterMatches;
+        var _numericFilterMatches4 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_numericFilterMatches3, 4);
+        fieldName = _numericFilterMatches4[1];
+        operator = _numericFilterMatches4[2];
+        fieldValue = _numericFilterMatches4[3];
+      }
+      return {
+        fieldName: fieldName,
+        operator: operator,
+        fieldValue: fieldValue
+      };
+    }
+  }, {
+    key: "_adaptGeoFilter",
+    value: function _adaptGeoFilter(_ref) {
+      var insideBoundingBox = _ref.insideBoundingBox,
+        aroundRadius = _ref.aroundRadius,
+        aroundLatLng = _ref.aroundLatLng,
+        insidePolygon = _ref.insidePolygon;
+      // Give this parameter first priority if it exists, since
+      if (insideBoundingBox) {
+        var x1, y1, x2, y2;
+        if (Array.isArray(insideBoundingBox)) {
+          var _insideBoundingBox$fl = insideBoundingBox.flat();
+          var _insideBoundingBox$fl2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_insideBoundingBox$fl, 4);
+          x1 = _insideBoundingBox$fl2[0];
+          y1 = _insideBoundingBox$fl2[1];
+          x2 = _insideBoundingBox$fl2[2];
+          y2 = _insideBoundingBox$fl2[3];
+        } else {
+          var _insideBoundingBox$sp = insideBoundingBox.split(",");
+          var _insideBoundingBox$sp2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_insideBoundingBox$sp, 4);
+          x1 = _insideBoundingBox$sp2[0];
+          y1 = _insideBoundingBox$sp2[1];
+          x2 = _insideBoundingBox$sp2[2];
+          y2 = _insideBoundingBox$sp2[3];
+        }
+        return "".concat(this.configuration.geoLocationField, ":(").concat(x1, ", ").concat(y1, ", ").concat(x1, ", ").concat(y2, ", ").concat(x2, ", ").concat(y2, ", ").concat(x2, ", ").concat(y1, ")");
+      }
+      if (aroundLatLng || aroundRadius) {
+        if (!aroundRadius || aroundRadius === "all") {
+          throw new Error("[Typesense-Instantsearch-Adapter] In Typesense, geo-filtering around a lat/lng also requires a numerical radius. " + "So the `aroundRadius` parameter is required when `aroundLatLng` is used. " + "If you intend to just geo-sort around a lat/long, you want to use the sortBy InstantSearch widget (or a virtual sortBy custom widget).");
+        }
+        var adaptedAroundRadius = "".concat(parseFloat(aroundRadius) / 1000, " km"); // aroundRadius is in meters
+        return "".concat(this.configuration.geoLocationField, ":(").concat(aroundLatLng, ", ").concat(adaptedAroundRadius, ")");
+      }
+      if (insidePolygon) {
+        var coordinates = insidePolygon;
+        if (Array.isArray(insidePolygon)) {
+          coordinates = insidePolygon.flat().join(",");
+        }
+        return "".concat(this.configuration.geoLocationField, ":(").concat(coordinates, ")");
+      }
+    }
+  }, {
+    key: "_splitByTopLevelAnd",
+    value: function _splitByTopLevelAnd(filterBy) {
+      var clauses = [];
+      var currentClause = "";
+      var backtickOpen = false;
+      for (var i = 0; i < filterBy.length; i += 1) {
+        var _char = filterBy[i];
+        var nextChar = filterBy[i + 1];
+        if (_char === "`") {
+          backtickOpen = !backtickOpen;
+        }
+        if (!backtickOpen && _char === "&" && nextChar === "&") {
+          if (currentClause.trim() !== "") {
+            clauses.push(currentClause.trim());
+          }
+          currentClause = "";
+          i += 1;
+          continue;
+        }
+        currentClause += _char;
+      }
+      if (currentClause.trim() !== "") {
+        clauses.push(currentClause.trim());
+      }
+      return clauses;
+    }
+  }, {
+    key: "_splitListValues",
+    value: function _splitListValues(valuesString) {
+      var values = [];
+      var currentValue = "";
+      var backtickOpen = false;
+      for (var i = 0; i < valuesString.length; i += 1) {
+        var _char2 = valuesString[i];
+        if (_char2 === "`") {
+          backtickOpen = !backtickOpen;
+        }
+        if (!backtickOpen && _char2 === ",") {
+          if (currentValue.trim() !== "") {
+            values.push(currentValue.trim());
+          }
+          currentValue = "";
+          continue;
+        }
+        currentValue += _char2;
+      }
+      if (currentValue.trim() !== "") {
+        values.push(currentValue.trim());
+      }
+      return values;
+    }
+  }, {
+    key: "_parseListClause",
+    value: function _parseListClause(clause) {
+      var trimmedClause = clause.trim();
+      var openBracketIndex = trimmedClause.indexOf("[");
+      var closeBracketIndex = trimmedClause.lastIndexOf("]");
+      if (openBracketIndex === -1 || closeBracketIndex === -1 || closeBracketIndex !== trimmedClause.length - 1) {
+        return null;
+      }
+      var leftSide = trimmedClause.slice(0, openBracketIndex).trim();
+      var valuesString = trimmedClause.slice(openBracketIndex + 1, closeBracketIndex);
+      var operators = [":!=", ":=", ":!", ":"];
+      var operator = operators.find(function (candidateOperator) {
+        return leftSide.endsWith(candidateOperator);
+      });
+      if (!operator) {
+        return null;
+      }
+      var fieldName = leftSide.slice(0, leftSide.length - operator.length).trim();
+      if (!fieldName) {
+        return null;
+      }
+      return {
+        fieldName: fieldName,
+        operator: operator,
+        values: this._splitListValues(valuesString)
+      };
+    }
+  }, {
+    key: "_mergeSameFieldExclusionListClauses",
+    value: function _mergeSameFieldExclusionListClauses(filterBy) {
+      var _this3 = this;
+      if (!filterBy) return filterBy;
+      var clauses = this._splitByTopLevelAnd(filterBy);
+      var groupedListClauses = {};
+      var rebuiltClauses = [];
+      clauses.forEach(function (clause, clauseIndex) {
+        var parsedClause = _this3._parseListClause(clause);
+        if (!parsedClause) {
+          rebuiltClauses.push({
+            clauseIndex: clauseIndex,
+            clause: clause
+          });
+          return;
+        }
+        var normalizedOperator = parsedClause.operator === ":!" || parsedClause.operator === ":!=" ? "exclude" : null;
+        if (normalizedOperator == null) {
+          rebuiltClauses.push({
+            clauseIndex: clauseIndex,
+            clause: clause
+          });
+          return;
+        }
+        var groupingKey = "".concat(parsedClause.fieldName, "|").concat(normalizedOperator);
+        if (!groupedListClauses[groupingKey]) {
+          groupedListClauses[groupingKey] = {
+            clauseIndex: clauseIndex,
+            fieldName: parsedClause.fieldName,
+            operator: parsedClause.operator,
+            normalizedOperator: normalizedOperator,
+            values: []
+          };
+        }
+        parsedClause.values.forEach(function (value) {
+          if (!groupedListClauses[groupingKey].values.includes(value)) {
+            groupedListClauses[groupingKey].values.push(value);
+          }
+        });
+      });
+      Object.values(groupedListClauses).forEach(function (group) {
+        rebuiltClauses.push({
+          clauseIndex: group.clauseIndex,
+          clause: "".concat(group.fieldName).concat(group.operator, "[").concat(group.values.join(","), "]")
+        });
+      });
+      return rebuiltClauses.sort(function (left, right) {
+        return left.clauseIndex - right.clauseIndex;
+      }).map(function (entry) {
+        return entry.clause;
+      }).join(" && ");
+    }
+  }, {
+    key: "_adaptFilters",
+    value: function _adaptFilters(instantsearchParams, collectionName) {
+      var adaptedFilters = [];
+
+      // `filters` can be used with the `Configure` widget
+      // However the format needs to be in the Typesense filter_by format, instead of Algolia filter format.
+      if (instantsearchParams.filters) {
+        adaptedFilters.push(instantsearchParams.filters);
+      }
+      adaptedFilters.push(this._adaptFacetFilters(instantsearchParams.facetFilters, collectionName));
+      adaptedFilters.push(this._adaptNumericFilters(instantsearchParams.numericFilters));
+      adaptedFilters.push(this._adaptGeoFilter(instantsearchParams));
+      var combinedFilter = adaptedFilters.filter(function (filter) {
+        return filter && filter !== "";
+      }).join(" && ");
+      if (this.configuration.flipNegativeRefinementOperator) {
+        return this._mergeSameFieldExclusionListClauses(combinedFilter);
+      }
+      return combinedFilter;
+    }
+  }, {
+    key: "_adaptIndexName",
+    value: function _adaptIndexName(indexName) {
+      return indexName.match(this.constructor.INDEX_NAME_MATCHING_REGEX)[1];
+    }
+  }, {
+    key: "_adaptSortBy",
+    value: function _adaptSortBy(indexName) {
+      return indexName.match(this.constructor.INDEX_NAME_MATCHING_REGEX)[3];
+    }
+  }, {
+    key: "_adaptFacetBy",
+    value: function _adaptFacetBy(facets, collectionName) {
+      var _this4 = this;
+      return [facets].flat().map(function (facet) {
+        var _this4$configuration$;
+        if ((_this4$configuration$ = _this4.configuration.collectionSpecificFacetByOptions) !== null && _this4$configuration$ !== void 0 && (_this4$configuration$ = _this4$configuration$[collectionName]) !== null && _this4$configuration$ !== void 0 && _this4$configuration$[facet]) {
+          return "".concat(facet).concat(_this4.configuration.collectionSpecificFacetByOptions[collectionName][facet]);
+        } else if (_this4.configuration.facetByOptions[facet]) {
+          return "".concat(facet).concat(_this4.configuration.facetByOptions[facet]);
+        } else {
+          return facet;
+        }
+      }).join(",");
+    }
+  }, {
+    key: "_adaptRulesContextsToOverrideTags",
+    value: function _adaptRulesContextsToOverrideTags(ruleContexts) {
+      return ruleContexts.join(",");
+    }
+  }, {
+    key: "_buildSearchParameters",
+    value: function _buildSearchParameters(instantsearchRequest) {
+      var _this$configuration$c2, _this$configuration$s;
+      var params = instantsearchRequest.params;
+      var indexName = instantsearchRequest.indexName;
+      var adaptedCollectionName = this._adaptIndexName(indexName);
+
+      // Convert all common parameters to snake case
+      var snakeCasedAdditionalSearchParameters = {};
+      for (var _i = 0, _Object$entries = Object.entries(this.additionalSearchParameters); _i < _Object$entries.length; _i++) {
+        var _Object$entries$_i = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_Object$entries[_i], 2),
+          key = _Object$entries$_i[0],
+          value = _Object$entries$_i[1];
+        snakeCasedAdditionalSearchParameters[this._camelToSnakeCase(key)] = value;
+      }
+
+      // Override, collection specific parameters
+      if (this.collectionSpecificSearchParameters[adaptedCollectionName]) {
+        for (var _i2 = 0, _Object$entries2 = Object.entries(this.collectionSpecificSearchParameters[adaptedCollectionName]); _i2 < _Object$entries2.length; _i2++) {
+          var _Object$entries2$_i = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_Object$entries2[_i2], 2),
+            _key = _Object$entries2$_i[0],
+            _value = _Object$entries2$_i[1];
+          snakeCasedAdditionalSearchParameters[this._camelToSnakeCase(_key)] = _value;
+        }
+      }
+      var typesenseSearchParams = Object.assign({}, snakeCasedAdditionalSearchParameters);
+      var adaptedSortBy = this._adaptSortBy(indexName);
+      Object.assign(typesenseSearchParams, {
+        collection: adaptedCollectionName,
+        q: params.query === "" || params.query === undefined ? "*" : params.query,
+        facet_by: snakeCasedAdditionalSearchParameters.facet_by || this._adaptFacetBy(params.facets, adaptedCollectionName),
+        filter_by: this._adaptFilters(params, adaptedCollectionName) || snakeCasedAdditionalSearchParameters.filter_by,
+        sort_by: adaptedSortBy || snakeCasedAdditionalSearchParameters.sort_by,
+        max_facet_values: params.maxValuesPerFacet,
+        page: (params.page || 0) + 1
+      });
+      if (params.hitsPerPage != null) {
+        typesenseSearchParams.per_page = params.hitsPerPage;
+      }
+      if (params.facetQuery) {
+        typesenseSearchParams.facet_query = "".concat(params.facetName, ":").concat(params.facetQuery);
+        typesenseSearchParams.per_page = 0;
+      }
+      if (params.ruleContexts && params.ruleContexts.length > 0) {
+        var tagsParamName = this.configuration.useOverrideTags ? "override_tags" : "curation_tags";
+        typesenseSearchParams[tagsParamName] = this._adaptRulesContextsToOverrideTags(params.ruleContexts);
+      }
+
+      // If a custom vector query is specified, set q=*
+      if (params.typesenseVectorQuery) {
+        typesenseSearchParams.vector_query = params.typesenseVectorQuery;
+      }
+
+      // Allow for conditional disabling of overrides, for particular sort orders
+      var sortByOption = ((_this$configuration$c2 = this.configuration.collectionSpecificSortByOptions) === null || _this$configuration$c2 === void 0 || (_this$configuration$c2 = _this$configuration$c2[adaptedCollectionName]) === null || _this$configuration$c2 === void 0 ? void 0 : _this$configuration$c2[typesenseSearchParams["sort_by"]]) || ((_this$configuration$s = this.configuration.sortByOptions) === null || _this$configuration$s === void 0 ? void 0 : _this$configuration$s[typesenseSearchParams["sort_by"]]);
+      if ((sortByOption === null || sortByOption === void 0 ? void 0 : sortByOption["enable_overrides"]) != null) {
+        typesenseSearchParams["enable_overrides"] = sortByOption["enable_overrides"];
+      }
+
+      // console.log(params);
+      // console.log(typesenseSearchParams);
+
+      // Filter out empty or null values, so we don't accidentally override values set in presets
+      // eslint-disable-next-line no-unused-vars
+      return Object.fromEntries(Object.entries(typesenseSearchParams).filter(function (_ref2) {
+        var _ref3 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_2__["default"])(_ref2, 2),
+          _ = _ref3[0],
+          v = _ref3[1];
+        return v != null && v !== "";
+      }));
+    }
+  }, {
+    key: "_camelToSnakeCase",
+    value: function _camelToSnakeCase(str) {
+      return str.split(/(?=[A-Z])/).join("_").toLowerCase();
+    }
+  }, {
+    key: "request",
+    value: function () {
+      var _request = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5__.mark(function _callee() {
+        var _this5 = this,
+          _searches$,
+          _searches$2;
+        var searches, commonParams, _searches$3, q, conversation, conversation_id, conversation_model_id, searchRequest;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_5__.wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              // console.log(this.instantsearchRequests);
+              searches = this.instantsearchRequests.map(function (instantsearchRequest) {
+                return _this5._buildSearchParameters(instantsearchRequest);
+              }); // If this is a conversational search, then move conversation related params to query params
+              commonParams = {};
+              if (((_searches$ = searches[0]) === null || _searches$ === void 0 ? void 0 : _searches$.conversation) === true || ((_searches$2 = searches[0]) === null || _searches$2 === void 0 ? void 0 : _searches$2.conversation) === "true") {
+                _searches$3 = searches[0], q = _searches$3.q, conversation = _searches$3.conversation, conversation_id = _searches$3.conversation_id, conversation_model_id = _searches$3.conversation_model_id;
+                commonParams = {
+                  q: q,
+                  conversation: conversation,
+                  conversation_id: conversation_id,
+                  conversation_model_id: conversation_model_id
+                };
+                searches = searches.map(function (searchParams) {
+                  // eslint-disable-next-line no-unused-vars
+                  var q = searchParams.q,
+                    conversation = searchParams.conversation,
+                    conversation_id = searchParams.conversation_id,
+                    conversation_model_id = searchParams.conversation_model_id,
+                    modifiedSearchParams = (0,_babel_runtime_helpers_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__["default"])(searchParams, _excluded);
+                  return modifiedSearchParams;
+                });
+              }
+              searchRequest = {
+                searches: searches
+              }; // Add union parameter if configured
+              if (this.configuration.union) {
+                searchRequest.union = this.configuration.union;
+                ["page", "per_page", "offset", "limit", "limit_hits"].forEach(function (paramName) {
+                  if (searches[0][paramName] != null) {
+                    commonParams[paramName] = searches[0][paramName];
+                  }
+                });
+              }
+              return _context.abrupt("return", this.typesenseClient.multiSearch.perform(searchRequest, commonParams));
+            case 6:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, this);
+      }));
+      function request() {
+        return _request.apply(this, arguments);
+      }
+      return request;
+    }()
+  }], [{
+    key: "INDEX_NAME_MATCHING_REGEX",
+    get: function get() {
+      return new RegExp("^(.+?)(?=(/sort/(.*))|$)");
+    }
+  }, {
+    key: "DEFAULT_FACET_FILTER_STRING_MATCHING_REGEX",
+    get: function get() {
+      return new RegExp("(.*)((?!:).):(?!:)(.*)");
+    }
+  }, {
+    key: "DEFAULT_NUMERIC_FILTER_STRING_MATCHING_REGEX",
+    get: function get() {
+      return new RegExp("(.*?)(<=|>=|>|<|=)(.*)");
+    }
+  }]);
+}();
+
+/***/ }),
+
+/***/ "./src/SearchResponseAdapter.js":
+/*!**************************************!*\
+  !*** ./src/SearchResponseAdapter.js ***!
+  \**************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SearchResponseAdapter: () => (/* binding */ SearchResponseAdapter)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/typeof */ "./node_modules/@babel/runtime/helpers/esm/typeof.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ "./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _support_utils_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./support/utils.js */ "./src/support/utils.js");
+
+
+
+
+
+
+
+
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__["default"])(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+
+var SearchResponseAdapter = /*#__PURE__*/function () {
+  function SearchResponseAdapter(typesenseResponse, instantsearchRequest, configuration) {
+    var allTypesenseResults = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
+    var fullTypesenseResponse = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : {};
+    (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_4__["default"])(this, SearchResponseAdapter);
+    this.typesenseResponse = typesenseResponse;
+    this.instantsearchRequest = instantsearchRequest;
+    this.configuration = configuration;
+    this.allTypesenseResults = allTypesenseResults;
+    this.fullTypesenseResponse = fullTypesenseResponse;
+  }
+  return (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_5__["default"])(SearchResponseAdapter, [{
+    key: "_adaptGroupedHits",
+    value: function _adaptGroupedHits(typesenseGroupedHits) {
+      var _this = this;
+      var adaptedResult = [];
+      adaptedResult = typesenseGroupedHits.map(function (groupedHit) {
+        var adaptedHits = _this._adaptHits(groupedHit.hits);
+        adaptedHits.forEach(function (hit) {
+          hit["group_key"] = hit["_group_key"] = groupedHit.group_key;
+          if (groupedHit.found) {
+            hit["_group_found"] = groupedHit.found;
+          }
+        });
+        return adaptedHits;
+      });
+
+      // adaptedResult is now in the form of [[{}, {}], [{}, {}], ...]
+      //  where each element in the outermost array corresponds to a group.
+
+      if (this.configuration.flattenGroupedHits) {
+        // We flatten it to [{}, {}, {}]
+        adaptedResult = adaptedResult.flat();
+      } else {
+        // We flatten it to [{ ..., grouped_hits: [{}, {}] }, {}, {}]
+        // We set the first element in the group as the hit, and then add a new key called grouped_hits with the other hits
+        adaptedResult = adaptedResult.map(function (adaptedGroupedHit) {
+          return _objectSpread(_objectSpread({}, adaptedGroupedHit[0]), {}, {
+            _grouped_hits: adaptedGroupedHit
+          });
+        });
+      }
+      return adaptedResult;
+    }
+  }, {
+    key: "_adaptHits",
+    value: function _adaptHits(typesenseHits) {
+      var _this2 = this;
+      var adaptedResult = [];
+      adaptedResult = typesenseHits.map(function (typesenseHit) {
+        var adaptedHit = _objectSpread({}, typesenseHit.document);
+        adaptedHit.objectID = typesenseHit.document.id;
+        adaptedHit._snippetResult = _this2._adaptHighlightResult(typesenseHit, "snippet");
+        adaptedHit._highlightResult = _this2._adaptHighlightResult(typesenseHit, "value");
+        adaptedHit._rawTypesenseHit = typesenseHit;
+
+        // We're adding `conversation` into each hit, since there doesn't seem to be any other way to pass this up to Instantsearch outside of hits
+        if (_this2.fullTypesenseResponse.conversation) {
+          adaptedHit._rawTypesenseConversation = _this2.fullTypesenseResponse.conversation;
+        }
+
+        // Add metadata fields to result, if a field with that name doesn't already exist
+        ["text_match", "geo_distance_meters", "curated", "text_match_info", "hybrid_search_info", "vector_distance", "collection",
+        // Union search specific
+        "search_index" // Union search specific
+        ].forEach(function (metadataField) {
+          if (Object.keys(typesenseHit).includes(metadataField) && !Object.keys(adaptedHit).includes(metadataField)) {
+            adaptedHit[metadataField] = typesenseHit[metadataField];
+          }
+        });
+        var geoLocationValue = adaptedHit[_this2.configuration.geoLocationField];
+        if (geoLocationValue) {
+          adaptedHit._geoloc = {
+            lat: geoLocationValue[0],
+            lng: geoLocationValue[1]
+          };
+        }
+        return adaptedHit;
+      });
+      return adaptedResult;
+    }
+  }, {
+    key: "_adaptHighlightResult",
+    value: function _adaptHighlightResult(typesenseHit, snippetOrValue) {
+      var result = {};
+
+      // If there is a highlight object available (as of v0.24.0),
+      // And the highlight object uses the highlight format available in v0.24.0.rcn32 and above
+      //  use that instead of the highlights array, since it supports highlights of nested fields
+      if (typesenseHit.highlight != null && this.isHighlightPost0240RCN32Format(typesenseHit.highlight)) {
+        this.adaptHighlightObject(typesenseHit, result, snippetOrValue);
+      } else {
+        this.adaptHighlightsArray(typesenseHit, result, snippetOrValue);
+      }
+      return result;
+    }
+  }, {
+    key: "isHighlightPost0240RCN32Format",
+    value: function isHighlightPost0240RCN32Format(highlight) {
+      return highlight.full == null && highlight.snippet == null;
+    }
+  }, {
+    key: "adaptHighlightsArray",
+    value: function adaptHighlightsArray(typesenseHit, result, snippetOrValue) {
+      var _this3 = this;
+      // Algolia lists all searchable attributes in this key, even if there are no matches
+      // So do the same and then override highlights
+
+      Object.assign.apply(Object, [result].concat((0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2__["default"])(Object.entries(typesenseHit.document).map(function (_ref) {
+        var _ref2 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_ref, 2),
+          attribute = _ref2[0],
+          value = _ref2[1];
+        return (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__["default"])({}, attribute, {
+          value: value,
+          matchLevel: "none",
+          matchedWords: []
+        });
+      }))));
+      typesenseHit.highlights.forEach(function (highlight) {
+        result[highlight.field] = {
+          value: highlight[snippetOrValue] || highlight["".concat(snippetOrValue, "s")],
+          matchLevel: "full",
+          matchedWords: highlight.matched_tokens
+        };
+        if (highlight.indices) {
+          result[highlight.field]["matchedIndices"] = highlight.indices;
+        }
+      });
+
+      // Now convert any values that have an array value
+      // Also, replace highlight tag
+      Object.entries(result).forEach(function (_ref4) {
+        var _ref5 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_ref4, 2),
+          k = _ref5[0],
+          v = _ref5[1];
+        var attribute = k;
+        var value = v.value,
+          matchLevel = v.matchLevel,
+          matchedWords = v.matchedWords,
+          matchedIndices = v.matchedIndices;
+        if (value == null) {
+          result[attribute] = _this3._adaptHighlightNullValue();
+        } else if (Array.isArray(value)) {
+          // Algolia lists all values of the key in highlights, even those that don't have any highlights
+          // So add all values of the array field, including highlights
+          result[attribute] = [];
+          typesenseHit.document[attribute].forEach(function (unhighlightedValueFromArray, index) {
+            if (matchedIndices && matchedIndices.includes(index)) {
+              result[attribute].push({
+                value: _this3._adaptHighlightTag("".concat(value[matchedIndices.indexOf(index)]), _this3.instantsearchRequest.params.highlightPreTag, _this3.instantsearchRequest.params.highlightPostTag),
+                matchLevel: matchLevel,
+                matchedWords: matchedWords[index]
+              });
+            } else if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(unhighlightedValueFromArray) === "object") {
+              // Handle arrays of objects
+              // Side note: Typesense does not support highlights for nested objects in this `highlights` array,
+              //  so we pass in an empty object below
+              result[attribute].push(_this3._adaptHighlightInObjectValue(unhighlightedValueFromArray, {}, snippetOrValue));
+            } else {
+              result[attribute].push({
+                value: "".concat(unhighlightedValueFromArray),
+                matchLevel: "none",
+                matchedWords: []
+              });
+            }
+          });
+        } else if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(value) === "object") {
+          // Handle nested objects
+          // Side note: Typesense does not support highlights for nested objects in this `highlights` array,
+          //  so we pass in an empty object below
+          result[attribute] = _this3._adaptHighlightInObjectValue(value, {}, snippetOrValue);
+        } else {
+          // Convert all values to strings
+          result[attribute].value = _this3._adaptHighlightTag("".concat(value), _this3.instantsearchRequest.params.highlightPreTag, _this3.instantsearchRequest.params.highlightPostTag);
+        }
+      });
+    }
+  }, {
+    key: "adaptHighlightObject",
+    value: function adaptHighlightObject(typesenseHit, result, snippetOrValue) {
+      Object.assign(result, this._adaptHighlightInObjectValue(typesenseHit.document, typesenseHit.highlight, snippetOrValue));
+    }
+  }, {
+    key: "_adaptHighlightInObjectValue",
+    value: function _adaptHighlightInObjectValue(objectValue, highlightObjectValue, snippetOrValue) {
+      var _this4 = this;
+      return Object.assign.apply(Object, [{}].concat((0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2__["default"])(Object.entries(objectValue).map(function (_ref6) {
+        var _ref7 = (0,_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_ref6, 2),
+          attribute = _ref7[0],
+          value = _ref7[1];
+        var adaptedValue;
+        if (value == null) {
+          adaptedValue = _this4._adaptHighlightNullValue();
+        } else if (Array.isArray(value)) {
+          var _highlightObjectValue;
+          adaptedValue = _this4._adaptHighlightInArrayValue(value, (_highlightObjectValue = highlightObjectValue === null || highlightObjectValue === void 0 ? void 0 : highlightObjectValue[attribute]) !== null && _highlightObjectValue !== void 0 ? _highlightObjectValue : [], snippetOrValue);
+        } else if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(value) === "object") {
+          var _highlightObjectValue2;
+          adaptedValue = _this4._adaptHighlightInObjectValue(value, (_highlightObjectValue2 = highlightObjectValue === null || highlightObjectValue === void 0 ? void 0 : highlightObjectValue[attribute]) !== null && _highlightObjectValue2 !== void 0 ? _highlightObjectValue2 : {}, snippetOrValue);
+        } else {
+          adaptedValue = _this4._adaptHighlightInPrimitiveValue(value, highlightObjectValue === null || highlightObjectValue === void 0 ? void 0 : highlightObjectValue[attribute], snippetOrValue);
+        }
+        return (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__["default"])({}, attribute, adaptedValue);
+      }))));
+    }
+  }, {
+    key: "_adaptHighlightInArrayValue",
+    value: function _adaptHighlightInArrayValue(arrayValue, highlightArrayValue, snippetOrValue) {
+      var _this5 = this;
+      return arrayValue.map(function (value, index) {
+        var adaptedValue;
+        if (value == null) {
+          adaptedValue = _this5._adaptHighlightNullValue();
+        } else if (Array.isArray(value)) {
+          var _highlightArrayValue$;
+          adaptedValue = _this5._adaptHighlightInArrayValue(value, (_highlightArrayValue$ = highlightArrayValue === null || highlightArrayValue === void 0 ? void 0 : highlightArrayValue[index]) !== null && _highlightArrayValue$ !== void 0 ? _highlightArrayValue$ : [], snippetOrValue);
+        } else if ((0,_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(value) === "object") {
+          var _highlightArrayValue$2;
+          adaptedValue = _this5._adaptHighlightInObjectValue(value, (_highlightArrayValue$2 = highlightArrayValue === null || highlightArrayValue === void 0 ? void 0 : highlightArrayValue[index]) !== null && _highlightArrayValue$2 !== void 0 ? _highlightArrayValue$2 : {}, snippetOrValue);
+        } else {
+          adaptedValue = _this5._adaptHighlightInPrimitiveValue(value, highlightArrayValue === null || highlightArrayValue === void 0 ? void 0 : highlightArrayValue[index], snippetOrValue);
+        }
+        return adaptedValue;
+      });
+    }
+  }, {
+    key: "_adaptHighlightInPrimitiveValue",
+    value: function _adaptHighlightInPrimitiveValue(primitiveValue, highlightPrimitiveValue, snippetOrValue) {
+      if (highlightPrimitiveValue != null) {
+        var _ref9, _ref10, _highlightPrimitiveVa;
+        var highlightedValue = (_ref9 = (_ref10 = (_highlightPrimitiveVa = highlightPrimitiveValue[snippetOrValue]) !== null && _highlightPrimitiveVa !== void 0 ? _highlightPrimitiveVa : highlightPrimitiveValue["highlight"]) !== null && _ref10 !== void 0 ? _ref10 : highlightPrimitiveValue["snippet"]) !== null && _ref9 !== void 0 ? _ref9 : primitiveValue;
+        return {
+          value: this._adaptHighlightTag("".concat(highlightedValue), this.instantsearchRequest.params.highlightPreTag, this.instantsearchRequest.params.highlightPostTag),
+          matchLevel: (highlightPrimitiveValue.matched_tokens || []).length > 0 ? "full" : "none",
+          matchedWords: highlightPrimitiveValue.matched_tokens || []
+        };
+      } else {
+        return {
+          // Convert all values to strings
+          value: this._adaptHighlightTag("".concat(primitiveValue), this.instantsearchRequest.params.highlightPreTag, this.instantsearchRequest.params.highlightPostTag),
+          matchLevel: "none",
+          matchedWords: []
+        };
+      }
+    }
+  }, {
+    key: "_adaptHighlightNullValue",
+    value: function _adaptHighlightNullValue() {
+      return {
+        value: "",
+        matchLevel: "none",
+        matchedWords: []
+      };
+    }
+  }, {
+    key: "_adaptFacets",
+    value: function _adaptFacets(typesenseFacetCounts) {
+      var adaptedResult = {};
+      if (Array.isArray(typesenseFacetCounts)) {
+        typesenseFacetCounts.forEach(function (facet) {
+          Object.assign(adaptedResult, (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__["default"])({}, facet.field_name, Object.assign.apply(Object, [{}].concat((0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2__["default"])(facet.counts.map(function (count) {
+            return (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__["default"])({}, count.value, count.count);
+          }))))));
+        });
+      }
+      return adaptedResult;
+    }
+  }, {
+    key: "_adaptFacetStats",
+    value: function _adaptFacetStats(typesenseFacetCounts) {
+      var adaptedResult = {};
+      if (Array.isArray(typesenseFacetCounts)) {
+        typesenseFacetCounts.forEach(function (facet) {
+          if (facet.stats && Object.keys(facet.stats).length > 0) {
+            Object.assign(adaptedResult, (0,_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_3__["default"])({}, facet.field_name, facet.stats));
+          }
+        });
+      }
+      return adaptedResult;
+    }
+  }, {
+    key: "_adaptRenderingContent",
+    value: function _adaptRenderingContent(typesenseFacetCounts) {
+      var _adaptedResult$facetO;
+      var adaptedResult = Object.assign({}, this.configuration.renderingContent);
+
+      // Only set facet ordering if the user has not set one
+      if (((_adaptedResult$facetO = adaptedResult.facetOrdering) === null || _adaptedResult$facetO === void 0 || (_adaptedResult$facetO = _adaptedResult$facetO.facets) === null || _adaptedResult$facetO === void 0 ? void 0 : _adaptedResult$facetO.order) == null) {
+        adaptedResult.facetOrdering = adaptedResult.facetOrdering || {};
+        adaptedResult.facetOrdering.facets = adaptedResult.facetOrdering.facets || {};
+        adaptedResult.facetOrdering.facets.order = (0,_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_2__["default"])(new Set((Array.isArray(typesenseFacetCounts) ? typesenseFacetCounts : []).map(function (fc) {
+          return fc["field_name"];
+        }).concat(this.allTypesenseResults.map(function (r) {
+          return r.facet_counts || [];
+        }).flat().map(function (fc) {
+          return fc["field_name"];
+        }).filter(function (f) {
+          return f;
+        }))));
+      }
+      return adaptedResult;
+    }
+  }, {
+    key: "_adaptUserData",
+    value: function _adaptUserData(metadata) {
+      if (!metadata) return [];
+      return Array.isArray(metadata) ? metadata : [metadata];
+    }
+  }, {
+    key: "adapt",
+    value: function adapt() {
+      var adaptedRenderingContent = this._adaptRenderingContent(this.typesenseResponse.facet_counts || []);
+
+      // For union search, use union_request_params, otherwise use request_params
+      var requestParams = this.typesenseResponse.union_request_params ? this.typesenseResponse.union_request_params[0] : this.typesenseResponse.request_params;
+      var adaptedResult = _objectSpread({
+        hits: this.typesenseResponse.grouped_hits ? this._adaptGroupedHits(this.typesenseResponse.grouped_hits) : this._adaptHits(this.typesenseResponse.hits),
+        nbHits: this.typesenseResponse.found,
+        page: this.typesenseResponse.union_request_params ? this.typesenseResponse.page // Union search already uses 0-based page
+        : this.typesenseResponse.page - 1,
+        // Regular search uses 1-based page, convert to 0-based
+        nbPages: this._adaptNumberOfPages(),
+        hitsPerPage: (requestParams === null || requestParams === void 0 ? void 0 : requestParams.per_page) || 10,
+        facets: this._adaptFacets(this.typesenseResponse.facet_counts || []),
+        facets_stats: this._adaptFacetStats(this.typesenseResponse.facet_counts || []),
+        query: (requestParams === null || requestParams === void 0 ? void 0 : requestParams.q) || "",
+        processingTimeMS: this.typesenseResponse.search_time_ms
+      }, Object.keys(adaptedRenderingContent).length > 0 ? {
+        renderingContent: adaptedRenderingContent
+      } : null);
+
+      // Add appliedRules if metadata is present
+      if (this.typesenseResponse.metadata) {
+        adaptedResult.appliedRules = ["typesense-override"];
+        adaptedResult.userData = this._adaptUserData(this.typesenseResponse.metadata);
+      }
+
+      // Add parsed_nl_query if natural language search was used
+      if (this.typesenseResponse.parsed_nl_query) {
+        adaptedResult.parsed_nl_query = this.typesenseResponse.parsed_nl_query;
+      }
+
+      // If no results were found for the search, but there is still a conversation response,
+      // still send that as a hit so the conversation is accessible via Instantsearch
+      if (this.fullTypesenseResponse.conversation && adaptedResult.hits.length === 0) {
+        adaptedResult.hits = [{
+          _rawTypesenseConversation: this.fullTypesenseResponse.conversation
+        }];
+      }
+
+      // console.log(adaptedResult);
+      return adaptedResult;
+    }
+  }]);
+}();
+Object.assign(SearchResponseAdapter.prototype, _support_utils_js__WEBPACK_IMPORTED_MODULE_6__.utils);
+
+/***/ }),
+
+/***/ "./src/support/utils.js":
+/*!******************************!*\
+  !*** ./src/support/utils.js ***!
+  \******************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   utils: () => (/* binding */ utils)
+/* harmony export */ });
+var utils = {
+  _adaptHighlightTag: function _adaptHighlightTag(value, highlightPreTag, highlightPostTag) {
+    return value.replace(new RegExp("<mark>", "g"), highlightPreTag || "<mark>").replace(new RegExp("</mark>", "g"), highlightPostTag || "</mark>");
+  },
+  _adaptNumberOfPages: function _adaptNumberOfPages() {
+    // For union search, use union_request_params, otherwise use request_params
+    var requestParams = this.typesenseResponse.union_request_params ? this.typesenseResponse.union_request_params[0] : this.typesenseResponse.request_params;
+    var perPage = (requestParams === null || requestParams === void 0 ? void 0 : requestParams.per_page) || 10;
+    var result = this.typesenseResponse.found / perPage;
+    if (Number.isFinite(result)) {
+      return Math.ceil(result);
+    } else {
+      return 1;
+    }
+  }
+};
+
+/***/ }),
+
 /***/ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs":
 /*!*****************************************************************!*\
   !*** ./node_modules/typesense/node_modules/tslib/tslib.es6.mjs ***!
@@ -11366,18 +11365,6 @@ function __rewriteRelativeImportExtension(path, preserveJsx) {
 /******/ 	}
 /******/ 	
 /************************************************************************/
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -11434,12 +11421,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
 /* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _Configuration__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Configuration */ "./src/Configuration.js");
+/* harmony import */ var _Configuration_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Configuration.js */ "./src/Configuration.js");
 /* harmony import */ var typesense__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! typesense */ "./node_modules/typesense/lib/Typesense.js");
-/* harmony import */ var _SearchRequestAdapter__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SearchRequestAdapter */ "./src/SearchRequestAdapter.js");
-/* harmony import */ var _SearchResponseAdapter__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./SearchResponseAdapter */ "./src/SearchResponseAdapter.js");
-/* harmony import */ var _FacetSearchResponseAdapter__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./FacetSearchResponseAdapter */ "./src/FacetSearchResponseAdapter.js");
+/* harmony import */ var _SearchRequestAdapter_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SearchRequestAdapter.js */ "./src/SearchRequestAdapter.js");
+/* harmony import */ var _SearchResponseAdapter_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./SearchResponseAdapter.js */ "./src/SearchResponseAdapter.js");
+/* harmony import */ var _FacetSearchResponseAdapter_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./FacetSearchResponseAdapter.js */ "./src/FacetSearchResponseAdapter.js");
 
 
 
@@ -11471,10 +11457,10 @@ var TypesenseInstantsearchAdapter = /*#__PURE__*/function () {
   return (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__["default"])(TypesenseInstantsearchAdapter, [{
     key: "searchTypesenseAndAdapt",
     value: function () {
-      var _searchTypesenseAndAdapt = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee(instantsearchRequests) {
+      var _searchTypesenseAndAdapt = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3__.mark(function _callee(instantsearchRequests) {
         var _this2 = this;
         var typesenseResponse, responseAdapter, adaptedResponse, adaptedResponses, _adaptedResponses;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee$(_context) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3__.wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
               _context.prev = 0;
@@ -11488,7 +11474,7 @@ var TypesenseInstantsearchAdapter = /*#__PURE__*/function () {
               }
               // Handle union search response - single unified response
               this._validateTypesenseResult(typesenseResponse);
-              responseAdapter = new _SearchResponseAdapter__WEBPACK_IMPORTED_MODULE_7__.SearchResponseAdapter(typesenseResponse, instantsearchRequests[0],
+              responseAdapter = new _SearchResponseAdapter_js__WEBPACK_IMPORTED_MODULE_7__.SearchResponseAdapter(typesenseResponse, instantsearchRequests[0],
               // Use first request as base
               this.configuration, [typesenseResponse],
               // Pass single response as allTypesenseResults
@@ -11504,7 +11490,7 @@ var TypesenseInstantsearchAdapter = /*#__PURE__*/function () {
               // Handle regular multi-search response - multiple separate responses
               _adaptedResponses = typesenseResponse.results.map(function (typesenseResult, index) {
                 _this2._validateTypesenseResult(typesenseResult);
-                var responseAdapter = new _SearchResponseAdapter__WEBPACK_IMPORTED_MODULE_7__.SearchResponseAdapter(typesenseResult, instantsearchRequests[index], _this2.configuration, typesenseResponse.results, typesenseResponse);
+                var responseAdapter = new _SearchResponseAdapter_js__WEBPACK_IMPORTED_MODULE_7__.SearchResponseAdapter(typesenseResult, instantsearchRequests[index], _this2.configuration, typesenseResponse.results, typesenseResponse);
                 var adaptedResponse = responseAdapter.adapt();
                 return adaptedResponse;
               });
@@ -11533,10 +11519,10 @@ var TypesenseInstantsearchAdapter = /*#__PURE__*/function () {
   }, {
     key: "searchTypesenseForFacetValuesAndAdapt",
     value: function () {
-      var _searchTypesenseForFacetValuesAndAdapt = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee2(instantsearchRequests) {
+      var _searchTypesenseForFacetValuesAndAdapt = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3__.mark(function _callee2(instantsearchRequests) {
         var _this3 = this;
         var typesenseResponse, adaptedResponses;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3__.wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
               _context2.prev = 0;
@@ -11546,7 +11532,7 @@ var TypesenseInstantsearchAdapter = /*#__PURE__*/function () {
               typesenseResponse = _context2.sent;
               adaptedResponses = typesenseResponse.results.map(function (typesenseResult, index) {
                 _this3._validateTypesenseResult(typesenseResult);
-                var responseAdapter = new _FacetSearchResponseAdapter__WEBPACK_IMPORTED_MODULE_8__.FacetSearchResponseAdapter(typesenseResult, instantsearchRequests[index], _this3.configuration);
+                var responseAdapter = new _FacetSearchResponseAdapter_js__WEBPACK_IMPORTED_MODULE_8__.FacetSearchResponseAdapter(typesenseResult, instantsearchRequests[index], _this3.configuration);
                 return responseAdapter.adapt();
               });
               return _context2.abrupt("return", adaptedResponses);
@@ -11569,12 +11555,12 @@ var TypesenseInstantsearchAdapter = /*#__PURE__*/function () {
   }, {
     key: "_adaptAndPerformTypesenseRequest",
     value: function () {
-      var _adaptAndPerformTypesenseRequest2 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().mark(function _callee3(instantsearchRequests) {
+      var _adaptAndPerformTypesenseRequest2 = (0,_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__["default"])( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3__.mark(function _callee3(instantsearchRequests) {
         var requestAdapter, typesenseResponse;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3___default().wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_3__.wrap(function _callee3$(_context3) {
           while (1) switch (_context3.prev = _context3.next) {
             case 0:
-              requestAdapter = new _SearchRequestAdapter__WEBPACK_IMPORTED_MODULE_6__.SearchRequestAdapter(instantsearchRequests, this.typesenseClient, this.configuration);
+              requestAdapter = new _SearchRequestAdapter_js__WEBPACK_IMPORTED_MODULE_6__.SearchRequestAdapter(instantsearchRequests, this.typesenseClient, this.configuration);
               _context3.next = 3;
               return requestAdapter.request();
             case 3:
@@ -11600,7 +11586,7 @@ var TypesenseInstantsearchAdapter = /*#__PURE__*/function () {
   }, {
     key: "updateConfiguration",
     value: function updateConfiguration(options) {
-      this.configuration = new _Configuration__WEBPACK_IMPORTED_MODULE_4__.Configuration(options);
+      this.configuration = new _Configuration_js__WEBPACK_IMPORTED_MODULE_4__.Configuration(options);
       this.configuration.validate();
       this.typesenseClient = new typesense__WEBPACK_IMPORTED_MODULE_5__.SearchClient(this.configuration.server);
       return true;

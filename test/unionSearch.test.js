@@ -1,5 +1,5 @@
 describe("Union Search", () => {
-  beforeAll(require("./support/beforeAll"), 60 * 1000);
+  beforeAll(require("./support/beforeAll.cjs"), 60 * 1000);
 
   beforeEach(async () => {
     return page.goto("http://localhost:3000/union_search.html");
