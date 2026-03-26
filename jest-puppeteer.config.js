@@ -6,7 +6,7 @@ module.exports = {
     headless: isDebugMode ? false : true,
     slowMo: 10,
     defaultViewport: null,
-    executablePath: process.env.CHROME_PATH,
+    ...(process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : {}),
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
   },
   server: [
