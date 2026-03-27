@@ -3,11 +3,20 @@ import type { SearchClient as AlgoliaSearchClient, CompositionClient } from "ins
 type SearchClient = CompositionClient | AlgoliaSearchClient;
 
 import type { ConfigurationOptions } from "typesense/lib/Typesense/Configuration";
-import type { DocumentSchema, SearchParamsWithPreset } from "typesense/lib/Typesense/Documents";
+import type { DocumentSchema, SearchParams, SearchParamsWithPreset } from "typesense/lib/Typesense/Documents";
+import { OperationMode } from "typesense/lib/Typesense/Documents";
 import { default as TypesenseSearchClient } from "typesense/lib/Typesense/SearchClient";
+import { arrayableParams } from "typesense/lib/Typesense/Types";
 
-interface BaseSearchParameters<T extends DocumentSchema, Infix extends string = string>
-  extends Partial<Omit<SearchParamsWithPreset<T, Infix>, "q" | "filter_by">> {
+type SearchParamsWithoutArray<TDoc extends DocumentSchema, Infix extends string> = {
+  [K in keyof SearchParams<TDoc, Infix>]: K extends keyof typeof arrayableParams
+    ? Exclude<SearchParams<TDoc, Infix>[K], any[]>
+    : SearchParams<TDoc, Infix>[K];
+};
+
+interface BaseSearchParameters<T extends DocumentSchema = DocumentSchema, Infix extends string = string>
+  extends Partial<Omit<SearchParamsWithoutArray<T, Infix>, "q" | "filter_by" | "infix">> {
+  preset?: string;
   /**
    * @deprecated Please use the snake_cased version of this parameter
    */
@@ -84,6 +93,8 @@ interface BaseSearchParameters<T extends DocumentSchema, Infix extends string = 
    * @deprecated Please use the snake_cased version of this parameter
    */
   exhaustiveSearch?: boolean;
+
+  infix?: OperationMode | (string & {});
 }
 
 interface BaseAdapterOptions {
