@@ -8,6 +8,7 @@ expectAssignable<TypesenseInstantsearchAdapterOptions>({
     nodes: [{ host: "example.com", port: 1234, protocol: "http" }],
   },
   additionalSearchParameters: { query_by: "a,b,c" },
+  interpretNegativeNumericFacetFiltersAsExclusions: true,
   collectionSpecificSearchParameters: {
     books: {
       query_by: "a, b, c",

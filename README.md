@@ -311,6 +311,8 @@ If you need to specify a `filter_by` search parameter for Typesense, you want to
 The format for `facetFilters` and `numericFilters` is the same as Algolia's as described [here](https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/).
 But `filters` needs to be in Typesense's `filter_by` format as described in this table [here](https://typesense.org/docs/latest/api/documents.html#query-parameters).
 
+There's one difference from Algolia's format, for values that look like numbers. Algolia reads `temp:-5` as "exclude 5", but this adapter matches the number -5 by default, as it always has. Set `interpretNegativeNumericFacetFiltersAsExclusions: true` to get Algolia's behavior, then write `temp:\-5` wherever you mean the number, including in `initialUiState` and routed URLs. In a JavaScript string, write `"temp:\\-5"`. Plain `"temp:\-5"` is the same string as `"temp:-5"`. Without the option, you can still exclude 5 with `filters: "temp:!=5"`.
+
 Setting `filter_by` inside the `additionalQueryParameters` config only works when the widgets are loaded initially, because InstantSearch internally overrides the `filter_by` field subsequently.
 Read more [here](https://github.com/typesense/typesense-instantsearch-adapter/issues/17#issuecomment-746912375).
 

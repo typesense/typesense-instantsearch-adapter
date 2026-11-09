@@ -239,6 +239,16 @@ describe("SearchRequestAdapter", () => {
         expect(result).toEqual("(tags:!`value1` || tags:!`value2`)");
       });
 
+      it("expands OR'ed numeric exclusions into OR clauses", () => {
+        const subject = new SearchRequestAdapter([], null, {
+          flipNegativeRefinementOperator: true,
+          interpretNegativeNumericFacetFiltersAsExclusions: true,
+        });
+
+        const result = subject._adaptFacetFilters([["field1:-5", "field1:-\\-5"]], "collection1");
+        expect(result).toEqual("(field1:!=5 || field1:!=-5)");
+      });
+
       it("keeps OR'ed positive refinements as list unions", () => {
         const subject = new SearchRequestAdapter([], null, {
           flipNegativeRefinementOperator: true,
@@ -249,6 +259,42 @@ describe("SearchRequestAdapter", () => {
 
         const result = subject._adaptFacetFilters([["tags:value1", "tags:value2"]], "collection1");
         expect(result).toEqual("tags:[`value1`,`value2`]");
+      });
+    });
+
+    describe("when facet values start with a minus sign", () => {
+      it("reads field:-5 as the number -5 by default", () => {
+        const subject = new SearchRequestAdapter([], null, {});
+
+        const result = subject._adaptFacetFilters([["field1:-5"], "field2:-1.5"]);
+        expect(result).toEqual("field1:=[-5] && field2:=[-1.5]");
+      });
+
+      it("reads field:-5 as excluding 5 when interpretNegativeNumericFacetFiltersAsExclusions is enabled", () => {
+        const subject = new SearchRequestAdapter([], null, {
+          interpretNegativeNumericFacetFiltersAsExclusions: true,
+        });
+
+        const result = subject._adaptFacetFilters([["field1:-5"], "field2:-1.5"]);
+        expect(result).toEqual("field1:!=[5] && field2:!=[1.5]");
+      });
+
+      it("strips the backslash from InstantSearch's \\- escape", () => {
+        const subject = new SearchRequestAdapter([], null, {});
+
+        const result = subject._adaptFacetFilters([
+          ["field1:\\-5", "field1:\\-1.5"],
+          ["field2:-\\-5"],
+          "field3:\\-5",
+          "field4:-\\-5",
+          "field5:\\-value",
+          "field6:-\\-value",
+          "field7:value\\-with\\-dashes",
+          "field8:\\\\-value",
+        ]);
+        expect(result).toEqual(
+          "field1:=[-5,-1.5] && field2:!=[-5] && field3:=[-5] && field4:!=[-5] && field5:=[`-value`] && field6:!=[`-value`] && field7:=[`value\\-with\\-dashes`] && field8:=[`\\\\-value`]",
+        );
       });
     });
   });

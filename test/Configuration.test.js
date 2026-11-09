@@ -52,6 +52,16 @@ describe("Configuration", () => {
         expect(subject.flipNegativeRefinementOperator).toBe(true);
       });
     });
+
+    describe("interpretNegativeNumericFacetFiltersAsExclusions parameter", () => {
+      it("defaults to false and accepts true", () => {
+        expect(new Configuration({}).interpretNegativeNumericFacetFiltersAsExclusions).toBe(false);
+        expect(
+          new Configuration({ interpretNegativeNumericFacetFiltersAsExclusions: true })
+            .interpretNegativeNumericFacetFiltersAsExclusions,
+        ).toBe(true);
+      });
+    });
   });
 
   describe(".validate", () => {
