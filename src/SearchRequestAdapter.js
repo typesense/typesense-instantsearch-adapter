@@ -204,6 +204,10 @@ export class SearchRequestAdapter {
   }
 
   _escapeFacetValue(value) {
+    // "\-" is InstantSearch's escape for a value that really starts with "-"
+    if (typeof value === "string" && value.startsWith("\\-")) {
+      value = value.substring(1);
+    }
     // Don't escape booleans, integers or floats
     if (typeof value === "boolean" || value === "true" || value === "false" || this._isNumber(value)) {
       return value;

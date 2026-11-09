@@ -251,6 +251,33 @@ describe("SearchRequestAdapter", () => {
         expect(result).toEqual("tags:[`value1`,`value2`]");
       });
     });
+
+    describe("when facet values start with a minus sign", () => {
+      it("reads field:-5 as the number -5 by default", () => {
+        const subject = new SearchRequestAdapter([], null, {});
+
+        const result = subject._adaptFacetFilters([["field1:-5"], "field2:-1.5"]);
+        expect(result).toEqual("field1:=[-5] && field2:=[-1.5]");
+      });
+
+      it("strips the backslash from InstantSearch's \\- escape", () => {
+        const subject = new SearchRequestAdapter([], null, {});
+
+        const result = subject._adaptFacetFilters([
+          ["field1:\\-5", "field1:\\-1.5"],
+          ["field2:-\\-5"],
+          "field3:\\-5",
+          "field4:-\\-5",
+          "field5:\\-value",
+          "field6:-\\-value",
+          "field7:value\\-with\\-dashes",
+          "field8:\\\\-value",
+        ]);
+        expect(result).toEqual(
+          "field1:=[-5,-1.5] && field2:!=[-5] && field3:=[-5] && field4:!=[-5] && field5:=[`-value`] && field6:!=[`-value`] && field7:=[`value\\-with\\-dashes`] && field8:=[`\\\\-value`]",
+        );
+      });
+    });
   });
 
   describe("._adaptFilters", () => {
