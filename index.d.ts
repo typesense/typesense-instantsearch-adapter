@@ -108,6 +108,11 @@ interface BaseAdapterOptions {
    * AND groups become `field:![a,b]`, OR groups become `field:!a || field:!b`.
    */
   flipNegativeRefinementOperator?: boolean;
+  /**
+   * Reads `field:-5` as "exclude 5", like Algolia. By default it matches -5.
+   * `field:\-5` matches -5 either way.
+   */
+  interpretNegativeNumericFacetFiltersAsExclusions?: boolean;
 }
 
 type CollectionSearchParameters<Infix extends string = string> = Record<

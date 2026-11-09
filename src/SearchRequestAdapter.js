@@ -96,7 +96,7 @@ export class SearchRequestAdapter {
         // Partition values into included and excluded values
         const [excludedFieldValues, includedFieldValues] = fieldValues.reduce(
           (result, fieldValue) => {
-            if (fieldValue.startsWith("-") && !this._isNumber(fieldValue)) {
+            if (this._isExcludedFacetValue(fieldValue)) {
               result[0].push(fieldValue.substring(1));
             } else {
               result[1].push(fieldValue);
@@ -137,7 +137,7 @@ export class SearchRequestAdapter {
 
         const { fieldName, fieldValue } = this._parseFacetFilter(item);
         let typesenseFilterString;
-        if (fieldValue.startsWith("-") && !this._isNumber(fieldValue)) {
+        if (this._isExcludedFacetValue(fieldValue)) {
           const operator = this._shouldUseExactMatchForField(fieldName, collectionName) ? ":!=" : ":!";
           typesenseFilterString = `${fieldName}${operator}[${this._escapeFacetValue(fieldValue.substring(1))}]`;
         } else {
@@ -201,6 +201,14 @@ export class SearchRequestAdapter {
       fieldName,
       fieldValue,
     };
+  }
+
+  // Algolia reads "-5" as "not 5", but sites that hand-write "-5" in URLs or initialUiState mean the number -5.
+  _isExcludedFacetValue(fieldValue) {
+    return (
+      fieldValue.startsWith("-") &&
+      (this.configuration.interpretNegativeNumericFacetFiltersAsExclusions || !this._isNumber(fieldValue))
+    );
   }
 
   _escapeFacetValue(value) {

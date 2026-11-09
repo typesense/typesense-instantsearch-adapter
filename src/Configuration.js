@@ -65,6 +65,8 @@ export class Configuration {
     // flips negative refinement encoding between AND/OR groups
     // AND groups become field:![a,b], OR groups become field:!a || field:!b
     this.flipNegativeRefinementOperator = options.flipNegativeRefinementOperator ?? false;
+    this.interpretNegativeNumericFacetFiltersAsExclusions =
+      options.interpretNegativeNumericFacetFiltersAsExclusions ?? false;
   }
 
   validate() {

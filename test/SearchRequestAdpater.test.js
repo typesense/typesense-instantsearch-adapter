@@ -239,6 +239,16 @@ describe("SearchRequestAdapter", () => {
         expect(result).toEqual("(tags:!`value1` || tags:!`value2`)");
       });
 
+      it("expands OR'ed numeric exclusions into OR clauses", () => {
+        const subject = new SearchRequestAdapter([], null, {
+          flipNegativeRefinementOperator: true,
+          interpretNegativeNumericFacetFiltersAsExclusions: true,
+        });
+
+        const result = subject._adaptFacetFilters([["field1:-5", "field1:-\\-5"]], "collection1");
+        expect(result).toEqual("(field1:!=5 || field1:!=-5)");
+      });
+
       it("keeps OR'ed positive refinements as list unions", () => {
         const subject = new SearchRequestAdapter([], null, {
           flipNegativeRefinementOperator: true,
@@ -258,6 +268,15 @@ describe("SearchRequestAdapter", () => {
 
         const result = subject._adaptFacetFilters([["field1:-5"], "field2:-1.5"]);
         expect(result).toEqual("field1:=[-5] && field2:=[-1.5]");
+      });
+
+      it("reads field:-5 as excluding 5 when interpretNegativeNumericFacetFiltersAsExclusions is enabled", () => {
+        const subject = new SearchRequestAdapter([], null, {
+          interpretNegativeNumericFacetFiltersAsExclusions: true,
+        });
+
+        const result = subject._adaptFacetFilters([["field1:-5"], "field2:-1.5"]);
+        expect(result).toEqual("field1:!=[5] && field2:!=[1.5]");
       });
 
       it("strips the backslash from InstantSearch's \\- escape", () => {
