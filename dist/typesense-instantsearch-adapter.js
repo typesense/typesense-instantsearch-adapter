@@ -10530,7 +10530,8 @@ var Configuration = /*#__PURE__*/function () {
       _options$collectionSp4,
       _options$union,
       _options$useOverrideT,
-      _options$flipNegative;
+      _options$flipNegative,
+      _options$interpretNeg;
     var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     (0,_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, Configuration);
     this.server = options.server || {
@@ -10577,6 +10578,7 @@ var Configuration = /*#__PURE__*/function () {
     // flips negative refinement encoding between AND/OR groups
     // AND groups become field:![a,b], OR groups become field:!a || field:!b
     this.flipNegativeRefinementOperator = (_options$flipNegative = options.flipNegativeRefinementOperator) !== null && _options$flipNegative !== void 0 ? _options$flipNegative : false;
+    this.interpretNegativeNumericFacetFiltersAsExclusions = (_options$interpretNeg = options.interpretNegativeNumericFacetFiltersAsExclusions) !== null && _options$interpretNeg !== void 0 ? _options$interpretNeg : false;
   }
   return (0,_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(Configuration, [{
     key: "validate",
@@ -10771,7 +10773,7 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
 
           // Partition values into included and excluded values
           var _fieldValues$reduce = fieldValues.reduce(function (result, fieldValue) {
-              if (fieldValue.startsWith("-") && !_this._isNumber(fieldValue)) {
+              if (_this._isExcludedFacetValue(fieldValue)) {
                 result[0].push(fieldValue.substring(1));
               } else {
                 result[1].push(fieldValue);
@@ -10814,7 +10816,7 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
             _fieldName = _this$_parseFacetFilt2.fieldName,
             fieldValue = _this$_parseFacetFilt2.fieldValue;
           var _typesenseFilterString;
-          if (fieldValue.startsWith("-") && !_this._isNumber(fieldValue)) {
+          if (_this._isExcludedFacetValue(fieldValue)) {
             var _operator2 = _this._shouldUseExactMatchForField(_fieldName, collectionName) ? ":!=" : ":!";
             _typesenseFilterString = "".concat(_fieldName).concat(_operator2, "[").concat(_this._escapeFacetValue(fieldValue.substring(1)), "]");
           } else {
@@ -10874,9 +10876,20 @@ var SearchRequestAdapter = /*#__PURE__*/function () {
         fieldValue: fieldValue
       };
     }
+
+    // Algolia reads "-5" as "not 5", but sites that hand-write "-5" in URLs or initialUiState mean the number -5.
+  }, {
+    key: "_isExcludedFacetValue",
+    value: function _isExcludedFacetValue(fieldValue) {
+      return fieldValue.startsWith("-") && (this.configuration.interpretNegativeNumericFacetFiltersAsExclusions || !this._isNumber(fieldValue));
+    }
   }, {
     key: "_escapeFacetValue",
     value: function _escapeFacetValue(value) {
+      // "\-" is InstantSearch's escape for a value that really starts with "-"
+      if (typeof value === "string" && value.startsWith("\\-")) {
+        value = value.substring(1);
+      }
       // Don't escape booleans, integers or floats
       if (typeof value === "boolean" || value === "true" || value === "false" || this._isNumber(value)) {
         return value;
