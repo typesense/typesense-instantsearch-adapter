@@ -271,6 +271,29 @@ export class AppComponent {
 
 You can then add any of the Instantsearch widgets [here](https://www.algolia.com/doc/guides/building-search-ui/widgets/showcase/angular/) that are [supported](#widget-compatibility) by the adapter.
 
+## Axios
+
+Behind the scenes, we are using axios as the promised based HTTP client. This may cause conflicts with systems that already employ axios and have default configurations set up.
+If you are making direct default changes to axios
+
+```
+import axios from 'axios'
+
+axios.interceptors.response.use((response) => response.data)
+
+```
+
+You'll need to change these to
+
+```
+import axios from 'axios'
+
+const instance = axios.create()
+
+instance.interceptors.response.use((response) => response.data)
+
+```
+
 ## Widget Specific Instructions
 
 ### `hierarchicalMenu`
