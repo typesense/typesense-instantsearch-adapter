@@ -1008,7 +1008,7 @@ var ApiCall = /** @class */ (function () {
                                                     var transformedData = data;
                                                     if (headers !== undefined &&
                                                         typeof data === "string" &&
-                                                        headers["content-type"] &&
+                                                        typeof headers["content-type"] === "string" &&
                                                         headers["content-type"].startsWith("application/json")) {
                                                         transformedData = JSON.parse(data);
                                                     }
@@ -1975,25 +1975,28 @@ var Configuration = /** @class */ (function () {
         var _this = this;
         this.nodes = options.nodes || [];
         this.nodes = this.nodes
+            .map(function (node) { return (tslib_1.__assign({}, node)); }) // Copy the caller's node objects before mutating them
             .map(function (node) { return _this.setDefaultPathInNode(node); })
-            .map(function (node) { return _this.setDefaultPortInNode(node); })
-            .map(function (node) { return (tslib_1.__assign({}, node)); }); // Make a deep copy
+            .map(function (node) { return _this.setDefaultPortInNode(node); });
         if (options.randomizeNodes == null) {
             options.randomizeNodes = true;
         }
         if (options.randomizeNodes === true) {
             this.shuffleArray(this.nodes);
         }
-        this.nearestNode = options.nearestNode;
+        this.nearestNode =
+            options.nearestNode == null
+                ? options.nearestNode
+                : tslib_1.__assign({}, options.nearestNode);
         this.nearestNode = this.setDefaultPathInNode(this.nearestNode);
         this.nearestNode = this.setDefaultPortInNode(this.nearestNode);
         this.connectionTimeoutSeconds =
             options.connectionTimeoutSeconds || options.timeoutSeconds || 5;
         this.healthcheckIntervalSeconds = options.healthcheckIntervalSeconds || 60;
         this.numRetries =
-            (options.numRetries !== undefined && options.numRetries >= 0
+            options.numRetries !== undefined && options.numRetries >= 0
                 ? options.numRetries
-                : this.nodes.length + (this.nearestNode == null ? 0 : 1)) || 3;
+                : this.nodes.length + (this.nearestNode == null ? 0 : 1) || 3;
         this.retryIntervalSeconds = options.retryIntervalSeconds || 0.1;
         this.apiKey = options.apiKey;
         this.sendApiKeyAsQueryParam = options.sendApiKeyAsQueryParam; // We will set a default for this in Client and SearchClient
@@ -2488,16 +2491,19 @@ exports.Document = void 0;
 var tslib_1 = __webpack_require__(/*! tslib */ "./node_modules/typesense/node_modules/tslib/tslib.es6.mjs");
 var Collections_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Collections */ "./node_modules/typesense/lib/Typesense/Collections.js"));
 var Documents_1 = tslib_1.__importDefault(__webpack_require__(/*! ./Documents */ "./node_modules/typesense/lib/Typesense/Documents.js"));
+var Utils_1 = __webpack_require__(/*! ./Utils */ "./node_modules/typesense/lib/Typesense/Utils.js");
 var Document = /** @class */ (function () {
     function Document(collectionName, documentId, apiCall) {
         this.collectionName = collectionName;
         this.documentId = documentId;
         this.apiCall = apiCall;
     }
-    Document.prototype.retrieve = function () {
+    Document.prototype.retrieve = function (options) {
         return tslib_1.__awaiter(this, void 0, void 0, function () {
+            var queryParams;
             return tslib_1.__generator(this, function (_a) {
-                return [2 /*return*/, this.apiCall.get(this.endpointPath())];
+                queryParams = (0, Utils_1.normalizeArrayableParams)(options !== null && options !== void 0 ? options : {});
+                return [2 /*return*/, this.apiCall.get(this.endpointPath(), queryParams)];
             });
         });
     };
@@ -2582,6 +2588,22 @@ var Documents = /** @class */ (function (_super) {
             });
         });
     };
+    Documents.prototype.emplace = function (document_1) {
+        return tslib_1.__awaiter(this, arguments, void 0, function (document, options) {
+            if (options === void 0) { options = {}; }
+            return tslib_1.__generator(this, function (_a) {
+                if (!document)
+                    throw new Error("No document provided");
+                if (options["filter_by"] != null) {
+                    return [2 /*return*/, this.apiCall.patch(this.endpointPath(), document, Object.assign({}, options))];
+                }
+                else {
+                    return [2 /*return*/, this.apiCall.post(this.endpointPath(), document, Object.assign({}, options, { action: "emplace" }))];
+                }
+                return [2 /*return*/];
+            });
+        });
+    };
     Documents.prototype.delete = function () {
         return tslib_1.__awaiter(this, arguments, void 0, function (query) {
             if (query === void 0) { query = {}; }
@@ -2600,11 +2622,12 @@ var Documents = /** @class */ (function (_super) {
         });
     };
     Documents.prototype.import = function (documents_1) {
-        return tslib_1.__awaiter(this, arguments, void 0, function (documents, options) {
+        return tslib_1.__awaiter(this, arguments, void 0, function (documents, options, _a) {
             var finalOptions, documentsInJSONLFormat, resultsInJSONLFormat, resultsInJSONFormat, failedItems;
             if (options === void 0) { options = {}; }
-            return tslib_1.__generator(this, function (_a) {
-                switch (_a.label) {
+            var _b = _a === void 0 ? {} : _a, _c = _b.abortSignal, abortSignal = _c === void 0 ? null : _c;
+            return tslib_1.__generator(this, function (_d) {
+                switch (_d.label) {
                     case 0:
                         finalOptions = tslib_1.__assign({ throwOnFail: true }, options);
                         if (Array.isArray(documents)) {
@@ -2636,11 +2659,12 @@ var Documents = /** @class */ (function (_super) {
                                 queryParameters: finalOptions,
                                 bodyParameters: documentsInJSONLFormat,
                                 additionalHeaders: { "Content-Type": "text/plain" },
+                                abortSignal: abortSignal,
                                 skipConnectionTimeout: true, // We never want to client-side-timeout on an import and retry, since imports are syncronous and we want to let them take as long as it takes to complete fully
                                 enableKeepAlive: isNodeJSEnvironment ? true : false, // This is to prevent ECONNRESET socket hang up errors. Reference: https://github.com/axios/axios/issues/2936#issuecomment-779439991
                             })];
                     case 1:
-                        resultsInJSONLFormat = _a.sent();
+                        resultsInJSONLFormat = _d.sent();
                         if (Array.isArray(documents)) {
                             resultsInJSONFormat = resultsInJSONLFormat
                                 .split("\n")
@@ -2670,22 +2694,24 @@ var Documents = /** @class */ (function (_super) {
      * Imports documents from a NodeJS readable stream of JSONL.
      */
     Documents.prototype.importStream = function (readableStream_1) {
-        return tslib_1.__awaiter(this, arguments, void 0, function (readableStream, options) {
+        return tslib_1.__awaiter(this, arguments, void 0, function (readableStream, options, _a) {
             var finalOptions, resultsInJSONLFormat, resultsInJSONFormat, failedItems;
             if (options === void 0) { options = {}; }
-            return tslib_1.__generator(this, function (_a) {
-                switch (_a.label) {
+            var _b = _a === void 0 ? {} : _a, _c = _b.abortSignal, abortSignal = _c === void 0 ? null : _c;
+            return tslib_1.__generator(this, function (_d) {
+                switch (_d.label) {
                     case 0:
                         finalOptions = tslib_1.__assign({ throwOnFail: true }, options);
                         return [4 /*yield*/, this.apiCall.performRequest("post", this.endpointPath("import"), {
                                 queryParameters: finalOptions,
                                 bodyParameters: readableStream,
                                 additionalHeaders: { "Content-Type": "text/plain" },
+                                abortSignal: abortSignal,
                                 skipConnectionTimeout: true, // We never want to client-side-timeout on an import and retry, since imports are syncronous and we want to let them take as long as it takes to complete fully
                                 enableKeepAlive: isNodeJSEnvironment ? true : false, // This is to prevent ECONNRESET socket hang up errors. Reference: https://github.com/axios/axios/issues/2936#issuecomment-779439991
                             })];
                     case 1:
-                        resultsInJSONLFormat = _a.sent();
+                        resultsInJSONLFormat = _d.sent();
                         resultsInJSONFormat = resultsInJSONLFormat
                             .split("\n")
                             .map(function (r) { return JSON.parse(r); });
@@ -3208,6 +3234,9 @@ var MultiSearch = /** @class */ (function () {
                 }
                 normalizedSearchRequests = {
                     union: searchRequests.union,
+                    remove_duplicates: "remove_duplicates" in searchRequests
+                        ? searchRequests.remove_duplicates
+                        : undefined,
                     searches: searchRequests.searches.map((Utils_1.normalizeArrayableParams)),
                 };
                 streamConfig = params.streamConfig, paramsWithoutStream = tslib_1.__rest(params, ["streamConfig"]);
@@ -3229,7 +3258,7 @@ var MultiSearch = /** @class */ (function () {
         });
     };
     MultiSearch.prototype.isStreamingRequest = function (commonParams) {
-        return commonParams.streamConfig !== undefined;
+        return commonParams.conversation_stream === true;
     };
     MultiSearch.prototype.hasAnySearchObjectPagination = function (searchRequests) {
         return searchRequests.searches.some(function (search) { return search.page !== undefined || search.per_page !== undefined || search.offset !== undefined || search.limit !== undefined || search.limit_hits !== undefined; });
@@ -3583,9 +3612,10 @@ var RequestWithCache = /** @class */ (function () {
     };
     RequestWithCache.prototype.perform = function (requestContext, methodName, requestParams, cacheOptions) {
         return tslib_1.__awaiter(this, void 0, void 0, function () {
-            var _a, _b, cacheResponseForSeconds, _c, maxSize, isCacheDisabled, path, queryParams, body, headers, streamConfig, abortSignal, responseType, isStreamingRequest, requestParamsJSON, cacheEntry, now, isEntryValid, cachePromiseEntry, isEntryValid, responsePromise, response, isCacheOverMaxSize, oldestEntry, isResponsePromiseCacheOverMaxSize, oldestEntry;
-            return tslib_1.__generator(this, function (_d) {
-                switch (_d.label) {
+            var _a, _b, cacheResponseForSeconds, _c, maxSize, isCacheDisabled, path, queryParams, body, headers, streamConfig, abortSignal, responseType, isStreamingRequest, requestParamsJSON, cacheEntry, now, isEntryValid, cachePromiseEntry, isEntryValid, responsePromise, response, error_1, isCacheOverMaxSize, oldestEntry, isResponsePromiseCacheOverMaxSize, oldestEntry;
+            var _d;
+            return tslib_1.__generator(this, function (_e) {
+                switch (_e.label) {
                     case 0:
                         _a = cacheOptions || {}, _b = _a.cacheResponseForSeconds, cacheResponseForSeconds = _b === void 0 ? defaultCacheResponseForSeconds : _b, _c = _a.maxSize, maxSize = _c === void 0 ? defaultMaxSize : _c;
                         isCacheDisabled = cacheOptions === undefined ||
@@ -3627,9 +3657,21 @@ var RequestWithCache = /** @class */ (function () {
                             requestTimestamp: now,
                             responsePromise: responsePromise,
                         });
-                        return [4 /*yield*/, responsePromise];
+                        _e.label = 1;
                     case 1:
-                        response = _d.sent();
+                        _e.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, responsePromise];
+                    case 2:
+                        response = _e.sent();
+                        return [3 /*break*/, 4];
+                    case 3:
+                        error_1 = _e.sent();
+                        if (((_d = this.responsePromiseCache.get(requestParamsJSON)) === null || _d === void 0 ? void 0 : _d.responsePromise) ===
+                            responsePromise) {
+                            this.responsePromiseCache.delete(requestParamsJSON);
+                        }
+                        throw error_1;
+                    case 4:
                         this.responseCache.set(requestParamsJSON, {
                             requestTimestamp: now,
                             response: response,
