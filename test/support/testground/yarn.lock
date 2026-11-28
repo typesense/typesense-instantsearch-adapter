@@ -2226,9 +2226,9 @@ data-urls@^1.1.0:
     whatwg-url "^7.0.0"
 
 deasync@^0.1.14:
-  version "0.1.21"
-  resolved "https://registry.yarnpkg.com/deasync/-/deasync-0.1.21.tgz#bb11eabd4466c0d8776f0d82deb8a6126460d30f"
-  integrity sha512-kUmM8Y+PZpMpQ+B4AuOW9k2Pfx/mSupJtxOsLzmnHY2WqZUYRFccFn2RhzPAqt3Xb+sorK/badW2D4zNzqZz5w==
+  version "0.1.32"
+  resolved "https://registry.yarnpkg.com/deasync/-/deasync-0.1.32.tgz#b82dd954e600d098a264d2c8aa3f6a23252397f3"
+  integrity sha512-7rYCD3JLBapnkXryYnEmEDV0pZrlHORin38Vjnhp/EZOTyjqyPCBw/+DCFASXWH8HDmqLrsZv9POw8XXu/DeYA==
   dependencies:
     bindings "^1.5.0"
     node-addon-api "^1.7.1"
